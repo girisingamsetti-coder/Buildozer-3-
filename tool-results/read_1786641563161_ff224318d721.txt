@@ -1,0 +1,737 @@
+     1→     1→'use client'
+     2→     2→
+     3→     3→import { useQuery } from '@tanstack/react-query'
+     4→     4→import { motion, AnimatePresence } from 'framer-motion'
+     5→     5→import {
+     6→     6→  Users,
+     7→     7→  CalendarCheck,
+     8→     8→  AlertTriangle,
+     9→     9→  MessageSquareWarning,
+    10→    10→  UserPlus,
+    11→    11→  FileWarning,
+    12→    12→  ClipboardCheck,
+    13→    13→  UserCog,
+    14→    14→  Bell,
+    15→    15→  TrendingUp,
+    16→    16→  TrendingDown,
+    17→    17→  ArrowUpRight,
+    18→    18→  Activity,
+    19→    19→  CheckCircle2,
+    20→    20→  Clock,
+    21→    21→} from 'lucide-react'
+    22→    22→import {
+    23→    23→  BarChart,
+    24→    24→  Bar,
+    25→    25→  XAxis,
+    26→    26→  YAxis,
+    27→    27→  Tooltip,
+    28→    28→  ResponsiveContainer,
+    29→    29→  PieChart,
+    30→    30→  Pie,
+    31→    31→  Cell,
+    32→    32→  AreaChart,
+    33→    33→  Area,
+    34→    34→  CartesianGrid,
+    35→    35→} from 'recharts'
+    36→    36→import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+    37→    37→import { Button } from '@/components/ui/button'
+    38→    38→import { Skeleton } from '@/components/ui/skeleton'
+    39→    39→import { Badge } from '@/components/ui/badge'
+    40→    40→import { useNavStore } from '@/stores/nav-store'
+    41→    41→import { useAuthStore } from '@/lib/auth-store'
+    42→    42→import { cn } from '@/lib/utils'
+    43→    43→
+    44→    44→// ──────────────────── Types ────────────────────
+    45→    45→
+    46→    46→interface DashboardData {
+    47→    47→  totalWorkers: number
+    48→    48→  activeWorkers: number
+    49→    49→  expiringTrainingsCount: number
+    50→    50→  pendingMedicalCount: number
+    51→    51→  openGrievancesCount: number
+    52→    52→  openIncidentsCount: number
+    53→    53→  attendanceToday: number
+    54→    54→  compliancePct: number
+    55→    55→  incidentBreakdown: { type: string; count: number }[]
+    56→    56→  trainingStatusBreakdown: { status: string; count: number }[]
+    57→    57→  genderBreakdown: { gender: string; count: number }[]
+    58→    58→}
+    59→    59→
+    60→    60→interface Notification {
+    61→    61→  id: string
+    62→    62→  title: string
+    63→    63→  message: string
+    64→    64→  priority: string
+    65→    65→  createdAt: string
+    66→    66→}
+    67→    67→
+    68→    68→interface AttendanceTrendPoint {
+    69→    69→  date: string
+    70→    70→  label: string
+    71→    71→  present: number
+    72→    72→  absent: number
+    73→    73→  total: number
+    74→    74→}
+    75→    75→
+    76→    76→// ──────────────────── Color Palette ────────────────────
+    77→    77→
+    78→    78→const TEAL = '#0d9488'
+    79→    79→const TEAL_LIGHT = '#5eead4'
+    80→    80→const AMBER = '#f59e0b'
+    81→    81→const AMBER_LIGHT = '#fcd34d'
+    82→    82→const RED = '#ef4444'
+    83→    83→const RED_LIGHT = '#fca5a5'
+    84→    84→const EMERALD = '#10b981'
+    85→    85→const SLATE = '#64748b'
+    86→    86→
+    87→    87→const GENDER_COLORS: Record<string, string> = {
+    88→    88→  Male: TEAL,
+    89→    89→  Female: '#f472b6',
+    90→    90→  Other: SLATE,
+    91→    91→}
+    92→    92→
+    93→    93→const TRAINING_COLORS: Record<string, string> = {
+    94→    94→  Valid: EMERALD,
+    95→    95→  ExpiringSoon: AMBER,
+    96→    96→  Expired: RED,
+    97→    97→}
+    98→    98→
+    99→    99→const PRIORITY_STYLES: Record<string, string> = {
+   100→   100→  critical: 'bg-red-500 ring-2 ring-red-200 dark:ring-red-800',
+   101→   101→  high: 'bg-amber-500 ring-2 ring-amber-200 dark:ring-amber-800',
+   102→   102→  medium: 'bg-teal-500',
+   103→   103→  low: 'bg-slate-400',
+   104→   104→  info: 'bg-teal-500',
+   105→   105→}
+   106→   106→
+   107→   107→// ──────────────────── Animations ────────────────────
+   108→   108→
+   109→   109→const stagger = {
+   110→   110→  container: {
+   111→   111→    animate: { transition: { staggerChildren: 0.06 } },
+   112→   112→  },
+   113→   113→  item: {
+   114→   114→    initial: { opacity: 0, y: 20, scale: 0.97 },
+   115→   115→    animate: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 300, damping: 24 } },
+   116→   116→  },
+   117→   117→}
+   118→   118→
+   119→   119→const fadeIn = {
+   120→   120→  initial: { opacity: 0, y: 16 },
+   121→   121→  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+   122→   122→}
+   123→   123→
+   124→   124→function getGreeting() {
+   125→   125→  const h = new Date().getHours()
+   126→   126→  if (h < 12) return 'Good Morning'
+   127→   127→  if (h < 17) return 'Good Afternoon'
+   128→   128→  return 'Good Evening'
+   129→   129→}
+   130→   130→
+   131→   131→function getTodayFormatted() {
+   132→   132→  return new Date().toLocaleDateString('en-IN', {
+   133→   133→    weekday: 'long',
+   134→   134→    day: 'numeric',
+   135→   135→    month: 'long',
+   136→   136→    year: 'numeric',
+   137→   137→  })
+   138→   138→}
+   139→   139→
+   140→   140→// ──────────────────── Gradient Backgrounds for Stat Tiles ────────────────────
+   141→   141→
+   142→   142→const TILE_GRADIENTS = [
+   143→   143→  // Total Workforce - teal gradient
+   144→   144→  'from-teal-500/10 via-teal-500/5 to-transparent border-teal-200/60 dark:border-teal-700/40',
+   145→   145→  // Attendance - emerald gradient
+   146→   146→  'from-emerald-500/10 via-emerald-500/5 to-transparent border-emerald-200/60 dark:border-emerald-700/40',
+   147→   147→  // Expiring Trainings - amber gradient
+   148→   148→  'from-amber-500/10 via-amber-500/5 to-transparent border-amber-200/60 dark:border-amber-700/40',
+   149→   149→  // Open Incidents - red gradient
+   150→   150→  'from-red-500/10 via-red-500/5 to-transparent border-red-200/60 dark:border-red-700/40',
+   151→   151→  // Pending Medical - orange gradient
+   152→   152→  'from-orange-500/10 via-orange-500/5 to-transparent border-orange-200/60 dark:border-orange-700/40',
+   153→   153→  // Open Grievances - rose gradient
+   154→   154→  'from-rose-500/10 via-rose-500/5 to-transparent border-rose-200/60 dark:border-rose-700/40',
+   155→   155→  // Compliance - emerald gradient
+   156→   156→  'from-emerald-500/10 via-emerald-500/5 to-transparent border-emerald-200/60 dark:border-emerald-700/40',
+   157→   157→  // Safety Score - cyan gradient
+   158→   158→  'from-cyan-500/10 via-cyan-500/5 to-transparent border-cyan-200/60 dark:border-cyan-700/40',
+   159→   159→]
+   160→   160→
+   161→   161→const TILE_ICON_STYLES = [
+   162→   162→  'bg-teal-500/15 text-teal-600 dark:text-teal-400',
+   163→   163→  'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
+   164→   164→  'bg-amber-500/15 text-amber-600 dark:text-amber-400',
+   165→   165→  'bg-red-500/15 text-red-600 dark:text-red-400',
+   166→   166→  'bg-orange-500/15 text-orange-600 dark:text-orange-400',
+   167→   167→  'bg-rose-500/15 text-rose-600 dark:text-rose-400',
+   168→   168→  'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
+   169→   169→  'bg-cyan-500/15 text-cyan-600 dark:text-cyan-400',
+   170→   170→]
+   171→   171→
+   172→   172→// ──────────────────── Stat Tile Component ────────────────────
+   173→   173→
+   174→   174→interface StatTileProps {
+   175→   175→  title: string
+   176→   176→  value: string | number
+   177→   177→  subtitle?: string
+   178→   178→  icon: React.ElementType
+   179→   179→  index: number
+   180→   180→  onClick?: () => void
+   181→   181→  pulse?: boolean
+   182→   182→  trend?: 'up' | 'down'
+   183→   183→  trendValue?: string
+   184→   184→}
+   185→   185→
+   186→   186→function StatTile({ title, value, subtitle, icon: Icon, index, onClick, pulse, trend, trendValue }: StatTileProps) {
+   187→   187→  return (
+   188→   188→    <motion.div variants={stagger.item} className="h-full">
+   189→   189→      <Card
+   190→   190→        className={cn(
+   191→   191→          'group relative overflow-hidden cursor-pointer h-full',
+   192→   192→          'bg-gradient-to-br transition-all duration-300 ease-out',
+   193→   193→          TILE_GRADIENTS[index % TILE_GRADIENTS.length],
+   194→   194→          'hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20',
+   195→   195→          'hover:-translate-y-1 hover:scale-[1.02]',
+   196→   196→          'active:translate-y-0 active:scale-[0.99]',
+   197→   197→          'border backdrop-blur-sm',
+   198→   198→        )}
+   199→   199→        onClick={onClick}
+   200→   200→      >
+   201→   201→        {/* Decorative corner accent */}
+   202→   202→        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-white/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+   203→   203→
+   204→   204→        <CardContent className="relative p-4 sm:p-5 h-full flex flex-col">
+   205→   205→          <div className="flex items-start justify-between flex-1 min-h-0">
+   206→   206→            <div className="space-y-1.5 min-w-0 flex-1">
+   207→   207→              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 line-clamp-1">{title}</p>
+   208→   208→              <div className="flex items-baseline gap-2 min-h-[1.875rem] sm:min-h-[2.25rem]">
+   209→   209→                <p className="text-xl sm:text-3xl font-bold tracking-tight tabular-nums leading-none whitespace-nowrap overflow-hidden">{value}</p>
+   210→   210→                {trend && trendValue && (
+   211→   211→                  <motion.span
+   212→   212→                    initial={{ opacity: 0, x: -4 }}
+   213→   213→                    animate={{ opacity: 1, x: 0 }}
+   214→   214→                    transition={{ delay: 0.3 + index * 0.05 }}
+   215→   215→                    className={cn(
+   216→   216→                      'inline-flex items-center gap-0.5 text-xs font-semibold rounded-full px-1.5 py-0.5 shrink-0',
+   217→   217→                      trend === 'up' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+   218→   218→                    )}
+   219→   219→                  >
+   220→   220→                    {trend === 'up' ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+   221→   221→                    {trendValue}
+   222→   222→                  </motion.span>
+   223→   223→                )}
+   224→   224→              </div>
+   225→   225→              <p className="text-xs text-muted-foreground line-clamp-1 min-h-[1rem]">{subtitle || '\u00A0'}</p>
+   226→   226→            </div>
+   227→   227→            <div className={cn('relative rounded-xl p-2.5 shrink-0 transition-transform duration-300 group-hover:scale-110', TILE_ICON_STYLES[index % TILE_ICON_STYLES.length])}>
+   228→   228→              <Icon className="h-5 w-5" />
+   229→   229→              {pulse && (
+   230→   230→                <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+   231→   231→                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+   232→   232→                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
+   233→   233→                </span>
+   234→   234→              )}
+   235→   235→            </div>
+   236→   236→          </div>
+   237→   237→
+   238→   238→          {/* Bottom shimmer on hover */}
+   239→   239→          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-teal-400/0 to-transparent group-hover:via-teal-400/60 transition-all duration-500" />
+   240→   240→        </CardContent>
+   241→   241→      </Card>
+   242→   242→    </motion.div>
+   243→   243→  )
+   244→   244→}
+   245→   245→
+   246→   246→// ──────────────────── Custom Chart Tooltip ────────────────────
+   247→   247→
+   248→   248→function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; name: string; color: string }>; label?: string }) {
+   249→   249→  if (!active || !payload?.length) return null
+   250→   250→  return (
+   251→   251→    <div className="rounded-xl border bg-background/95 backdrop-blur-sm px-3.5 py-2.5 shadow-xl">
+   252→   252→      <p className="text-xs font-semibold text-muted-foreground mb-1">{label}</p>
+   253→   253→      {payload.map((entry, i) => (
+   254→   254→        <div key={i} className="flex items-center gap-2 text-sm">
+   255→   255→          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
+   256→   256→          <span className="text-muted-foreground capitalize">{entry.name}:</span>
+   257→   257→          <span className="font-semibold">{entry.value}</span>
+   258→   258→        </div>
+   259→   259→      ))}
+   260→   260→    </div>
+   261→   261→  )
+   262→   262→}
+   263→   263→
+   264→   264→// ──────────────────── Loading Skeleton ────────────────────
+   265→   265→
+   266→   266→function DashboardSkeleton() {
+   267→   267→  return (
+   268→   268→    <div className="space-y-4">
+   269→   269→      {/* Greeting */}
+   270→   270→      <div className="space-y-1">
+   271→   271→        <Skeleton className="h-7 w-48" />
+   272→   272→        <Skeleton className="h-4 w-72" />
+   273→   273→      </div>
+   274→   274→      {/* Row 1: 4 tiles */}
+   275→   275→      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+   276→   276→        {Array.from({ length: 4 }).map((_, i) => (
+   277→   277→          <Card key={i}><CardContent className="p-4 sm:p-5"><div className="flex items-start justify-between"><div className="space-y-2 flex-1"><Skeleton className="h-3 w-24" /><Skeleton className="h-8 w-20" /></div><Skeleton className="h-10 w-10 rounded-xl" /></div></CardContent></Card>
+   278→   278→        ))}
+   279→   279→      </div>
+   280→   280→      {/* Row 2: 4 tiles */}
+   281→   281→      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+   282→   282→        {Array.from({ length: 4 }).map((_, i) => (
+   283→   283→          <Card key={i}><CardContent className="p-4 sm:p-5"><div className="flex items-start justify-between"><div className="space-y-2 flex-1"><Skeleton className="h-3 w-24" /><Skeleton className="h-8 w-20" /></div><Skeleton className="h-10 w-10 rounded-xl" /></div></CardContent></Card>
+   284→   284→        ))}
+   285→   285→      </div>
+   286→   286→      {/* Charts row */}
+   287→   287→      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+   288→   288→        <Card className="lg:col-span-2"><CardHeader><Skeleton className="h-5 w-40" /></CardHeader><CardContent><Skeleton className="h-72 w-full" /></CardContent></Card>
+   289→   289→        <Card><CardHeader><Skeleton className="h-5 w-40" /></CardHeader><CardContent><Skeleton className="h-72 w-full" /></CardContent></Card>
+   290→   290→      </div>
+   291→   291→      {/* Bottom row */}
+   292→   292→      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+   293→   293→        <Card><CardHeader><Skeleton className="h-5 w-36" /></CardHeader><CardContent><Skeleton className="h-52 w-full" /></CardContent></Card>
+   294→   294→        <Card className="lg:col-span-2"><CardHeader><Skeleton className="h-5 w-36" /></CardHeader><CardContent><Skeleton className="h-52 w-full" /></CardContent></Card>
+   295→   295→      </div>
+   296→   296→    </div>
+   297→   297→  )
+   298→   298→}
+   299→   299→
+   300→   300→// ──────────────────── Incident Label Map ────────────────────
+   301→   301→
+   302→   302→const INCIDENT_LABEL_MAP: Record<string, string> = {
+   303→   303→  MinorInjury: 'Minor Injury',
+   304→   304→  MajorFatalInjury: 'Major / Fatal',
+   305→   305→  NearMiss: 'Near Miss',
+   306→   306→  PropertyDamage: 'Property Damage',
+   307→   307→  Environmental: 'Environmental',
+   308→   308→  FireInjury: 'Fire Injury',
+   309→   309→  Fire: 'Fire',
+   310→   310→  Death: 'Death',
+   311→   311→}
+   312→   312→
+   313→   313→const INCIDENT_COLORS = ['#0d9488', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f97316', '#ec4899', '#64748b']
+   314→   314→
+   315→   315→// ──────────────────── Main Component ────────────────────
+   316→   316→
+   317→   317→export default function DashboardView() {
+   318→   318→  const role = useAuthStore(s => s.role)
+   319→   319→  const setPage = useNavStore(s => s.setPage)
+   320→   320→  const openWorkerForm = useNavStore(s => s.openWorkerForm)
+   321→   321→  const openIncidentForm = useNavStore(s => s.openIncidentForm)
+   322→   322→
+   323→   323→  const { data: dash, isLoading } = useQuery<DashboardData>({
+   324→   324→    queryKey: ['dashboard'],
+   325→   325→    queryFn: () => fetch('/api/dashboard').then(r => r.json()),
+   326→   326→  })
+   327→   327→
+   328→   328→  const { data: notifications } = useQuery<Notification[]>({
+   329→   329→    queryKey: ['notifications'],
+   330→   330→    queryFn: () => fetch('/api/notifications').then(r => r.json()),
+   331→   331→  })
+   332→   332→
+   333→   333→  const { data: attendanceTrend } = useQuery<AttendanceTrendPoint[]>({
+   334→   334→    queryKey: ['dashboard', 'attendance-trend'],
+   335→   335→    queryFn: () => fetch('/api/dashboard/attendance-trend').then(r => r.json()),
+   336→   336→  })
+   337→   337→
+   338→   338→  if (isLoading) return <DashboardSkeleton />
+   339→   339→  if (!dash) return null
+   340→   340→
+   341→   341→  // Compute training valid percentage for center text
+   342→   342→  const trainingTotal = dash.trainingStatusBreakdown?.reduce((s, t) => s + t.count, 0) ?? 0
+   343→   343→  const trainingValid = dash.trainingStatusBreakdown?.find(t => t.status === 'Valid')?.count ?? 0
+   344→   344→  const trainingValidPct = trainingTotal > 0 ? Math.round((trainingValid / trainingTotal) * 100) : 0
+   345→   345→
+   346→   346→  const incidentData = (dash.incidentBreakdown ?? []).map(d => ({
+   347→   347→    ...d,
+   348→   348→    label: INCIDENT_LABEL_MAP[d.type] || d.type,
+   349→   349→  }))
+   350→   350→
+   351→   351→  const trainingData = dash.trainingStatusBreakdown ?? []
+   352→   352→  const genderData = dash.genderBreakdown ?? []
+   353→   353→  const recentAlerts = (notifications ?? []).slice(0, 6)
+   354→   354→
+   355→   355→  // Count total gender
+   356→   356→  const genderTotal = genderData.reduce((s, g) => s + g.count, 0)
+   357→   357→
+   358→   358→  return (
+   359→   359→    <div className="space-y-4">
+   360→   360→      {/* ────── Greeting ────── */}
+   361→   361→      <motion.div {...fadeIn}>
+   362→   362→        <h1 className="text-2xl font-bold tracking-tight">{getGreeting()} 👋</h1>
+   363→   363→        <p className="text-sm text-muted-foreground mt-0.5">{getTodayFormatted()} — Here's your site overview</p>
+   364→   364→      </motion.div>
+   365→   365→
+   366→   366→      {/* ────── Stat Tiles ────── */}
+   367→   367→      <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" variants={stagger.container} initial="initial" animate="animate">
+   368→   368→        <StatTile
+   369→   369→          title="Total Workforce"
+   370→   370→          value={`${dash.activeWorkers} / ${dash.totalWorkers}`}
+   371→   371→          subtitle={`${dash.totalWorkers - dash.activeWorkers} inactive`}
+   372→   372→          icon={Users}
+   373→   373→          index={0}
+   374→   374→          onClick={() => setPage('workers')}
+   375→   375→        />
+   376→   376→        <StatTile
+   377→   377→          title="Open Incidents"
+   378→   378→          value={dash.openIncidentsCount}
+   379→   379→          subtitle="require immediate attention"
+   380→   380→          icon={AlertTriangle}
+   381→   381→          index={3}
+   382→   382→          onClick={() => setPage('incidents')}
+   383→   383→          pulse={dash.openIncidentsCount > 0}
+   384→   384→        />
+   385→   385→        <StatTile
+   386→   386→          title="Open Grievances"
+   387→   387→          value={dash.openGrievancesCount}
+   388→   388→          subtitle="awaiting resolution"
+   389→   389→          icon={MessageSquareWarning}
+   390→   390→          index={5}
+   391→   391→          onClick={() => setPage('grievance')}
+   392→   392→          pulse={dash.openGrievancesCount > 0}
+   393→   393→        />
+   394→   394→      </motion.div>
+   395→   395→
+   396→   396→      {/* ────── Charts Row 1: Attendance Trend (2/3) + Training Donut (1/3) ────── */}
+   397→   397→      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+   398→   398→        {/* Attendance Trend - Area Chart */}
+   399→   399→        <motion.div className="lg:col-span-2" {...fadeIn} transition={{ duration: 0.4, delay: 0.15 }}>
+   400→   400→          <Card className="overflow-hidden">
+   401→   401→            <CardHeader className="pb-2">
+   402→   402→              <div className="flex items-center justify-between">
+   403→   403→                <div>
+   404→   404→                  <CardTitle className="text-base font-semibold">Attendance Trend</CardTitle>
+   405→   405→                  <CardDescription>Last 7 days daily attendance</CardDescription>
+   406→   406→                </div>
+   407→   407→                <Badge variant="outline" className="text-xs font-normal">
+   408→   408→                  <Activity className="h-3 w-3 mr-1" />
+   409→   409→                  Live
+   410→   410→                </Badge>
+   411→   411→              </div>
+   412→   412→            </CardHeader>
+   413→   413→            <CardContent className="pt-0">
+   414→   414→              {attendanceTrend && attendanceTrend.length > 0 ? (
+   415→   415→                <ResponsiveContainer width="100%" height={280}>
+   416→   416→                  <AreaChart data={attendanceTrend} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+   417→   417→                    <defs>
+   418→   418→                      <linearGradient id="presentGradient" x1="0" y1="0" x2="0" y2="1">
+   419→   419→                        <stop offset="0%" stopColor={TEAL} stopOpacity={0.3} />
+   420→   420→                        <stop offset="95%" stopColor={TEAL} stopOpacity={0.02} />
+   421→   421→                      </linearGradient>
+   422→   422→                      <linearGradient id="absentGradient" x1="0" y1="0" x2="0" y2="1">
+   423→   423→                        <stop offset="0%" stopColor={RED} stopOpacity={0.2} />
+   424→   424→                        <stop offset="95%" stopColor={RED} stopOpacity={0.01} />
+   425→   425→                      </linearGradient>
+   426→   426→                    </defs>
+   427→   427→                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.5} />
+   428→   428→                    <XAxis
+   429→   429→                      dataKey="label"
+   430→   430→                      tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
+   431→   431→                      axisLine={false}
+   432→   432→                      tickLine={false}
+   433→   433→                    />
+   434→   434→                    <YAxis
+   435→   435→                      allowDecimals={false}
+   436→   436→                      tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
+   437→   437→                      axisLine={false}
+   438→   438→                      tickLine={false}
+   439→   439→                    />
+   440→   440→                    <Tooltip content={<ChartTooltip />} />
+   441→   441→                    <Area
+   442→   442→                      type="monotone"
+   443→   443→                      dataKey="present"
+   444→   444→                      name="Present"
+   445→   445→                      stroke={TEAL}
+   446→   446→                      strokeWidth={2.5}
+   447→   447→                      fill="url(#presentGradient)"
+   448→   448→                      dot={{ fill: TEAL, strokeWidth: 0, r: 3 }}
+   449→   449→                      activeDot={{ fill: TEAL, strokeWidth: 2, stroke: '#fff', r: 5 }}
+   450→   450→                    />
+   451→   451→                    <Area
+   452→   452→                      type="monotone"
+   453→   453→                      dataKey="absent"
+   454→   454→                      name="Absent"
+   455→   455→                      stroke={RED}
+   456→   456→                      strokeWidth={2}
+   457→   457→                      fill="url(#absentGradient)"
+   458→   458→                      strokeDasharray="5 5"
+   459→   459→                      dot={{ fill: RED, strokeWidth: 0, r: 2.5 }}
+   460→   460→                      activeDot={{ fill: RED, strokeWidth: 2, stroke: '#fff', r: 5 }}
+   461→   461→                    />
+   462→   462→                  </AreaChart>
+   463→   463→                </ResponsiveContainer>
+   464→   464→              ) : (
+   465→   465→                <div className="flex items-center justify-center h-72 text-muted-foreground text-sm">
+   466→   466→                  <CalendarCheck className="h-4 w-4 mr-2" /> No attendance data for the past week
+   467→   467→                </div>
+   468→   468→              )}
+   469→   469→            </CardContent>
+   470→   470→          </Card>
+   471→   471→        </motion.div>
+   472→   472→
+   473→   473→        {/* Training Compliance - Donut Chart with Center Text */}
+   474→   474→        <motion.div {...fadeIn} transition={{ duration: 0.4, delay: 0.2 }}>
+   475→   475→          <Card className="h-full">
+   476→   476→            <CardHeader className="pb-2">
+   477→   477→              <CardTitle className="text-base font-semibold">Training Compliance</CardTitle>
+   478→   478→              <CardDescription>Certification status</CardDescription>
+   479→   479→            </CardHeader>
+   480→   480→            <CardContent className="flex flex-col items-center justify-center">
+   481→   481→              {trainingData.length > 0 ? (
+   482→   482→                <>
+   483→   483→                  <div className="relative">
+   484→   484→                    <ResponsiveContainer width={180} height={180}>
+   485→   485→                      <PieChart>
+   486→   486→                        <Pie
+   487→   487→                          data={trainingData}
+   488→   488→                          dataKey="count"
+   489→   489→                          nameKey="status"
+   490→   490→                          cx="50%"
+   491→   491→                          cy="50%"
+   492→   492→                          innerRadius={56}
+   493→   493→                          outerRadius={82}
+   494→   494→                          paddingAngle={4}
+   495→   495→                          strokeWidth={0}
+   496→   496→                          animationBegin={300}
+   497→   497→                          animationDuration={800}
+   498→   498→                        >
+   499→   499→                          {trainingData.map((entry, idx) => (
+   500→   500→                            <Cell
+   501→   501→                              key={entry.status}
+   502→   502→                              fill={TRAINING_COLORS[entry.status] || SLATE}
+   503→   503→                              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
+   504→   504→                            />
+   505→   505→                          ))}
+   506→   506→                        </Pie>
+   507→   507→                      </PieChart>
+   508→   508→                    </ResponsiveContainer>
+   509→   509→                    {/* Center text overlay */}
+   510→   510→                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+   511→   511→                      <span className="text-2xl font-bold">{trainingValidPct}%</span>
+   512→   512→                      <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Valid</span>
+   513→   513→                    </div>
+   514→   514→                  </div>
+   515→   515→
+   516→   516→                  {/* Legend below the donut */}
+   517→   517→                  <div className="mt-3 w-full space-y-2">
+   518→   518→                    {trainingData.map((entry) => {
+   519→   519→                      const color = TRAINING_COLORS[entry.status] || SLATE
+   520→   520→                      const label = entry.status === 'ExpiringSoon' ? 'Expiring Soon' : entry.status
+   521→   521→                      const pct = trainingTotal > 0 ? Math.round((entry.count / trainingTotal) * 100) : 0
+   522→   522→                      return (
+   523→   523→                        <div key={entry.status} className="flex items-center gap-2.5 text-sm">
+   524→   524→                          <span className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: color }} />
+   525→   525→                          <span className="flex-1 text-muted-foreground">{label}</span>
+   526→   526→                          <span className="font-semibold tabular-nums">{entry.count}</span>
+   527→   527→                          <span className="text-xs text-muted-foreground w-8 text-right">{pct}%</span>
+   528→   528→                        </div>
+   529→   529→                      )
+   530→   530→                    })}
+   531→   531→                  </div>
+   532→   532→                </>
+   533→   533→              ) : (
+   534→   534→                <div className="flex items-center justify-center h-64 text-muted-foreground text-sm">
+   535→   535→                  No training data available
+   536→   536→                </div>
+   537→   537→              )}
+   538→   538→            </CardContent>
+   539→   539→          </Card>
+   540→   540→        </motion.div>
+   541→   541→      </div>
+   542→   542→
+   543→   543→      {/* ────── Charts Row 2: Demographics (1/3) + Incident (1/3) + Alerts (1/3) ────── */}
+   544→   544→      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+   545→   545→        {/* Workforce Demographics - Donut */}
+   546→   546→        <motion.div {...fadeIn} transition={{ duration: 0.4, delay: 0.25 }}>
+   547→   547→          <Card className="h-full">
+   548→   548→            <CardHeader className="pb-2">
+   549→   549→              <CardTitle className="text-base font-semibold">Workforce Demographics</CardTitle>
+   550→   550→              <CardDescription>Gender distribution</CardDescription>
+   551→   551→            </CardHeader>
+   552→   552→            <CardContent className="pt-0">
+   553→   553→              {genderData.length > 0 ? (
+   554→   554→                <>
+   555→   555→                  <div className="relative mx-auto w-fit">
+   556→   556→                    <ResponsiveContainer width={160} height={160}>
+   557→   557→                      <PieChart>
+   558→   558→                        <Pie
+   559→   559→                          data={genderData}
+   560→   560→                          dataKey="count"
+   561→   561→                          nameKey="gender"
+   562→   562→                          cx="50%"
+   563→   563→                          cy="50%"
+   564→   564→                          innerRadius={54}
+   565→   565→                          outerRadius={76}
+   566→   566→                          paddingAngle={3}
+   567→   567→                          strokeWidth={0}
+   568→   568→                        >
+   569→   569→                          {genderData.map((entry) => (
+   570→   570→                            <Cell key={entry.gender} fill={GENDER_COLORS[entry.gender] || SLATE} />
+   571→   571→                          ))}
+   572→   572→                        </Pie>
+   573→   573→                      </PieChart>
+   574→   574→                    </ResponsiveContainer>
+   575→   575→                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+   576→   576→                      <span className="text-2xl font-bold">{genderTotal}</span>
+   577→   577→                      <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Total</span>
+   578→   578→                    </div>
+   579→   579→                  </div>
+   580→   580→                  <div className="mt-3 w-full space-y-2">
+   581→   581→                    {genderData.map((entry) => {
+   582→   582→                      const color = GENDER_COLORS[entry.gender] || SLATE
+   583→   583→                      const pct = genderTotal > 0 ? Math.round((entry.count / genderTotal) * 100) : 0
+   584→   584→                      return (
+   585→   585→                        <div key={entry.gender} className="flex items-center gap-2.5 text-sm">
+   586→   586→                          <span className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: color }} />
+   587→   587→                          <span className="flex-1 text-muted-foreground">{entry.gender}</span>
+   588→   588→                          <span className="font-semibold tabular-nums">{entry.count}</span>
+   589→   589→                          <span className="text-xs text-muted-foreground w-8 text-right">{pct}%</span>
+   590→   590→                        </div>
+   591→   591→                      )
+   592→   592→                    })}
+   593→   593→                  </div>
+   594→   594→                </>
+   595→   595→              ) : (
+   596→   596→                <div className="flex items-center justify-center h-64 text-muted-foreground text-sm">No data</div>
+   597→   597→              )}
+   598→   598→            </CardContent>
+   599→   599→          </Card>
+   600→   600→        </motion.div>
+   601→   601→
+   602→   602→        {/* Incident Breakdown - Gradient Bar Chart */}
+   603→   603→        <motion.div {...fadeIn} transition={{ duration: 0.4, delay: 0.3 }}>
+   604→   604→          <Card className="h-full">
+   605→   605→            <CardHeader className="pb-2">
+   606→   606→              <div className="flex items-center justify-between">
+   607→   607→                <div>
+   608→   608→                  <CardTitle className="text-base font-semibold">Incident Summary</CardTitle>
+   609→   609→                  <CardDescription>Breakdown by type</CardDescription>
+   610→   610→                </div>
+   611→   611→                {dash.openIncidentsCount > 0 && (
+   612→   612→                  <Badge variant="destructive" className="text-xs">
+   613→   613→                    <AlertTriangle className="h-3 w-3 mr-1" />
+   614→   614→                    {dash.openIncidentsCount} Open
+   615→   615→                  </Badge>
+   616→   616→                )}
+   617→   617→              </div>
+   618→   618→            </CardHeader>
+   619→   619→            <CardContent className="pt-0">
+   620→   620→              {incidentData.length > 0 ? (
+   621→   621→                <ResponsiveContainer width="100%" height={220}>
+   622→   622→                  <BarChart data={incidentData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }} barCategoryGap="20%">
+   623→   623→                    <defs>
+   624→   624→                      {incidentData.map((_, idx) => (
+   625→   625→                        <linearGradient key={idx} id={`barGrad${idx}`} x1="0" y1="0" x2="0" y2="1">
+   626→   626→                          <stop offset="0%" stopColor={INCIDENT_COLORS[idx % INCIDENT_COLORS.length]} stopOpacity={1} />
+   627→   627→                          <stop offset="100%" stopColor={INCIDENT_COLORS[idx % INCIDENT_COLORS.length]} stopOpacity={0.6} />
+   628→   628→                        </linearGradient>
+   629→   629→                      ))}
+   630→   630→                    </defs>
+   631→   631→                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} vertical={false} />
+   632→   632→                    <XAxis
+   633→   633→                      dataKey="label"
+   634→   634→                      tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
+   635→   635→                      axisLine={false}
+   636→   636→                      tickLine={false}
+   637→   637→                    />
+   638→   638→                    <YAxis
+   639→   639→                      allowDecimals={false}
+   640→   640→                      tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
+   641→   641→                      axisLine={false}
+   642→   642→                      tickLine={false}
+   643→   643→                    />
+   644→   644→                    <Tooltip content={<ChartTooltip />} cursor={{ fill: 'hsl(var(--muted))', radius: 4, opacity: 0.5 }} />
+   645→   645→                    <Bar dataKey="count" radius={[8, 8, 0, 0]} maxBarSize={52} animationDuration={800}>
+   646→   646→                      {incidentData.map((_, idx) => (
+   647→   647→                        <Cell key={idx} fill={`url(#barGrad${idx})`} />
+   648→   648→                      ))}
+   649→   649→                    </Bar>
+   650→   650→                  </BarChart>
+   651→   651→                </ResponsiveContainer>
+   652→   652→              ) : (
+   653→   653→                <div className="flex items-center justify-center h-48 text-muted-foreground text-sm">
+   654→   654→                  <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-500" /> No incidents recorded
+   655→   655→                </div>
+   656→   656→              )}
+   657→   657→            </CardContent>
+   658→   658→          </Card>
+   659→   659→        </motion.div>
+   660→   660→
+   661→   661→        {/* Recent Alerts */}
+   662→   662→        <motion.div {...fadeIn} transition={{ duration: 0.4, delay: 0.35 }}>
+   663→   663→          <Card className="h-full">
+   664→   664→            <CardHeader className="pb-2">
+   665→   665→              <div className="flex items-center justify-between">
+   666→   666→                <div>
+   667→   667→                  <CardTitle className="text-base font-semibold">Recent Alerts</CardTitle>
+   668→   668→                  <CardDescription>Latest notifications</CardDescription>
+   669→   669→                </div>
+   670→   670→                <Bell className="h-4 w-4 text-muted-foreground" />
+   671→   671→              </div>
+   672→   672→            </CardHeader>
+   673→   673→            <CardContent className="pt-0">
+   674→   674→              {recentAlerts.length > 0 ? (
+   675→   675→                <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1 custom-scrollbar">
+   676→   676→                  <AnimatePresence>
+   677→   677→                    {recentAlerts.map((n, idx) => (
+   678→   678→                      <motion.div
+   679→   679→                        key={n.id}
+   680→   680→                        initial={{ opacity: 0, x: -8 }}
+   681→   681→                        animate={{ opacity: 1, x: 0 }}
+   682→   682→                        transition={{ delay: 0.3 + idx * 0.05 }}
+   683→   683→                        className="flex items-start gap-2.5 group/alert"
+   684→   684→                      >
+   685→   685→                        <span className={cn('mt-1.5 h-2 w-2 rounded-full shrink-0 transition-transform group-hover/alert:scale-125', PRIORITY_STYLES[n.priority] || 'bg-slate-400')} />
+   686→   686→                        <div className="flex-1 min-w-0">
+   687→   687→                          <p className="text-xs font-medium leading-tight truncate group-hover/alert:text-foreground transition-colors">{n.title}</p>
+   688→   688→                          <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-1">{n.message}</p>
+   689→   689→                        </div>
+   690→   690→                        <span className="text-[10px] text-muted-foreground whitespace-nowrap mt-0.5">
+   691→   691→                          {new Date(n.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+   692→   692→                        </span>
+   693→   693→                      </motion.div>
+   694→   694→                    ))}
+   695→   695→                  </AnimatePresence>
+   696→   696→                </div>
+   697→   697→              ) : (
+   698→   698→                <div className="flex items-center justify-center h-48 text-muted-foreground text-xs">
+   699→   699→                  <Bell className="h-3.5 w-3.5 mr-1.5" /> No recent notifications
+   700→   700→                </div>
+   701→   701→              )}
+   702→   702→            </CardContent>
+   703→   703→          </Card>
+   704→   704→        </motion.div>
+   705→   705→      </div>
+   706→   706→
+   707→   707→      {/* ────── Quick Actions ────── */}
+   708→   708→      <motion.div {...fadeIn} transition={{ duration: 0.4, delay: 0.4 }}>
+   709→   709→        <h2 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Quick Actions</h2>
+   710→   710→        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+   711→   711→          {[
+   712→   712→            { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, color: 'text-teal-600 dark:text-teal-400' },
+   713→   713→            { icon: FileWarning, label: 'Log Incident', action: 'incident-form' as const, color: 'text-red-600 dark:text-red-400' },
+   714→   714→            { icon: ClipboardCheck, label: 'Mark Attendance', action: 'attendance' as const, color: 'text-emerald-600 dark:text-emerald-400' },
+   715→   715→            { icon: UserCog, label: 'View Workers', action: 'workers' as const, color: 'text-cyan-600 dark:text-cyan-400' },
+   716→   716→          ].map((action) => (
+   717→   717→            <Button
+   718→   718→              key={action.action}
+   719→   719→              variant="outline"
+   720→   720→              className="h-auto flex-col gap-2.5 py-4 px-3 group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+   721→   721→              onClick={() => {
+   722→   722→                if (action.action === 'worker-form') openWorkerForm()
+   723→   723→                else if (action.action === 'incident-form') openIncidentForm()
+   724→   724→                else setPage(action.action)
+   725→   725→              }}
+   726→   726→            >
+   727→   727→              <action.icon className={cn('h-5 w-5 transition-transform duration-200 group-hover/qa:scale-110', action.color)} />
+   728→   728→              <span className="text-xs font-medium">{action.label}</span>
+   729→   729→              <ArrowUpRight className="h-3 w-3 text-muted-foreground opacity-0 group-hover/qa:opacity-100 transition-opacity duration-200 absolute top-2 right-2" />
+   730→   730→            </Button>
+   731→   731→          ))}
+   732→   732→        </div>
+   733→   733→      </motion.div>
+   734→   734→    </div>
+   735→   735→  )
+   736→   736→}
+   737→   737→

@@ -208,7 +208,7 @@ export function TableExportButton<T>({
           size={size}
           disabled={isDisabled}
           className={cn(
-            "bg-muted text-muted-foreground border-input hover:bg-muted/80 hover:text-muted-foreground",
+            "bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100",
             className,
           )}
           title={hasData ? `Export ${rows.length} row${rows.length === 1 ? "" : "s"}` : "No data to export"}

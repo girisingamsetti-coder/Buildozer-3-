@@ -103,9 +103,8 @@ export function AppShell() {
           </div>
         ) : (
           <>
-            <TopBar />
-            <main className="flex-1 overflow-y-auto">
-              <div className="p-4 sm:p-6">{pageContent}</div>
+            <main className="flex-1 overflow-hidden">
+              <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 h-full flex flex-col">{pageContent}</div>
             </main>
           </>
         )}

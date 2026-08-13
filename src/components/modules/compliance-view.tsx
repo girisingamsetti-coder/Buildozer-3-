@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import {
   Warehouse, Shield, Heart, Building2, Camera, X, ZoomIn,
   CheckCircle2, XCircle, AlertTriangle, CalendarDays,
-  User, Image as ImageIcon, Pencil, Upload,
+  User, Image as ImageIcon, Pencil, Upload, ClipboardCheck, Plus,
 } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -215,7 +215,7 @@ export default function ComplianceView() {
   }, [])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
@@ -226,91 +226,109 @@ export default function ComplianceView() {
         </div>
       </div>
 
-      {/* ====== Site Selector + Score ====== */}
+      {/* ====== 4 Stat Tiles (Overall + 3 sections) ====== */}
       {sitesLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-xl" />
+            <Skeleton key={i} className="h-20 rounded-xl" />
           ))}
         </div>
       ) : (
-        <>
-          {/* Overall Score */}
-          <Card className="border-l-4 border-l-[#0d9488]">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground">Overall Compliance Score</p>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <span className={`text-3xl font-bold ${getScoreColor(overallScore)}`}>{overallScore}%</span>
-                    <span className="text-sm text-muted-foreground">{isAggregated ? 'across all sites combined' : 'across all sections'}</span>
-                  </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {/* Overall Compliance */}
+          <Card className="border-l-4 border-l-[#0d9488] shadow-sm">
+            <CardContent className="p-2">
+              <div className="flex items-center gap-2">
+                <div className="rounded-md bg-teal-100 p-1.5 shrink-0">
+                  <ClipboardCheck className="h-3.5 w-3.5 text-teal-600" />
                 </div>
-                <div className="w-full sm:w-64">
-                  <Progress value={overallScore} className={`h-3 ${getScoreProgressColor(overallScore)}`} />
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Overall</p>
+                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(overallScore)}`}>{overallScore}%</p>
                 </div>
               </div>
+              <Progress value={overallScore} className={`h-1.5 mt-1 ${getScoreProgressColor(overallScore)}`} />
             </CardContent>
           </Card>
-
-          {/* Site Selector */}
-          {sites && sites.length > 0 && (
-            <Card className="py-0">
-              <CardContent className="px-3 py-2">
-                <div className="flex items-center gap-3">
-                  <Building2 className="h-5 w-5 text-muted-foreground" />
-                  <Label className="whitespace-nowrap font-medium">Site</Label>
-                  <Select value={selectedSiteId} onValueChange={setSelectedSiteId}>
-                    <SelectTrigger className="flex-1"><SelectValue placeholder="Select a site" /></SelectTrigger>
-                    <SelectContent>
-                      {sites.map((s) => (
-                        <SelectItem key={s.id} value={s.id}>
-                          {s.name} ({s.code})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {selectedSiteId && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-xs text-muted-foreground hover:text-foreground"
-                      onClick={() => setSelectedSiteId('')}
-                    >
-                      <X className="h-3.5 w-3.5 mr-1" />
-                      Clear
-                    </Button>
-                  )}
+          {/* Site Facilities */}
+          <Card className="border-l-4 border-l-teal-500 shadow-sm">
+            <CardContent className="p-2">
+              <div className="flex items-center gap-2">
+                <div className="rounded-md bg-teal-100 p-1.5 shrink-0">
+                  <Warehouse className="h-3.5 w-3.5 text-teal-600" />
                 </div>
-              </CardContent>
-            </Card>
-          )}
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Facilities</p>
+                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(facilityScore)}`}>{facilityScore}%</p>
+                </div>
+              </div>
+              <Progress value={facilityScore} className={`h-1.5 mt-1 ${getScoreProgressColor(facilityScore)}`} />
+            </CardContent>
+          </Card>
+          {/* Site Security */}
+          <Card className="border-l-4 border-l-emerald-500 shadow-sm">
+            <CardContent className="p-2">
+              <div className="flex items-center gap-2">
+                <div className="rounded-md bg-emerald-100 p-1.5 shrink-0">
+                  <Shield className="h-3.5 w-3.5 text-emerald-600" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Security</p>
+                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(securityScore)}`}>{securityScore}%</p>
+                </div>
+              </div>
+              <Progress value={securityScore} className={`h-1.5 mt-1 ${getScoreProgressColor(securityScore)}`} />
+            </CardContent>
+          </Card>
+          {/* Medical Infrastructure */}
+          <Card className="border-l-4 border-l-amber-500 shadow-sm">
+            <CardContent className="p-2">
+              <div className="flex items-center gap-2">
+                <div className="rounded-md bg-amber-100 p-1.5 shrink-0">
+                  <Heart className="h-3.5 w-3.5 text-amber-600" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Medical</p>
+                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(medScore)}`}>{medScore}%</p>
+                </div>
+              </div>
+              <Progress value={medScore} className={`h-1.5 mt-1 ${getScoreProgressColor(medScore)}`} />
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
-          {/* Section Score Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[
-              { label: 'Site Facilities', score: facilityScore, icon: Warehouse, total: t ? t.facilities.total : FACILITY_ITEMS.length, available: t ? t.facilities.compliant : facilities.filter((i) => i.status === 'Compliant').length, bg: 'bg-teal-50 text-teal-700 border-teal-200', iconBg: 'bg-teal-100 text-teal-600' },
-              { label: 'Site Security', score: securityScore, icon: Shield, total: t ? t.security.total : SECURITY_ITEMS.length, available: t ? t.security.compliant : securityItems.filter((i) => i.status === 'Compliant').length, bg: 'bg-emerald-50 text-emerald-700 border-emerald-200', iconBg: 'bg-emerald-100 text-emerald-600' },
-              { label: 'Medical Infrastructure', score: medScore, icon: Heart, total: t ? t.medInfra.total : MED_INFRA_ITEMS.length, available: t ? t.medInfra.compliant : medInfraItems.filter((i) => i.status === 'Compliant').length, bg: 'bg-amber-50 text-amber-700 border-amber-200', iconBg: 'bg-amber-100 text-amber-600' },
-            ].map((s) => (
-              <Card key={s.label} className={`${s.bg} border transition-all duration-200 hover:shadow-md`}>
-                <CardContent className="p-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">{s.label}</p>
-                      <p className={`text-xl font-bold tracking-tight mt-1 ${getScoreColor(s.score)}`}>{s.score}%</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{s.available} of {s.total} available</p>
-                    </div>
-                    <div className={`rounded-xl p-2 shrink-0 ${s.iconBg}`}>
-                      <s.icon className="h-5 w-5" />
-                    </div>
-                  </div>
-                  <Progress value={s.score} className={`h-2 mt-3 ${getScoreProgressColor(s.score)}`} />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </>
+      {/* ====== Site Selector (below tiles) ====== */}
+      {sites && sites.length > 0 && (
+        <Card className="py-0">
+          <CardContent className="px-3 py-2">
+            <div className="flex items-center gap-3">
+              <Building2 className="h-5 w-5 text-muted-foreground" />
+              <Label className="whitespace-nowrap font-medium">Site</Label>
+              <Select value={selectedSiteId} onValueChange={setSelectedSiteId}>
+                <SelectTrigger className="flex-1"><SelectValue placeholder="Select a site" /></SelectTrigger>
+                <SelectContent>
+                  {sites.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.name} ({s.code})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {selectedSiteId && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200"
+                  onClick={() => setSelectedSiteId('')}
+                >
+                  <X className="h-3.5 w-3.5 mr-1" />
+                  Clear
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* ====== Main Tabs Content ====== */}
@@ -323,12 +341,12 @@ export default function ComplianceView() {
       ) : (
         <Tabs defaultValue="facilities" className="w-full">
           {isAggregated && (
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <Building2 className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium text-muted-foreground">Showing combined stats for all sites</span>
+              <span className="text-sm font-medium text-muted-foreground">Segments</span>
             </div>
           )}
-          <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex h-auto p-1">
+          <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex h-auto p-1 mt-1">
             <TabsTrigger value="facilities" className="gap-1.5 text-xs sm:text-sm">
               <Warehouse className="h-4 w-4" />
               <span className="hidden xs:inline">Site Facilities</span>
@@ -347,19 +365,31 @@ export default function ComplianceView() {
           </TabsList>
 
           {/* ===== TAB: Site Facilities ===== */}
-          <TabsContent value="facilities" className="mt-4">
+          <TabsContent value="facilities" className="mt-1">
             <CategorySummary
               items={facilities}
               label="Site Facilities"
               total={FACILITY_ITEMS.length}
               action={
-                <TableExportButton
-                  rows={facilities}
-                  columns={complianceExportColumns}
-                  filename="site_compliance_facilities"
-                  variant="outline"
-                  size="default"
-                />
+                <div className="flex items-center gap-2">
+                  {perms.canEdit && !isAggregated && (
+                    <Button
+                      size="sm"
+                      className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+                      onClick={() => toast.info('Add new facility item — coming soon')}
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      <span className="hidden sm:inline">Add New</span>
+                    </Button>
+                  )}
+                  <TableExportButton
+                    rows={facilities}
+                    columns={complianceExportColumns}
+                    filename="site_compliance_facilities"
+                    variant="outline"
+                    size="default"
+                  />
+                </div>
               }
             />
             <ItemGrid
@@ -373,19 +403,31 @@ export default function ComplianceView() {
           </TabsContent>
 
           {/* ===== TAB: Site Security ===== */}
-          <TabsContent value="security" className="mt-4">
+          <TabsContent value="security" className="mt-1">
             <CategorySummary
               items={securityItems}
               label="Site Security"
               total={SECURITY_ITEMS.length}
               action={
-                <TableExportButton
-                  rows={securityItems}
-                  columns={complianceExportColumns}
-                  filename="site_compliance_security"
-                  variant="outline"
-                  size="default"
-                />
+                <div className="flex items-center gap-2">
+                  {perms.canEdit && !isAggregated && (
+                    <Button
+                      size="sm"
+                      className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+                      onClick={() => toast.info('Add new security item — coming soon')}
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      <span className="hidden sm:inline">Add New</span>
+                    </Button>
+                  )}
+                  <TableExportButton
+                    rows={securityItems}
+                    columns={complianceExportColumns}
+                    filename="site_compliance_security"
+                    variant="outline"
+                    size="default"
+                  />
+                </div>
               }
             />
             <ItemGrid
@@ -399,19 +441,31 @@ export default function ComplianceView() {
           </TabsContent>
 
           {/* ===== TAB: Medical Infrastructure ===== */}
-          <TabsContent value="medinfra" className="mt-4">
+          <TabsContent value="medinfra" className="mt-1">
             <CategorySummary
               items={medInfraItems}
               label="Medical Infrastructure"
               total={MED_INFRA_ITEMS.length}
               action={
-                <TableExportButton
-                  rows={medInfraItems}
-                  columns={complianceExportColumns}
-                  filename="site_compliance_medical_infrastructure"
-                  variant="outline"
-                  size="default"
-                />
+                <div className="flex items-center gap-2">
+                  {perms.canEdit && !isAggregated && (
+                    <Button
+                      size="sm"
+                      className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+                      onClick={() => toast.info('Add new medical infra item — coming soon')}
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      <span className="hidden sm:inline">Add New</span>
+                    </Button>
+                  )}
+                  <TableExportButton
+                    rows={medInfraItems}
+                    columns={complianceExportColumns}
+                    filename="site_compliance_medical_infrastructure"
+                    variant="outline"
+                    size="default"
+                  />
+                </div>
               }
             />
             <ItemGrid

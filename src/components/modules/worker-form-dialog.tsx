@@ -554,7 +554,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                           {/* Photo Upload */}
                           <div className="sm:col-span-2 flex flex-col items-center gap-2 mb-2">
                             <div
-                              className="relative w-[120px] h-[120px] rounded-full border-2 border-dashed border-muted-foreground/30 bg-muted/30 flex items-center justify-center cursor-pointer overflow-hidden group"
+                              className="relative w-[72px] h-[72px] rounded-full border-2 border-dashed border-muted-foreground/30 bg-muted/30 flex items-center justify-center cursor-pointer overflow-hidden group"
                               onClick={() => fileInputRef.current?.click()}
                             >
                               {photoDataUrl ? (
@@ -564,13 +564,13 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
-                                <div className="flex flex-col items-center gap-1 text-muted-foreground">
-                                  <Camera className="h-8 w-8 opacity-60" />
-                                  <span className="text-[11px]">Add Photo</span>
+                                <div className="flex flex-col items-center gap-0.5 text-muted-foreground">
+                                  <Camera className="h-5 w-5 opacity-60" />
+                                  <span className="text-[9px]">Add Photo</span>
                                 </div>
                               )}
                               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <Camera className="h-6 w-6 text-white" />
+                                <Camera className="h-4 w-4 text-white" />
                               </div>
                             </div>
                             <input

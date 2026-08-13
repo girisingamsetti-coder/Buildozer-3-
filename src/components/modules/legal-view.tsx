@@ -5,7 +5,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import {
   Search, Plus, Scale, CheckCircle2, AlertTriangle, XCircle,
-  Clock, FileCheck, Edit2, Trash2, ShieldAlert, X,
+  Clock, FileCheck, Edit2, Trash2, ShieldAlert, X, FileSpreadsheet,
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -303,10 +303,19 @@ export default function LegalView() {
             size="default"
           />
           {perms.canEdit && (
-            <Button className="bg-[#0d9488] hover:bg-[#0f766e] text-white" onClick={openCreate}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Compliance Record
-            </Button>
+            <>
+              <Button
+                variant="outline"
+                onClick={() => toast.info('Import legal compliance records — coming soon')}
+              >
+                <FileSpreadsheet className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Import</span>
+              </Button>
+              <Button className="bg-[#0d9488] hover:bg-[#0f766e] text-white" onClick={openCreate}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Compliance
+              </Button>
+            </>
           )}
         </div>
       </div>

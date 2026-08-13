@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Search, Plus, Truck, CheckCircle2, Wrench, CircleSlash, X } from 'lucide-react'
+import { Search, Plus, Truck, CheckCircle2, Wrench, CircleSlash, X, FileSpreadsheet, Upload, FileText } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -115,7 +115,20 @@ export default function VehicleListView() {
   const [addDialogOpen, setAddDialogOpen] = useState(false)
   const [newVehicleNumber, setNewVehicleNumber] = useState('')
   const [newVehicleType, setNewVehicleType] = useState('')
-  const [newOwner, setNewOwner] = useState('')
+  const [newOwner, setNewOwner] = useState('Contractor')
+  const [newCondition, setNewCondition] = useState('Fit')
+  const [newDriverId, setNewDriverId] = useState('')
+  const [newDocumentName, setNewDocumentName] = useState('')
+
+  // Import dialog state
+  const [importOpen, setImportOpen] = useState(false)
+
+  // Fetch drivers (workers) for the driver dropdown
+  const { data: driversData } = useQuery<{ data: { id: string; fullName: string; employeeNumber: string }[] }>({
+    queryKey: ['vehicles-drivers'],
+    queryFn: () => fetch('/api/workers?limit=100').then((r) => r.json()),
+  })
+  const drivers = driversData?.data ?? []
 
   const hasActiveFilter = !!(search || vehicleType || condition)
   const clearFilters = () => {
@@ -153,7 +166,10 @@ export default function VehicleListView() {
       setAddDialogOpen(false)
       setNewVehicleNumber('')
       setNewVehicleType('')
-      setNewOwner('')
+      setNewOwner('Contractor')
+      setNewCondition('Fit')
+      setNewDriverId('')
+      setNewDocumentName('')
     },
     onError: () => toast.error('Failed to add item'),
   })
@@ -179,7 +195,17 @@ export default function VehicleListView() {
       vehicleNumber: newVehicleNumber,
       vehicleType: newVehicleType,
       owner: newOwner || 'Contractor',
+      condition: newCondition,
+      driverId: newDriverId || undefined,
     })
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setNewDocumentName(file.name)
+      toast.info(`Selected: ${file.name}`)
+    }
   }
 
   return (
@@ -201,10 +227,19 @@ export default function VehicleListView() {
             size="default"
           />
           {perms.canEdit && (
-            <Button className="bg-[#0d9488] hover:bg-[#0f766e] text-white" onClick={() => setAddDialogOpen(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Item
-            </Button>
+            <>
+              <Button
+                variant="outline"
+                onClick={() => setImportOpen(true)}
+              >
+                <FileSpreadsheet className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Import</span>
+              </Button>
+              <Button className="bg-[#0d9488] hover:bg-[#0f766e] text-white" onClick={() => setAddDialogOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add New
+              </Button>
+            </>
           )}
         </div>
       </div>
@@ -416,36 +451,136 @@ export default function VehicleListView() {
 
       {/* Add Item Dialog */}
       <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-lg">
           <DialogHeader><DialogTitle>Add Machinery / Vehicle</DialogTitle></DialogHeader>
           <div className="space-y-4 pt-2">
-            <div>
-              <Label>Vehicle / Equipment Number *</Label>
-              <Input className="mt-1" placeholder="e.g. AP-28-BJ-1234" value={newVehicleNumber} onChange={(e) => setNewVehicleNumber(e.target.value)} />
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs">Vehicle / Equipment Number *</Label>
+                <Input className="mt-1" placeholder="e.g. AP-28-BJ-1234" value={newVehicleNumber} onChange={(e) => setNewVehicleNumber(e.target.value)} />
+              </div>
+              <div>
+                <Label className="text-xs">Type *</Label>
+                <Select value={newVehicleType} onValueChange={setNewVehicleType}>
+                  <SelectTrigger className="mt-1"><SelectValue placeholder="Select type" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Dumper">Dumper</SelectItem>
+                    <SelectItem value="JCB">JCB</SelectItem>
+                    <SelectItem value="Crane">Crane</SelectItem>
+                    <SelectItem value="Tanker">Tanker</SelectItem>
+                    <SelectItem value="Passenger">Passenger</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs">Ownership</Label>
+                <Select value={newOwner} onValueChange={setNewOwner}>
+                  <SelectTrigger className="mt-1"><SelectValue placeholder="Select ownership" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Contractor">Own (Contractor)</SelectItem>
+                    <SelectItem value="Rented">Rented</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-xs">Condition</Label>
+                <Select value={newCondition} onValueChange={setNewCondition}>
+                  <SelectTrigger className="mt-1"><SelectValue placeholder="Select condition" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Fit">Fit</SelectItem>
+                    <SelectItem value="NeedsRepair">Needs Repair</SelectItem>
+                    <SelectItem value="Grounded">Grounded</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             <div>
-              <Label>Type *</Label>
-              <Select value={newVehicleType} onValueChange={setNewVehicleType}>
-                <SelectTrigger className="mt-1"><SelectValue placeholder="Select type" /></SelectTrigger>
+              <Label className="text-xs">Driver</Label>
+              <Select value={newDriverId} onValueChange={setNewDriverId}>
+                <SelectTrigger className="mt-1"><SelectValue placeholder="Select driver (optional)" /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Dumper">Dumper</SelectItem>
-                  <SelectItem value="JCB">JCB</SelectItem>
-                  <SelectItem value="Crane">Crane</SelectItem>
-                  <SelectItem value="Tanker">Tanker</SelectItem>
-                  <SelectItem value="Passenger">Passenger</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  {drivers.map((d) => (
+                    <SelectItem key={d.id} value={d.id}>{d.fullName} ({d.employeeNumber})</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <Label>Owner</Label>
-              <Input className="mt-1" placeholder="e.g. Contractor" value={newOwner} onChange={(e) => setNewOwner(e.target.value)} />
+              <Label className="text-xs">Document Attachment</Label>
+              <div className="mt-1 border-2 border-dashed border-slate-200 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:border-teal-400 hover:bg-teal-50/30 transition-colors cursor-pointer relative">
+                {newDocumentName ? (
+                  <div className="flex items-center gap-2 text-sm text-teal-700">
+                    <FileText className="h-4 w-4" />
+                    <span className="font-medium">{newDocumentName}</span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-5 w-5 ml-1"
+                      onClick={(e) => { e.stopPropagation(); setNewDocumentName('') }}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Upload className="h-5 w-5 text-muted-foreground" />
+                    <p className="text-xs text-muted-foreground text-center">
+                      Click to upload or drag and drop<br />
+                      <span className="text-[10px]">RC, Insurance, Fitness Certificate, etc. (PDF/JPG/PNG up to 5MB)</span>
+                    </p>
+                  </>
+                )}
+                <input
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  className="hidden"
+                  onChange={handleFileChange}
+                  id="vehicle-document-upload"
+                />
+                <label htmlFor="vehicle-document-upload" className="absolute inset-0 cursor-pointer" />
+              </div>
             </div>
             <div className="flex gap-2 pt-2">
               <Button className="bg-[#0d9488] hover:bg-[#0f766e] text-white" disabled={addMutation.isPending} onClick={handleAdd}>
-                {addMutation.isPending ? 'Adding...' : 'Add'}
+                {addMutation.isPending ? 'Adding...' : 'Add Vehicle'}
               </Button>
               <Button variant="outline" onClick={() => setAddDialogOpen(false)}>Cancel</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Import Dialog (placeholder) */}
+      <Dialog open={importOpen} onOpenChange={setImportOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader><DialogTitle>Import Vehicles</DialogTitle></DialogHeader>
+          <div className="space-y-3 pt-2">
+            <p className="text-sm text-muted-foreground">
+              Upload an Excel file with vehicle data. The file should have columns for Vehicle Number, Type, Owner, Condition, and Driver.
+            </p>
+            <div className="border-2 border-dashed border-slate-200 rounded-lg p-6 flex flex-col items-center justify-center gap-2 relative">
+              <Upload className="h-6 w-6 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground text-center">Click to upload Excel (.xlsx) file</p>
+              <input
+                type="file"
+                accept=".xlsx,.xls"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) {
+                    toast.info(`Import feature coming soon. Selected: ${file.name}`)
+                  }
+                }}
+                id="vehicle-import-upload"
+              />
+              <label htmlFor="vehicle-import-upload" className="absolute inset-0 cursor-pointer" />
+            </div>
+            <div className="flex gap-2 pt-2 justify-end">
+              <Button variant="outline" onClick={() => setImportOpen(false)}>Close</Button>
             </div>
           </div>
         </DialogContent>

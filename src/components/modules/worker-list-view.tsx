@@ -73,6 +73,7 @@ interface Worker {
   designation: { id: string; name: string; category: string }
   site: { id: string; name: string; code: string } | null
   contractor: { id: string; name: string; code: string }
+  labourCamp: { id: string; name: string } | null
   policeRecords: string
   nativeState: string | null
 }
@@ -104,6 +105,7 @@ const workerExportColumns: ExportColumn<Worker>[] = [
   { key: 'bloodGroup', header: 'Blood Group' },
   { key: 'uanNumber', header: 'UAN', accessor: (w) => w.uanNumber ?? '' },
   { key: 'site', header: 'Site / Zone', accessor: (w) => w.site?.name ?? '' },
+  { key: 'labourCamp', header: 'Camp', accessor: (w) => w.labourCamp?.name ?? '' },
   { key: 'policeRecords', header: 'Police Records', accessor: (w) => w.policeRecords || 'Not Updated' },
   { key: 'status', header: 'Status', accessor: (w) => (w.isActive ? 'Active' : 'Inactive') },
 ]
@@ -193,6 +195,7 @@ export default function WorkerListView() {
     'designation.name': w.designation?.name,
     'contractor.name': w.contractor?.name,
     'site.name': w.site?.name,
+    'labourCamp.name': w.labourCamp?.name,
   })) as (Worker & Record<string, unknown>)[]
   const { sorted, sortKey, sortDir, toggleSort } = useSort(flatWorkers)
   const totalPages = Math.max(1, Math.ceil(total / limit))
@@ -410,6 +413,7 @@ export default function WorkerListView() {
                       <TableHead className="w-24">Blood Group</TableHead>
                       <TableHead className="w-36">UAN</TableHead>
                       <SortableHeader column="site.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-40">Site / Zone</SortableHeader>
+                      <SortableHeader column="labourCamp.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-40">Camp</SortableHeader>
                       <TableHead className="w-32">Police Records</TableHead>
                       <TableHead className="w-24">Status</TableHead>
                       {(role === 'ADMIN' || role === 'HR_COORDINATOR') && <TableHead className="w-24">Actions</TableHead>}
@@ -445,6 +449,9 @@ export default function WorkerListView() {
                         </TableCell>
                         <TableCell>
                           {w.site?.name ?? '—'}
+                        </TableCell>
+                        <TableCell>
+                          {w.labourCamp?.name ?? '—'}
                         </TableCell>
                         <TableCell>
                           <select
@@ -567,6 +574,7 @@ export default function WorkerListView() {
                       <span>{w.gender}</span>
                       <span>{w.bloodGroup}</span>
                       <span>{w.site?.name ?? 'No Site'}</span>
+                      {w.labourCamp?.name && <span>{w.labourCamp.name}</span>}
                     </div>
                     {w.uanNumber && (
                       <p className="text-xs text-muted-foreground mt-1 font-mono">

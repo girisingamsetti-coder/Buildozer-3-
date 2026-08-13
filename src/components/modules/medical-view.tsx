@@ -729,13 +729,22 @@ export default function MedicalView() {
                         size="default"
                       />
                       {perms.canEdit && (
-                        <Button
-                          className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
-                          onClick={() => setDialogOpen(true)}
-                        >
-                          <Plus className="h-4 w-4 mr-2" />
-                          Add Record
-                        </Button>
+                        <>
+                          <Button
+                            variant="outline"
+                            onClick={() => toast.info('Import medical records — coming soon')}
+                          >
+                            <FileText className="h-4 w-4 mr-2" />
+                            <span className="hidden sm:inline">Import</span>
+                          </Button>
+                          <Button
+                            className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+                            onClick={() => setDialogOpen(true)}
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Add Record
+                          </Button>
+                        </>
                       )}
                     </div>
                   </div>

@@ -1,0 +1,664 @@
+     1→'use client'
+     2→
+     3→import { useState } from 'react'
+     4→import { useQuery, useQueryClient } from '@tanstack/react-query'
+     5→import { Search, UserPlus, ChevronLeft, ChevronRight, Users, FileSpreadsheet, Eye, X, Printer, UserX, UserCheck, Loader2 } from 'lucide-react'
+     6→import { toast } from 'sonner'
+     7→import BulkImportDialog from './bulk-import-dialog'
+     8→import { Card, CardContent } from '@/components/ui/card'
+     9→import { Button } from '@/components/ui/button'
+    10→import { Input } from '@/components/ui/input'
+    11→import { Skeleton } from '@/components/ui/skeleton'
+    12→import { Badge } from '@/components/ui/badge'
+    13→import {
+    14→  Table,
+    15→  TableBody,
+    16→  TableCell,
+    17→  TableHead,
+    18→  TableHeader,
+    19→  TableRow,
+    20→} from '@/components/ui/table'
+    21→import {
+    22→  Select,
+    23→  SelectContent,
+    24→  SelectItem,
+    25→  SelectTrigger,
+    26→  SelectValue,
+    27→} from '@/components/ui/select'
+    28→import {
+    29→  Dialog,
+    30→  DialogContent,
+    31→  DialogHeader,
+    32→  DialogTitle,
+    33→  DialogDescription,
+    34→  DialogFooter,
+    35→} from '@/components/ui/dialog'
+    36→import { useNavStore } from '@/stores/nav-store'
+    37→import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+    38→import { useSort } from '@/lib/use-sort'
+    39→import { SortableHeader } from '@/components/shared/sortable-header'
+    40→import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
+    41→import WorkerIdCard from './worker-id-card'
+    42→
+    43→// ---------- types ----------
+    44→interface WorkerCardData {
+    45→  id: string
+    46→  profilePhotoPath: string | null
+    47→  employeeNumber: string
+    48→  fullName: string
+    49→  dateOfBirth: string
+    50→  age: number
+    51→  gender: string
+    52→  aadhaarNumber: string
+    53→  permanentAddress: string
+    54→  bloodGroup: string
+    55→  qualification: string
+    56→  zone: string | null
+    57→  uanNumber: string | null
+    58→  designation: { id: string; name: string; category: string }
+    59→  contractor: { id: string; name: string; code: string }
+    60→  site: { id: string; name: string; code: string } | null
+    61→  emergencyContacts: { id: string; name: string; relationship: string; phone: string; isPrimary: boolean }[]
+    62→}
+    63→
+    64→interface Worker {
+    65→  id: string
+    66→  profilePhotoPath: string | null
+    67→  employeeNumber: string
+    68→  fullName: string
+    69→  gender: string
+    70→  bloodGroup: string
+    71→  uanNumber: string | null
+    72→  isActive: boolean
+    73→  designation: { id: string; name: string; category: string }
+    74→  site: { id: string; name: string; code: string } | null
+    75→  contractor: { id: string; name: string; code: string }
+    76→  policeRecords: string
+    77→  nativeState: string | null
+    78→}
+    79→
+    80→interface Designation {
+    81→  id: string
+    82→  name: string
+    83→}
+    84→
+    85→interface Site {
+    86→  id: string
+    87→  name: string
+    88→  code: string
+    89→}
+    90→
+    91→interface WorkersResponse {
+    92→  data: Worker[]
+    93→  total: number
+    94→  page: number
+    95→  limit: number
+    96→}
+    97→
+    98→// ---------- export columns ----------
+    99→const workerExportColumns: ExportColumn<Worker>[] = [
+   100→  { key: 'employeeNumber', header: 'Employee No.' },
+   101→  { key: 'fullName', header: 'Worker Name' },
+   102→  { key: 'designation', header: 'Designation', accessor: (w) => w.designation?.name ?? '' },
+   103→  { key: 'gender', header: 'Gender' },
+   104→  { key: 'bloodGroup', header: 'Blood Group' },
+   105→  { key: 'uanNumber', header: 'UAN', accessor: (w) => w.uanNumber ?? '' },
+   106→  { key: 'site', header: 'Site / Zone', accessor: (w) => w.site?.name ?? '' },
+   107→  { key: 'policeRecords', header: 'Police Records', accessor: (w) => w.policeRecords || 'Not Updated' },
+   108→  { key: 'status', header: 'Status', accessor: (w) => (w.isActive ? 'Active' : 'Inactive') },
+   109→]
+   110→
+   111→// ---------- skeleton ----------
+   112→function TableSkeleton() {
+   113→  return (
+   114→    <div className="space-y-3">
+   115→      {Array.from({ length: 8 }).map((_, i) => (
+   116→        <div key={i} className="flex items-center gap-4 px-4">
+   117→          <Skeleton className="h-4 w-28" />
+   118→          <Skeleton className="h-4 w-36 flex-1" />
+   119→          <Skeleton className="h-4 w-24 hidden sm:block" />
+   120→          <Skeleton className="h-4 w-16 hidden md:block" />
+   121→          <Skeleton className="h-4 w-16 hidden md:block" />
+   122→          <Skeleton className="h-4 w-20 hidden lg:block" />
+   123→          <Skeleton className="h-4 w-20 hidden lg:block" />
+   124→          <Skeleton className="h-5 w-16" />
+   125→        </div>
+   126→      ))}
+   127→    </div>
+   128→  )
+   129→}
+   130→
+   131→// ---------- main ----------
+   132→export default function WorkerListView() {
+   133→  const setPage = useNavStore((s) => s.setPage)
+   134→  const openWorkerForm = useNavStore((s) => s.openWorkerForm)
+   135→  const role = useAuthStore((s) => s.role)
+   136→  const perms = rolePermissions[role]
+   137→
+   138→  const [search, setSearch] = useState('')
+   139→  const [debouncedSearch, setDebouncedSearch] = useState('')
+   140→  const [designationId, setDesignationId] = useState('')
+   141→  const [gender, setGender] = useState('')
+   142→  const [siteId, setSiteId] = useState('')
+   143→  const [statusFilter, setStatusFilter] = useState('')
+   144→  const [page, setPageNum] = useState(1)
+   145→  const [importOpen, setImportOpen] = useState(false)
+   146→  const [idCardOpen, setIdCardOpen] = useState(false)
+   147→  const [idCardWorker, setIdCardWorker] = useState<WorkerCardData | null>(null)
+   148→  const [idCardLoading, setIdCardLoading] = useState(false)
+   149→  const limit = 20
+   150→  const queryClient = useQueryClient()
+   151→
+   152→  // Debounce search
+   153→  const handleSearchChange = (value: string) => {
+   154→    setSearch(value)
+   155→    const t = setTimeout(() => {
+   156→      setDebouncedSearch(value)
+   157→      setPageNum(1)
+   158→    }, 300)
+   159→    return () => clearTimeout(t)
+   160→  }
+   161→
+   162→  // Fetch filter options
+   163→  const { data: designations } = useQuery<Designation[]>({
+   164→    queryKey: ['designations'],
+   165→    queryFn: () => fetch('/api/designations').then((r) => r.json()),
+   166→  })
+   167→
+   168→  const { data: sites } = useQuery<Site[]>({
+   169→    queryKey: ['sites'],
+   170→    queryFn: () => fetch('/api/sites').then((r) => r.json()),
+   171→  })
+   172→
+   173→  // Fetch workers
+   174→  const queryParams = new URLSearchParams()
+   175→  if (debouncedSearch) queryParams.set('search', debouncedSearch)
+   176→  if (designationId) queryParams.set('designationId', designationId)
+   177→  if (gender) queryParams.set('gender', gender)
+   178→  if (siteId) queryParams.set('siteId', siteId)
+   179→  if (statusFilter) queryParams.set('status', statusFilter)
+   180→  queryParams.set('page', String(page))
+   181→  queryParams.set('limit', String(limit))
+   182→
+   183→  const { data, isLoading } = useQuery<WorkersResponse>({
+   184→    queryKey: ['workers', debouncedSearch, designationId, gender, siteId, statusFilter, page],
+   185→    queryFn: () => fetch(`/api/workers?${queryParams.toString()}`).then((r) => r.json()),
+   186→  })
+   187→
+   188→  const workers = data?.data ?? []
+   189→  const total = data?.total ?? 0
+   190→
+   191→  const flatWorkers = workers.map(w => ({
+   192→    ...w,
+   193→    'designation.name': w.designation?.name,
+   194→    'contractor.name': w.contractor?.name,
+   195→    'site.name': w.site?.name,
+   196→  })) as (Worker & Record<string, unknown>)[]
+   197→  const { sorted, sortKey, sortDir, toggleSort } = useSort(flatWorkers)
+   198→  const totalPages = Math.max(1, Math.ceil(total / limit))
+   199→
+   200→  // ID Card
+   201→  const handleOpenIdCard = async (workerId: string, e: React.MouseEvent) => {
+   202→    e.stopPropagation()
+   203→    setIdCardLoading(true)
+   204→    setIdCardOpen(true)
+   205→    try {
+   206→      const resp = await fetch(`/api/workers/${workerId}`)
+   207→      const json = await resp.json()
+   208→      setIdCardWorker(json.data ?? json)
+   209→    } catch {
+   210→      setIdCardWorker(null)
+   211→    } finally {
+   212→      setIdCardLoading(false)
+   213→    }
+   214→  }
+   215→
+   216→  const handlePrintIdCard = () => window.print()
+   217→
+   218→  const handleCloseIdCard = () => {
+   219→    setIdCardOpen(false)
+   220→    setIdCardWorker(null)
+   221→  }
+   222→
+   223→  // Toggle Active/Inactive
+   224→  const [togglingId, setTogglingId] = useState<string | null>(null)
+   225→  const handleToggleActive = async (workerId: string, currentActive: boolean, workerName: string, e: React.MouseEvent) => {
+   226→    e.stopPropagation()
+   227→    const action = currentActive ? 'deactivate' : 'reactivate'
+   228→    if (!confirm(`Are you sure you want to ${action} ${workerName}?`)) return
+   229→    setTogglingId(workerId)
+   230→    try {
+   231→      const res = await fetch(`/api/workers/${workerId}`, {
+   232→        method: 'PATCH',
+   233→        headers: { 'Content-Type': 'application/json' },
+   234→        body: JSON.stringify({ isActive: !currentActive }),
+   235→      })
+   236→      if (!res.ok) throw new Error('Failed')
+   237→      toast.success(`${workerName} marked as ${currentActive ? 'Inactive' : 'Active'}`)
+   238→      queryClient.invalidateQueries({ queryKey: ['workers'] })
+   239→      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
+   240→    } catch {
+   241→      toast.error('Failed to update worker status')
+   242→    } finally {
+   243→      setTogglingId(null)
+   244→    }
+   245→  }
+   246→
+   247→  // Clear filters
+   248→  const hasActiveFilter = !!(search || designationId || gender || siteId || statusFilter)
+   249→  const clearFilters = () => {
+   250→    setSearch('')
+   251→    setDebouncedSearch('')
+   252→    setDesignationId('')
+   253→    setGender('')
+   254→    setSiteId('')
+   255→    setStatusFilter('')
+   256→    setPageNum(1)
+   257→  }
+   258→
+   259→  const handlePageChange = (newPage: number) => {
+   260→    if (newPage >= 1 && newPage <= totalPages) {
+   261→      setPageNum(newPage)
+   262→    }
+   263→  }
+   264→
+   265→  // Page number buttons (show max 5 around current)
+   266→  const getPageNumbers = () => {
+   267→    const pages: number[] = []
+   268→    const start = Math.max(1, page - 2)
+   269→    const end = Math.min(totalPages, page + 2)
+   270→    for (let i = start; i <= end; i++) pages.push(i)
+   271→    return pages
+   272→  }
+   273→
+   274→  return (
+   275→    <div className="flex flex-col gap-6 h-full overflow-hidden">
+   276→      {/* ====== Page Header ====== */}
+   277→      <div className="shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+   278→        <div>
+   279→          <h1 className="text-2xl font-bold tracking-tight">Workforce Register</h1>
+   280→          <p className="text-sm text-muted-foreground mt-1">
+   281→            {isLoading
+   282→              ? 'Loading workers...'
+   283→              : `${total} worker${total !== 1 ? 's' : ''} registered`}
+   284→          </p>
+   285→        </div>
+   286→        <div className="flex items-center gap-2">
+   287→            <TableExportButton
+   288→              rows={sorted}
+   289→              columns={workerExportColumns}
+   290→              filename="workforce_register"
+   291→              variant="outline"
+   292→              size="default"
+   293→            />
+   294→            {perms.canEdit && (
+   295→              <>
+   296→                <Button
+   297→                  variant="outline"
+   298→                  onClick={() => setImportOpen(true)}
+   299→                >
+   300→                  <FileSpreadsheet className="h-4 w-4 mr-2" />
+   301→                  <span className="hidden sm:inline">Import Excel</span>
+   302→                  <span className="sm:hidden">Import</span>
+   303→                </Button>
+   304→                <Button
+   305→                  className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+   306→                  onClick={() => openWorkerForm()}
+   307→                >
+   308→                  <UserPlus className="h-4 w-4 mr-2" />
+   309→                  <span className="hidden sm:inline">Register Worker</span>
+   310→                  <span className="sm:hidden">Add</span>
+   311→                </Button>
+   312→              </>
+   313→            )}
+   314→          </div>
+   315→      </div>
+   316→
+   317→      {/* ====== Filter Bar ====== */}
+   318→      <Card className="shrink-0 py-0">
+   319→        <CardContent className="px-3 py-2">
+   320→          <div className="flex flex-col sm:flex-row gap-3">
+   321→            <div className="relative flex-1 min-w-0">
+   322→              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+   323→              <Input
+   324→                placeholder="Search by name or employee number..."
+   325→                value={search}
+   326→                onChange={(e) => handleSearchChange(e.target.value)}
+   327→                className="pl-9"
+   328→              />
+   329→            </div>
+   330→            <Select value={designationId} onValueChange={(v) => { setDesignationId(v); setPageNum(1) }}>
+   331→              <SelectTrigger className="w-full sm:w-44">
+   332→                <SelectValue placeholder="Designation" />
+   333→              </SelectTrigger>
+   334→              <SelectContent>
+   335→                {designations?.map((d) => (
+   336→                  <SelectItem key={d.id} value={d.id}>{d.name}</SelectItem>
+   337→                ))}
+   338→              </SelectContent>
+   339→            </Select>
+   340→            <Select value={gender} onValueChange={(v) => { setGender(v); setPageNum(1) }}>
+   341→              <SelectTrigger className="w-full sm:w-36">
+   342→                <SelectValue placeholder="Gender" />
+   343→              </SelectTrigger>
+   344→              <SelectContent>
+   345→                <SelectItem value="Male">Male</SelectItem>
+   346→                <SelectItem value="Female">Female</SelectItem>
+   347→                <SelectItem value="Other">Other</SelectItem>
+   348→              </SelectContent>
+   349→            </Select>
+   350→            <Select value={siteId} onValueChange={(v) => { setSiteId(v); setPageNum(1) }}>
+   351→              <SelectTrigger className="w-full sm:w-44">
+   352→                <SelectValue placeholder="Site" />
+   353→              </SelectTrigger>
+   354→              <SelectContent>
+   355→                {sites?.map((s) => (
+   356→                  <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+   357→                ))}
+   358→              </SelectContent>
+   359→            </Select>
+   360→            <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setPageNum(1) }}>
+   361→              <SelectTrigger className="w-full sm:w-36">
+   362→                <SelectValue placeholder="Status" />
+   363→              </SelectTrigger>
+   364→              <SelectContent>
+   365→                <SelectItem value="active">Active</SelectItem>
+   366→                <SelectItem value="inactive">Inactive</SelectItem>
+   367→              </SelectContent>
+   368→            </Select>
+   369→            {hasActiveFilter && (
+   370→              <Button
+   371→                variant="outline"
+   372→                size="sm"
+   373→                className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+   374→                onClick={(e) => { e.stopPropagation(); clearFilters() }}
+   375→              >
+   376→                Clear <X className="h-3.5 w-3.5 ml-1" />
+   377→              </Button>
+   378→            )}
+   379→          </div>
+   380→        </CardContent>
+   381→      </Card>
+   382→
+   383→      {/* ====== Table (Desktop) / Cards (Mobile) ====== */}
+   384→      <div className="flex-1 min-h-0 flex flex-col">
+   385→      <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+   386→        <CardContent className="flex-1 min-h-0 overflow-y-auto p-0">
+   387→          {isLoading ? (
+   388→            <div className="p-4">
+   389→              <TableSkeleton />
+   390→            </div>
+   391→          ) : workers.length === 0 ? (
+   392→            <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+   393→              <Users className="h-12 w-12 mb-3 opacity-40" />
+   394→              <p className="text-base font-medium">No workers found</p>
+   395→              <p className="text-sm mt-1">Try adjusting your search or filters</p>
+   396→            </div>
+   397→          ) : (
+   398→            <>
+   399→              {/* Desktop Table */}
+   400→              <div className="hidden md:block overflow-x-auto">
+   401→                <Table>
+   402→                  <TableHeader className="sticky top-0 z-10 bg-background">
+   403→                    <TableRow>
+   404→                      <TableHead className="w-12">S.No</TableHead>
+   405→                      <TableHead className="w-12"></TableHead>
+   406→                      <TableHead className="w-36">Employee No.</TableHead>
+   407→                      <SortableHeader column="fullName" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort}>Name</SortableHeader>
+   408→                      <SortableHeader column="designation.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-36">Designation</SortableHeader>
+   409→                      <TableHead className="w-20">Gender</TableHead>
+   410→                      <TableHead className="w-24">Blood Group</TableHead>
+   411→                      <TableHead className="w-36">UAN</TableHead>
+   412→                      <SortableHeader column="site.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-40">Site / Zone</SortableHeader>
+   413→                      <TableHead className="w-32">Police Records</TableHead>
+   414→                      <TableHead className="w-24">Status</TableHead>
+   415→                      {(role === 'ADMIN' || role === 'HR_COORDINATOR') && <TableHead className="w-24">Actions</TableHead>}
+   416→                      <TableHead className="w-20">ID Card</TableHead>
+   417→                    </TableRow>
+   418→                  </TableHeader>
+   419→                  <TableBody>
+   420→                    {sorted.map((w, index) => (
+   421→                      <TableRow
+   422→                        key={w.id}
+   423→                        className={`cursor-pointer hover:bg-muted/50 transition-colors ${!w.isActive ? 'opacity-60' : ''}`}
+   424→                        onClick={() => setPage('worker-detail', { id: w.id })}
+   425→                      >
+   426→                        <TableCell className="text-muted-foreground text-xs">{index + 1}</TableCell>
+   427→                        <TableCell>
+   428→                          {w.profilePhotoPath && w.profilePhotoPath.startsWith('data:') ? (
+   429→                            <img src={w.profilePhotoPath} alt={w.fullName} className="w-8 h-8 rounded-full object-cover" />
+   430→                          ) : (
+   431→                            <div className="w-8 h-8 rounded-full bg-[#0d9488] text-white flex items-center justify-center text-xs font-bold">
+   432→                              {w.fullName.split(' ').map((n) => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()}
+   433→                            </div>
+   434→                          )}
+   435→                        </TableCell>
+   436→                        <TableCell className="font-mono text-sm">
+   437→                          {w.employeeNumber}
+   438→                        </TableCell>
+   439→                        <TableCell className="font-medium">{w.fullName}</TableCell>
+   440→                        <TableCell>{w.designation.name}</TableCell>
+   441→                        <TableCell>{w.gender}</TableCell>
+   442→                        <TableCell>{w.bloodGroup}</TableCell>
+   443→                        <TableCell className="font-mono text-sm text-muted-foreground">
+   444→                          {w.uanNumber ?? '—'}
+   445→                        </TableCell>
+   446→                        <TableCell>
+   447→                          {w.site?.name ?? '—'}
+   448→                        </TableCell>
+   449→                        <TableCell>
+   450→                          <select
+   451→                            className="text-xs border rounded px-1.5 py-1 bg-transparent w-full"
+   452→                            value={w.policeRecords || 'Not Updated'}
+   453→                            onClick={(e) => e.stopPropagation()}
+   454→                            onChange={async (e) => {
+   455→                              e.stopPropagation()
+   456→                              const val = e.target.value
+   457→                              try {
+   458→                                const res = await fetch(`/api/workers/${w.id}`, {
+   459→                                  method: 'PATCH',
+   460→                                  headers: { 'Content-Type': 'application/json' },
+   461→                                  body: JSON.stringify({ policeRecords: val }),
+   462→                                })
+   463→                                if (res.ok) {
+   464→                                  toast.success(`${w.fullName}: Police Records updated`)
+   465→                                  queryClient.invalidateQueries({ queryKey: ['workers'] })
+   466→                                }
+   467→                              } catch { toast.error('Failed to update') }
+   468→                            }}
+   469→                          >
+   470→                            <option value="Updated">Updated</option>
+   471→                            <option value="Not Updated">Not Updated</option>
+   472→                            <option value="Not Applicable">Not Applicable</option>
+   473→                          </select>
+   474→                        </TableCell>
+   475→                        <TableCell>
+   476→                          <Badge
+   477→                            variant="outline"
+   478→                            className={w.isActive
+   479→                              ? 'status-valid border-emerald-300 dark:border-emerald-700'
+   480→                              : 'status-expired border-red-300 dark:border-red-700'
+   481→                            }
+   482→                          >
+   483→                            {w.isActive ? 'Active' : 'Inactive'}
+   484→                          </Badge>
+   485→                        </TableCell>
+   486→                        {(role === 'ADMIN' || role === 'HR_COORDINATOR') && (
+   487→                          <TableCell>
+   488→                            <Button
+   489→                              variant="outline"
+   490→                              size="icon"
+   491→                              className={`h-7 w-7 ${w.isActive ? 'text-red-500 hover:bg-red-50 hover:text-red-600 border-red-200' : 'text-emerald-500 hover:bg-emerald-50 hover:text-emerald-600 border-emerald-200'}`}
+   492→                              title={w.isActive ? 'Mark Inactive' : 'Mark Active'}
+   493→                              disabled={togglingId === w.id}
+   494→                              onClick={(e) => handleToggleActive(w.id, w.isActive, w.fullName, e)}
+   495→                            >
+   496→                              {togglingId === w.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : w.isActive ? <UserX className="h-3.5 w-3.5" /> : <UserCheck className="h-3.5 w-3.5" />}
+   497→                            </Button>
+   498→                          </TableCell>
+   499→                        )}
+   500→                        <TableCell>
+   501→                          <Button
+   502→                            variant="outline"
+   503→                            size="sm"
+   504→                            className="h-7 px-3 text-xs font-semibold text-[#0d9488] border-[#0d9488]/30 hover:bg-[#0d9488]/10"
+   505→                            onClick={(e) => handleOpenIdCard(w.id, e)}
+   506→                          >
+   507→                            <Eye className="h-3.5 w-3.5 mr-1" />
+   508→                            View
+   509→                          </Button>
+   510→                        </TableCell>
+   511→                      </TableRow>
+   512→                    ))}
+   513→                  </TableBody>
+   514→                </Table>
+   515→              </div>
+   516→
+   517→              {/* Mobile Cards */}
+   518→              <div className="md:hidden divide-y overflow-y-auto">
+   519→                {workers.map((w) => (
+   520→                  <div
+   521→                    key={w.id}
+   522→                    className={`p-4 cursor-pointer hover:bg-muted/50 transition-colors ${!w.isActive ? 'opacity-60' : ''}`}
+   523→                    onClick={() => setPage('worker-detail', { id: w.id })}
+   524→                  >
+   525→                    <div className="flex items-start justify-between gap-2">
+   526→                      <div className="min-w-0 flex-1">
+   527→                        <div className="flex items-center gap-2">
+   528→                          <p className="font-medium truncate">{w.fullName}</p>
+   529→                          <Button
+   530→                            variant="outline"
+   531→                            size="sm"
+   532→                            className="h-6 px-2 text-xs font-semibold text-[#0d9488] border-[#0d9488]/30 hover:bg-[#0d9488]/10 shrink-0"
+   533→                            onClick={(e) => handleOpenIdCard(w.id, e)}
+   534→                          >
+   535→                            <Eye className="h-3 w-3 mr-0.5" />
+   536→                            View
+   537→                          </Button>
+   538→                          {(role === 'ADMIN' || role === 'HR_COORDINATOR') && (
+   539→                            <Button
+   540→                              variant="outline"
+   541→                              size="icon"
+   542→                              className={`h-6 w-6 shrink-0 ${w.isActive ? 'text-red-500 hover:bg-red-50 border-red-200' : 'text-emerald-500 hover:bg-emerald-50 border-emerald-200'}`}
+   543→                              title={w.isActive ? 'Mark Inactive' : 'Mark Active'}
+   544→                              disabled={togglingId === w.id}
+   545→                              onClick={(e) => handleToggleActive(w.id, w.isActive, w.fullName, e)}
+   546→                            >
+   547→                              {togglingId === w.id ? <Loader2 className="h-3 w-3 animate-spin" /> : w.isActive ? <UserX className="h-3 w-3" /> : <UserCheck className="h-3 w-3" />}
+   548→                            </Button>
+   549→                          )}
+   550→                        </div>
+   551→                        <p className="text-xs text-muted-foreground font-mono mt-0.5">
+   552→                          {w.employeeNumber}
+   553→                        </p>
+   554→                      </div>
+   555→                      <Badge
+   556→                        variant="outline"
+   557→                        className={w.isActive
+   558→                          ? 'status-valid border-emerald-300 dark:border-emerald-700'
+   559→                          : 'status-expired border-red-300 dark:border-red-700'
+   560→                        }
+   561→                      >
+   562→                        {w.isActive ? 'Active' : 'Inactive'}
+   563→                      </Badge>
+   564→                    </div>
+   565→                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted-foreground">
+   566→                      <span>{w.designation.name}</span>
+   567→                      <span>{w.gender}</span>
+   568→                      <span>{w.bloodGroup}</span>
+   569→                      <span>{w.site?.name ?? 'No Site'}</span>
+   570→                    </div>
+   571→                    {w.uanNumber && (
+   572→                      <p className="text-xs text-muted-foreground mt-1 font-mono">
+   573→                        UAN: {w.uanNumber}
+   574→                      </p>
+   575→                    )}
+   576→                  </div>
+   577→                ))}
+   578→              </div>
+   579→            </>
+   580→          )}
+   581→        </CardContent>
+   582→      </Card>
+   583→
+   584→      {/* ====== Pagination ====== */}
+   585→      {totalPages > 1 && (
+   586→        <div className="shrink-0 flex items-center justify-between">
+   587→          <p className="text-sm text-muted-foreground">
+   588→            Page {page} of {totalPages} ({total} total)
+   589→          </p>
+   590→          <div className="flex items-center gap-1">
+   591→            <Button
+   592→              variant="outline"
+   593→              size="sm"
+   594→              disabled={page <= 1}
+   595→              onClick={() => handlePageChange(page - 1)}
+   596→            >
+   597→              <ChevronLeft className="h-4 w-4" />
+   598→              <span className="sr-only">Previous</span>
+   599→            </Button>
+   600→            {getPageNumbers().map((p) => (
+   601→              <Button
+   602→                key={p}
+   603→                variant={p === page ? 'default' : 'outline'}
+   604→                size="sm"
+   605→                className={p === page ? 'bg-[#0d9488] hover:bg-[#0f766e] text-white' : ''}
+   606→                onClick={() => handlePageChange(p)}
+   607→              >
+   608→                {p}
+   609→              </Button>
+   610→            ))}
+   611→            <Button
+   612→              variant="outline"
+   613→              size="sm"
+   614→              disabled={page >= totalPages}
+   615→              onClick={() => handlePageChange(page + 1)}
+   616→            >
+   617→              <ChevronRight className="h-4 w-4" />
+   618→              <span className="sr-only">Next</span>
+   619→            </Button>
+   620→          </div>
+   621→        </div>
+   622→      )}
+   623→      </div>
+   624→
+   625→      {/* ====== ID Card Dialog ====== */}
+   626→      <Dialog open={idCardOpen} onOpenChange={(open) => { if (!open) handleCloseIdCard() }}>
+   627→        <DialogContent className="max-w-md">
+   628→          <DialogHeader>
+   629→            <DialogTitle>Worker ID Card</DialogTitle>
+   630→          </DialogHeader>
+   631→          {idCardLoading ? (
+   632→            <div className="flex items-center justify-center py-12">
+   633→              <Skeleton className="h-64 w-full max-w-xs rounded-xl" />
+   634→            </div>
+   635→          ) : idCardWorker ? (
+   636→            <WorkerIdCard worker={idCardWorker} />
+   637→          ) : (
+   638→            <p className="text-sm text-muted-foreground text-center py-8">Failed to load worker data.</p>
+   639→          )}
+   640→          <div className="flex justify-end gap-2 no-print">
+   641→            <Button variant="outline" onClick={handlePrintIdCard}>
+   642→              <Printer className="h-4 w-4 mr-2" />
+   643→              Print
+   644→            </Button>
+   645→            <Button variant="outline" onClick={handleCloseIdCard}>
+   646→              <X className="h-4 w-4 mr-2" />
+   647→              Close
+   648→            </Button>
+   649→          </div>
+   650→        </DialogContent>
+   651→      </Dialog>
+   652→
+   653→      {/* ====== Bulk Import Dialog ====== */}
+   654→      <BulkImportDialog
+   655→        open={importOpen}
+   656→        onOpenChange={(open) => {
+   657→          setImportOpen(open)
+   658→          if (!open) queryClient.invalidateQueries({ queryKey: ['workers'] })
+   659→        }}
+   660→      />
+   661→    </div>
+   662→  )
+   663→}
+   664→

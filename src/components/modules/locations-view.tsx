@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import {
-  Plus, MapPin, Building2, Users, Pencil, Trash2, X, Loader2, Home, ShieldCheck, AlertTriangle,
+  Plus, MapPin, Building2, Users, Pencil, Trash2, X, Loader2, Home, ShieldCheck, AlertTriangle, Search,
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
+import { Switch } from '@/components/ui/switch'
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table'
@@ -25,6 +26,9 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
+import { useSort } from '@/lib/use-sort'
+import { SortableHeader } from '@/components/shared/sortable-header'
+import { cn } from '@/lib/utils'
 
 // ==================== TYPES ====================
 
@@ -110,6 +114,20 @@ export default function LocationsView() {
   const [deleteCamp, setDeleteCamp] = useState<Camp | null>(null)
   const [workersCamp, setWorkersCamp] = useState<Camp | null>(null)
 
+  // Filters
+  const [search, setSearch] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [contractorFilter, setContractorFilter] = useState('')
+  const [siteFilter, setSiteFilter] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
+
+  // Debounce search
+  const handleSearchChange = (value: string) => {
+    setSearch(value)
+    const t = setTimeout(() => setDebouncedSearch(value), 300)
+    return () => clearTimeout(t)
+  }
+
   const { data: camps = [], isLoading: campsLoading } = useQuery<Camp[]>({
     queryKey: ['labour-camps-all'],
     queryFn: () => fetch('/api/labour-camps?all=true').then((r) => r.json()),
@@ -124,6 +142,38 @@ export default function LocationsView() {
     queryKey: ['locations-sites'],
     queryFn: () => fetch('/api/sites').then((r) => r.json()),
   })
+
+  // Apply filters + sorting
+  const filteredCamps = useMemo(() => {
+    return camps.filter((c) => {
+      if (debouncedSearch) {
+        const q = debouncedSearch.toLowerCase()
+        if (!c.name.toLowerCase().includes(q) && !c.contractor?.name?.toLowerCase().includes(q) && !c.site?.name?.toLowerCase().includes(q)) return false
+      }
+      if (contractorFilter && c.contractorId !== contractorFilter) return false
+      if (siteFilter && c.siteId !== siteFilter) return false
+      if (statusFilter === 'active' && !c.isActive) return false
+      if (statusFilter === 'inactive' && c.isActive) return false
+      return true
+    })
+  }, [camps, debouncedSearch, contractorFilter, siteFilter, statusFilter])
+
+  const flatCamps = filteredCamps.map((c) => ({
+    ...c,
+    'contractor.name': c.contractor?.name ?? '',
+    'site.name': c.site?.name ?? '',
+    'name': c.name,
+  })) as (Camp & Record<string, unknown>)[]
+  const { sorted, sortKey, sortDir, toggleSort } = useSort(flatCamps)
+
+  const hasActiveFilter = !!(search || contractorFilter || siteFilter || statusFilter)
+  const clearFilters = () => {
+    setSearch('')
+    setDebouncedSearch('')
+    setContractorFilter('')
+    setSiteFilter('')
+    setStatusFilter('')
+  }
 
   const activeCamps = camps.filter((c) => c.isActive).length
   const totalWorkers = camps.reduce((s, c) => s + c._count.workers, 0)
@@ -187,6 +237,62 @@ export default function LocationsView() {
         </div>
       </div>
 
+      {/* ====== Filter Bar ====== */}
+      <Card className="shrink-0 py-0">
+        <CardContent className="px-3 py-2">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-1 min-w-0">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search by camp name, contractor, or project..."
+                value={search}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+            <Select value={contractorFilter} onValueChange={setContractorFilter}>
+              <SelectTrigger className="w-full sm:w-48">
+                <SelectValue placeholder="Contractor" />
+              </SelectTrigger>
+              <SelectContent>
+                {contractors.map((c) => (
+                  <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={siteFilter} onValueChange={setSiteFilter}>
+              <SelectTrigger className="w-full sm:w-48">
+                <SelectValue placeholder="Site" />
+              </SelectTrigger>
+              <SelectContent>
+                {sites.map((s) => (
+                  <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full sm:w-36">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+              </SelectContent>
+            </Select>
+            {hasActiveFilter && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-sky-50 text-sky-700 hover:bg-sky-100 border-sky-200"
+                onClick={() => clearFilters()}
+              >
+                Clear <X className="h-3.5 w-3.5 ml-1" />
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* ====== Camps Table ====== */}
       <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
         <CardContent className="p-0 flex-1 min-h-0 overflow-auto">
@@ -196,23 +302,23 @@ export default function LocationsView() {
                 <Skeleton key={i} className="h-10 w-full" />
               ))}
             </div>
-          ) : camps.length === 0 ? (
+          ) : sorted.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
               <MapPin className="h-12 w-12 mb-3 opacity-40" />
               <p className="text-base font-medium">No locations found</p>
-              <p className="text-sm mt-1">Click "Add New Location" to create your first camp.</p>
+              <p className="text-sm mt-1">Try adjusting your search or filters, or click "Add New Location".</p>
             </div>
           ) : (
             <>
               {/* Desktop Table */}
               <div className="hidden md:block">
                 <Table>
-                  <TableHeader className="sticky top-0 z-10 bg-background">
+                  <TableHeader>
                     <TableRow>
                       <TableHead className="text-xs">S.No</TableHead>
-                      <TableHead className="text-xs">Camp Name</TableHead>
-                      <TableHead className="text-xs">Contractor</TableHead>
-                      <TableHead className="text-xs">Project Name</TableHead>
+                      <SortableHeader column="name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="text-xs">Camp Name</SortableHeader>
+                      <SortableHeader column="contractor.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="text-xs">Contractor</SortableHeader>
+                      <SortableHeader column="site.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="text-xs">Project Name</SortableHeader>
                       <TableHead className="text-xs text-center">Total Workers</TableHead>
                       <TableHead className="text-xs text-center">Camp Capacity</TableHead>
                       <TableHead className="text-xs text-center">Occupancy(%)</TableHead>
@@ -222,7 +328,7 @@ export default function LocationsView() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {camps.map((camp, index) => {
+                    {sorted.map((camp, index) => {
                       const comp = complianceFor(camp)
                       const pct = occupancyPct(camp)
                       return (
@@ -295,7 +401,7 @@ export default function LocationsView() {
 
               {/* Mobile Cards */}
               <div className="md:hidden divide-y">
-                {camps.map((camp) => {
+                {sorted.map((camp) => {
                   const comp = complianceFor(camp)
                   const pct = occupancyPct(camp)
                   return (
@@ -422,6 +528,7 @@ function AddLocationDialog({
   const [campName, setCampName] = useState(editingCamp?.name || '')
   const [capacity, setCapacity] = useState(editingCamp?.capacity != null ? String(editingCamp.capacity) : '')
   const [address, setAddress] = useState(editingCamp?.address || '')
+  const [isActive, setIsActive] = useState(editingCamp?.isActive ?? true)
 
   // Extra camp-name options added via the "+" button (local only)
   const [extraCampNames, setExtraCampNames] = useState<string[]>([])
@@ -435,7 +542,7 @@ function AddLocationDialog({
   }, [existingCampNames, extraCampNames])
 
   const mutation = useMutation({
-    mutationFn: async (body: { name: string; contractorId: string; siteId: string; capacity?: number; address?: string }) => {
+    mutationFn: async (body: { name: string; contractorId: string; siteId: string; capacity?: number; address?: string; isActive?: boolean }) => {
       if (isEdit && editingCamp) {
         const res = await fetch('/api/labour-camps', {
           method: 'PUT',
@@ -445,6 +552,7 @@ function AddLocationDialog({
             name: body.name,
             capacity: body.capacity,
             address: body.address,
+            isActive: body.isActive,
           }),
         })
         if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Failed to update location') }
@@ -477,6 +585,7 @@ function AddLocationDialog({
       siteId,
       capacity: capacity ? Number(capacity) : undefined,
       address: address.trim() || undefined,
+      isActive: isEdit ? isActive : undefined,
     })
   }
 
@@ -597,6 +706,25 @@ function AddLocationDialog({
                 />
               </div>
             </div>
+
+            {/* Active/Inactive toggle (only shown in edit mode) */}
+            {isEdit && (
+              <div className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2">
+                <div>
+                  <Label className="text-xs font-semibold">Camp Status</Label>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Toggle to activate or deactivate this camp</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={cn('text-xs font-medium', isActive ? 'text-emerald-600' : 'text-red-600')}>
+                    {isActive ? 'Active' : 'Inactive'}
+                  </span>
+                  <Switch
+                    checked={isActive}
+                    onCheckedChange={setIsActive}
+                  />
+                </div>
+              </div>
+            )}
 
             <DialogFooter className="pt-2">
               <Button type="button" variant="outline" size="sm" onClick={() => onOpenChange(false)}>Cancel</Button>

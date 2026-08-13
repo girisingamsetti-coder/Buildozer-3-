@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { ArrowLeft, Plus, FileText, Trash2, Edit2, CheckCircle2, Clock, Truck, User, MapPin, Building2, Calendar, Wrench, Camera, QrCode, RefreshCw, Loader2, ZoomIn, ImagePlus, Download } from 'lucide-react'
+import { ArrowLeft, Plus, FileText, Trash2, Edit2, CheckCircle2, Clock, Truck, User, MapPin, Building2, Calendar, Wrench, Camera, QrCode, RefreshCw, Loader2, ZoomIn, ImagePlus, Download, Upload, X } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -132,6 +132,7 @@ export default function VehicleDetailView() {
   const [docNumber, setDocNumber] = useState('')
   const [docIssueDate, setDocIssueDate] = useState('')
   const [docExpiryDate, setDocExpiryDate] = useState('')
+  const [docFileName, setDocFileName] = useState('')
 
   // Edit mode
   const [isEditing, setIsEditing] = useState(false)
@@ -173,7 +174,7 @@ export default function VehicleDetailView() {
       toast.success('Document added')
       queryClient.invalidateQueries({ queryKey: ['vehicle', id] })
       setDocDialogOpen(false)
-      setDocType(''); setDocNumber(''); setDocIssueDate(''); setDocExpiryDate('')
+      setDocType(''); setDocNumber(''); setDocIssueDate(''); setDocExpiryDate(''); setDocFileName('')
     },
     onError: () => toast.error('Failed to add document'),
   })
@@ -798,6 +799,49 @@ export default function VehicleDetailView() {
               <div>
                 <Label>Expiry Date</Label>
                 <Input type="date" className="mt-1" value={docExpiryDate} onChange={(e) => setDocExpiryDate(e.target.value)} />
+              </div>
+            </div>
+            {/* Document upload area */}
+            <div>
+              <Label>Document Upload</Label>
+              <div className="mt-1 border-2 border-dashed border-slate-200 rounded-lg p-4 flex flex-col items-center justify-center gap-2 hover:border-teal-400 hover:bg-teal-50/30 transition-colors cursor-pointer relative">
+                {docFileName ? (
+                  <div className="flex items-center gap-2 text-sm text-teal-700">
+                    <FileText className="h-4 w-4" />
+                    <span className="font-medium">{docFileName}</span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-5 w-5 ml-1"
+                      onClick={(e) => { e.stopPropagation(); setDocFileName('') }}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Upload className="h-5 w-5 text-muted-foreground" />
+                    <p className="text-xs text-muted-foreground text-center">
+                      Click to upload document<br />
+                      <span className="text-[10px]">PDF, JPG, PNG up to 5MB</span>
+                    </p>
+                  </>
+                )}
+                <input
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      setDocFileName(file.name)
+                      toast.info(`Selected: ${file.name}`)
+                    }
+                  }}
+                  id="vehicle-doc-upload"
+                />
+                <label htmlFor="vehicle-doc-upload" className="absolute inset-0 cursor-pointer" />
               </div>
             </div>
             <div className="flex gap-2 pt-2">
