@@ -19,6 +19,7 @@ import {
   HeartPulse,
   GraduationCap,
   CalendarDays,
+  MapPin,
 } from 'lucide-react'
 import {
   BarChart,
@@ -616,8 +617,8 @@ export default function DashboardView() {
   ]
 
   return (
-    <div className="flex flex-col gap-2 h-full overflow-hidden">
-      {/* ────── Hero Header (light teal, compact) ────── */}
+    <div className="h-full flex flex-col gap-2 overflow-hidden">
+      {/* ────── Hero Header (compact, ~48px) ────── */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -637,159 +638,67 @@ export default function DashboardView() {
         </div>
       </motion.div>
 
-      {/* ────── Main Content: Charts (left) + Recent Activity (right) ────── */}
-      <div className="flex-1 min-h-0 flex gap-2 overflow-hidden">
-        {/* Left: Charts column — 3 equal-height rows */}
-        <div className="flex-1 min-w-0 flex flex-col gap-2 overflow-hidden">
-          {/* Row 1: 5 stat cards */}
+      {/* ────── Main Content: CSS Grid — left dashboard + right panel ────── */}
+      <div
+        className="flex-1 min-h-0 grid overflow-hidden"
+        style={{
+          gridTemplateColumns: '1fr 372px',
+          gap: '8px',
+        }}
+      >
+        {/* LEFT: Dashboard area — 3 rows (KPI / Donuts / Camps) + Quick Actions */}
+        <div className="min-w-0 grid overflow-hidden" style={{
+          gridTemplateRows: 'minmax(0, 0.72fr) minmax(0, 1fr) minmax(0, 0.92fr) auto',
+          gap: '8px',
+        }}>
+          {/* Row 1: 5 KPI cards */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.05 }}
-            className="flex-1 min-h-0 grid grid-cols-5 gap-2"
+            className="grid min-h-0"
+            style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}
           >
-            <StatCard
-              title="Total Workforce"
-              icon={Users}
-              iconBg="bg-teal-100"
-              iconColor="text-teal-700"
-              bigNumber={String(dash.totalWorkers)}
-              unit="workers"
-              subtitle={`${dash.activeWorkers} active`}
-              segments={[
-                { label: 'Male', value: maleCount, color: DONUT_COLORS.male },
-                { label: 'Female', value: femaleCount, color: DONUT_COLORS.female },
-                ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : []),
-              ]}
-            />
-            <StatCard
-              title="Skill Mix"
-              icon={Wrench}
-              iconBg="bg-orange-100"
-              iconColor="text-orange-700"
-              bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)}
-              unit="workers"
-              subtitle="Skilled vs Unskilled"
-              segments={[
-                { label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled },
-                { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled },
-              ]}
-            />
-            <StatCard
-              title="Age Distribution"
-              icon={Activity}
-              iconBg="bg-cyan-100"
-              iconColor="text-cyan-700"
-              bigNumber={String(dash.totalWorkers)}
-              unit="workers"
-              subtitle="By age group"
-              segments={(dash.ageDistribution ?? []).map((a, i) => ({
-                label: a.bucket,
-                value: a.count,
-                color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8',
-              }))}
-            />
-            <StatCard
-              title="Medical Tests"
-              icon={HeartPulse}
-              iconBg="bg-rose-100"
-              iconColor="text-rose-700"
-              bigNumber={String(medFit + medUnfit + medPending + medConditional)}
-              unit="records"
-              subtitle="Examination results"
-              segments={[
-                { label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit },
-                { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit },
-                { label: 'Pending', value: medPending, color: DONUT_COLORS.medicalPending },
-                ...(medConditional > 0 ? [{ label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }] : []),
-              ].filter(s => s.value > 0)}
-            />
-            <StatCard
-              title="Training Status"
-              icon={GraduationCap}
-              iconBg="bg-emerald-100"
-              iconColor="text-emerald-700"
-              bigNumber={String(trainingTotal)}
-              unit="records"
-              subtitle="Certification status"
-              segments={[
-                { label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid },
-                { label: 'Expiring', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring },
-                { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired },
-              ].filter(s => s.value > 0)}
-            />
+            <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-100" iconColor="text-teal-700" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle={`${dash.activeWorkers} active`} segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
+            <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-100" iconColor="text-orange-700" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
+            <StatCard title="Age Distribution" icon={Activity} iconBg="bg-cyan-100" iconColor="text-cyan-700" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="By age group" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
+            <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-rose-100" iconColor="text-rose-700" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="records" subtitle="Examination results" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Pending', value: medPending, color: DONUT_COLORS.medicalPending }, ...(medConditional > 0 ? [{ label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }] : [])].filter(s => s.value > 0)} />
+            <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-emerald-100" iconColor="text-emerald-700" bigNumber={String(trainingTotal)} unit="records" subtitle="Certification status" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
           </motion.div>
 
-          {/* Row 2: 4 donut charts */}
+          {/* Row 2: 4 Donut chart cards */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="flex-1 min-h-0 grid grid-cols-4 gap-2"
+            className="grid min-h-0"
+            style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}
           >
-            <DonutCard
-              title="Equipment Status"
-              icon={Wrench}
-              iconBg="bg-emerald-100"
-              iconColor="text-emerald-700"
-              data={equipmentData}
-              centerLabel="Total"
-            />
-            <DonutCard
-              title="Inspection Status"
-              icon={ShieldCheck}
-              iconBg="bg-amber-100"
-              iconColor="text-amber-700"
-              data={inspectionData}
-              centerLabel="Total"
-            />
-            <DonutCard
-              title="Ownership"
-              icon={Building2}
-              iconBg="bg-teal-100"
-              iconColor="text-teal-700"
-              data={ownershipData}
-              centerLabel="Total"
-            />
-            <DonutCard
-              title="Approval Status"
-              icon={CheckCircle2}
-              iconBg="bg-violet-100"
-              iconColor="text-violet-700"
-              data={approvalData}
-              centerLabel="Total"
-            />
+            <DonutCard title="Equipment Status" icon={Wrench} iconBg="bg-emerald-100" iconColor="text-emerald-700" data={equipmentData} centerLabel="Total" />
+            <DonutCard title="Inspection Status" icon={ShieldCheck} iconBg="bg-amber-100" iconColor="text-amber-700" data={inspectionData} centerLabel="Total" />
+            <DonutCard title="Ownership" icon={Building2} iconBg="bg-teal-100" iconColor="text-teal-700" data={ownershipData} centerLabel="Total" />
+            <DonutCard title="Approval Status" icon={CheckCircle2} iconBg="bg-violet-100" iconColor="text-violet-700" data={approvalData} centerLabel="Total" />
           </motion.div>
 
-          {/* Row 3: 2 camps charts */}
+          {/* Row 3: Camps per Contractor (268px) + Workforce per Camp (flex) */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.15 }}
-            className="flex-1 min-h-0 grid grid-cols-4 gap-2"
+            className="grid min-h-0"
+            style={{ gridTemplateColumns: '268px 1fr', gap: '8px' }}
           >
-            <RankedListCard
-              title="Camps per Contractor"
-              icon={Building2}
-              items={campsPerContractorData}
-            />
-            <BarChartCard
-              title="Workforce per Camp"
-              icon={Users}
-              data={workforcePerCampData}
-              maxBarSize={10}
-              className="col-span-3"
-            />
+            <RankedListCard title="Camps per Contractor" icon={Building2} items={campsPerContractorData} />
+            <BarChartCard title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
           </motion.div>
 
-          {/* Quick Actions at the very bottom */}
+          {/* Quick Actions — 4 buttons, ~55px high */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
             className="shrink-0"
           >
-            <h2 className="text-[10px] font-semibold mb-1 text-slate-500 uppercase tracking-wider">Quick Actions</h2>
             <div className="grid grid-cols-4 gap-2">
               {[
                 { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, gradient: 'from-teal-500 to-cyan-600' },
@@ -800,7 +709,7 @@ export default function DashboardView() {
                 <Button
                   key={action.action}
                   variant="outline"
-                  className="h-auto flex-col gap-1 py-2 px-2 group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-teal-100/60 relative"
+                  className="h-[55px] flex-row gap-2 px-3 group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-teal-100/60 relative"
                   onClick={() => {
                     if (action.action === 'worker-form') openWorkerForm()
                     else if (action.action === 'incident-form') openIncidentForm()
@@ -818,14 +727,14 @@ export default function DashboardView() {
           </motion.div>
         </div>
 
-        {/* Right: Recent Activity */}
+        {/* RIGHT: Recent Activity panel — 372px wide, full height */}
         <motion.div
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="w-[437px] shrink-0 overflow-hidden"
+          className="overflow-hidden"
         >
-          <Card className="h-full overflow-hidden border-teal-100/60 bg-white shadow-sm flex flex-col">
+          <Card className="h-full overflow-hidden border border-slate-200/80 bg-white shadow-sm flex flex-col rounded-xl">
             <CardHeader className="p-3 pb-1 shrink-0">
               <div className="flex items-center gap-2">
                 <div className="rounded-md bg-gradient-to-br from-teal-500 to-cyan-600 p-1.5">
@@ -838,34 +747,26 @@ export default function DashboardView() {
               <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex-1 min-h-0 flex flex-col">
                 <TabsList className="grid grid-cols-5 gap-1 bg-slate-100/70 p-0.5 h-auto mb-1">
                   {tabs.map(t => (
-                    <TabsTrigger
-                      key={t.id}
-                      value={t.id}
-                      className={cn(
-                        'text-[10px] px-1 py-1 rounded-md font-medium transition-all data-[state=active]:bg-gradient-to-br data-[state=active]:from-teal-400/80 data-[state=active]:to-cyan-400/80 data-[state=active]:text-white data-[state=active]:shadow-sm',
-                      )}
-                    >
-                      {t.label}
-                    </TabsTrigger>
+                    <TabsTrigger key={t.id} value={t.id} className={cn('text-[10px] px-1 py-1 rounded-md font-medium transition-all data-[state=active]:bg-gradient-to-br data-[state=active]:from-teal-400/80 data-[state=active]:to-cyan-400/80 data-[state=active]:text-white data-[state=active]:shadow-sm')}>{t.label}</TabsTrigger>
                   ))}
                 </TabsList>
                 {tabs.map(t => (
                   <TabsContent key={t.id} value={t.id} className="mt-0 flex-1 min-h-0">
-                    <ScrollArea className="h-full pr-1" style={{ maxHeight: 'calc(100% - 0px)' }}>
+                    <ScrollArea className="h-full pr-1">
                       <div className="space-y-0.5">
                         {activityItems.length === 0 ? (
                           <p className="text-xs text-slate-400 text-center py-8">No recent activity</p>
                         ) : (
                           <AnimatePresence mode="popLayout">
                             {activityItems.map((item) => (
-                              <motion.div
-                                key={item.id}
-                                initial={{ opacity: 0, y: 4 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -4 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <RecentActivityItem item={item} onPhotoClick={(it) => it.photo && setPreviewPhoto(it)} />
+                              <motion.div key={item.id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.2 }} className="flex items-start gap-2 p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-default" onClick={() => item.photo && setPreviewPhoto(item)}>
+                                {item.photo ? (<img src={item.photo} alt={item.title} className="w-9 h-9 rounded-md object-cover shrink-0" />) : (<div className="w-9 h-9 rounded-md bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold shrink-0">{item.title.split(' ').map(n => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()}</div>)}
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-[11px] font-medium text-slate-700 truncate">{item.title}</p>
+                                  <p className="text-[10px] text-slate-500 truncate">{item.subtitle}</p>
+                                  {item.location && (<p className="text-[10px] text-slate-400 truncate flex items-center gap-0.5 mt-0.5"><MapPin className="h-2.5 w-2.5" />{item.location}</p>)}
+                                </div>
+                                <span className="text-[10px] text-slate-400 whitespace-nowrap shrink-0 mt-0.5">{formatRelativeTime(item.timestamp)}</span>
                               </motion.div>
                             ))}
                           </AnimatePresence>
