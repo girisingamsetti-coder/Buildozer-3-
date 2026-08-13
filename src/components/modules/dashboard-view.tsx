@@ -182,7 +182,7 @@ interface StatCardProps {
 function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subtitle, segments }: StatCardProps) {
   const total = segments.reduce((s, seg) => s + seg.value, 0)
   return (
-    <Card className="h-[170px] overflow-hidden border-teal-100/60 bg-white shadow-sm">
+    <Card className="h-[140px] overflow-hidden border-teal-100/60 bg-white shadow-sm">
       <CardContent className="p-3 h-full flex flex-col">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
@@ -491,17 +491,17 @@ function RecentActivityItem({ item, onPhotoClick }: { item: ActivityItem; onPhot
 
 function DashboardSkeleton() {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       <div className="space-y-1">
-        <Skeleton className="h-7 w-48" />
-        <Skeleton className="h-4 w-72" />
+        <Skeleton className="h-6 w-48" />
+        <Skeleton className="h-3 w-72" />
       </div>
-      <div className="grid grid-cols-5 gap-3">
+      <div className="grid grid-cols-5 gap-2">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="h-[170px] rounded-xl" />
+          <Skeleton key={i} className="h-[140px] rounded-xl" />
         ))}
       </div>
-      <div className="grid grid-cols-4 grid-rows-[1fr_0.9fr] gap-3">
+      <div className="grid grid-cols-4 grid-rows-[1fr_0.85fr] gap-2">
         {Array.from({ length: 4 }).map((_, i) => (
           <Skeleton key={i} className="rounded-xl" />
         ))}
@@ -612,37 +612,37 @@ export default function DashboardView() {
   ]
 
   return (
-    <div className="flex flex-col gap-3 h-full overflow-hidden">
-      {/* ────── Hero Header (light teal) ────── */}
+    <div className="flex flex-col gap-2 h-full overflow-hidden">
+      {/* ────── Hero Header (light teal, compact) ────── */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="shrink-0 rounded-2xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 px-5 py-4 flex items-center justify-between"
+        className="shrink-0 rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 px-4 py-2 flex items-center justify-between"
       >
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-800">{getGreeting()} 👋</h1>
-          <p className="text-xs text-slate-600 mt-0.5 flex items-center gap-1.5">
+          <h1 className="text-base font-bold tracking-tight text-slate-800">{getGreeting()} 👋</h1>
+          <p className="text-[11px] text-slate-600 flex items-center gap-1">
             <CalendarDays className="h-3 w-3" />
             {getTodayFormatted()}
           </p>
         </div>
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500">
-          <span className="inline-block w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
-          Live site overview
+        <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
+          Live
         </div>
       </motion.div>
 
       {/* ────── Main Content: Charts (left) + Recent Activity (right) ────── */}
-      <div className="flex-1 min-h-0 flex gap-3 overflow-hidden">
+      <div className="flex-1 min-h-0 flex gap-2 overflow-hidden">
         {/* Left: Charts column */}
-        <div className="flex-1 min-w-0 flex flex-col gap-3 overflow-hidden">
+        <div className="flex-1 min-w-0 flex flex-col gap-2 overflow-hidden">
           {/* 5 stat cards in a row */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.05 }}
-            className="shrink-0 grid grid-cols-5 gap-3"
+            className="shrink-0 grid grid-cols-5 gap-2"
           >
             <StatCard
               title="Total Workforce"
@@ -721,7 +721,7 @@ export default function DashboardView() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="shrink-0 grid grid-cols-4 grid-rows-[1fr_0.9fr] gap-3"
+            className="shrink-0 grid grid-cols-4 grid-rows-[1fr_0.85fr] gap-2"
           >
             <DonutCard
               title="Equipment Status"
@@ -762,7 +762,7 @@ export default function DashboardView() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.15 }}
-            className="flex-1 min-h-0 grid grid-cols-4 gap-3 overflow-hidden"
+            className="flex-1 min-h-0 grid grid-cols-4 gap-2 overflow-hidden"
           >
             <RankedListCard
               title="Camps per Contractor"
@@ -785,7 +785,7 @@ export default function DashboardView() {
             transition={{ duration: 0.3, delay: 0.2 }}
             className="shrink-0"
           >
-            <h2 className="text-xs font-semibold mb-2 text-slate-500 uppercase tracking-wider">Quick Actions</h2>
+            <h2 className="text-[10px] font-semibold mb-1 text-slate-500 uppercase tracking-wider">Quick Actions</h2>
             <div className="grid grid-cols-4 gap-2">
               {[
                 { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, gradient: 'from-teal-500 to-cyan-600' },
@@ -796,7 +796,7 @@ export default function DashboardView() {
                 <Button
                   key={action.action}
                   variant="outline"
-                  className="h-auto flex-col gap-1.5 py-2.5 px-2 group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-teal-100/60 relative"
+                  className="h-auto flex-col gap-1 py-2 px-2 group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-teal-100/60 relative"
                   onClick={() => {
                     if (action.action === 'worker-form') openWorkerForm()
                     else if (action.action === 'incident-form') openIncidentForm()
@@ -819,7 +819,7 @@ export default function DashboardView() {
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="w-[410px] shrink-0 overflow-hidden"
+          className="w-[380px] shrink-0 overflow-hidden"
         >
           <Card className="h-full overflow-hidden border-teal-100/60 bg-white shadow-sm flex flex-col">
             <CardHeader className="p-3 pb-1 shrink-0">
