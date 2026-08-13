@@ -6,8 +6,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -41,75 +40,85 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-teal: #0d9488;
+  --color-teal-light: #14b8a6;
+  --color-teal-dark: #0f766e;
+  --color-warn: #f59e0b;
+  --color-warn-light: #fbbf24;
+  --color-critical: #ef4444;
+  --color-critical-light: #f87171;
+  --color-success: #10b981;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0d9488;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f0fdfa;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0d9488;
+  /* Chart palette: harmonious, no blue/indigo */
+  --chart-1: #0d9488;
+  --chart-2: #f97316;
+  --chart-3: #eab308;
+  --chart-4: #ec4899;
+  --chart-5: #ef4444;
+  /* Sidebar: clean light theme */
+  --sidebar: #f8fafc;
+  --sidebar-foreground: #334155;
+  --sidebar-primary: #0d9488;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0fdfa;
+  --sidebar-accent-foreground: #0f766e;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #0d9488;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #020617;
+  --foreground: #e2e8f0;
+  --card: #0f172a;
+  --card-foreground: #e2e8f0;
+  --popover: #0f172a;
+  --popover-foreground: #e2e8f0;
+  --primary: #14b8a6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #e2e8f0;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #0f1f1e;
+  --accent-foreground: #e2e8f0;
+  --destructive: #f87171;
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #14b8a6;
+  --chart-1: #14b8a6;
+  --chart-2: #fb923c;
+  --chart-3: #facc15;
+  --chart-4: #f472b6;
+  --chart-5: #f87171;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #cbd5e1;
+  --sidebar-primary: #14b8a6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #cbd5e1;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #14b8a6;
 }
 
 @layer base {
@@ -120,3 +129,229 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom scrollbar - modern thin style */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Status badge colors - no indigo/blue */
+.status-valid {
+  @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400;
+}
+
+.status-expiring {
+  @apply bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400;
+}
+
+.status-expired {
+  @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400;
+}
+
+.status-pending {
+  @apply bg-slate-100 text-slate-800 dark:bg-slate-700/50 dark:text-slate-300;
+}
+
+.status-open {
+  @apply bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400;
+}
+
+.status-closed {
+  @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400;
+}
+
+.status-critical {
+  @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400;
+}
+
+/* Sidebar navigation styles - modern hover and active states */
+.sidebar-nav-item {
+  @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200;
+  @apply text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground;
+}
+
+.sidebar-nav-item.active {
+  @apply bg-primary/10 text-sidebar-primary font-semibold;
+  @apply shadow-sm shadow-primary/5;
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
+}
+
+/* Modern card style */
+.card-modern {
+  @apply rounded-xl border-0 shadow-sm transition-all duration-200 hover:shadow-md;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Mobile frame: simulate a narrow viewport inside the 420px
+   preview frame. Tailwind's sm:/lg:/xl: breakpoints respond to
+   the real browser viewport (desktop-sized), so we override them
+   here to force mobile-appropriate layouts inside the frame.
+   ───────────────────────────────────────────────────────────── */
+.mobile-frame {
+  container-type: inline-size;
+}
+
+/* 4-column grids (stat cards, etc.) → 2 columns on mobile frame */
+.mobile-frame .lg\:grid-cols-4,
+.mobile-frame .xl\:grid-cols-4,
+.mobile-frame .sm\:grid-cols-4,
+.mobile-frame .md\:grid-cols-4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* 3-column grids → 2 columns on mobile frame */
+.mobile-frame .lg\:grid-cols-3,
+.mobile-frame .xl\:grid-cols-3,
+.mobile-frame .md\:grid-cols-3,
+.mobile-frame .sm\:grid-cols-3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* 2-column side-by-side content (charts, detail panels) → 1 column (stack) */
+.mobile-frame .lg\:grid-cols-2,
+.mobile-frame .xl\:grid-cols-2 {
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
+
+/* md:grid-cols-2 stays at 2 columns (fine for mobile stat pairs) */
+
+/* Views with hardcoded viewport height → auto height so content flows */
+.mobile-frame .h-\[calc\(100vh-6rem\)\],
+.mobile-frame .h-\[calc\(100vh-7rem\)\],
+.mobile-frame .h-\[calc\(100vh-8rem\)\] {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+/* Tables and wide content: ensure horizontal scroll instead of overflow */
+.mobile-frame .overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Ensure the content wrapper doesn't clip wide tables — let them scroll */
+.mobile-frame main > div {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* ── Breakpoint simulation: force mobile layouts inside the frame ──
+   Tailwind's sm:/md:/lg: respond to the real viewport (desktop-sized).
+   Inside the 420px frame we must swap them so mobile-optimized views
+   (cards, stacked filters, short labels) are shown instead.
+
+   NOTE: We use [class~="..."] attribute selectors instead of escaped
+   class selectors (.md\:hidden) because Tailwind 4's CSS processor
+   strips custom rules that reference its own utility class names.
+   Attribute selectors bypass that processing entirely.               */
+
+/* Show mobile-only elements (md:hidden / lg:hidden / sm:hidden) */
+.mobile-frame [class~="sm:hidden"],
+.mobile-frame [class~="md:hidden"],
+.mobile-frame [class~="lg:hidden"],
+.mobile-frame [class~="xl:hidden"] {
+  display: block !important;
+}
+
+/* Hide desktop-only elements (hidden md:block / hidden lg:block) */
+.mobile-frame [class~="hidden"][class~="sm:block"],
+.mobile-frame [class~="hidden"][class~="md:block"],
+.mobile-frame [class~="hidden"][class~="lg:block"],
+.mobile-frame [class~="hidden"][class~="xl:block"],
+.mobile-frame [class~="hidden"][class~="md:flex"],
+.mobile-frame [class~="hidden"][class~="lg:flex"],
+.mobile-frame [class~="hidden"][class~="sm:flex"] {
+  display: none !important;
+}
+
+/* Stack rows that are side-by-side on sm+ into columns */
+.mobile-frame [class~="sm:flex-row"],
+.mobile-frame [class~="md:flex-row"],
+.mobile-frame [class~="lg:flex-row"] {
+  flex-direction: column !important;
+}
+
+/* Show mobile text variants in buttons (sm:hidden spans) and hide desktop ones (sm:inline spans) */
+.mobile-frame span[class~="sm:hidden"],
+.mobile-frame span[class~="md:hidden"],
+.mobile-frame span[class~="lg:hidden"] {
+  display: inline !important;
+}
+.mobile-frame span[class~="sm:inline"],
+.mobile-frame span[class~="md:inline"],
+.mobile-frame span[class~="lg:inline"] {
+  display: none !important;
+}
+
+/* Force fixed-width inputs/selects to full width in mobile frame */
+.mobile-frame [class~="sm:w-44"],
+.mobile-frame [class~="sm:w-40"],
+.mobile-frame [class~="sm:w-36"],
+.mobile-frame [class~="sm:w-32"],
+.mobile-frame [class~="md:w-44"],
+.mobile-frame [class~="md:w-40"],
+.mobile-frame [class~="md:w-36"],
+.mobile-frame [class~="md:w-32"],
+.mobile-frame [class~="lg:w-44"],
+.mobile-frame [class~="lg:w-40"],
+.mobile-frame [class~="lg:w-36"] {
+  width: 100% !important;
+}
+
+/* Filter/toolbars: allow wrapping instead of overflowing horizontally */
+.mobile-frame .flex.flex-wrap {
+  gap: 0.5rem !important;
+}
+
+/* Slightly reduce large heading sizes for better mobile fit */
+.mobile-frame h1 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+}
+
+/* Allow truncated text to wrap instead of being cut off (better mobile readability) */
+.mobile-frame .truncate {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  word-break: break-word !important;
+}
+
+/* Slightly smaller secondary text so descriptions fit in narrow cards */
+.mobile-frame .text-xs {
+  font-size: 0.6875rem !important;
+  line-height: 1rem !important;
+}
+
