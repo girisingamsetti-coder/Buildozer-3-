@@ -635,7 +635,7 @@ export default function DashboardView() {
 
       {/* ────── Main Content: Charts (left) + Recent Activity (right) ────── */}
       <div className="flex-1 min-h-0 flex gap-2 overflow-hidden">
-        {/* Left: Charts column */}
+        {/* Left: Charts column — no gap between donut row and camps row */}
         <div className="flex-1 min-w-0 flex flex-col gap-2 overflow-hidden">
           {/* 5 stat cards in a row */}
           <motion.div
@@ -716,13 +716,15 @@ export default function DashboardView() {
             />
           </motion.div>
 
-          {/* 4 donut charts */}
+          {/* 4 donut charts + 2 camps charts — no gap between them */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="shrink-0 grid grid-cols-4 grid-rows-[1fr_0.85fr] gap-2"
+            className="flex-1 min-h-0 flex flex-col overflow-hidden"
           >
+            {/* Donut charts row */}
+            <div className="shrink-0 grid grid-cols-4 gap-2" style={{ height: '40%' }}>
             <DonutCard
               title="Equipment Status"
               icon={Wrench}
@@ -755,15 +757,9 @@ export default function DashboardView() {
               data={approvalData}
               centerLabel="Total"
             />
-          </motion.div>
-
-          {/* Camps charts row: RankedList (1) + Bar chart (3) */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
-            className="flex-1 min-h-0 grid grid-cols-4 gap-2 overflow-hidden"
-          >
+            </div>
+            {/* Camps charts row — directly below donuts, no gap */}
+            <div className="flex-1 min-h-0 grid grid-cols-4 gap-2 overflow-hidden">
             <RankedListCard
               title="Camps per Contractor"
               icon={Building2}
@@ -776,6 +772,7 @@ export default function DashboardView() {
               maxBarSize={10}
               className="col-span-3"
             />
+            </div>
           </motion.div>
 
           {/* Quick Actions at the very bottom */}
