@@ -182,7 +182,7 @@ interface StatCardProps {
 function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subtitle, segments }: StatCardProps) {
   const total = segments.reduce((s, seg) => s + seg.value, 0)
   return (
-    <Card className="h-[140px] overflow-hidden border-teal-100/60 bg-white shadow-sm">
+    <Card className="h-full overflow-hidden border-teal-100/60 bg-white shadow-sm">
       <CardContent className="p-3 h-full flex flex-col">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
@@ -491,20 +491,24 @@ function RecentActivityItem({ item, onPhotoClick }: { item: ActivityItem; onPhot
 
 function DashboardSkeleton() {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 h-full">
       <div className="space-y-1">
         <Skeleton className="h-6 w-48" />
         <Skeleton className="h-3 w-72" />
       </div>
-      <div className="grid grid-cols-5 gap-2">
+      <div className="flex-1 grid grid-cols-5 gap-2">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="h-[140px] rounded-xl" />
+          <Skeleton key={i} className="rounded-xl" />
         ))}
       </div>
-      <div className="grid grid-cols-4 grid-rows-[1fr_0.85fr] gap-2">
+      <div className="flex-1 grid grid-cols-4 gap-2">
         {Array.from({ length: 4 }).map((_, i) => (
           <Skeleton key={i} className="rounded-xl" />
         ))}
+      </div>
+      <div className="flex-1 grid grid-cols-4 gap-2">
+        <Skeleton className="rounded-xl" />
+        <Skeleton className="col-span-3 rounded-xl" />
       </div>
     </div>
   )
@@ -635,14 +639,14 @@ export default function DashboardView() {
 
       {/* ────── Main Content: Charts (left) + Recent Activity (right) ────── */}
       <div className="flex-1 min-h-0 flex gap-2 overflow-hidden">
-        {/* Left: Charts column — no gap between donut row and camps row */}
+        {/* Left: Charts column — 3 equal-height rows */}
         <div className="flex-1 min-w-0 flex flex-col gap-2 overflow-hidden">
-          {/* 5 stat cards in a row */}
+          {/* Row 1: 5 stat cards */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.05 }}
-            className="shrink-0 grid grid-cols-5 gap-2"
+            className="flex-1 min-h-0 grid grid-cols-5 gap-2"
           >
             <StatCard
               title="Total Workforce"
@@ -716,15 +720,13 @@ export default function DashboardView() {
             />
           </motion.div>
 
-          {/* 4 donut charts + 2 camps charts — no gap between them */}
+          {/* Row 2: 4 donut charts */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="flex-1 min-h-0 flex flex-col overflow-hidden"
+            className="flex-1 min-h-0 grid grid-cols-4 gap-2"
           >
-            {/* Donut charts row */}
-            <div className="shrink-0 grid grid-cols-4 gap-2" style={{ height: '40%' }}>
             <DonutCard
               title="Equipment Status"
               icon={Wrench}
@@ -757,9 +759,15 @@ export default function DashboardView() {
               data={approvalData}
               centerLabel="Total"
             />
-            </div>
-            {/* Camps charts row — directly below donuts, no gap */}
-            <div className="flex-1 min-h-0 grid grid-cols-4 gap-2 overflow-hidden">
+          </motion.div>
+
+          {/* Row 3: 2 camps charts */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="flex-1 min-h-0 grid grid-cols-4 gap-2"
+          >
             <RankedListCard
               title="Camps per Contractor"
               icon={Building2}
@@ -772,7 +780,6 @@ export default function DashboardView() {
               maxBarSize={10}
               className="col-span-3"
             />
-            </div>
           </motion.div>
 
           {/* Quick Actions at the very bottom */}
@@ -816,7 +823,7 @@ export default function DashboardView() {
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="w-[380px] shrink-0 overflow-hidden"
+          className="w-[437px] shrink-0 overflow-hidden"
         >
           <Card className="h-full overflow-hidden border-teal-100/60 bg-white shadow-sm flex flex-col">
             <CardHeader className="p-3 pb-1 shrink-0">
