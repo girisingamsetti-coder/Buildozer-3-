@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
       // Workers with profile photos
       const workersWithPhotos = await db.worker.findMany({
         where: { profilePhotoPath: { not: null } },
-        take: 8,
+        take: 20,
         orderBy: { createdAt: 'desc' },
         select: {
           id: true,
@@ -120,7 +120,7 @@ export async function GET(req: NextRequest) {
 
     if (type === 'new-entry' || type === 'all') {
       const recentWorkers = await db.worker.findMany({
-        take: 8,
+        take: 20,
         orderBy: { createdAt: 'desc' },
         select: {
           id: true,
@@ -149,7 +149,7 @@ export async function GET(req: NextRequest) {
 
     if (type === 'medical' || type === 'all') {
       const recentMedical = await db.medicalRecord.findMany({
-        take: 8,
+        take: 20,
         orderBy: { createdAt: 'desc' },
         select: {
           id: true,
@@ -178,7 +178,7 @@ export async function GET(req: NextRequest) {
 
     if (type === 'training' || type === 'all') {
       const recentTraining = await db.trainingRecord.findMany({
-        take: 8,
+        take: 20,
         orderBy: { createdAt: 'desc' },
         select: {
           id: true,
@@ -208,7 +208,7 @@ export async function GET(req: NextRequest) {
 
     if (type === 'incident' || type === 'all') {
       const recentIncidents = await db.incident.findMany({
-        take: 8,
+        take: 20,
         orderBy: { createdAt: 'desc' },
         select: {
           id: true,

@@ -340,10 +340,10 @@ function RankedListCard({ title, icon: Icon, items, colorPool = CONTRACTOR_COLOR
         </div>
       </CardHeader>
       <CardContent className="p-3 pt-1">
-        <ScrollArea className="h-[220px] pr-2">
-          <div className="space-y-1.5">
+        <div className="h-full overflow-hidden pr-1">
+          <div className="space-y-1">
             {items.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-8">No data available</p>
+              <p className="text-xs text-slate-400 text-center py-4">No data available</p>
             ) : (
               items.map((item, idx) => {
                 const max = Math.max(...items.map(i => i.value), 1)
@@ -373,7 +373,7 @@ function RankedListCard({ title, icon: Icon, items, colorPool = CONTRACTOR_COLOR
               })
             )}
           </div>
-        </ScrollArea>
+        </div>
       </CardContent>
     </Card>
   )
@@ -648,8 +648,8 @@ export default function DashboardView() {
       >
         {/* LEFT: Dashboard area — 3 rows (KPI / Donuts / Camps) + Quick Actions */}
         <div className="min-w-0 grid overflow-hidden" style={{
-          gridTemplateRows: 'minmax(0, 0.72fr) minmax(0, 1fr) minmax(0, 0.92fr) auto',
-          gap: '8px',
+          gridTemplateRows: 'minmax(0, 0.62fr) minmax(0, 0.9fr) minmax(0, 0.78fr) auto',
+          gap: '6px',
         }}>
           {/* Row 1: 5 KPI cards */}
           <motion.div
@@ -699,7 +699,7 @@ export default function DashboardView() {
             transition={{ duration: 0.3, delay: 0.2 }}
             className="shrink-0"
           >
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2 w-full">
               {[
                 { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, gradient: 'from-teal-500 to-cyan-600' },
                 { icon: FileWarning, label: 'Log Incident', action: 'incident-form' as const, gradient: 'from-rose-500 to-red-600' },
@@ -709,7 +709,7 @@ export default function DashboardView() {
                 <Button
                   key={action.action}
                   variant="outline"
-                  className="h-[55px] flex-row gap-2 px-3 group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-teal-100/60 relative"
+                  className="h-[50px] flex-row gap-2 px-3 w-full group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-teal-100/60 relative"
                   onClick={() => {
                     if (action.action === 'worker-form') openWorkerForm()
                     else if (action.action === 'incident-form') openIncidentForm()
