@@ -126,9 +126,9 @@ interface DesigConfig {
 }
 
 const DESIG_CONFIGS: DesigConfig[] = [
-  { name:'Helper', category:'General', count:22, dailyRateRange:[500,650], wageCategory:'Unskilled', skillLevel:'Unskilled',
+  { name:'Helper', category:'General', count:45, dailyRateRange:[500,650], wageCategory:'Unskilled', skillLevel:'Unskilled',
     qualWeights:{'Below 10th':60,'10th':30,'Other':10}, trainingTitles:['General Construction Safety'] },
-  { name:'Mason', category:'General', count:16, dailyRateRange:[700,900], wageCategory:'Skilled', skillLevel:'Skilled',
+  { name:'Mason', category:'General', count:30, dailyRateRange:[700,900], wageCategory:'Skilled', skillLevel:'Skilled',
     qualWeights:{'Below 10th':25,'10th':40,'ITI':20,'12th':15}, trainingTitles:['Masonry Work Safety Practices','Scaffold Safety Awareness'] },
   { name:'Electrician', category:'Safety-Critical', count:9, dailyRateRange:[700,850], wageCategory:'Skilled', skillLevel:'Skilled',
     qualWeights:{'10th':25,'ITI':45,'12th':15,'Diploma':15}, trainingTitles:['Electrical Safety & Lockout/Tagout','Working at Heights - Electrical'] },

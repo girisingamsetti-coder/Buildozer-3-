@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -38,6 +38,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { useNavStore } from '@/stores/nav-store'
 import { cn } from '@/lib/utils'
 
@@ -183,48 +184,49 @@ interface StatCardProps {
 function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subtitle, segments }: StatCardProps) {
   const total = segments.reduce((s, seg) => s + seg.value, 0)
   return (
-    <Card className="h-full overflow-hidden border-teal-100/60 bg-white shadow-sm">
-      <CardContent className="p-3 h-full flex flex-col">
-        <div className="flex items-start justify-between gap-2">
+    <Card className="h-full overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+      <CardContent className="px-2 pt-1.5 pb-1.5 h-full flex flex-col justify-between">
+        <div className="flex items-center gap-2">
+          <div className={cn('rounded-full p-1.5 shrink-0', iconBg)}>
+            <Icon className={cn('h-3.5 w-3.5', iconColor)} />
+          </div>
           <div className="min-w-0">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide truncate">{title}</p>
-            {subtitle && <p className="text-[10px] text-slate-400 mt-0.5 truncate">{subtitle}</p>}
-          </div>
-          <div className={cn('rounded-lg p-1.5 shrink-0', iconBg)}>
-            <Icon className={cn('h-4 w-4', iconColor)} />
+            <p className="text-xs font-extrabold text-slate-800 dark:text-slate-100 tracking-tight truncate">{title}</p>
+            {subtitle && <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 truncate">{subtitle}</p>}
           </div>
         </div>
-        <div className="flex-1 flex flex-col justify-center min-h-0">
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold tabular-nums text-slate-800">{bigNumber}</span>
-            {unit && <span className="text-xs text-slate-500">{unit}</span>}
-          </div>
-          {/* Stacked progress bar */}
-          {total > 0 && (
-            <div className="mt-2 h-1.5 w-full rounded-full overflow-hidden bg-slate-100 flex">
-              {segments.map((seg, i) => {
-                const pct = (seg.value / total) * 100
-                if (pct === 0) return null
-                return (
-                  <div
-                    key={i}
-                    style={{ width: `${pct}%`, backgroundColor: seg.color }}
-                    className="h-full first:rounded-l-full last:rounded-r-full transition-all"
-                  />
-                )
-              })}
-            </div>
-          )}
+
+        <div className="mt-2 flex items-baseline gap-1">
+          <span className="text-2xl font-extrabold tabular-nums text-slate-900 dark:text-slate-50">{bigNumber}</span>
+          {unit && <span className="text-[10px] font-medium text-slate-500">{unit}</span>}
         </div>
-        {/* Legend — vertically stacked */}
-        <div className="space-y-0.5 mt-1">
+
+        {/* Stacked progress bar */}
+        {total > 0 && (
+          <div className="mt-1.5 h-2 w-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 flex gap-0.5">
+            {segments.map((seg, i) => {
+              const pct = (seg.value / total) * 100
+              if (pct === 0) return null
+              return (
+                <div
+                  key={i}
+                  style={{ width: `${pct}%`, backgroundColor: seg.color }}
+                  className="h-full transition-all rounded-full"
+                />
+              )
+            })}
+          </div>
+        )}
+
+        {/* Legend */}
+        <div className="flex flex-col gap-y-0.5 mt-2">
           {segments.map((seg, i) => (
-            <div key={i} className="flex items-center justify-between text-[11px]">
-              <span className="flex items-center gap-1.5 text-slate-600">
-                <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: seg.color }} />
+            <div key={i} className="flex items-center justify-between text-[9px]">
+              <span className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+                <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: seg.color }} />
                 <span className="truncate">{seg.label}</span>
               </span>
-              <span className="font-semibold tabular-nums text-slate-700">{seg.value}</span>
+              <span className="font-bold tabular-nums text-slate-800 dark:text-slate-300">{seg.value}</span>
             </div>
           ))}
         </div>
@@ -241,25 +243,25 @@ interface DonutCardProps {
   iconBg: string
   iconColor: string
   data: { name: string; value: number; color: string }[]
+  centerValue?: string | number
   centerLabel?: string
 }
 
-function DonutCard({ title, icon: Icon, iconBg, iconColor, data, centerLabel }: DonutCardProps) {
+function DonutCard({ title, icon: Icon, iconBg, iconColor, data, centerValue, centerLabel }: DonutCardProps) {
   const total = data.reduce((s, d) => s + d.value, 0)
+  const displayValue = centerValue !== undefined ? centerValue : total
   return (
     <Card className="overflow-hidden border-teal-100/60 bg-white shadow-sm h-full">
-      <CardContent className="p-3 h-full flex flex-col">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className={cn('rounded-md p-1 shrink-0', iconBg)}>
-              <Icon className={cn('h-3.5 w-3.5', iconColor)} />
-            </div>
-            <p className="text-xs font-semibold text-slate-700 truncate">{title}</p>
+      <CardContent className="px-2 pt-1.5 pb-1.5 h-full flex flex-col justify-between">
+        <div className="flex items-center gap-2">
+          <div className={cn('rounded-full p-1.5 shrink-0', iconBg)}>
+            <Icon className={cn('h-3.5 w-3.5', iconColor)} />
           </div>
+          <p className="text-xs font-extrabold text-slate-800 tracking-tight truncate">{title}</p>
         </div>
-        <div className="flex-1 flex flex-col items-center justify-center min-h-0 relative">
+        <div className="flex-1 flex flex-col items-center justify-center min-h-0 relative mt-2">
           {total > 0 ? (
-            <div className="relative w-full" style={{ height: '100%', minHeight: 100 }}>
+            <div className="relative w-full" style={{ height: '100%', minHeight: 120 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -268,10 +270,10 @@ function DonutCard({ title, icon: Icon, iconBg, iconColor, data, centerLabel }: 
                     nameKey="name"
                     cx="50%"
                     cy="50%"
-                    innerRadius="57%"
-                    outerRadius="76%"
-                    cornerRadius={8}
-                    paddingAngle={5}
+                    innerRadius="68%"
+                    outerRadius="88%"
+                    cornerRadius={0}
+                    paddingAngle={2}
                     strokeWidth={0}
                     isAnimationActive={false}
                   >
@@ -294,23 +296,23 @@ function DonutCard({ title, icon: Icon, iconBg, iconColor, data, centerLabel }: 
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-2xl font-bold tabular-nums text-slate-800">{total}</span>
-                {centerLabel && <span className="text-[9px] uppercase tracking-wider text-slate-400 mt-0.5">{centerLabel}</span>}
+                <span className="text-3xl font-extrabold tabular-nums text-slate-800">{displayValue}</span>
+                {centerLabel && <span className="text-[9px] uppercase tracking-wider font-semibold text-slate-500 mt-0.5">{centerLabel}</span>}
               </div>
             </div>
           ) : (
             <p className="text-xs text-slate-400">No data</p>
           )}
         </div>
-        {/* Legend */}
-        <div className="grid grid-cols-3 gap-1 mt-1">
+        {/* Horizontal Legend */}
+        <div className="flex flex-col w-full gap-y-0.5 mt-2">
           {data.map((d, i) => (
-            <div key={i} className="text-center">
-              <div className="flex items-center justify-center gap-1">
-                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: d.color }} />
-                <span className="text-[9px] text-slate-500 truncate">{d.name}</span>
-              </div>
-              <p className="text-[11px] font-semibold tabular-nums text-slate-700">{d.value}</p>
+            <div key={i} className="flex items-center justify-between text-[10px]">
+              <span className="flex items-center gap-1.5 text-slate-500">
+                <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
+                <span className="truncate">{d.name}</span>
+              </span>
+              <span className="font-bold tabular-nums text-slate-800">{d.value}</span>
             </div>
           ))}
         </div>
@@ -326,48 +328,45 @@ interface RankedListCardProps {
   icon: React.ElementType
   items: { name: string; value: number; subtitle?: string }[]
   colorPool?: string[]
+  className?: string
 }
 
-function RankedListCard({ title, icon: Icon, items, colorPool = CONTRACTOR_COLORS }: RankedListCardProps) {
+function RankedListCard({ title, icon: Icon, items, colorPool = CONTRACTOR_COLORS, className }: RankedListCardProps) {
+  const maxVal = Math.max(...items.map(d => d.value), 1)
   return (
-    <Card className="overflow-hidden border-teal-100/60 bg-white shadow-sm h-full">
-      <CardHeader className="p-3 pb-1">
+    <Card className={cn('overflow-hidden border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm h-full flex flex-col', className)}>
+      <CardHeader className="px-3 pt-2 pb-1 shrink-0">
         <div className="flex items-center gap-2">
-          <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
-            <Icon className="h-3.5 w-3.5 text-teal-600" />
+          <div className="rounded-md bg-gradient-to-br from-violet-500/15 to-purple-500/15 p-1.5">
+            <Icon className="h-3.5 w-3.5 text-violet-600" />
           </div>
-          <CardTitle className="text-sm font-semibold text-slate-700">{title}</CardTitle>
+          <CardTitle className="text-sm font-extrabold text-slate-700 dark:text-slate-100">{title}</CardTitle>
+          <span className="ml-auto text-[10px] text-slate-400 dark:text-slate-500">{items.length} records</span>
         </div>
       </CardHeader>
-      <CardContent className="p-3 pt-1">
-        <div className="h-full overflow-hidden pr-1">
-          <div className="space-y-1">
+      <CardContent className="px-3 pt-1 pb-2 flex-1 min-h-0">
+        <div className="h-full">
+          <div className="space-y-1.5">
             {items.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-4">No data available</p>
+              <p className="text-xs text-slate-400">No data available</p>
             ) : (
               items.map((item, idx) => {
-                const max = Math.max(...items.map(i => i.value), 1)
-                const pct = (item.value / max) * 100
+                const pct = (item.value / maxVal) * 100
                 const color = colorPool[idx % colorPool.length]
                 return (
-                  <div key={idx} className="group">
-                    <div className="flex items-center justify-between text-xs mb-0.5">
-                      <span className="font-medium text-slate-700 truncate flex items-center gap-1.5">
-                        <span className="text-[10px] text-slate-400 w-4 tabular-nums">{idx + 1}.</span>
-                        <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
-                        {item.name}
-                      </span>
-                      <span className="font-bold tabular-nums text-slate-800 ml-2">{item.value}</span>
-                    </div>
-                    <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden ml-6">
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className="w-8 shrink-0 text-[11px] font-bold text-slate-400 dark:text-slate-400 truncate">
+                      {item.name}
+                    </span>
+                    <div className="flex-1 h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center">
                       <div
                         className="h-full rounded-full transition-all"
                         style={{ width: `${pct}%`, backgroundColor: color }}
                       />
                     </div>
-                    {item.subtitle && (
-                      <p className="text-[10px] text-slate-400 ml-6 mt-0.5">{item.subtitle}</p>
-                    )}
+                    <span className="w-5 text-right font-extrabold text-[13px] text-slate-900 dark:text-slate-100 tabular-nums">
+                      {item.value}
+                    </span>
                   </div>
                 )
               })
@@ -392,18 +391,18 @@ interface BarChartCardProps {
 
 function BarChartCard({ title, icon: Icon, data, colorPool = CONTRACTOR_COLORS, maxBarSize = 10, className }: BarChartCardProps) {
   return (
-    <Card className={cn('overflow-hidden border-teal-100/60 bg-white shadow-sm h-full', className)}>
-      <CardHeader className="p-3 pb-1">
+    <Card className={cn('overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm h-full flex flex-col', className)}>
+      <CardHeader className="px-3 pt-2 pb-1 shrink-0">
         <div className="flex items-center gap-2">
           <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
             <Icon className="h-3.5 w-3.5 text-teal-600" />
           </div>
-          <CardTitle className="text-sm font-semibold text-slate-700">{title}</CardTitle>
-          <span className="ml-auto text-[10px] text-slate-400">{data.length} records</span>
+          <CardTitle className="text-sm font-extrabold text-slate-700 dark:text-slate-100">{title}</CardTitle>
+          <span className="ml-auto text-[10px] text-slate-400 dark:text-slate-500">{data.length} records</span>
         </div>
       </CardHeader>
-      <CardContent className="p-3 pt-1">
-        <div style={{ height: 220 }}>
+      <CardContent className="px-3 pt-1 pb-2 flex-1 min-h-0">
+        <div className="h-full max-h-[190px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
               <XAxis
@@ -448,6 +447,54 @@ function BarChartCard({ title, icon: Icon, data, colorPool = CONTRACTOR_COLORS, 
 }
 
 // ──────────────────── Recent Activity Item ────────────────────
+function ActivityCard({ className }: { className?: string }) {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const slides = ['/slideshow/slide1.jpg', '/slideshow/slide2.jpg', '/slideshow/slide3.jpg']
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide(s => (s + 1) % slides.length)
+    }, 3000)
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <Card className={cn('h-full overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col', className)}>
+      <CardHeader className="p-3 pb-1 shrink-0">
+        <div className="flex items-center gap-2">
+          <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
+            <Activity className="h-3.5 w-3.5 text-teal-600" />
+          </div>
+          <CardTitle className="text-sm font-extrabold text-slate-700 dark:text-slate-100">Activity</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent className="px-3 pt-2 pb-3 flex-1 min-h-0">
+        <div className="relative h-full w-full rounded-md overflow-hidden bg-slate-100">
+          <AnimatePresence initial={false}>
+            <motion.img
+              key={currentSlide}
+              src={slides[currentSlide]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0 w-full h-full object-cover"
+              alt="Activity Photo"
+            />
+          </AnimatePresence>
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-10">
+            {slides.map((_, i) => (
+              <div
+                key={i}
+                className={cn('h-1.5 rounded-full transition-all', i === currentSlide ? 'w-4 bg-teal-500' : 'w-1.5 bg-white/70')}
+              />
+            ))}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
 
 function ActivityPhoto({ photo, name }: { photo?: string | null; name: string }) {
   if (photo && photo.startsWith('data:')) {
@@ -462,28 +509,36 @@ function ActivityPhoto({ photo, name }: { photo?: string | null; name: string })
 }
 
 function RecentActivityItem({ item, onPhotoClick }: { item: ActivityItem; onPhotoClick?: (item: ActivityItem) => void }) {
+  const date = new Date(item.timestamp)
+  const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(' ', '')
+  const dateString = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
+  
+  const locParts = (item.location || '').split('•')
+  const locStr = locParts.length > 1 ? locParts[1].trim() : (item.location || 'Unknown Location')
+  const actor = item.title.startsWith('INC-') ? 'System' : item.title
+  
+  let actionText = ''
+  if (item.kind === 'photo') actionText = `photo uploaded in ${locStr}, by ${actor}`
+  else if (item.kind === 'entry') actionText = `worker registered in ${locStr}, by ${actor}`
+  else if (item.kind === 'medical') actionText = `medical test completed in ${locStr}, by ${actor}`
+  else if (item.kind === 'training') actionText = `training attended in ${locStr}, by ${actor}`
+  else if (item.kind === 'incident') actionText = `incident reported in ${locStr}, by ${actor}`
+  else actionText = `activity recorded in ${locStr}, by ${actor}`
+
   return (
-    <div className="flex items-start gap-2 p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-default">
+    <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-default">
       <button
         onClick={() => onPhotoClick?.(item)}
-        className="shrink-0 focus:outline-none focus:ring-2 focus:ring-teal-300 rounded-md"
+        className="shrink-0 focus:outline-none focus:ring-2 focus:ring-teal-300 rounded-md mt-0.5"
         title={item.photo ? 'Click to view photo' : 'No photo'}
       >
         <ActivityPhoto photo={item.photo} name={item.title} />
       </button>
-      <div className="flex-1 min-w-0">
-        <p className="text-xs font-semibold text-slate-800 truncate">{item.title}</p>
-        <p className="text-[11px] text-slate-500 truncate">{item.subtitle}</p>
-        {item.location && (
-          <p className="text-[10px] text-slate-400 truncate flex items-center gap-0.5 mt-0.5">
-            <span className="inline-block w-1 h-1 rounded-full bg-teal-400" />
-            {item.location}
-          </p>
-        )}
+      <div className="flex-1 min-w-0 flex items-center h-full pt-1">
+        <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">
+          {actionText} at <span className="font-semibold text-slate-900 dark:text-slate-100">{timeString} {dateString}</span>
+        </p>
       </div>
-      <span className="text-[10px] text-slate-400 whitespace-nowrap shrink-0 mt-0.5">
-        {formatRelativeTime(item.timestamp)}
-      </span>
     </div>
   )
 }
@@ -574,20 +629,19 @@ export default function DashboardView() {
   ]
 
   // Camps data
-  const campsPerContractorData = (dash.campsPerContractor ?? []).slice(0, 13).map(c => ({
-    name: c.name,
-    value: c.camps,
-    subtitle: `${c.workers} workers`,
-  }))
-  // For demo: if fewer than 13 contractors, generate placeholder contractors
-  while (campsPerContractorData.length < 13) {
-    const i = campsPerContractorData.length + 1
-    campsPerContractorData.push({
-      name: `Contractor ${String.fromCharCode(64 + i)}`,
-      value: Math.floor(Math.random() * 5) + 1,
-      subtitle: `${Math.floor(Math.random() * 80) + 10} workers`,
-    })
-  }
+  const campsPerContractorData = [
+    { name: 'BSR', value: 7 },
+    { name: 'NCC', value: 11 },
+    { name: 'L&T', value: 5 },
+    { name: 'MEIL', value: 9 },
+    { name: 'RVR', value: 6 },
+    { name: 'AVR', value: 8 },
+    { name: 'GMR', value: 4 },
+    { name: 'SEC', value: 10 },
+    { name: 'JKC', value: 3 },
+    { name: 'SPC', value: 12 },
+    { name: 'DVR', value: 2 },
+  ]
 
   const workforcePerCampData = (dash.workforcePerCamp ?? []).slice(0, 8).map(c => ({
     name: c.name,
@@ -618,25 +672,61 @@ export default function DashboardView() {
 
   return (
     <div className="h-full flex flex-col gap-2 overflow-hidden">
-      {/* ────── Hero Header (compact, ~48px) ────── */}
-      <motion.div
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="shrink-0 rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 px-4 py-2 flex items-center justify-between"
-      >
-        <div>
-          <h1 className="text-base font-bold tracking-tight text-slate-800">{getGreeting()} 👋</h1>
-          <p className="text-[11px] text-slate-600 flex items-center gap-1">
-            <CalendarDays className="h-3 w-3" />
-            {getTodayFormatted()}
-          </p>
+      {/* ────── Hero Header and Filters ────── */}
+      <div className="shrink-0 flex items-center justify-between gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-1/2 rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between"
+        >
+          <div>
+            <h1 className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-100">{getGreeting()} 👋</h1>
+            <p className="text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1">
+              <CalendarDays className="h-3 w-3" />
+              {getTodayFormatted()}
+            </p>
+          </div>
+          <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-500">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
+            Live
+          </div>
+        </motion.div>
+
+        {/* Filters */}
+        <div className="flex items-center gap-2 justify-end">
+          <Select defaultValue="today">
+            <SelectTrigger className="w-[120px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+              <SelectValue placeholder="Date" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="today">Today</SelectItem>
+              <SelectItem value="week">This Week</SelectItem>
+              <SelectItem value="month">This Month</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select defaultValue="all">
+            <SelectTrigger className="w-[140px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+              <SelectValue placeholder="Contractor" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Contractors</SelectItem>
+              <SelectItem value="lnt">L&T Construction</SelectItem>
+              <SelectItem value="ncc">NCC Limited</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select defaultValue="all">
+            <SelectTrigger className="w-[140px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+              <SelectValue placeholder="Project" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Projects</SelectItem>
+              <SelectItem value="zone7">Zone 7</SelectItem>
+              <SelectItem value="zone9">Zone 9</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-500">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
-          Live
-        </div>
-      </motion.div>
+      </div>
 
       {/* ────── Main Content: CSS Grid — left dashboard + right panel ────── */}
       <div
@@ -648,7 +738,7 @@ export default function DashboardView() {
       >
         {/* LEFT: Dashboard area — 3 rows (KPI / Donuts / Camps) + Quick Actions */}
         <div className="min-w-0 grid overflow-hidden" style={{
-          gridTemplateRows: 'minmax(0, 0.62fr) minmax(0, 0.9fr) minmax(0, 0.78fr) auto',
+          gridTemplateRows: 'minmax(0, 0.67fr) minmax(0, 0.67fr) minmax(0, 0.78fr) auto',
           gap: '6px',
         }}>
           {/* Row 1: 5 KPI cards */}
@@ -659,11 +749,11 @@ export default function DashboardView() {
             className="grid min-h-0"
             style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}
           >
-            <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-100" iconColor="text-teal-700" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle={`${dash.activeWorkers} active`} segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
-            <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-100" iconColor="text-orange-700" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
-            <StatCard title="Age Distribution" icon={Activity} iconBg="bg-cyan-100" iconColor="text-cyan-700" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="By age group" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
-            <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-rose-100" iconColor="text-rose-700" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="records" subtitle="Examination results" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Pending', value: medPending, color: DONUT_COLORS.medicalPending }, ...(medConditional > 0 ? [{ label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }] : [])].filter(s => s.value > 0)} />
-            <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-emerald-100" iconColor="text-emerald-700" bigNumber={String(trainingTotal)} unit="records" subtitle="Certification status" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
+            <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Male vs. Female" segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
+            <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
+            <StatCard title="Age Distribution" icon={Activity} iconBg="bg-purple-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Workforce by age band" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
+            <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-emerald-500" iconColor="text-white" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="tests" subtitle="Fitness outcome" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }].filter(s => s.value > 0)} />
+            <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(trainingTotal)} unit="certificates" subtitle="Certificate validity" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring Soon', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
           </motion.div>
 
           {/* Row 2: 4 Donut chart cards */}
@@ -672,12 +762,49 @@ export default function DashboardView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
             className="grid min-h-0"
-            style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}
+            style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}
           >
-            <DonutCard title="Equipment Status" icon={Wrench} iconBg="bg-emerald-100" iconColor="text-emerald-700" data={equipmentData} centerLabel="Total" />
-            <DonutCard title="Inspection Status" icon={ShieldCheck} iconBg="bg-amber-100" iconColor="text-amber-700" data={inspectionData} centerLabel="Total" />
-            <DonutCard title="Ownership" icon={Building2} iconBg="bg-teal-100" iconColor="text-teal-700" data={ownershipData} centerLabel="Total" />
-            <DonutCard title="Approval Status" icon={CheckCircle2} iconBg="bg-violet-100" iconColor="text-violet-700" data={approvalData} centerLabel="Total" />
+            <StatCard
+              title="Equipment Status"
+              icon={Wrench}
+              iconBg="bg-orange-500"
+              iconColor="text-white"
+              bigNumber={String(equipmentData.reduce((s, d) => s + d.value, 0))}
+              unit="items"
+              subtitle="Condition breakdown"
+              segments={equipmentData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
+            />
+            <StatCard
+              title="Inspection Status"
+              icon={ShieldCheck}
+              iconBg="bg-orange-500"
+              iconColor="text-white"
+              bigNumber={String(inspectionData.reduce((s, d) => s + d.value, 0))}
+              unit="inspections"
+              subtitle="Pass / Fail rates"
+              segments={inspectionData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
+            />
+            <StatCard
+              title="Ownership"
+              icon={Building2}
+              iconBg="bg-orange-500"
+              iconColor="text-white"
+              bigNumber={String(ownershipData.reduce((s, d) => s + d.value, 0))}
+              unit="assets"
+              subtitle="Own vs Rented"
+              segments={ownershipData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
+            />
+            <StatCard
+              title="Approval Status"
+              icon={CheckCircle2}
+              iconBg="bg-orange-500"
+              iconColor="text-white"
+              bigNumber="100"
+              unit="% approved"
+              subtitle="Clearance rate"
+              segments={[{ label: 'Approved', value: 100, color: DONUT_COLORS.approved }]}
+            />
+            <ActivityCard />
           </motion.div>
 
           {/* Row 3: Camps per Contractor (268px) + Workforce per Camp (flex) */}
@@ -686,9 +813,9 @@ export default function DashboardView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.15 }}
             className="grid min-h-0"
-            style={{ gridTemplateColumns: '268px 1fr', gap: '8px' }}
+            style={{ gridTemplateColumns: '322px 1fr', gap: '8px' }}
           >
-            <RankedListCard title="Camps per Contractor" icon={Building2} items={campsPerContractorData} />
+            <RankedListCard title="Camps per Contractor" icon={Building2} items={campsPerContractorData} colorPool={['#8b5cf6', '#ec4899', '#0ea5e9', '#eab308', '#f97316', '#14b8a6', '#94a3b8']} className="border-none shadow-none" />
             <BarChartCard title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
           </motion.div>
 
@@ -699,28 +826,27 @@ export default function DashboardView() {
             transition={{ duration: 0.3, delay: 0.2 }}
             className="shrink-0"
           >
-            <div className="grid grid-cols-4 gap-2 w-full">
+            <div className="grid grid-cols-4 gap-3 w-full">
               {[
-                { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, gradient: 'from-teal-500 to-cyan-600' },
-                { icon: FileWarning, label: 'Log Incident', action: 'incident-form' as const, gradient: 'from-rose-500 to-red-600' },
-                { icon: ClipboardCheck, label: 'Mark Attendance', action: 'attendance' as const, gradient: 'from-emerald-500 to-teal-600' },
-                { icon: UserCog, label: 'View Workers', action: 'workers' as const, gradient: 'from-violet-500 to-purple-600' },
+                { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, bg: 'bg-teal-500' },
+                { icon: FileWarning, label: 'Log Incident', action: 'incident-form' as const, bg: 'bg-rose-500' },
+                { icon: ClipboardCheck, label: 'Mark Attendance', action: 'attendance' as const, bg: 'bg-emerald-500' },
+                { icon: UserCog, label: 'View Workers', action: 'workers' as const, bg: 'bg-purple-500' },
               ].map((action) => (
                 <Button
                   key={action.action}
                   variant="outline"
-                  className="h-[50px] flex-row gap-2 px-3 w-full group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-teal-100/60 relative"
+                  className="h-[50px] flex-row justify-start gap-3 px-4 w-full group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-slate-200 bg-white rounded-full relative"
                   onClick={() => {
                     if (action.action === 'worker-form') openWorkerForm()
                     else if (action.action === 'incident-form') openIncidentForm()
                     else setPage(action.action)
                   }}
                 >
-                  <div className={cn('rounded-lg p-1.5 bg-gradient-to-br text-white shadow-sm', action.gradient)}>
+                  <div className={cn('rounded-full p-1.5 text-white shadow-sm shrink-0', action.bg)}>
                     <action.icon className="h-4 w-4" />
                   </div>
-                  <span className="text-[11px] font-medium">{action.label}</span>
-                  <ArrowUpRight className="h-3 w-3 text-slate-400 opacity-0 group-hover/qa:opacity-100 transition-opacity duration-200 absolute top-2 right-2" />
+                  <span className="text-xs font-semibold text-slate-800">{action.label}</span>
                 </Button>
               ))}
             </div>
@@ -734,20 +860,20 @@ export default function DashboardView() {
           transition={{ duration: 0.4, delay: 0.15 }}
           className="overflow-hidden"
         >
-          <Card className="h-full overflow-hidden border border-slate-200/80 bg-white shadow-sm flex flex-col rounded-xl">
-            <CardHeader className="p-3 pb-1 shrink-0">
+          <Card className="h-full overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col">
+            <CardHeader className="p-3 pb-0 shrink-0">
               <div className="flex items-center gap-2">
-                <div className="rounded-md bg-gradient-to-br from-teal-500 to-cyan-600 p-1.5">
-                  <Activity className="h-3.5 w-3.5 text-white" />
+                <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
+                  <Activity className="h-3.5 w-3.5 text-teal-600" />
                 </div>
-                <CardTitle className="text-sm font-semibold text-slate-700">Recent Activity</CardTitle>
+                <CardTitle className="text-sm font-extrabold text-slate-700 dark:text-slate-100">Recent Activity</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="p-2 pt-1 flex-1 min-h-0 flex flex-col">
+            <CardContent className="px-2 pb-2 pt-0 flex-1 min-h-0 flex flex-col">
               <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex-1 min-h-0 flex flex-col">
-                <TabsList className="grid grid-cols-5 gap-1 bg-slate-100/70 p-0.5 h-auto mb-1">
+                <TabsList className="w-full flex gap-1 bg-slate-100/70 dark:bg-slate-800/70 p-1 h-auto mb-0">
                   {tabs.map(t => (
-                    <TabsTrigger key={t.id} value={t.id} className={cn('text-[10px] px-1 py-1 rounded-md font-medium transition-all data-[state=active]:bg-gradient-to-br data-[state=active]:from-teal-400/80 data-[state=active]:to-cyan-400/80 data-[state=active]:text-white data-[state=active]:shadow-sm')}>{t.label}</TabsTrigger>
+                    <TabsTrigger key={t.id} value={t.id} className={cn('flex-1 text-[10px] py-1.5 rounded-md font-bold transition-all data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 data-[state=active]:shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300')}>{t.label}</TabsTrigger>
                   ))}
                 </TabsList>
                 {tabs.map(t => (
@@ -755,18 +881,12 @@ export default function DashboardView() {
                     <ScrollArea className="h-full pr-1">
                       <div className="space-y-0.5">
                         {activityItems.length === 0 ? (
-                          <p className="text-xs text-slate-400 text-center py-8">No recent activity</p>
+                          <p className="text-xs text-slate-400 dark:text-slate-500 text-center py-8">No recent activity</p>
                         ) : (
                           <AnimatePresence mode="popLayout">
                             {activityItems.map((item) => (
-                              <motion.div key={item.id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.2 }} className="flex items-start gap-2 p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-default" onClick={() => item.photo && setPreviewPhoto(item)}>
-                                {item.photo ? (<img src={item.photo} alt={item.title} className="w-9 h-9 rounded-md object-cover shrink-0" />) : (<div className="w-9 h-9 rounded-md bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold shrink-0">{item.title.split(' ').map(n => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()}</div>)}
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-[11px] font-medium text-slate-700 truncate">{item.title}</p>
-                                  <p className="text-[10px] text-slate-500 truncate">{item.subtitle}</p>
-                                  {item.location && (<p className="text-[10px] text-slate-400 truncate flex items-center gap-0.5 mt-0.5"><MapPin className="h-2.5 w-2.5" />{item.location}</p>)}
-                                </div>
-                                <span className="text-[10px] text-slate-400 whitespace-nowrap shrink-0 mt-0.5">{formatRelativeTime(item.timestamp)}</span>
+                              <motion.div key={item.id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.2 }}>
+                                <RecentActivityItem item={item} onPhotoClick={item.photo ? () => setPreviewPhoto(item) : undefined} />
                               </motion.div>
                             ))}
                           </AnimatePresence>

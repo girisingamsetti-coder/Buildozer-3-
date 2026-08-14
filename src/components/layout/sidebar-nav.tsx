@@ -18,6 +18,7 @@ import {
   Settings,
   X,
   FileBarChart,
+  Flame,
   Menu,
   ChevronLeft,
   ChevronRight,
@@ -59,6 +60,7 @@ const navItems: { id: PageId; label: string; icon: typeof LayoutDashboard }[] = 
   { id: 'training', label: 'Training', icon: GraduationCap },
   { id: 'medical', label: 'Medical', icon: HeartPulse },
   { id: 'grievance', label: 'Grievances', icon: MessageSquareWarning },
+  { id: 'hazardous', label: 'Hazardous Materials', icon: Flame },
   { id: 'legal', label: 'Legal', icon: Scale },
   { id: 'compliance', label: 'Site Compliance', icon: ClipboardCheck },
   { id: 'reports', label: 'Reports', icon: FileBarChart },
@@ -147,9 +149,9 @@ export function SidebarNav() {
       {/* Sidebar */}
       <aside className={cn(
         'text-sidebar-foreground flex flex-col shrink-0 transition-[width] duration-300 ease-in-out relative',
-        // Light teal gradient background
-        'bg-gradient-to-b from-teal-50/60 via-teal-50/30 to-cyan-50/40',
-        'border-r border-teal-100/60',
+        // Light teal gradient background (dark slate in dark mode)
+        'bg-gradient-to-b from-teal-50/60 via-teal-50/30 to-cyan-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950',
+        'border-r border-teal-100/60 dark:border-slate-800',
         // Mobile: fixed, slide in/out
         'fixed top-0 left-0 z-50 h-full w-64',
         sidebarOpen ? 'translate-x-0' : '-translate-x-full',
@@ -159,7 +161,7 @@ export function SidebarNav() {
       )}>
         {/* Header */}
         <div className={cn(
-          'flex items-center border-b border-teal-100/60 shrink-0',
+          'flex items-center border-b border-teal-100/60 dark:border-slate-800 shrink-0',
           collapsed ? 'h-14 justify-center px-2' : 'h-20 px-3'
         )}>
           <img
@@ -175,7 +177,7 @@ export function SidebarNav() {
             variant="ghost"
             size="icon"
             className={cn(
-              'text-teal-700/50 hover:text-teal-700 hover:bg-teal-100/60 h-8 w-8 shrink-0 ml-auto',
+              'text-teal-700/50 dark:text-slate-400 hover:text-teal-700 dark:hover:text-slate-200 hover:bg-teal-100/60 dark:hover:bg-slate-800 h-8 w-8 shrink-0 ml-auto',
               forceMobile ? '' : 'lg:hidden'
             )}
             onClick={() => setSidebarOpen(false)}
@@ -202,7 +204,7 @@ export function SidebarNav() {
                       : 'gap-3 px-3 py-2.5',
                     isActive
                       ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-semibold shadow-sm'
-                      : 'text-slate-600 hover:bg-teal-50 hover:text-teal-700'
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400'
                   )}
                 >
                   <Icon className="h-4.5 w-4.5 shrink-0" />
@@ -233,75 +235,44 @@ export function SidebarNav() {
           'shrink-0 border-t border-teal-100/60 py-2',
           collapsed ? 'px-1.5' : 'px-2.5'
         )}>
-          <div className={cn('flex flex-col gap-1', collapsed && 'items-center')}>
+          <div className={cn('flex gap-2', collapsed ? 'flex-col items-center' : 'flex-row items-center justify-center')}>
             {/* Dark/Light mode toggle */}
-            {collapsed ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={toggleTheme}
-                    className="h-9 w-9 rounded-lg text-slate-600 hover:bg-teal-50 hover:text-teal-700"
-                    title="Toggle theme"
-                  >
-                    {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="right">{isDark ? 'Switch to Light' : 'Switch to Dark'}</TooltipContent>
-              </Tooltip>
-            ) : (
-              <Button
-                variant="ghost"
-                onClick={toggleTheme}
-                className="justify-start gap-3 h-9 px-3 rounded-lg text-slate-600 hover:bg-teal-50 hover:text-teal-700 font-medium"
-              >
-                {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-                <span>{isDark ? 'Dark Mode' : 'Light Mode'}</span>
-              </Button>
-            )}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={toggleTheme}
+                  className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
+                  title="Toggle theme"
+                >
+                  {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side={collapsed ? "right" : "top"}>{isDark ? 'Switch to Light' : 'Switch to Dark'}</TooltipContent>
+            </Tooltip>
 
             {/* Notifications */}
             <Popover open={notifOpen} onOpenChange={setNotifOpen}>
               <PopoverTrigger asChild>
-                {collapsed ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="relative h-9 w-9 rounded-lg text-slate-600 hover:bg-teal-50 hover:text-teal-700"
-                        title="Notifications"
-                      >
-                        <Bell className="h-4 w-4" />
-                        {unreadCount > 0 && (
-                          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-background">
-                            {unreadCount}
-                          </span>
-                        )}
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">Notifications</TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    className="justify-start gap-3 h-9 px-3 rounded-lg text-slate-600 hover:bg-teal-50 hover:text-teal-700 font-medium relative"
-                  >
-                    <div className="relative">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="relative h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
+                      title="Notifications"
+                    >
                       <Bell className="h-4 w-4" />
                       {unreadCount > 0 && (
-                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-background">
+                        <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-background dark:ring-slate-900">
                           {unreadCount}
                         </span>
                       )}
-                    </div>
-                    <span>Notifications</span>
-                    {unreadCount > 0 && (
-                      <Badge variant="secondary" className="ml-auto text-xs">{unreadCount} new</Badge>
-                    )}
-                  </Button>
-                )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side={collapsed ? "right" : "top"}>Notifications</TooltipContent>
+                </Tooltip>
               </PopoverTrigger>
               <PopoverContent side="right" align="start" className="w-80 p-0 rounded-xl">
                 <div className="flex items-center justify-between p-3 border-b">
@@ -350,37 +321,21 @@ export function SidebarNav() {
             {/* Profile dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                {collapsed ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 rounded-lg text-slate-600 hover:bg-teal-50 hover:text-teal-700 mt-1"
-                        title="Profile"
-                      >
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold">
-                          {getInitials(userName || 'User')}
-                        </div>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">{userName || 'Profile'}</TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    className="justify-start gap-2 h-10 px-2 rounded-lg text-slate-600 hover:bg-teal-50 hover:text-teal-700 font-medium mt-1"
-                  >
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                      {getInitials(userName || 'User')}
-                    </div>
-                    <div className="text-left flex-1 min-w-0">
-                      <p className="text-xs font-semibold truncate leading-tight">{userName || 'User'}</p>
-                      <p className="text-[10px] text-slate-500 truncate leading-tight">{roleLabels[role] || role}</p>
-                    </div>
-                    <ChevronDown className="h-3.5 w-3.5 shrink-0 text-slate-400" />
-                  </Button>
-                )}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
+                      title="Profile"
+                    >
+                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold">
+                        {getInitials(userName || 'User')}
+                      </div>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side={collapsed ? "right" : "top"}>{userName || 'Profile'}</TooltipContent>
+                </Tooltip>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="right" align="start" className="w-56">
                 <DropdownMenuLabel className="font-normal">

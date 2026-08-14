@@ -386,7 +386,7 @@ export default function WorkerListView() {
       {/* ====== Table (Desktop) / Cards (Mobile) ====== */}
       <div className="flex-1 min-h-0 flex flex-col">
       <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
-        <CardContent className="flex-1 min-h-0 overflow-y-auto p-0">
+        <CardContent className="flex-1 min-h-0 flex flex-col p-0">
           {isLoading ? (
             <div className="p-4">
               <TableSkeleton />
@@ -400,7 +400,7 @@ export default function WorkerListView() {
           ) : (
             <>
               {/* Desktop Table */}
-              <div className="hidden md:block overflow-x-auto">
+              <div className="hidden md:block flex-1 min-h-0 overflow-auto">
                 <Table>
                   <TableHeader className="sticky top-0 z-10 bg-background">
                     <TableRow>

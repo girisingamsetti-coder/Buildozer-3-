@@ -331,7 +331,7 @@ export default function IncidentListView() {
       {/* ====== Table / Cards ====== */}
       <div className="flex-1 min-h-0 flex flex-col">
         <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
-          <CardContent className="p-0 flex-1 min-h-0 flex flex-col overflow-hidden">
+          <CardContent className="p-0 flex-1 min-h-0 flex flex-col">
             {isLoading ? (
               <div className="p-4"><TableSkeleton /></div>
             ) : incidents.length === 0 ? (
@@ -343,7 +343,7 @@ export default function IncidentListView() {
             ) : (
               <>
                 {/* Desktop Table */}
-                <div className="hidden md:block overflow-x-auto">
+                <div className="hidden md:block flex-1 min-h-0 overflow-auto">
                   <Table>
                     <TableHeader className="sticky top-0 z-10 bg-background">
                       <TableRow>

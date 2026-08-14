@@ -695,7 +695,7 @@ export default function TrainingView() {
       {/* Table / Cards */}
       <div className="flex-1 min-h-0 flex flex-col">
       <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
-        <CardContent className="flex-1 min-h-0 overflow-y-auto p-0">
+        <CardContent className="flex-1 min-h-0 flex flex-col p-0">
           {isLoading ? (
             <div className="p-4"><TableSkeleton /></div>
           ) : filteredRecords.length === 0 ? (
@@ -707,9 +707,9 @@ export default function TrainingView() {
           ) : (
             <>
               {/* Desktop Table */}
-              <div className="hidden lg:block overflow-x-auto">
+              <div className="hidden lg:block flex-1 min-h-0 overflow-auto">
                 <Table>
-                  <TableHeader className="sticky top-0 z-10 bg-background">
+                  <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
                     <TableRow>
                       <TableHead className="w-12">S.No</TableHead>
                       <TableHead className="w-36">Worker</TableHead>
