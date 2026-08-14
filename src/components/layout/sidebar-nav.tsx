@@ -255,26 +255,21 @@ export function SidebarNav() {
             {/* Notifications */}
             <Popover open={notifOpen} onOpenChange={setNotifOpen}>
               <PopoverTrigger asChild>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="relative h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
-                      title="Notifications"
-                    >
-                      <Bell className="h-4 w-4" />
-                      {unreadCount > 0 && (
-                        <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-background dark:ring-slate-900">
-                          {unreadCount}
-                        </span>
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side={collapsed ? "right" : "top"}>Notifications</TooltipContent>
-                </Tooltip>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
+                  title="Notifications"
+                >
+                  <Bell className="h-4 w-4" />
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-background dark:ring-slate-900">
+                      {unreadCount}
+                    </span>
+                  )}
+                </Button>
               </PopoverTrigger>
-              <PopoverContent side="right" align="start" className="w-80 p-0 rounded-xl">
+              <PopoverContent side="top" align="center" className="w-64 p-0 rounded-xl mb-2">
                 <div className="flex items-center justify-between p-3 border-b">
                   <h3 className="font-semibold text-sm">Notifications</h3>
                   <div className="flex items-center gap-2">

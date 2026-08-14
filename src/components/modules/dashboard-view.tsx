@@ -717,6 +717,16 @@ export default function DashboardView() {
           </Select>
           <Select defaultValue="all">
             <SelectTrigger className="w-[140px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+              <SelectValue placeholder="Camp" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Camps</SelectItem>
+              <SelectItem value="camp-a">Camp A</SelectItem>
+              <SelectItem value="camp-b">Camp B</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select defaultValue="all">
+            <SelectTrigger className="w-[140px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
               <SelectValue placeholder="Project" />
             </SelectTrigger>
             <SelectContent>
