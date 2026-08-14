@@ -242,7 +242,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
   })
 
   const form = useForm<WorkerFormValues>({
-    resolver: zodResolver(workerFormSchema),
+    resolver: zodResolver(workerFormSchema) as any,
     defaultValues: {
       fullName: '',
       dateOfBirth: '',

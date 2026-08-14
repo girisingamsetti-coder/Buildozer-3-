@@ -17,8 +17,8 @@ export async function GET(req: NextRequest) {
       ])
 
       // Aggregate: group by item name, compute majority status
-      const aggregate = <T extends { item: string; status: string; siteId: string }>(items: T[]) => {
-        const map = new Map<string, { item: string; compliant: number; nonCompliant: number; pending: number; total: number; lastInspectionDate: string | null; inspector: string | null }>()
+      const aggregate = <T extends { item: string; status: string; siteId: string; lastInspectionDate?: Date | null; inspector?: string | null }>(items: T[]) => {
+        const map = new Map<string, { item: string; compliant: number; nonCompliant: number; pending: number; total: number; lastInspectionDate: Date | null; inspector: string | null }>()
         for (const i of items) {
           const existing = map.get(i.item)
           if (existing) {
@@ -33,8 +33,8 @@ export async function GET(req: NextRequest) {
               nonCompliant: i.status === 'NonCompliant' ? 1 : 0,
               pending: i.status === 'Pending' ? 1 : 0,
               total: 1,
-              lastInspectionDate: i.lastInspectionDate,
-              inspector: i.inspector,
+              lastInspectionDate: i.lastInspectionDate ?? null,
+              inspector: i.inspector ?? null,
             })
           }
         }

@@ -101,7 +101,7 @@ async function seed() {
   const names = ['Amit', 'Rahul', 'Suresh', 'Ramesh', 'Prakash', 'Vijay', 'Sanjay', 'Rajesh', 'Manoj', 'Deepak', 'Arun', 'Raju', 'Kamal', 'Babu', 'Vinod', 'Anil', 'Sunil', 'Gopal', 'Naresh', 'Hari']
   const surnames = ['Kumar', 'Singh', 'Sharma', 'Verma', 'Patel', 'Yadav', 'Das', 'Gupta', 'Prasad', 'Rao', 'Reddy', 'Chauhan', 'Nath', 'Mishra']
   
-  const workers = []
+  const workers: any[] = []
   for (let i = 1; i <= 100; i++) {
     const c = allContractors[i % allContractors.length]
     const s = allSites[i % allSites.length]
@@ -227,6 +227,7 @@ async function seed() {
         category: 'Hazardous',
         hazardClassification: ['Flammable', 'Toxic', 'Corrosive'][i % 3],
         quantityCurrent: 100 + i * 10,
+        quantityMaxPermissible: 500 + i * 50,
         unit: 'Liters',
         siteId: allSites[i % allSites.length].id,
       }
@@ -238,8 +239,7 @@ async function seed() {
   for (let i = 1; i <= 20; i++) {
     await db.legalCompliance.create({
       data: {
-        documentName: ['Labour License', 'BOCW Registration', 'PF Registration', 'ESI Registration'][i % 4],
-        category: 'Statutory',
+        complianceType: ['LabourLicense', 'BOCW', 'ContractLabour', 'StatutoryRegister'][i % 4],
         status: i % 5 === 0 ? 'Expired' : 'Valid',
         expiryDate: new Date(Date.now() + i * 30 * 86400000),
         contractorId: allContractors[i % allContractors.length].id,

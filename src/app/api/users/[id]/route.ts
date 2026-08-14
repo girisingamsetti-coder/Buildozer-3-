@@ -81,7 +81,7 @@ export async function PUT(
     const changeDetails: string[] = []
     if (fullName !== undefined && fullName !== existing.fullName) changeDetails.push(`fullName: ${existing.fullName} → ${fullName}`)
     if (role !== undefined && role !== existing.role) changeDetails.push(`role: ${existing.role} → ${role}`)
-    if (contractorName !== undefined && contractorName !== (existing.contractor?.name ?? 'All Contractors')) changeDetails.push(`contractorName: ${existing.contractor?.name ?? 'All Contractors'} → ${contractorName}`)
+    if (contractorName !== undefined && contractorName !== (existing.contractorId ?? 'All Contractors')) changeDetails.push(`contractor: ${existing.contractorId ?? 'All Contractors'} → ${contractorName}`)
     if (isActive !== undefined && isActive !== existing.isActive) changeDetails.push(`isActive: ${String(existing.isActive)} → ${String(isActive)}`)
 
     if (changeDetails.length > 0) {

@@ -357,11 +357,10 @@ export default function LocationsView() {
                             )}
                           </TableCell>
                           <TableCell className="text-center">
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                              camp.isActive
-                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                                : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                            }`}>
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${camp.isActive
+                              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                              : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                              }`}>
                               {camp.isActive ? 'Active' : 'Inactive'}
                             </span>
                           </TableCell>
@@ -412,6 +411,9 @@ export default function LocationsView() {
                           <p className="text-xs text-muted-foreground">{camp.contractor?.name} · {camp.site?.name}</p>
                         </div>
                         <div className="flex items-center gap-1 shrink-0">
+                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-[#0d9488]" onClick={() => setMapCamp(camp)}>
+                            <MapPin className="h-4 w-4" />
+                          </Button>
                           <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => { setEditingCamp(camp); setAddOpen(true) }}>
                             <Pencil className="h-3 w-3" />
                           </Button>
@@ -441,9 +443,8 @@ export default function LocationsView() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                          camp.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
-                        }`}>
+                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${camp.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+                          }`}>
                           {camp.isActive ? 'Active' : 'Inactive'}
                         </span>
                         <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${comp.className}`}>

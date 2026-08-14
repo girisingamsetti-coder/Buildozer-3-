@@ -109,5 +109,5 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  return POST(req, params)
+  return POST(req, { params })
 }

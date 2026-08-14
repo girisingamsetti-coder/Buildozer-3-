@@ -924,7 +924,7 @@ export async function runDemoSeed(db: PrismaClient): Promise<Record<string, numb
   }
 
   // Create incidents and get IDs
-  const createdIncidents = []
+  const createdIncidents: any[] = []
   for (const inc of incidents) {
     const created = await db.incident.create({ data: inc })
     createdIncidents.push(created)
@@ -972,7 +972,7 @@ export async function runDemoSeed(db: PrismaClient): Promise<Record<string, numb
   const grievanceAssignees = ['SafetyOfficer','PMC','HR','SafetyOfficer','PMC']
 
   const NUM_GRIEVANCES = 8
-  const grievanceData = []
+  const grievanceData: any[] = []
   for (let i = 0; i < NUM_GRIEVANCES; i++) {
     const tmpl = grievanceTemplates[i % grievanceTemplates.length]
     const status = grievanceStatuses[i % grievanceStatuses.length]
@@ -1087,7 +1087,7 @@ export async function runDemoSeed(db: PrismaClient): Promise<Record<string, numb
   }
 
   // Create vehicles and get IDs
-  const createdVehicles = []
+  const createdVehicles: any[] = []
   for (const v of vehiclesData) {
     const created = await db.vehicle.create({ data: v })
     createdVehicles.push(created)
@@ -1178,7 +1178,7 @@ export async function runDemoSeed(db: PrismaClient): Promise<Record<string, numb
     }
   }
 
-  const createdHazmats = []
+  const createdHazmats: any[] = []
   for (const hm of hazmatData) {
     const created = await db.hazardousMaterial.create({ data: hm })
     createdHazmats.push(created)
@@ -1315,7 +1315,7 @@ export async function runDemoSeed(db: PrismaClient): Promise<Record<string, numb
     { type:'GrievanceSLA', title:'Grievance Escalated', message:'Grievance {entity} has been escalated due to non-resolution within SLA period.', entityType:'Grievance', priority:'Critical' },
   ]
 
-  const notificationsData = []
+  const notificationsData: any[] = []
   for (let i = 0; i < 25; i++) {
     const tmpl = notificationTemplates[i % notificationTemplates.length]
     const workerName = pick(workerData.slice(0, 30)).fullName

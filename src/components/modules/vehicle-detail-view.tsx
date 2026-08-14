@@ -492,8 +492,8 @@ export default function VehicleDetailView() {
                   <div>
                     <p className="text-xs text-muted-foreground">Driver</p>
                     {vehicle.driver ? (
-                      <button type="button" className="text-sm font-medium mt-0.5 text-teal-600 hover:underline" onClick={() => setPage('worker-detail', { id: vehicle.driver.id })}>
-                        {vehicle.driver.fullName} <span className="text-muted-foreground font-mono text-xs">({vehicle.driver.employeeNumber})</span>
+                      <button type="button" className="text-sm font-medium mt-0.5 text-teal-600 hover:underline" onClick={() => setPage('worker-detail', { id: vehicle.driver?.id ?? '' })}>
+                        {vehicle.driver?.fullName} <span className="text-muted-foreground font-mono text-xs">({vehicle.driver?.employeeNumber})</span>
                       </button>
                     ) : (
                       <p className="text-sm text-muted-foreground mt-0.5">No driver assigned</p>

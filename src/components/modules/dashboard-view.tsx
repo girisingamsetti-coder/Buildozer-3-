@@ -20,6 +20,10 @@ import {
   GraduationCap,
   CalendarDays,
   MapPin,
+  HardHat,
+  Tent,
+  FolderKanban,
+  Search,
 } from 'lucide-react'
 import {
   BarChart,
@@ -39,6 +43,10 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, subMonths } from 'date-fns'
+import { DateRange } from 'react-day-picker'
 import { useNavStore } from '@/stores/nav-store'
 import { cn } from '@/lib/utils'
 
@@ -447,33 +455,26 @@ function BarChartCard({ title, icon: Icon, data, colorPool = CONTRACTOR_COLORS, 
 }
 
 // ──────────────────── Recent Activity Item ────────────────────
-function ActivityCard({ className }: { className?: string }) {
+function ActivityCard({ className, slides = [] }: { className?: string; slides?: string[] }) {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const slides = ['/slideshow/slide1.jpg', '/slideshow/slide2.jpg', '/slideshow/slide3.jpg']
+  const defaultSlides = ['/slideshow/slide1.jpg', '/slideshow/slide2.jpg', '/slideshow/slide3.jpg']
+  const displaySlides = slides.length > 0 ? slides : defaultSlides
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide(s => (s + 1) % slides.length)
+      setCurrentSlide(s => (s + 1) % displaySlides.length)
     }, 3000)
     return () => clearInterval(timer)
-  }, [])
+  }, [displaySlides.length])
 
   return (
-    <Card className={cn('h-full overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col', className)}>
-      <CardHeader className="p-3 pb-1 shrink-0">
-        <div className="flex items-center gap-2">
-          <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
-            <Activity className="h-3.5 w-3.5 text-teal-600" />
-          </div>
-          <CardTitle className="text-sm font-extrabold text-slate-700 dark:text-slate-100">Activity</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent className="px-3 pt-2 pb-3 flex-1 min-h-0">
-        <div className="relative h-full w-full rounded-md overflow-hidden bg-slate-100">
+    <Card className={cn('overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col', className)}>
+      <CardContent className="px-2 py-0 flex-1 min-h-0">
+        <div className="relative h-full w-full overflow-hidden bg-slate-100 rounded-xl">
           <AnimatePresence initial={false}>
             <motion.img
               key={currentSlide}
-              src={slides[currentSlide]}
+              src={displaySlides[currentSlide]}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -483,7 +484,7 @@ function ActivityCard({ className }: { className?: string }) {
             />
           </AnimatePresence>
           <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-10">
-            {slides.map((_, i) => (
+            {displaySlides.map((_, i) => (
               <div
                 key={i}
                 className={cn('h-1.5 rounded-full transition-all', i === currentSlide ? 'w-4 bg-teal-500' : 'w-1.5 bg-white/70')}
@@ -512,11 +513,11 @@ function RecentActivityItem({ item, onPhotoClick }: { item: ActivityItem; onPhot
   const date = new Date(item.timestamp)
   const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(' ', '')
   const dateString = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
-  
+
   const locParts = (item.location || '').split('•')
   const locStr = locParts.length > 1 ? locParts[1].trim() : (item.location || 'Unknown Location')
   const actor = item.title.startsWith('INC-') ? 'System' : item.title
-  
+
   let actionText = ''
   if (item.kind === 'photo') actionText = `photo uploaded in ${locStr}, by ${actor}`
   else if (item.kind === 'entry') actionText = `worker registered in ${locStr}, by ${actor}`
@@ -578,6 +579,19 @@ export default function DashboardView() {
   const openIncidentForm = useNavStore(s => s.openIncidentForm)
   const [activeTab, setActiveTab] = useState<'photos' | 'new-entry' | 'medical' | 'training' | 'incident'>('photos')
   const [previewPhoto, setPreviewPhoto] = useState<ActivityItem | null>(null)
+
+  const [dateRange, setDateRange] = useState<DateRange | undefined>()
+  const [contractorFilter, setContractorFilter] = useState('all')
+  const [campFilter, setCampFilter] = useState('all')
+  const [projectFilter, setProjectFilter] = useState('all')
+
+  const hasActiveFilters = !!dateRange || contractorFilter !== 'all' || campFilter !== 'all' || projectFilter !== 'all'
+  const clearFilters = () => {
+    setDateRange(undefined)
+    setContractorFilter('all')
+    setCampFilter('all')
+    setProjectFilter('all')
+  }
 
   const { data: dash, isLoading } = useQuery<DashboardData>({
     queryKey: ['dashboard'],
@@ -687,52 +701,117 @@ export default function DashboardView() {
               {getTodayFormatted()}
             </p>
           </div>
-          <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-500">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
-            Live
-          </div>
         </motion.div>
 
         {/* Filters */}
-        <div className="flex items-center gap-2 justify-end">
-          <Select defaultValue="today">
-            <SelectTrigger className="w-[120px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-              <SelectValue placeholder="Date" />
+        <div className="flex flex-wrap items-center gap-2 justify-end">
+          {hasActiveFilters && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors"
+              onClick={clearFilters}
+            >
+              Clear Filters
+            </Button>
+          )}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                id="date"
+                variant={"outline"}
+                className={cn(
+                  "w-auto px-4 h-9 rounded-full justify-start text-left font-medium text-xs bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all",
+                  !dateRange && "text-muted-foreground"
+                )}
+              >
+                <CalendarDays className="mr-2 h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                {dateRange?.from ? (
+                  dateRange.to ? (
+                    <>
+                      {format(dateRange.from, "MMM d")} - {format(dateRange.to, "MMM d, yyyy")}
+                    </>
+                  ) : (
+                    format(dateRange.from, "MMM d, yyyy")
+                  )
+                ) : (
+                  <span>Date</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 rounded-xl border-slate-200 dark:border-slate-800 shadow-xl flex" align="start">
+              {/* Quick Presets Sidebar */}
+              <div className="flex flex-col gap-1 border-r border-slate-200 dark:border-slate-800 p-3 bg-slate-50 dark:bg-slate-900/50 w-[140px]">
+                <span className="text-xs font-semibold text-slate-500 mb-1 px-2">Quick Select</span>
+                {[
+                  { label: 'Overall', onClick: () => setDateRange(undefined) },
+                  { label: 'Today', onClick: () => setDateRange({ from: new Date(), to: new Date() }) },
+                  { label: 'Yesterday', onClick: () => setDateRange({ from: subDays(new Date(), 1), to: subDays(new Date(), 1) }) },
+                  { label: 'Last 7 Days', onClick: () => setDateRange({ from: subDays(new Date(), 6), to: new Date() }) },
+                  { label: 'Last 30 Days', onClick: () => setDateRange({ from: subDays(new Date(), 29), to: new Date() }) },
+                ].map(preset => (
+                  <Button
+                    key={preset.label}
+                    variant="ghost"
+                    size="sm"
+                    className="justify-start font-normal text-xs h-8 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800"
+                    onClick={preset.onClick}
+                  >
+                    {preset.label}
+                  </Button>
+                ))}
+              </div>
+              {/* Calendar */}
+              <div className="p-2">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={dateRange?.from}
+                  selected={dateRange}
+                  onSelect={setDateRange}
+                  numberOfMonths={1}
+                  className="bg-white dark:bg-slate-950 rounded-xl"
+                />
+              </div>
+            </PopoverContent>
+          </Popover>
+          <Select value={contractorFilter} onValueChange={setContractorFilter}>
+            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                <HardHat className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                <SelectValue placeholder="Contractor" />
+              </div>
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="today">Today</SelectItem>
-              <SelectItem value="week">This Week</SelectItem>
-              <SelectItem value="month">This Month</SelectItem>
+            <SelectContent className="rounded-xl shadow-lg border-slate-200 dark:border-slate-800">
+              <SelectItem value="all" className="text-xs cursor-pointer">All Contractors</SelectItem>
+              <SelectItem value="lnt" className="text-xs cursor-pointer">L&T Construction</SelectItem>
+              <SelectItem value="ncc" className="text-xs cursor-pointer">NCC Limited</SelectItem>
             </SelectContent>
           </Select>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-[140px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-              <SelectValue placeholder="Contractor" />
+          <Select value={campFilter} onValueChange={setCampFilter}>
+            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                <Tent className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                <SelectValue placeholder="Camp" />
+              </div>
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Contractors</SelectItem>
-              <SelectItem value="lnt">L&T Construction</SelectItem>
-              <SelectItem value="ncc">NCC Limited</SelectItem>
+            <SelectContent className="rounded-xl shadow-lg border-slate-200 dark:border-slate-800">
+              <SelectItem value="all" className="text-xs cursor-pointer">All Camps</SelectItem>
+              <SelectItem value="camp-a" className="text-xs cursor-pointer">Camp A</SelectItem>
+              <SelectItem value="camp-b" className="text-xs cursor-pointer">Camp B</SelectItem>
             </SelectContent>
           </Select>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-[140px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-              <SelectValue placeholder="Camp" />
+          <Select value={projectFilter} onValueChange={setProjectFilter}>
+            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                <FolderKanban className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                <SelectValue placeholder="Project" />
+              </div>
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Camps</SelectItem>
-              <SelectItem value="camp-a">Camp A</SelectItem>
-              <SelectItem value="camp-b">Camp B</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-[140px] h-10 text-xs bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-              <SelectValue placeholder="Project" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Projects</SelectItem>
-              <SelectItem value="zone7">Zone 7</SelectItem>
-              <SelectItem value="zone9">Zone 9</SelectItem>
+            <SelectContent className="rounded-xl shadow-lg border-slate-200 dark:border-slate-800">
+              <SelectItem value="all" className="text-xs cursor-pointer">All Projects</SelectItem>
+              <SelectItem value="zone7" className="text-xs cursor-pointer">Zone 7</SelectItem>
+              <SelectItem value="zone9" className="text-xs cursor-pointer">Zone 9</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -772,7 +851,7 @@ export default function DashboardView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
             className="grid min-h-0"
-            style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}
+            style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}
           >
             <StatCard
               title="Equipment Status"
@@ -814,7 +893,6 @@ export default function DashboardView() {
               subtitle="Clearance rate"
               segments={[{ label: 'Approved', value: 100, color: DONUT_COLORS.approved }]}
             />
-            <ActivityCard />
           </motion.div>
 
           {/* Row 3: Camps per Contractor (268px) + Workforce per Camp (flex) */}
@@ -829,38 +907,7 @@ export default function DashboardView() {
             <BarChartCard title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
           </motion.div>
 
-          {/* Quick Actions — 4 buttons, ~55px high */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-            className="shrink-0"
-          >
-            <div className="grid grid-cols-4 gap-3 w-full">
-              {[
-                { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, bg: 'bg-teal-500' },
-                { icon: FileWarning, label: 'Log Incident', action: 'incident-form' as const, bg: 'bg-rose-500' },
-                { icon: ClipboardCheck, label: 'Mark Attendance', action: 'attendance' as const, bg: 'bg-emerald-500' },
-                { icon: UserCog, label: 'View Workers', action: 'workers' as const, bg: 'bg-purple-500' },
-              ].map((action) => (
-                <Button
-                  key={action.action}
-                  variant="outline"
-                  className="h-[50px] flex-row justify-start gap-3 px-4 w-full group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-slate-200 bg-white rounded-full relative"
-                  onClick={() => {
-                    if (action.action === 'worker-form') openWorkerForm()
-                    else if (action.action === 'incident-form') openIncidentForm()
-                    else setPage(action.action)
-                  }}
-                >
-                  <div className={cn('rounded-full p-1.5 text-white shadow-sm shrink-0', action.bg)}>
-                    <action.icon className="h-4 w-4" />
-                  </div>
-                  <span className="text-xs font-semibold text-slate-800">{action.label}</span>
-                </Button>
-              ))}
-            </div>
-          </motion.div>
+
         </div>
 
         {/* RIGHT: Recent Activity panel — 372px wide, full height */}
@@ -868,9 +915,9 @@ export default function DashboardView() {
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="overflow-hidden"
+          className="overflow-hidden flex flex-col gap-2 h-full items-start"
         >
-          <Card className="h-full overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col">
+          <Card className="w-full flex-1 min-h-0 overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col">
             <CardHeader className="p-3 pb-0 shrink-0">
               <div className="flex items-center gap-2">
                 <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
@@ -908,8 +955,43 @@ export default function DashboardView() {
               </Tabs>
             </CardContent>
           </Card>
+          <ActivityCard className="w-full h-[284px] shrink-0" slides={activityItems.map(i => i.photo).filter(Boolean) as string[]} />
         </motion.div>
       </div>
+
+      {/* Quick Actions — 5 buttons, ~55px high */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
+        className="shrink-0"
+      >
+        <div className="grid grid-cols-5 gap-3 w-full">
+          {[
+            { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, bg: 'bg-teal-500' },
+            { icon: FileWarning, label: 'Log Incident', action: 'incident-form' as const, bg: 'bg-rose-500' },
+            { icon: ClipboardCheck, label: 'Mark Attendance', action: 'attendance' as const, bg: 'bg-emerald-500' },
+            { icon: UserCog, label: 'View Workers', action: 'workers' as const, bg: 'bg-purple-500' },
+            { icon: Search, label: 'Search Machinery', action: 'vehicles' as const, bg: 'bg-blue-500' },
+          ].map((action) => (
+            <Button
+              key={action.action}
+              variant="outline"
+              className="h-[50px] flex-row justify-start gap-3 px-4 w-full group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-slate-200 bg-white rounded-full relative"
+              onClick={() => {
+                if (action.action === 'worker-form') openWorkerForm()
+                else if (action.action === 'incident-form') openIncidentForm()
+                else setPage(action.action)
+              }}
+            >
+              <div className={cn('rounded-full p-1.5 text-white shadow-sm shrink-0', action.bg)}>
+                <action.icon className="h-4 w-4" />
+              </div>
+              <span className="text-xs font-semibold text-slate-800">{action.label}</span>
+            </Button>
+          ))}
+        </div>
+      </motion.div>
 
       {/* Photo Preview Dialog */}
       <Dialog open={!!previewPhoto} onOpenChange={(open) => !open && setPreviewPhoto(null)}>

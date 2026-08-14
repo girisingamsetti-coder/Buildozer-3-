@@ -49,7 +49,7 @@ function LoadingFallback() {
   )
 }
 
-const pageComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
+const pageComponents: Record<string, React.LazyExoticComponent<any>> = {
   dashboard: DashboardView,
   workers: WorkforceView,
   'worker-detail': WorkerDetailView,

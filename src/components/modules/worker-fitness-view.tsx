@@ -73,7 +73,7 @@ export default function WorkerFitnessView() {
   const [submitting, setSubmitting] = useState(false)
 
   const form = useForm<FitnessFormValues>({
-    resolver: zodResolver(fitnessSchema),
+    resolver: zodResolver(fitnessSchema) as any,
     defaultValues: {
       fitnessStatus: 'Pending',
       fitnessValidityDate: '',

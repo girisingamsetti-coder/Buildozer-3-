@@ -205,11 +205,9 @@ export default function WorkerFormView() {
   const [direction, setDirection] = useState<1 | -1>(1)
   const [validating, setValidating] = useState(false)
 
-  // Derive photo: user-uploaded takes priority, else existing from DB
-  const photoDataUrl = userPhoto || (isEdit && existingWorker?.data?.profilePhotoPath ? existingWorker.data.profilePhotoPath : null)
 
   const form = useForm<WorkerFormValues>({
-    resolver: zodResolver(workerFormSchema),
+    resolver: zodResolver(workerFormSchema) as any,
     defaultValues: {
       fullName: '',
       dateOfBirth: '',
@@ -265,6 +263,9 @@ export default function WorkerFormView() {
     queryFn: () => fetch(`/api/workers/${editId}`).then((r) => r.json()),
     enabled: isEdit,
   })
+
+  // Derive photo: user-uploaded takes priority, else existing from DB
+  const photoDataUrl = userPhoto || (isEdit && existingWorker?.data?.profilePhotoPath ? existingWorker.data.profilePhotoPath : null)
 
   // Populate form when editing
   useEffect(() => {

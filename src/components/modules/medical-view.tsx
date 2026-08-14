@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, useWatch } from 'react-hook-form'
 import {
   Plus,
   Search,
@@ -283,7 +283,7 @@ function AddMedicalDialog({ workerId, workerName, open, onOpenChange }: {
 
   const [formPhotos, setFormPhotos] = useState<string[]>([])
 
-  const selectedChronic = watch('chronicDiseases') || []
+  const selectedChronic = useWatch({ control, name: 'chronicDiseases' }) || []
 
   const mutation = useMutation({
     mutationFn: async (data: MedicalFormValues) => {

@@ -95,5 +95,5 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   // Same logic as POST — upsert
-  return POST(req, params)
+  return POST(req, { params })
 }
