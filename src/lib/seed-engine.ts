@@ -299,7 +299,9 @@ export async function runDemoSeed(db: PrismaClient): Promise<Record<string, numb
     db.designation.deleteMany(),
     db.contractor.deleteMany(),
   ]
-  await Promise.all(deleteOps)
+  for (const op of deleteOps) {
+    await op
+  }
   console.log('[SEED] All data cleared.')
 
   // ─── STEP 2: MASTER DATA ──────────────────────────────────────────
