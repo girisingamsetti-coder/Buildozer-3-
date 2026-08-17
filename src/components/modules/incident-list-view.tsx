@@ -365,36 +365,36 @@ export default function IncidentListView() {
                           onClick={() => navigateTo('incident-detail', { id: inc.id })}
                         >
                           <TableCell className="text-muted-foreground text-xs">{(page - 1) * PAGE_SIZE + index + 1}</TableCell>
-                        <TableCell className="font-mono text-sm font-medium">
-                          {inc.incidentNumber}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className={typeBadgeClass[inc.incidentType] || ''}>
-                            {typeLabels[inc.incidentType] || inc.incidentType}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {format(new Date(inc.date), 'dd MMM yyyy')}
-                        </TableCell>
-                        <TableCell className="text-sm max-w-40 truncate">
-                          {inc.locationOnSite || '—'}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className={severityClass[inc.severity] || ''}>
-                            {inc.severity}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <StatusBadge status={inc.status} />
-                        </TableCell>
-                        <TableCell className="text-center font-medium">
-                          {inc.workers?.length ?? 0}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+                          <TableCell className="font-mono text-sm font-medium">
+                            {inc.incidentNumber}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={typeBadgeClass[inc.incidentType] || ''}>
+                              {typeLabels[inc.incidentType] || inc.incidentType}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-sm">
+                            {format(new Date(inc.date), 'dd MMM yyyy')}
+                          </TableCell>
+                          <TableCell className="text-sm max-w-40 truncate">
+                            {inc.locationOnSite || '—'}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={severityClass[inc.severity] || ''}>
+                              {inc.severity}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <StatusBadge status={inc.status} />
+                          </TableCell>
+                          <TableCell className="text-center font-medium">
+                            {inc.workers?.length ?? 0}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
 
                 {/* Mobile Cards */}
                 <div className="md:hidden divide-y flex-1 min-h-0 overflow-y-auto">
@@ -404,29 +404,29 @@ export default function IncidentListView() {
                       className={`p-4 cursor-pointer hover:bg-muted/50 transition-colors ${inc.isDeath ? 'border-l-4 border-l-red-600' : ''}`}
                       onClick={() => navigateTo('incident-detail', { id: inc.id })}
                     >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="font-mono text-sm font-medium">{inc.incidentNumber}</p>
-                        <p className="text-sm text-muted-foreground mt-0.5">
-                          {format(new Date(inc.date), 'dd MMM yyyy')}
-                        </p>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <p className="font-mono text-sm font-medium">{inc.incidentNumber}</p>
+                          <p className="text-sm text-muted-foreground mt-0.5">
+                            {format(new Date(inc.date), 'dd MMM yyyy')}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-end gap-1">
+                          <Badge variant="outline" className={typeBadgeClass[inc.incidentType] || ''}>
+                            {typeLabels[inc.incidentType] || inc.incidentType}
+                          </Badge>
+                          <StatusBadge status={inc.status} />
+                        </div>
                       </div>
-                      <div className="flex flex-col items-end gap-1">
-                        <Badge variant="outline" className={typeBadgeClass[inc.incidentType] || ''}>
-                          {typeLabels[inc.incidentType] || inc.incidentType}
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted-foreground">
+                        <span>{inc.locationOnSite || 'No location'}</span>
+                        <span>{inc.workers?.length ?? 0} worker(s)</span>
+                        <Badge variant="outline" className={severityClass[inc.severity] || ''}>
+                          {inc.severity}
                         </Badge>
-                        <StatusBadge status={inc.status} />
                       </div>
                     </div>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted-foreground">
-                      <span>{inc.locationOnSite || 'No location'}</span>
-                      <span>{inc.workers?.length ?? 0} worker(s)</span>
-                      <Badge variant="outline" className={severityClass[inc.severity] || ''}>
-                        {inc.severity}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
+                  ))}
                 </div>
               </>
             )}

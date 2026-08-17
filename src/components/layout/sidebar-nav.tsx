@@ -104,7 +104,7 @@ export function SidebarNav() {
     fetch('/api/notifications')
       .then(r => r.ok ? r.json() : [])
       .then(setNotifications)
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   useEffect(() => {
@@ -151,12 +151,12 @@ export function SidebarNav() {
         'text-sidebar-foreground flex flex-col shrink-0 transition-[width] duration-300 ease-in-out relative',
         // Light teal gradient background (dark slate in dark mode)
         'bg-gradient-to-b from-teal-50/60 via-teal-50/30 to-cyan-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950',
-        'border-r border-teal-100/60 dark:border-slate-800',
+        'border border-teal-100/60 dark:border-slate-800 shadow-sm',
         // Mobile: fixed, slide in/out
         'fixed top-0 left-0 z-50 h-full w-64',
         sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         // Desktop: in-flow, full or mini — only when not in forced mobile view
-        !forceMobile && 'lg:static lg:h-full lg:translate-x-0',
+        !forceMobile && 'lg:static lg:h-[calc(100vh-16px)] lg:my-2 lg:ml-2 lg:rounded-2xl lg:translate-x-0',
         !forceMobile && (collapsed ? 'lg:w-16' : 'lg:w-64')
       )}>
         {/* Header */}
@@ -204,7 +204,7 @@ export function SidebarNav() {
                       : 'gap-3 px-3 py-2.5',
                     isActive
                       ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-semibold shadow-sm'
-                      : 'text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300'
                   )}
                 >
                   <Icon className="h-4.5 w-4.5 shrink-0" />
@@ -243,7 +243,7 @@ export function SidebarNav() {
                   variant="ghost"
                   size="icon"
                   onClick={toggleTheme}
-                  className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
+                  className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300 transition-all duration-200 hover:scale-110 hover:shadow-sm"
                   title="Toggle theme"
                 >
                   {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
@@ -258,7 +258,7 @@ export function SidebarNav() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
+                  className="relative h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300 transition-all duration-200 hover:scale-110 hover:shadow-sm"
                   title="Notifications"
                 >
                   <Bell className="h-4 w-4" />
@@ -316,21 +316,16 @@ export function SidebarNav() {
             {/* Profile dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-700 dark:hover:text-teal-400"
-                      title="Profile"
-                    >
-                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold">
-                        {getInitials(userName || 'User')}
-                      </div>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side={collapsed ? "right" : "top"}>{userName || 'Profile'}</TooltipContent>
-                </Tooltip>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300 transition-all duration-200 hover:scale-110 hover:shadow-sm"
+                  title="Profile"
+                >
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold">
+                    {getInitials(userName || 'User')}
+                  </div>
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="right" align="start" className="w-56">
                 <DropdownMenuLabel className="font-normal">

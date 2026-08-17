@@ -287,34 +287,34 @@ export default function WorkerListView() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-            <TableExportButton
-              rows={sorted}
-              columns={workerExportColumns}
-              filename="workforce_register"
-              variant="outline"
-              size="default"
-            />
-            {perms.canEdit && (
-              <>
-                <Button
-                  variant="outline"
-                  onClick={() => setImportOpen(true)}
-                >
-                  <FileSpreadsheet className="h-4 w-4 mr-2" />
-                  <span className="hidden sm:inline">Import Excel</span>
-                  <span className="sm:hidden">Import</span>
-                </Button>
-                <Button
-                  className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
-                  onClick={() => openWorkerForm()}
-                >
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  <span className="hidden sm:inline">Register Worker</span>
-                  <span className="sm:hidden">Add</span>
-                </Button>
-              </>
-            )}
-          </div>
+          <TableExportButton
+            rows={sorted}
+            columns={workerExportColumns}
+            filename="workforce_register"
+            variant="outline"
+            size="default"
+          />
+          {perms.canEdit && (
+            <>
+              <Button
+                variant="outline"
+                onClick={() => setImportOpen(true)}
+              >
+                <FileSpreadsheet className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Import Excel</span>
+                <span className="sm:hidden">Import</span>
+              </Button>
+              <Button
+                className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+                onClick={() => openWorkerForm()}
+              >
+                <UserPlus className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Register Worker</span>
+                <span className="sm:hidden">Add</span>
+              </Button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* ====== Filter Bar ====== */}
@@ -385,249 +385,249 @@ export default function WorkerListView() {
 
       {/* ====== Table (Desktop) / Cards (Mobile) ====== */}
       <div className="flex-1 min-h-0 flex flex-col">
-      <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
-        <CardContent className="flex-1 min-h-0 flex flex-col p-0">
-          {isLoading ? (
-            <div className="p-4">
-              <TableSkeleton />
-            </div>
-          ) : workers.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
-              <Users className="h-12 w-12 mb-3 opacity-40" />
-              <p className="text-base font-medium">No workers found</p>
-              <p className="text-sm mt-1">Try adjusting your search or filters</p>
-            </div>
-          ) : (
-            <>
-              {/* Desktop Table */}
-              <div className="hidden md:block flex-1 min-h-0 overflow-auto">
-                <Table>
-                  <TableHeader className="sticky top-0 z-10 bg-background">
-                    <TableRow>
-                      <TableHead className="w-12">S.No</TableHead>
-                      <TableHead className="w-12"></TableHead>
-                      <TableHead className="w-36">Employee No.</TableHead>
-                      <SortableHeader column="fullName" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort}>Name</SortableHeader>
-                      <SortableHeader column="designation.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-36">Designation</SortableHeader>
-                      <TableHead className="w-20">Gender</TableHead>
-                      <TableHead className="w-24">Blood Group</TableHead>
-                      <TableHead className="w-36">UAN</TableHead>
-                      <SortableHeader column="site.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-40">Site / Zone</SortableHeader>
-                      <SortableHeader column="labourCamp.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-40">Camp</SortableHeader>
-                      <TableHead className="w-32">Police Records</TableHead>
-                      <TableHead className="w-24">Status</TableHead>
-                      {(role === 'ADMIN' || role === 'HR_COORDINATOR') && <TableHead className="w-24">Actions</TableHead>}
-                      <TableHead className="w-20">ID Card</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {sorted.map((w, index) => (
-                      <TableRow
-                        key={w.id}
-                        className={`cursor-pointer hover:bg-muted/50 transition-colors ${!w.isActive ? 'opacity-60' : ''}`}
-                        onClick={() => setPage('worker-detail', { id: w.id })}
-                      >
-                        <TableCell className="text-muted-foreground text-xs">{index + 1}</TableCell>
-                        <TableCell>
-                          {w.profilePhotoPath && w.profilePhotoPath.startsWith('data:') ? (
-                            <img src={w.profilePhotoPath} alt={w.fullName} className="w-8 h-8 rounded-full object-cover" />
-                          ) : (
-                            <div className="w-8 h-8 rounded-full bg-[#0d9488] text-white flex items-center justify-center text-xs font-bold">
-                              {w.fullName.split(' ').map((n) => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()}
-                            </div>
+        <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+          <CardContent className="flex-1 min-h-0 flex flex-col p-0">
+            {isLoading ? (
+              <div className="p-4">
+                <TableSkeleton />
+              </div>
+            ) : workers.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+                <Users className="h-12 w-12 mb-3 opacity-40" />
+                <p className="text-base font-medium">No workers found</p>
+                <p className="text-sm mt-1">Try adjusting your search or filters</p>
+              </div>
+            ) : (
+              <>
+                {/* Desktop Table */}
+                <div className="hidden md:block flex-1 min-h-0 overflow-auto">
+                  <Table>
+                    <TableHeader className="sticky top-0 z-10 bg-background">
+                      <TableRow>
+                        <TableHead className="w-12">S.No</TableHead>
+                        <TableHead className="w-12"></TableHead>
+                        <TableHead className="w-36">Employee No.</TableHead>
+                        <SortableHeader column="fullName" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort}>Name</SortableHeader>
+                        <SortableHeader column="designation.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-36">Designation</SortableHeader>
+                        <TableHead className="w-20">Gender</TableHead>
+                        <TableHead className="w-24">Blood Group</TableHead>
+                        <TableHead className="w-36">UAN</TableHead>
+                        <SortableHeader column="site.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-40">Site / Zone</SortableHeader>
+                        <SortableHeader column="labourCamp.name" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-40">Camp</SortableHeader>
+                        <TableHead className="w-32">Police Records</TableHead>
+                        <TableHead className="w-24">Status</TableHead>
+                        {(role === 'ADMIN' || role === 'HR_COORDINATOR') && <TableHead className="w-24">Actions</TableHead>}
+                        <TableHead className="w-20">ID Card</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {sorted.map((w, index) => (
+                        <TableRow
+                          key={w.id}
+                          className={`cursor-pointer hover:bg-muted/50 transition-colors ${!w.isActive ? 'opacity-60' : ''}`}
+                          onClick={() => setPage('worker-detail', { id: w.id })}
+                        >
+                          <TableCell className="text-muted-foreground text-xs">{index + 1}</TableCell>
+                          <TableCell>
+                            {w.profilePhotoPath && w.profilePhotoPath.startsWith('data:') ? (
+                              <img src={w.profilePhotoPath} alt={w.fullName} className="w-8 h-8 rounded-full object-cover" />
+                            ) : (
+                              <div className="w-8 h-8 rounded-full bg-[#0d9488] text-white flex items-center justify-center text-xs font-bold">
+                                {w.fullName.split(' ').map((n) => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()}
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell className="font-mono text-sm">
+                            {w.employeeNumber}
+                          </TableCell>
+                          <TableCell className="font-medium">{w.fullName}</TableCell>
+                          <TableCell>{w.designation.name}</TableCell>
+                          <TableCell>{w.gender}</TableCell>
+                          <TableCell>{w.bloodGroup}</TableCell>
+                          <TableCell className="font-mono text-sm text-muted-foreground">
+                            {w.uanNumber ?? '—'}
+                          </TableCell>
+                          <TableCell>
+                            {w.site?.name ?? '—'}
+                          </TableCell>
+                          <TableCell>
+                            {w.labourCamp?.name ?? '—'}
+                          </TableCell>
+                          <TableCell>
+                            <select
+                              className="text-xs border rounded px-1.5 py-1 bg-transparent w-full"
+                              value={w.policeRecords || 'Not Updated'}
+                              onClick={(e) => e.stopPropagation()}
+                              onChange={async (e) => {
+                                e.stopPropagation()
+                                const val = e.target.value
+                                try {
+                                  const res = await fetch(`/api/workers/${w.id}`, {
+                                    method: 'PATCH',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ policeRecords: val }),
+                                  })
+                                  if (res.ok) {
+                                    toast.success(`${w.fullName}: Police Records updated`)
+                                    queryClient.invalidateQueries({ queryKey: ['workers'] })
+                                  }
+                                } catch { toast.error('Failed to update') }
+                              }}
+                            >
+                              <option value="Updated">Updated</option>
+                              <option value="Not Updated">Not Updated</option>
+                              <option value="Not Applicable">Not Applicable</option>
+                            </select>
+                          </TableCell>
+                          <TableCell>
+                            <Badge
+                              variant="outline"
+                              className={w.isActive
+                                ? 'status-valid border-emerald-300 dark:border-emerald-700'
+                                : 'status-expired border-red-300 dark:border-red-700'
+                              }
+                            >
+                              {w.isActive ? 'Active' : 'Inactive'}
+                            </Badge>
+                          </TableCell>
+                          {(role === 'ADMIN' || role === 'HR_COORDINATOR') && (
+                            <TableCell>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className={`h-7 w-7 ${w.isActive ? 'text-red-500 hover:bg-red-50 hover:text-red-600 border-red-200' : 'text-emerald-500 hover:bg-emerald-50 hover:text-emerald-600 border-emerald-200'}`}
+                                title={w.isActive ? 'Mark Inactive' : 'Mark Active'}
+                                disabled={togglingId === w.id}
+                                onClick={(e) => handleToggleActive(w.id, w.isActive, w.fullName, e)}
+                              >
+                                {togglingId === w.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : w.isActive ? <UserX className="h-3.5 w-3.5" /> : <UserCheck className="h-3.5 w-3.5" />}
+                              </Button>
+                            </TableCell>
                           )}
-                        </TableCell>
-                        <TableCell className="font-mono text-sm">
-                          {w.employeeNumber}
-                        </TableCell>
-                        <TableCell className="font-medium">{w.fullName}</TableCell>
-                        <TableCell>{w.designation.name}</TableCell>
-                        <TableCell>{w.gender}</TableCell>
-                        <TableCell>{w.bloodGroup}</TableCell>
-                        <TableCell className="font-mono text-sm text-muted-foreground">
-                          {w.uanNumber ?? '—'}
-                        </TableCell>
-                        <TableCell>
-                          {w.site?.name ?? '—'}
-                        </TableCell>
-                        <TableCell>
-                          {w.labourCamp?.name ?? '—'}
-                        </TableCell>
-                        <TableCell>
-                          <select
-                            className="text-xs border rounded px-1.5 py-1 bg-transparent w-full"
-                            value={w.policeRecords || 'Not Updated'}
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={async (e) => {
-                              e.stopPropagation()
-                              const val = e.target.value
-                              try {
-                                const res = await fetch(`/api/workers/${w.id}`, {
-                                  method: 'PATCH',
-                                  headers: { 'Content-Type': 'application/json' },
-                                  body: JSON.stringify({ policeRecords: val }),
-                                })
-                                if (res.ok) {
-                                  toast.success(`${w.fullName}: Police Records updated`)
-                                  queryClient.invalidateQueries({ queryKey: ['workers'] })
-                                }
-                              } catch { toast.error('Failed to update') }
-                            }}
-                          >
-                            <option value="Updated">Updated</option>
-                            <option value="Not Updated">Not Updated</option>
-                            <option value="Not Applicable">Not Applicable</option>
-                          </select>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className={w.isActive
-                              ? 'status-valid border-emerald-300 dark:border-emerald-700'
-                              : 'status-expired border-red-300 dark:border-red-700'
-                            }
-                          >
-                            {w.isActive ? 'Active' : 'Inactive'}
-                          </Badge>
-                        </TableCell>
-                        {(role === 'ADMIN' || role === 'HR_COORDINATOR') && (
                           <TableCell>
                             <Button
                               variant="outline"
-                              size="icon"
-                              className={`h-7 w-7 ${w.isActive ? 'text-red-500 hover:bg-red-50 hover:text-red-600 border-red-200' : 'text-emerald-500 hover:bg-emerald-50 hover:text-emerald-600 border-emerald-200'}`}
-                              title={w.isActive ? 'Mark Inactive' : 'Mark Active'}
-                              disabled={togglingId === w.id}
-                              onClick={(e) => handleToggleActive(w.id, w.isActive, w.fullName, e)}
+                              size="sm"
+                              className="h-7 px-3 text-xs font-semibold text-[#0d9488] border-[#0d9488]/30 hover:bg-[#0d9488]/10"
+                              onClick={(e) => handleOpenIdCard(w.id, e)}
                             >
-                              {togglingId === w.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : w.isActive ? <UserX className="h-3.5 w-3.5" /> : <UserCheck className="h-3.5 w-3.5" />}
+                              <Eye className="h-3.5 w-3.5 mr-1" />
+                              View
                             </Button>
                           </TableCell>
-                        )}
-                        <TableCell>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-7 px-3 text-xs font-semibold text-[#0d9488] border-[#0d9488]/30 hover:bg-[#0d9488]/10"
-                            onClick={(e) => handleOpenIdCard(w.id, e)}
-                          >
-                            <Eye className="h-3.5 w-3.5 mr-1" />
-                            View
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
 
-              {/* Mobile Cards */}
-              <div className="md:hidden divide-y overflow-y-auto">
-                {workers.map((w) => (
-                  <div
-                    key={w.id}
-                    className={`p-4 cursor-pointer hover:bg-muted/50 transition-colors ${!w.isActive ? 'opacity-60' : ''}`}
-                    onClick={() => setPage('worker-detail', { id: w.id })}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium truncate">{w.fullName}</p>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-6 px-2 text-xs font-semibold text-[#0d9488] border-[#0d9488]/30 hover:bg-[#0d9488]/10 shrink-0"
-                            onClick={(e) => handleOpenIdCard(w.id, e)}
-                          >
-                            <Eye className="h-3 w-3 mr-0.5" />
-                            View
-                          </Button>
-                          {(role === 'ADMIN' || role === 'HR_COORDINATOR') && (
+                {/* Mobile Cards */}
+                <div className="md:hidden divide-y overflow-y-auto">
+                  {workers.map((w) => (
+                    <div
+                      key={w.id}
+                      className={`p-4 cursor-pointer hover:bg-muted/50 transition-colors ${!w.isActive ? 'opacity-60' : ''}`}
+                      onClick={() => setPage('worker-detail', { id: w.id })}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium truncate">{w.fullName}</p>
                             <Button
                               variant="outline"
-                              size="icon"
-                              className={`h-6 w-6 shrink-0 ${w.isActive ? 'text-red-500 hover:bg-red-50 border-red-200' : 'text-emerald-500 hover:bg-emerald-50 border-emerald-200'}`}
-                              title={w.isActive ? 'Mark Inactive' : 'Mark Active'}
-                              disabled={togglingId === w.id}
-                              onClick={(e) => handleToggleActive(w.id, w.isActive, w.fullName, e)}
+                              size="sm"
+                              className="h-6 px-2 text-xs font-semibold text-[#0d9488] border-[#0d9488]/30 hover:bg-[#0d9488]/10 shrink-0"
+                              onClick={(e) => handleOpenIdCard(w.id, e)}
                             >
-                              {togglingId === w.id ? <Loader2 className="h-3 w-3 animate-spin" /> : w.isActive ? <UserX className="h-3 w-3" /> : <UserCheck className="h-3 w-3" />}
+                              <Eye className="h-3 w-3 mr-0.5" />
+                              View
                             </Button>
-                          )}
+                            {(role === 'ADMIN' || role === 'HR_COORDINATOR') && (
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className={`h-6 w-6 shrink-0 ${w.isActive ? 'text-red-500 hover:bg-red-50 border-red-200' : 'text-emerald-500 hover:bg-emerald-50 border-emerald-200'}`}
+                                title={w.isActive ? 'Mark Inactive' : 'Mark Active'}
+                                disabled={togglingId === w.id}
+                                onClick={(e) => handleToggleActive(w.id, w.isActive, w.fullName, e)}
+                              >
+                                {togglingId === w.id ? <Loader2 className="h-3 w-3 animate-spin" /> : w.isActive ? <UserX className="h-3 w-3" /> : <UserCheck className="h-3 w-3" />}
+                              </Button>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground font-mono mt-0.5">
+                            {w.employeeNumber}
+                          </p>
                         </div>
-                        <p className="text-xs text-muted-foreground font-mono mt-0.5">
-                          {w.employeeNumber}
-                        </p>
+                        <Badge
+                          variant="outline"
+                          className={w.isActive
+                            ? 'status-valid border-emerald-300 dark:border-emerald-700'
+                            : 'status-expired border-red-300 dark:border-red-700'
+                          }
+                        >
+                          {w.isActive ? 'Active' : 'Inactive'}
+                        </Badge>
                       </div>
-                      <Badge
-                        variant="outline"
-                        className={w.isActive
-                          ? 'status-valid border-emerald-300 dark:border-emerald-700'
-                          : 'status-expired border-red-300 dark:border-red-700'
-                        }
-                      >
-                        {w.isActive ? 'Active' : 'Inactive'}
-                      </Badge>
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted-foreground">
+                        <span>{w.designation.name}</span>
+                        <span>{w.gender}</span>
+                        <span>{w.bloodGroup}</span>
+                        <span>{w.site?.name ?? 'No Site'}</span>
+                        {w.labourCamp?.name && <span>{w.labourCamp.name}</span>}
+                      </div>
+                      {w.uanNumber && (
+                        <p className="text-xs text-muted-foreground mt-1 font-mono">
+                          UAN: {w.uanNumber}
+                        </p>
+                      )}
                     </div>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted-foreground">
-                      <span>{w.designation.name}</span>
-                      <span>{w.gender}</span>
-                      <span>{w.bloodGroup}</span>
-                      <span>{w.site?.name ?? 'No Site'}</span>
-                      {w.labourCamp?.name && <span>{w.labourCamp.name}</span>}
-                    </div>
-                    {w.uanNumber && (
-                      <p className="text-xs text-muted-foreground mt-1 font-mono">
-                        UAN: {w.uanNumber}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
+                  ))}
+                </div>
+              </>
+            )}
+          </CardContent>
+        </Card>
 
-      {/* ====== Pagination ====== */}
-      {totalPages > 1 && (
-        <div className="shrink-0 flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
-            Page {page} of {totalPages} ({total} total)
-          </p>
-          <div className="flex items-center gap-1">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={page <= 1}
-              onClick={() => handlePageChange(page - 1)}
-            >
-              <ChevronLeft className="h-4 w-4" />
-              <span className="sr-only">Previous</span>
-            </Button>
-            {getPageNumbers().map((p) => (
+        {/* ====== Pagination ====== */}
+        {totalPages > 1 && (
+          <div className="shrink-0 flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              Page {page} of {totalPages} ({total} total)
+            </p>
+            <div className="flex items-center gap-1">
               <Button
-                key={p}
-                variant={p === page ? 'default' : 'outline'}
+                variant="outline"
                 size="sm"
-                className={p === page ? 'bg-[#0d9488] hover:bg-[#0f766e] text-white' : ''}
-                onClick={() => handlePageChange(p)}
+                disabled={page <= 1}
+                onClick={() => handlePageChange(page - 1)}
               >
-                {p}
+                <ChevronLeft className="h-4 w-4" />
+                <span className="sr-only">Previous</span>
               </Button>
-            ))}
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={page >= totalPages}
-              onClick={() => handlePageChange(page + 1)}
-            >
-              <ChevronRight className="h-4 w-4" />
-              <span className="sr-only">Next</span>
-            </Button>
+              {getPageNumbers().map((p) => (
+                <Button
+                  key={p}
+                  variant={p === page ? 'default' : 'outline'}
+                  size="sm"
+                  className={p === page ? 'bg-[#0d9488] hover:bg-[#0f766e] text-white' : ''}
+                  onClick={() => handlePageChange(p)}
+                >
+                  {p}
+                </Button>
+              ))}
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={page >= totalPages}
+                onClick={() => handlePageChange(page + 1)}
+              >
+                <ChevronRight className="h-4 w-4" />
+                <span className="sr-only">Next</span>
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
 
       {/* ====== ID Card Dialog ====== */}

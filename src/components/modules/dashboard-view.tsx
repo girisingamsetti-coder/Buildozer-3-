@@ -191,54 +191,96 @@ interface StatCardProps {
 
 function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subtitle, segments }: StatCardProps) {
   const total = segments.reduce((s, seg) => s + seg.value, 0)
+  // Use a uniform distinct premium color for all TOTAL tiles (light violet/purple)
+  const mainColor = '#8b5cf6';
+  const bgMap: Record<string, string> = {
+    'bg-teal-500': 'bg-teal-50 text-teal-600 dark:bg-teal-500/15 dark:text-teal-400',
+    'bg-orange-500': 'bg-orange-50 text-orange-600 dark:bg-orange-500/15 dark:text-orange-400',
+    'bg-purple-500': 'bg-purple-50 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400',
+    'bg-emerald-500': 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400',
+  }
+  const iconStyleClasses = bgMap[iconBg] || 'bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-400';
+
+  let displayCards: { label: string; value: string | number; color: string; pct: string | null }[] = []
+  if (segments.length <= 3) {
+    displayCards.push({
+      label: ('TOTAL ' + (unit || '')).trim().toUpperCase(),
+      value: bigNumber,
+      color: '#64748b',
+      pct: null
+    })
+  }
+
+  segments.forEach(seg => {
+    displayCards.push({
+      label: seg.label.toUpperCase(),
+      value: String(seg.value),
+      color: seg.color,
+      pct: total > 0 ? Math.round((seg.value / total) * 100) + '%' : '0%'
+    })
+  })
+
+
+
   return (
-    <Card className="h-full overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-      <CardContent className="px-2 pt-1.5 pb-1.5 h-full flex flex-col justify-between">
-        <div className="flex items-center gap-2">
-          <div className={cn('rounded-full p-1.5 shrink-0', iconBg)}>
-            <Icon className={cn('h-3.5 w-3.5', iconColor)} />
+    <Card className="h-full overflow-hidden border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] rounded-[16px] p-3.5 flex flex-col">
+      <div className="flex items-center justify-between mb-4 shrink-0">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className={cn('rounded-xl p-2.5 shrink-0', iconStyleClasses)}>
+            <Icon className="h-5 w-5" />
           </div>
           <div className="min-w-0">
-            <p className="text-xs font-extrabold text-slate-800 dark:text-slate-100 tracking-tight truncate">{title}</p>
-            {subtitle && <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 truncate">{subtitle}</p>}
+            <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm truncate">{title}</h3>
+            {subtitle && <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate">{subtitle}</p>}
           </div>
         </div>
-
-        <div className="mt-2 flex items-baseline gap-1">
-          <span className="text-2xl font-extrabold tabular-nums text-slate-900 dark:text-slate-50">{bigNumber}</span>
-          {unit && <span className="text-[10px] font-medium text-slate-500">{unit}</span>}
+        <div className="h-7 w-7 rounded-full bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center shrink-0 ml-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400"><path d="m9 18 6-6-6-6" /></svg>
         </div>
+      </div>
 
-        {/* Stacked progress bar */}
-        {total > 0 && (
-          <div className="mt-1.5 h-2 w-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 flex gap-0.5">
-            {segments.map((seg, i) => {
-              const pct = (seg.value / total) * 100
-              if (pct === 0) return null
-              return (
-                <div
-                  key={i}
-                  style={{ width: `${pct}%`, backgroundColor: seg.color }}
-                  className="h-full transition-all rounded-full"
-                />
-              )
-            })}
-          </div>
-        )}
+      <div className="grid grid-cols-2 grid-rows-2 gap-2 flex-1">
+        {displayCards.slice(0, 4).map((card, i) => {
+          const isTotal = i === 0 && card.label.startsWith('TOTAL');
+          let mainColor = card.color;
+          const lbl = card.label;
 
-        {/* Legend */}
-        <div className="flex flex-col gap-y-0.5 mt-2">
-          {segments.map((seg, i) => (
-            <div key={i} className="flex items-center justify-between text-[9px]">
-              <span className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
-                <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: seg.color }} />
-                <span className="truncate">{seg.label}</span>
-              </span>
-              <span className="font-bold tabular-nums text-slate-800 dark:text-slate-300">{seg.value}</span>
+          if (isTotal) {
+            mainColor = '#8b5cf6'; // light purple
+          } else if (['APPROVED', 'COMPLETED', 'PASSED', 'VALID', 'FIT'].includes(lbl)) {
+            mainColor = '#10b981'; // light green
+          } else if (['PENDING', 'DELAYED', 'CONDITIONAL', 'EXPIRING SOON', 'REPAIR'].includes(lbl)) {
+            mainColor = '#f97316'; // light orange
+          } else if (['REJECTED', 'FAILED', 'EXPIRED', 'UNFIT', 'GROUNDED', 'NOT COMPLETED'].includes(lbl)) {
+            mainColor = '#ef4444'; // light red
+          }
+
+          const bgColor = `${mainColor}12`;
+          const textColor = mainColor;
+          const darkBgColor = `${mainColor}15`;
+          const borderColor = `${mainColor}30`;
+          const isFullWidth = isTotal && displayCards.length === 3;
+          const pushToBottom = displayCards.length <= 2;
+
+          return (
+            <div key={i} className={cn("sub-tile rounded-xl p-2.5 flex flex-col justify-between border transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:border-teal-500 hover:shadow-[0_8px_24px_-4px_rgba(20,184,166,0.2)] hover:brightness-95 dark:hover:brightness-110", isFullWidth && "col-span-2", pushToBottom && "row-start-2")} style={{ backgroundColor: bgColor, borderColor }} >
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[9px] font-bold tracking-wider truncate" style={{ color: textColor }}>
+                  {card.label}
+                </span>
+                {card.pct && (
+                  <span className="text-[10px] font-bold shrink-0" style={{ color: textColor }}>
+                    {card.pct}
+                  </span>
+                )}
+              </div>
+              <div className="mt-2">
+                <span className="text-sm font-extrabold text-slate-900 dark:text-slate-100">{card.value}</span>
+              </div>
             </div>
-          ))}
-        </div>
-      </CardContent>
+          )
+        })}
+      </div>
     </Card>
   )
 }
@@ -342,17 +384,23 @@ interface RankedListCardProps {
 function RankedListCard({ title, icon: Icon, items, colorPool = CONTRACTOR_COLORS, className }: RankedListCardProps) {
   const maxVal = Math.max(...items.map(d => d.value), 1)
   return (
-    <Card className={cn('overflow-hidden border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm h-full flex flex-col', className)}>
-      <CardHeader className="px-3 pt-2 pb-1 shrink-0">
-        <div className="flex items-center gap-2">
-          <div className="rounded-md bg-gradient-to-br from-violet-500/15 to-purple-500/15 p-1.5">
-            <Icon className="h-3.5 w-3.5 text-violet-600" />
+    <Card className={cn('overflow-hidden border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] rounded-[16px] p-3.5 flex flex-col h-full', className)}>
+      <CardHeader className="p-0 mb-4 shrink-0 border-b-0 space-y-0">
+        <div className="flex items-center justify-between min-w-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="rounded-xl bg-gradient-to-br from-violet-500/15 to-purple-500/15 p-2.5 shrink-0">
+              <Icon className="h-5 w-5 text-violet-600" />
+            </div>
+            <div className="min-w-0">
+              <CardTitle className="font-bold text-slate-900 dark:text-slate-100 text-sm truncate">{title}</CardTitle>
+            </div>
           </div>
-          <CardTitle className="text-sm font-extrabold text-slate-700 dark:text-slate-100">{title}</CardTitle>
-          <span className="ml-auto text-[10px] text-slate-400 dark:text-slate-500">{items.length} records</span>
+          <div className="h-7 w-7 rounded-full bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center shrink-0 ml-2">
+            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 shrink-0">{items.length}</span>
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="px-3 pt-1 pb-2 flex-1 min-h-0">
+      <CardContent className="p-0 flex-1 min-h-0">
         <div className="h-full">
           <div className="space-y-1.5">
             {items.length === 0 ? (
@@ -399,8 +447,8 @@ interface BarChartCardProps {
 
 function BarChartCard({ title, icon: Icon, data, colorPool = CONTRACTOR_COLORS, maxBarSize = 10, className }: BarChartCardProps) {
   return (
-    <Card className={cn('overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm h-full flex flex-col', className)}>
-      <CardHeader className="px-3 pt-2 pb-1 shrink-0">
+    <Card className={cn('overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] rounded-[16px] p-3.5 h-full flex flex-col', className)}>
+      <CardHeader className="p-0 mb-4 shrink-0">
         <div className="flex items-center gap-2">
           <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
             <Icon className="h-3.5 w-3.5 text-teal-600" />
@@ -409,7 +457,7 @@ function BarChartCard({ title, icon: Icon, data, colorPool = CONTRACTOR_COLORS, 
           <span className="ml-auto text-[10px] text-slate-400 dark:text-slate-500">{data.length} records</span>
         </div>
       </CardHeader>
-      <CardContent className="px-3 pt-1 pb-2 flex-1 min-h-0">
+      <CardContent className="p-0 flex-1 min-h-0">
         <div className="h-full max-h-[190px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
@@ -527,7 +575,7 @@ function RecentActivityItem({ item, onPhotoClick }: { item: ActivityItem; onPhot
   else actionText = `activity recorded in ${locStr}, by ${actor}`
 
   return (
-    <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-default">
+    <div className="flex items-start gap-3 px-2 py-0.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-default">
       <button
         onClick={() => onPhotoClick?.(item)}
         className="shrink-0 focus:outline-none focus:ring-2 focus:ring-teal-300 rounded-md mt-0.5"
@@ -577,7 +625,7 @@ export default function DashboardView() {
   const setPage = useNavStore(s => s.setPage)
   const openWorkerForm = useNavStore(s => s.openWorkerForm)
   const openIncidentForm = useNavStore(s => s.openIncidentForm)
-  const [activeTab, setActiveTab] = useState<'photos' | 'new-entry' | 'medical' | 'training' | 'incident'>('photos')
+  const [activeTab, setActiveTab] = useState<'photos' | 'new-entry' | 'medical' | 'training' | 'incident'>('new-entry')
   const [previewPhoto, setPreviewPhoto] = useState<ActivityItem | null>(null)
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>()
@@ -677,11 +725,11 @@ export default function DashboardView() {
 
   // Tab config
   const tabs = [
-    { id: 'photos' as const, label: 'Photos' },
     { id: 'new-entry' as const, label: 'New Entry' },
     { id: 'medical' as const, label: 'Medical' },
     { id: 'training' as const, label: 'Training' },
     { id: 'incident' as const, label: 'Incident' },
+    { id: 'photos' as const, label: 'Photos' },
   ]
 
   return (
@@ -817,108 +865,105 @@ export default function DashboardView() {
         </div>
       </div>
 
-      {/* ────── Main Content: CSS Grid — left dashboard + right panel ────── */}
+      {/* ────── Main Content: CSS Grid — unified layout ────── */}
       <div
-        className="flex-1 min-h-0 grid overflow-hidden"
+        className="flex-1 min-h-0 grid px-2 pt-2 pb-0 -mx-2 -mt-2"
         style={{
           gridTemplateColumns: '1fr 372px',
-          gap: '8px',
+          gridTemplateRows: 'minmax(0, 0.67fr) minmax(0, 0.67fr) minmax(0, 0.78fr)',
+          gap: '6px 8px',
         }}
       >
-        {/* LEFT: Dashboard area — 3 rows (KPI / Donuts / Camps) + Quick Actions */}
-        <div className="min-w-0 grid overflow-hidden" style={{
-          gridTemplateRows: 'minmax(0, 0.67fr) minmax(0, 0.67fr) minmax(0, 0.78fr) auto',
-          gap: '6px',
-        }}>
-          {/* Row 1: 5 KPI cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
-            className="grid min-h-0"
-            style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}
-          >
-            <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Male vs. Female" segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
-            <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
-            <StatCard title="Age Distribution" icon={Activity} iconBg="bg-purple-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Workforce by age band" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
-            <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-emerald-500" iconColor="text-white" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="tests" subtitle="Fitness outcome" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }].filter(s => s.value > 0)} />
-            <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(trainingTotal)} unit="certificates" subtitle="Certificate validity" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring Soon', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
-          </motion.div>
+        {/* Row 1: 5 KPI cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.05 }}
+          className="grid min-h-0"
+          style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', gridColumn: '1', gridRow: '1' }}
+        >
+          <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Male vs. Female" segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
+          <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
+          <StatCard title="Age Distribution" icon={Activity} iconBg="bg-purple-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Workforce by age band" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
+          <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-emerald-500" iconColor="text-white" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="tests" subtitle="Fitness outcome" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }].filter(s => s.value > 0)} />
+          <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(trainingTotal)} unit="certificates" subtitle="Certificate validity" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring Soon', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
+        </motion.div>
 
-          {/* Row 2: 4 Donut chart cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="grid min-h-0"
-            style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}
-          >
-            <StatCard
-              title="Equipment Status"
-              icon={Wrench}
-              iconBg="bg-orange-500"
-              iconColor="text-white"
-              bigNumber={String(equipmentData.reduce((s, d) => s + d.value, 0))}
-              unit="items"
-              subtitle="Condition breakdown"
-              segments={equipmentData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
-            />
-            <StatCard
-              title="Inspection Status"
-              icon={ShieldCheck}
-              iconBg="bg-orange-500"
-              iconColor="text-white"
-              bigNumber={String(inspectionData.reduce((s, d) => s + d.value, 0))}
-              unit="inspections"
-              subtitle="Pass / Fail rates"
-              segments={inspectionData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
-            />
-            <StatCard
-              title="Ownership"
-              icon={Building2}
-              iconBg="bg-orange-500"
-              iconColor="text-white"
-              bigNumber={String(ownershipData.reduce((s, d) => s + d.value, 0))}
-              unit="assets"
-              subtitle="Own vs Rented"
-              segments={ownershipData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
-            />
-            <StatCard
-              title="Approval Status"
-              icon={CheckCircle2}
-              iconBg="bg-orange-500"
-              iconColor="text-white"
-              bigNumber="100"
-              unit="% approved"
-              subtitle="Clearance rate"
-              segments={[{ label: 'Approved', value: 100, color: DONUT_COLORS.approved }]}
-            />
-          </motion.div>
+        {/* Row 2: 4 Donut chart cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="grid min-h-0"
+          style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', gridColumn: '1', gridRow: '2' }}
+        >
+          <StatCard
+            title="Equipment Status"
+            icon={Wrench}
+            iconBg="bg-orange-500"
+            iconColor="text-white"
+            bigNumber={String(equipmentData.reduce((s, d) => s + d.value, 0))}
+            unit="items"
+            subtitle="Condition breakdown"
+            segments={equipmentData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
+          />
+          <StatCard
+            title="Inspection Status"
+            icon={ShieldCheck}
+            iconBg="bg-orange-500"
+            iconColor="text-white"
+            bigNumber={String(inspectionData.reduce((s, d) => s + d.value, 0))}
+            unit="inspections"
+            subtitle="Pass / Fail rates"
+            segments={inspectionData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
+          />
+          <StatCard
+            title="Ownership"
+            icon={Building2}
+            iconBg="bg-orange-500"
+            iconColor="text-white"
+            bigNumber={String(ownershipData.reduce((s, d) => s + d.value, 0))}
+            unit="assets"
+            subtitle="Own vs Rented"
+            segments={ownershipData.map(d => ({ label: d.name, value: d.value, color: d.color }))}
+          />
+          <StatCard
+            title="Approval Status"
+            icon={CheckCircle2}
+            iconBg="bg-orange-500"
+            iconColor="text-white"
+            bigNumber="100"
+            unit="% approved"
+            subtitle="Clearance rate"
+            segments={[
+              { label: 'Approved', value: 100, color: DONUT_COLORS.approved },
+              { label: 'Pending', value: 0, color: DONUT_COLORS.pendingApproval }
+            ]}
+          />
+        </motion.div>
 
-          {/* Row 3: Camps per Contractor (268px) + Workforce per Camp (flex) */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
-            className="grid min-h-0"
-            style={{ gridTemplateColumns: '322px 1fr', gap: '8px' }}
-          >
-            <RankedListCard title="Camps per Contractor" icon={Building2} items={campsPerContractorData} colorPool={['#8b5cf6', '#ec4899', '#0ea5e9', '#eab308', '#f97316', '#14b8a6', '#94a3b8']} className="border-none shadow-none" />
-            <BarChartCard title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
-          </motion.div>
+        {/* Row 3: Camps per Contractor + Workforce per Camp */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.15 }}
+          className="grid min-h-0"
+          style={{ gridTemplateColumns: '322px 1fr', gap: '8px', gridColumn: '1', gridRow: '3' }}
+        >
+          <RankedListCard title="Camps per Contractor" icon={Building2} items={campsPerContractorData} colorPool={['#8b5cf6', '#ec4899', '#0ea5e9', '#eab308', '#f97316', '#14b8a6', '#94a3b8']} />
+          <BarChartCard title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
+        </motion.div>
 
-
-        </div>
-
-        {/* RIGHT: Recent Activity panel — 372px wide, full height */}
+        {/* RIGHT PANEL - Row 1 and 2: Recent Activity */}
         <motion.div
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="overflow-hidden flex flex-col gap-2 h-full items-start"
+          className="flex flex-col h-full min-h-0"
+          style={{ gridColumn: '2', gridRow: '1 / span 2' }}
         >
-          <Card className="w-full flex-1 min-h-0 overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col">
-            <CardHeader className="p-3 pb-0 shrink-0">
+          <Card className="w-full flex-1 min-h-0 overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] rounded-[16px] p-3.5 flex flex-col gap-1.5">
+            <CardHeader className="p-0 space-y-0 shrink-0">
               <div className="flex items-center gap-2">
                 <div className="rounded-md bg-gradient-to-br from-teal-500/15 to-cyan-500/15 p-1.5">
                   <Activity className="h-3.5 w-3.5 text-teal-600" />
@@ -926,9 +971,9 @@ export default function DashboardView() {
                 <CardTitle className="text-sm font-extrabold text-slate-700 dark:text-slate-100">Recent Activity</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="px-2 pb-2 pt-0 flex-1 min-h-0 flex flex-col">
+            <CardContent className="p-0 pt-1.5 flex-1 min-h-0 flex flex-col">
               <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex-1 min-h-0 flex flex-col">
-                <TabsList className="w-full flex gap-1 bg-slate-100/70 dark:bg-slate-800/70 p-1 h-auto mb-0">
+                <TabsList className="w-full flex gap-1 bg-slate-100/70 dark:bg-slate-800/70 p-1 shrink-0 h-auto mb-0 mt-0">
                   {tabs.map(t => (
                     <TabsTrigger key={t.id} value={t.id} className={cn('flex-1 text-[10px] py-1.5 rounded-md font-bold transition-all data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 data-[state=active]:shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300')}>{t.label}</TabsTrigger>
                   ))}
@@ -955,7 +1000,17 @@ export default function DashboardView() {
               </Tabs>
             </CardContent>
           </Card>
-          <ActivityCard className="w-full h-[284px] shrink-0" slides={activityItems.map(i => i.photo).filter(Boolean) as string[]} />
+        </motion.div>
+
+        {/* RIGHT PANEL - Row 3: ActivityCard (Photos) */}
+        <motion.div
+          initial={{ opacity: 0, x: 10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="flex flex-col h-full min-h-0"
+          style={{ gridColumn: '2', gridRow: '3' }}
+        >
+          <ActivityCard className="w-full h-full" slides={activityItems.map(i => i.photo).filter(Boolean) as string[]} />
         </motion.div>
       </div>
 

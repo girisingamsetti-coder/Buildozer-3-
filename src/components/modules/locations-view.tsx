@@ -113,6 +113,7 @@ export default function LocationsView() {
   const [editingCamp, setEditingCamp] = useState<Camp | null>(null)
   const [deleteCamp, setDeleteCamp] = useState<Camp | null>(null)
   const [workersCamp, setWorkersCamp] = useState<Camp | null>(null)
+  const [mapCamp, setMapCamp] = useState<Camp | null>(null)
 
   // Filters
   const [search, setSearch] = useState('')
