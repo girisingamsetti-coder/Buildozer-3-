@@ -191,8 +191,8 @@ interface StatCardProps {
 
 function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subtitle, segments }: StatCardProps) {
   const total = segments.reduce((s, seg) => s + seg.value, 0)
-  // Use a uniform distinct premium color for all TOTAL tiles (light violet/purple)
-  const mainColor = '#8b5cf6';
+  // Use a uniform distinct color for all TOTAL tiles (light grey)
+  const mainColor = '#64748b';
   const bgMap: Record<string, string> = {
     'bg-teal-500': 'bg-teal-50 text-teal-600 dark:bg-teal-500/15 dark:text-teal-400',
     'bg-orange-500': 'bg-orange-50 text-orange-600 dark:bg-orange-500/15 dark:text-orange-400',
@@ -246,7 +246,7 @@ function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subti
           const lbl = card.label;
 
           if (isTotal) {
-            mainColor = '#8b5cf6'; // light purple
+            mainColor = '#64748b'; // light grey
           } else if (['APPROVED', 'COMPLETED', 'PASSED', 'VALID', 'FIT'].includes(lbl)) {
             mainColor = '#10b981'; // light green
           } else if (['PENDING', 'DELAYED', 'CONDITIONAL', 'EXPIRING SOON', 'REPAIR'].includes(lbl)) {
