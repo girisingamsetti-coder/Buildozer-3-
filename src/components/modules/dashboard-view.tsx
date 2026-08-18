@@ -48,6 +48,7 @@ import { Calendar } from '@/components/ui/calendar'
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, subMonths } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { useNavStore } from '@/stores/nav-store'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 
 // ──────────────────── Types ────────────────────
@@ -187,9 +188,14 @@ interface StatCardProps {
   unit?: string
   subtitle?: string
   segments: { label: string; value: number; color: string }[]
+  className?: string
 }
 
-function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subtitle, segments }: StatCardProps) {
+function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subtitle, segments, className }: StatCardProps) {
+  const isDeviceMobile = useIsMobile()
+  const mobileViewConfig = useNavStore(s => s.mobileView)
+  const isMobile = isDeviceMobile || !!mobileViewConfig
+
   const total = segments.reduce((s, seg) => s + seg.value, 0)
   // Use a uniform distinct color for all TOTAL tiles (light grey)
   const mainColor = '#64748b';
@@ -223,7 +229,7 @@ function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subti
 
 
   return (
-    <Card className="h-full overflow-hidden border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] rounded-[16px] p-3.5 flex flex-col">
+    <Card className={cn(className || (isMobile ? "h-auto" : "h-full"), "overflow-hidden border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] rounded-[16px] p-3.5 flex flex-col")}>
       <div className="flex items-center justify-between mb-4 shrink-0">
         <div className="flex items-center gap-3 min-w-0">
           <div className={cn('rounded-xl p-2.5 shrink-0', iconStyleClasses)}>
@@ -625,6 +631,9 @@ export default function DashboardView() {
   const setPage = useNavStore(s => s.setPage)
   const openWorkerForm = useNavStore(s => s.openWorkerForm)
   const openIncidentForm = useNavStore(s => s.openIncidentForm)
+  const mobileViewConfig = useNavStore(s => s.mobileView)
+  const isDeviceMobile = useIsMobile()
+  const isMobile = isDeviceMobile || !!mobileViewConfig
   const [activeTab, setActiveTab] = useState<'photos' | 'new-entry' | 'medical' | 'training' | 'incident'>('new-entry')
   const [previewPhoto, setPreviewPhoto] = useState<ActivityItem | null>(null)
 
@@ -867,8 +876,8 @@ export default function DashboardView() {
 
       {/* ────── Main Content: CSS Grid — unified layout ────── */}
       <div
-        className="flex-1 min-h-0 grid px-2 pt-2 pb-0 -mx-2 -mt-2"
-        style={{
+        className={cn("flex-1 min-h-0 px-2 pt-2 pb-0 -mx-2 -mt-2", isMobile ? "flex flex-col gap-4 overflow-y-auto" : "grid")}
+        style={isMobile ? {} : {
           gridTemplateColumns: '1fr 372px',
           gridTemplateRows: 'minmax(0, 0.67fr) minmax(0, 0.67fr) minmax(0, 0.78fr)',
           gap: '6px 8px',
@@ -879,8 +888,8 @@ export default function DashboardView() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.05 }}
-          className="grid min-h-0"
-          style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', gridColumn: '1', gridRow: '1' }}
+          className={cn("min-h-0", isMobile ? "flex flex-col gap-2" : "grid")}
+          style={isMobile ? {} : { gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', gridColumn: '1', gridRow: '1' }}
         >
           <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Male vs. Female" segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
           <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
@@ -894,8 +903,8 @@ export default function DashboardView() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="grid min-h-0"
-          style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', gridColumn: '1', gridRow: '2' }}
+          className={cn("min-h-0", isMobile ? "flex flex-col gap-2" : "grid")}
+          style={isMobile ? {} : { gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', gridColumn: '1', gridRow: '2' }}
         >
           <StatCard
             title="Equipment Status"
@@ -947,8 +956,8 @@ export default function DashboardView() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.15 }}
-          className="grid min-h-0"
-          style={{ gridTemplateColumns: '322px 1fr', gap: '8px', gridColumn: '1', gridRow: '3' }}
+          className={cn("min-h-0", isMobile ? "flex flex-col gap-2" : "grid")}
+          style={isMobile ? {} : { gridTemplateColumns: '322px 1fr', gap: '8px', gridColumn: '1', gridRow: '3' }}
         >
           <RankedListCard title="Camps per Contractor" icon={Building2} items={campsPerContractorData} colorPool={['#8b5cf6', '#ec4899', '#0ea5e9', '#eab308', '#f97316', '#14b8a6', '#94a3b8']} />
           <BarChartCard title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
@@ -959,8 +968,8 @@ export default function DashboardView() {
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="flex flex-col h-full min-h-0"
-          style={{ gridColumn: '2', gridRow: '1 / span 2' }}
+          className={cn("flex flex-col h-full min-h-0", isMobile && "min-h-[400px]")}
+          style={isMobile ? {} : { gridColumn: '2', gridRow: '1 / span 2' }}
         >
           <Card className="w-full flex-1 min-h-0 overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] rounded-[16px] p-3.5 flex flex-col gap-1.5">
             <CardHeader className="p-0 space-y-0 shrink-0">

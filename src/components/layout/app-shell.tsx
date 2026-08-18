@@ -4,6 +4,7 @@ import { useAuthStore } from '@/lib/auth-store'
 import { useNavStore } from '@/stores/nav-store'
 import { SidebarNav } from './sidebar-nav'
 import { TopBar } from './top-bar'
+import { MobileBottomNav } from './mobile-bottom-nav'
 import { LoginScreen } from './login-screen'
 import { lazy, Suspense } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -99,7 +100,7 @@ export function AppShell() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
-      <SidebarNav />
+      {!isMobile && <SidebarNav />}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {isMobile ? (
           <div className="flex-1 overflow-hidden bg-muted/50 flex items-center justify-center p-0 sm:p-4 lg:p-6">
@@ -117,9 +118,10 @@ export function AppShell() {
               )}
               {/* TopBar inside the mobile frame so it aligns with content */}
               <TopBar />
-              <main className="flex-1 overflow-y-auto">
-                <div className="p-4">{pageContent}</div>
+              <main className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950">
+                <div className="p-4 pb-20">{pageContent}</div>
               </main>
+              <MobileBottomNav />
             </div>
           </div>
         ) : (
