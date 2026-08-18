@@ -72,6 +72,13 @@ const pageComponents: Record<string, React.LazyExoticComponent<any>> = {
   reports: ReportsView,
 }
 
+const deviceDimensions: Record<string, { width: string, height: string }> = {
+  'iphone-15-pro': { width: '393px', height: '852px' },
+  'iphone-se': { width: '375px', height: '667px' },
+  'galaxy-s23': { width: '360px', height: '780px' },
+  'pixel-7': { width: '412px', height: '915px' },
+}
+
 export function AppShell() {
   const isAuthenticated = useAuthStore(s => s.isAuthenticated)
   const activePage = useNavStore(s => s.activePage)
@@ -87,13 +94,27 @@ export function AppShell() {
     </Suspense>
   )
 
+  const isMobile = !!mobileView;
+  const currentDevice = typeof mobileView === 'string' ? deviceDimensions[mobileView] : null;
+
   return (
     <div className="flex h-screen overflow-hidden bg-background">
       <SidebarNav />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {mobileView ? (
-          <div className="flex-1 overflow-hidden bg-muted/50 flex items-stretch justify-center p-0 sm:p-4 lg:p-6">
-            <div className="mobile-frame w-full max-w-[420px] h-full bg-background shadow-2xl ring-1 ring-black/5 sm:rounded-[1.75rem] overflow-hidden flex flex-col">
+        {isMobile ? (
+          <div className="flex-1 overflow-hidden bg-muted/50 flex items-center justify-center p-0 sm:p-4 lg:p-6">
+            <div 
+              className="mobile-frame bg-background shadow-2xl ring-1 ring-black/10 sm:rounded-[2.5rem] overflow-hidden flex flex-col relative"
+              style={{
+                width: currentDevice ? currentDevice.width : '420px',
+                height: currentDevice ? currentDevice.height : '100%',
+                maxHeight: '100%',
+              }}
+            >
+              {/* Optional simulated notch */}
+              {currentDevice && (
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-black/10 dark:bg-black/40 rounded-b-2xl z-50 pointer-events-none" />
+              )}
               {/* TopBar inside the mobile frame so it aligns with content */}
               <TopBar />
               <main className="flex-1 overflow-y-auto">

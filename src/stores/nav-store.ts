@@ -27,7 +27,7 @@ interface NavState {
   pageParams: Record<string, string>
   sidebarOpen: boolean
   sidebarCollapsed: boolean
-  mobileView: boolean
+  mobileView: string | false
   // Worker-form dialog (replaces the worker-form page route for the "Register Worker" / "Edit" buttons)
   workerFormDialogOpen: boolean
   workerFormEditId: string | null
@@ -40,7 +40,7 @@ interface NavState {
   setPage: (page: PageId, params?: Record<string, string>) => void
   setSidebarOpen: (open: boolean) => void
   setSidebarCollapsed: (collapsed: boolean) => void
-  setMobileView: (on: boolean) => void
+  setMobileView: (device: string | false) => void
   toggleMobileView: () => void
   goBack: () => void
 }
@@ -88,12 +88,13 @@ export const useNavStore = create<NavState>((set, get) => ({
   },
   setSidebarOpen: (open) => set({ sidebarOpen: open }),
   setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
-  setMobileView: (on) => set({ mobileView: on }),
+  setMobileView: (device) => set({ mobileView: device }),
   toggleMobileView: () => {
-    const next = !get().mobileView
+    const current = get().mobileView
+    const next = current ? false : 'iphone-15-pro'
     // When entering mobile view, close the sidebar overlay so the framed
     // content is visible. The FAB remains available to re-open it.
-    set(next ? { mobileView: true, sidebarOpen: false } : { mobileView: false })
+    set(next ? { mobileView: next, sidebarOpen: false } : { mobileView: false })
   },
   goBack: () => {
     const current = get().activePage

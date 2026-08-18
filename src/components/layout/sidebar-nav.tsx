@@ -31,6 +31,7 @@ import {
   User as UserIcon,
   Calendar,
   LogOut,
+  Smartphone,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -85,7 +86,7 @@ function getInitials(name: string): string {
 }
 
 export function SidebarNav() {
-  const { activePage, setPage, sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed, mobileView } = useNavStore()
+  const { activePage, setPage, sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed, mobileView, setMobileView } = useNavStore()
   const { logout, userName, role } = useAuthStore()
   const permissions = rolePermissions[role] ?? rolePermissions.SAFETY_OFFICER
   const { theme, setTheme } = useTheme()
@@ -236,6 +237,31 @@ export function SidebarNav() {
           collapsed ? 'px-1.5' : 'px-2.5'
         )}>
           <div className={cn('flex gap-2', collapsed ? 'flex-col items-center' : 'flex-row items-center justify-center')}>
+            {/* Mobile Preview Selector */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn("h-9 w-9 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-sm", mobileView ? "text-teal-600 bg-teal-100 dark:text-teal-400 dark:bg-teal-900/30" : "text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300")}
+                  title="Mobile Preview"
+                >
+                  <Smartphone className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" side="top">
+                <DropdownMenuItem onClick={() => setMobileView(false)} className={!mobileView ? 'font-bold text-teal-600' : ''}>Desktop (Off)</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground">Apple</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => setMobileView('iphone-15-pro')} className={mobileView === 'iphone-15-pro' ? 'font-bold text-teal-600' : ''}>iPhone 15 Pro</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setMobileView('iphone-se')} className={mobileView === 'iphone-se' ? 'font-bold text-teal-600' : ''}>iPhone SE</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground">Android</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => setMobileView('galaxy-s23')} className={mobileView === 'galaxy-s23' ? 'font-bold text-teal-600' : ''}>Galaxy S23</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setMobileView('pixel-7')} className={mobileView === 'pixel-7' ? 'font-bold text-teal-600' : ''}>Pixel 7</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             {/* Dark/Light mode toggle */}
             <Tooltip>
               <TooltipTrigger asChild>
