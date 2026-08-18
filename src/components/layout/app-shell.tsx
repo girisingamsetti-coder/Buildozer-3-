@@ -33,6 +33,7 @@ const LegalView = lazy(() => import('@/components/modules/legal-view'))
 const ComplianceView = lazy(() => import('@/components/modules/compliance-view'))
 const SettingsView = lazy(() => import('@/components/modules/settings-view'))
 const ReportsView = lazy(() => import('@/components/modules/reports-view'))
+const MoreView = lazy(() => import('@/components/modules/more-view'))
 
 function LoadingFallback() {
   return (
@@ -71,6 +72,7 @@ const pageComponents: Record<string, React.LazyExoticComponent<any>> = {
   compliance: ComplianceView,
   settings: SettingsView,
   reports: ReportsView,
+  more: MoreView,
 }
 
 const deviceDimensions: Record<string, { width: string, height: string }> = {
@@ -104,7 +106,7 @@ export function AppShell() {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {isMobile ? (
           <div className="flex-1 overflow-hidden bg-muted/50 flex items-center justify-center p-0 sm:p-4 lg:p-6">
-            <div 
+            <div
               className="mobile-frame bg-background shadow-2xl ring-1 ring-black/10 sm:rounded-[2.5rem] overflow-hidden flex flex-col relative"
               style={{
                 width: currentDevice ? currentDevice.width : '420px',
@@ -112,10 +114,7 @@ export function AppShell() {
                 maxHeight: '100%',
               }}
             >
-              {/* Optional simulated notch */}
-              {currentDevice && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-black/10 dark:bg-black/40 rounded-b-2xl z-50 pointer-events-none" />
-              )}
+              {/* Optional simulated notch removed as per request */}
               {/* TopBar inside the mobile frame so it aligns with content */}
               <TopBar />
               <main className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950">

@@ -21,6 +21,7 @@ export type PageId =
   | 'compliance'
   | 'settings'
   | 'reports'
+  | 'more'
 
 interface NavState {
   activePage: PageId
@@ -66,6 +67,7 @@ export const pageTitles: Record<PageId, string> = {
   compliance: 'Site Compliance',
   settings: 'Settings',
   reports: 'Reports',
+  more: 'More Options',
 }
 
 export const useNavStore = create<NavState>((set, get) => ({

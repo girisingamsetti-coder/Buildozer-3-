@@ -1,7 +1,7 @@
 'use client'
 
 import { useNavStore, type PageId } from '@/stores/nav-store'
-import { LayoutDashboard, Users, AlertTriangle, FileBarChart } from 'lucide-react'
+import { LayoutDashboard, Users, AlertTriangle, FileBarChart, Grid } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export function MobileBottomNav() {
@@ -36,6 +36,18 @@ export function MobileBottomNav() {
             </button>
           )
         })}
+
+        {/* More Options Tab */}
+        <button
+          onClick={() => setPage('more')}
+          className={cn(
+            "flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors",
+            activePage === 'more' ? "text-teal-600 dark:text-teal-400" : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+          )}
+        >
+          <Grid className={cn("h-5 w-5", activePage === 'more' && "stroke-[2.5px]")} />
+          <span className="text-[10px] font-medium">More</span>
+        </button>
       </div>
     </nav>
   )

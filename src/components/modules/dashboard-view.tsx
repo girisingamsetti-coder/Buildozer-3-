@@ -463,8 +463,8 @@ function BarChartCard({ title, icon: Icon, data, colorPool = CONTRACTOR_COLORS, 
           <span className="ml-auto text-[10px] text-slate-400 dark:text-slate-500">{data.length} records</span>
         </div>
       </CardHeader>
-      <CardContent className="p-0 flex-1 min-h-0">
-        <div className="h-full max-h-[190px]">
+      <CardContent className="p-0 flex-1 flex flex-col">
+        <div className="w-full h-[220px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
               <XAxis
@@ -523,8 +523,8 @@ function ActivityCard({ className, slides = [] }: { className?: string; slides?:
 
   return (
     <Card className={cn('overflow-hidden border-teal-100/60 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col', className)}>
-      <CardContent className="px-2 py-0 flex-1 min-h-0">
-        <div className="relative h-full w-full overflow-hidden bg-slate-100 rounded-xl">
+      <CardContent className="px-2 py-2 flex-1 min-h-0 flex flex-col">
+        <div className="relative flex-1 w-full min-h-[200px] overflow-hidden bg-slate-100 rounded-xl">
           <AnimatePresence initial={false}>
             <motion.img
               key={currentSlide}
@@ -744,12 +744,15 @@ export default function DashboardView() {
   return (
     <div className="h-full flex flex-col gap-2 overflow-hidden">
       {/* ────── Hero Header and Filters ────── */}
-      <div className="shrink-0 flex items-center justify-between gap-4">
+      <div className={cn("shrink-0 flex gap-4", isMobile ? "flex-col" : "items-center justify-between")}>
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-1/2 rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between"
+          className={cn(
+            "rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between",
+            isMobile ? "w-full" : "w-1/2"
+          )}
         >
           <div>
             <h1 className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-100">{getGreeting()} 👋</h1>
@@ -761,12 +764,15 @@ export default function DashboardView() {
         </motion.div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2 justify-end">
+        <div className={cn("gap-2", isMobile ? "grid grid-cols-2" : "flex flex-wrap items-center justify-end")}>
           {hasActiveFilters && (
             <Button
               variant="ghost"
               size="sm"
-              className="h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors"
+              className={cn(
+                "h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors",
+                isMobile && "col-span-2"
+              )}
               onClick={clearFilters}
             >
               Clear Filters
@@ -778,7 +784,7 @@ export default function DashboardView() {
                 id="date"
                 variant={"outline"}
                 className={cn(
-                  "w-auto px-4 h-9 rounded-full justify-start text-left font-medium text-xs bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all",
+                  "w-full px-4 h-9 rounded-full justify-start text-left font-medium text-xs bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden text-ellipsis whitespace-nowrap",
                   !dateRange && "text-muted-foreground"
                 )}
               >
@@ -833,7 +839,7 @@ export default function DashboardView() {
             </PopoverContent>
           </Popover>
           <Select value={contractorFilter} onValueChange={setContractorFilter}>
-            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+            <SelectTrigger className="w-full px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden">
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <HardHat className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Contractor" />
@@ -846,7 +852,7 @@ export default function DashboardView() {
             </SelectContent>
           </Select>
           <Select value={campFilter} onValueChange={setCampFilter}>
-            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+            <SelectTrigger className="w-full px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden">
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <Tent className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Camp" />
@@ -859,7 +865,7 @@ export default function DashboardView() {
             </SelectContent>
           </Select>
           <Select value={projectFilter} onValueChange={setProjectFilter}>
-            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+            <SelectTrigger className="w-full px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden">
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <FolderKanban className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Project" />
@@ -951,7 +957,6 @@ export default function DashboardView() {
           />
         </motion.div>
 
-        {/* Row 3: Camps per Contractor + Workforce per Camp */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -959,8 +964,8 @@ export default function DashboardView() {
           className={cn("min-h-0", isMobile ? "flex flex-col gap-2" : "grid")}
           style={isMobile ? {} : { gridTemplateColumns: '322px 1fr', gap: '8px', gridColumn: '1', gridRow: '3' }}
         >
-          <RankedListCard title="Camps per Contractor" icon={Building2} items={campsPerContractorData} colorPool={['#8b5cf6', '#ec4899', '#0ea5e9', '#eab308', '#f97316', '#14b8a6', '#94a3b8']} />
-          <BarChartCard title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
+          <RankedListCard className={cn(isMobile && "min-h-[250px]")} title="Camps per Contractor" icon={Building2} items={campsPerContractorData} colorPool={['#8b5cf6', '#ec4899', '#0ea5e9', '#eab308', '#f97316', '#14b8a6', '#94a3b8']} />
+          <BarChartCard className={cn(isMobile && "min-h-[300px]")} title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
         </motion.div>
 
         {/* RIGHT PANEL - Row 1 and 2: Recent Activity */}
@@ -1016,8 +1021,8 @@ export default function DashboardView() {
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="flex flex-col h-full min-h-0"
-          style={{ gridColumn: '2', gridRow: '3' }}
+          className={cn("flex flex-col h-full min-h-0", isMobile && "min-h-[250px]")}
+          style={isMobile ? {} : { gridColumn: '2', gridRow: '3' }}
         >
           <ActivityCard className="w-full h-full" slides={activityItems.map(i => i.photo).filter(Boolean) as string[]} />
         </motion.div>
@@ -1030,18 +1035,21 @@ export default function DashboardView() {
         transition={{ duration: 0.3, delay: 0.2 }}
         className="shrink-0"
       >
-        <div className="grid grid-cols-5 gap-3 w-full">
+        <div className={cn("w-full", isMobile ? "grid grid-cols-2 gap-2 pb-2" : "grid grid-cols-5 gap-3")}>
           {[
             { icon: UserPlus, label: 'Register Worker', action: 'worker-form' as const, bg: 'bg-teal-500' },
             { icon: FileWarning, label: 'Log Incident', action: 'incident-form' as const, bg: 'bg-rose-500' },
             { icon: ClipboardCheck, label: 'Mark Attendance', action: 'attendance' as const, bg: 'bg-emerald-500' },
             { icon: UserCog, label: 'View Workers', action: 'workers' as const, bg: 'bg-purple-500' },
             { icon: Search, label: 'Search Machinery', action: 'vehicles' as const, bg: 'bg-blue-500' },
-          ].map((action) => (
+          ].map((action, index) => (
             <Button
               key={action.action}
               variant="outline"
-              className="h-[50px] flex-row justify-start gap-3 px-4 w-full group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-slate-200 bg-white rounded-full relative"
+              className={cn(
+                "h-[50px] flex-row justify-start gap-3 px-4 group/qa transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 border-slate-200 bg-white rounded-full relative w-full",
+                isMobile && index === 4 && "col-span-2"
+              )}
               onClick={() => {
                 if (action.action === 'worker-form') openWorkerForm()
                 else if (action.action === 'incident-form') openIncidentForm()
