@@ -744,15 +744,12 @@ export default function DashboardView() {
   return (
     <div className="h-full flex flex-col gap-2 overflow-hidden">
       {/* ────── Hero Header and Filters ────── */}
-      <div className={cn("shrink-0 flex gap-4", isMobile ? "flex-col" : "items-center justify-between")}>
+      <div className="shrink-0 flex items-center justify-between gap-4">
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className={cn(
-            "rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between",
-            isMobile ? "w-full" : "w-1/2"
-          )}
+          className="w-1/2 rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between"
         >
           <div>
             <h1 className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-100">{getGreeting()} 👋</h1>
@@ -764,15 +761,12 @@ export default function DashboardView() {
         </motion.div>
 
         {/* Filters */}
-        <div className={cn("gap-2", isMobile ? "grid grid-cols-2" : "flex flex-wrap items-center justify-end")}>
+        <div className="flex flex-wrap items-center gap-2 justify-end">
           {hasActiveFilters && (
             <Button
               variant="ghost"
               size="sm"
-              className={cn(
-                "h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors",
-                isMobile && "col-span-2"
-              )}
+              className="h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors"
               onClick={clearFilters}
             >
               Clear Filters
@@ -784,7 +778,7 @@ export default function DashboardView() {
                 id="date"
                 variant={"outline"}
                 className={cn(
-                  "w-full px-4 h-9 rounded-full justify-start text-left font-medium text-xs bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden text-ellipsis whitespace-nowrap",
+                  "w-auto px-4 h-9 rounded-full justify-start text-left font-medium text-xs bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all",
                   !dateRange && "text-muted-foreground"
                 )}
               >
@@ -839,7 +833,7 @@ export default function DashboardView() {
             </PopoverContent>
           </Popover>
           <Select value={contractorFilter} onValueChange={setContractorFilter}>
-            <SelectTrigger className="w-full px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden">
+            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <HardHat className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Contractor" />
@@ -852,7 +846,7 @@ export default function DashboardView() {
             </SelectContent>
           </Select>
           <Select value={campFilter} onValueChange={setCampFilter}>
-            <SelectTrigger className="w-full px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden">
+            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <Tent className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Camp" />
@@ -865,7 +859,7 @@ export default function DashboardView() {
             </SelectContent>
           </Select>
           <Select value={projectFilter} onValueChange={setProjectFilter}>
-            <SelectTrigger className="w-full px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all overflow-hidden">
+            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <FolderKanban className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Project" />
