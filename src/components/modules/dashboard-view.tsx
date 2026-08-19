@@ -983,7 +983,7 @@ export default function DashboardView() {
               <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex-1 min-h-0 flex flex-col">
                 <TabsList className="w-full flex gap-1 bg-slate-100/70 dark:bg-slate-800/70 p-1 shrink-0 h-auto mb-0 mt-0">
                   {tabs.map(t => (
-                    <TabsTrigger key={t.id} value={t.id} className={cn('flex-1 text-[10px] py-1.5 rounded-md font-bold transition-all data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 data-[state=active]:shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300')}>{t.label}</TabsTrigger>
+                    <TabsTrigger key={t.id} value={t.id} className={cn('flex-1 text-[10px] py-1.5 rounded-md font-bold transition-all duration-300 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 data-[state=active]:shadow-sm text-slate-500 dark:text-slate-400 hover:z-10 hover:-translate-y-1 hover:shadow-[0_8px_24px_-4px_rgba(20,184,166,0.2)] hover:text-teal-600 dark:hover:text-teal-400 hover:bg-white dark:hover:bg-slate-700')}>{t.label}</TabsTrigger>
                   ))}
                 </TabsList>
                 {tabs.map(t => (
