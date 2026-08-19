@@ -629,7 +629,10 @@ export default function MedicalView() {
       {/* Two-panel layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Panel: Worker List */}
-        <Card className="lg:col-span-4">
+        <Card className={cn(
+          "lg:col-span-4",
+          selectedWorkerId ? "order-2 lg:order-none" : "order-1 lg:order-none"
+        )}>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between gap-2">
               <CardTitle className="text-base">Workers</CardTitle>
@@ -652,7 +655,7 @@ export default function MedicalView() {
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <ScrollArea className="h-[500px] lg:h-[600px]">
+            <ScrollArea className="h-[350px] lg:h-[600px]">
               {workersLoading ? (
                 <div className="p-4"><WorkerListSkeleton /></div>
               ) : workers.length === 0 ? (
@@ -693,7 +696,10 @@ export default function MedicalView() {
         </Card>
 
         {/* Right Panel: Medical Records */}
-        <div className="lg:col-span-8 space-y-4">
+        <div className={cn(
+          "lg:col-span-8 space-y-4",
+          selectedWorkerId ? "order-1 lg:order-none" : "order-2 lg:order-none"
+        )}>
           {!selectedWorker ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-20 text-muted-foreground">
