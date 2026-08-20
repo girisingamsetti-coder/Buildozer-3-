@@ -22,7 +22,9 @@ node_modules
 
 # misc
 .DS_Store
+desktop.ini
 *.pem
+update_headers.js
 
 # debug
 npm-debug.log*
