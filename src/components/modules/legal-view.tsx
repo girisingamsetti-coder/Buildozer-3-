@@ -288,7 +288,7 @@ export default function LegalView() {
     <div className="flex flex-col gap-4 h-full overflow-hidden">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Legal & Statutory Compliance</h1>
           <p className="text-sm text-muted-foreground mt-1">
             {isLoading ? 'Loading...' : `${total} record${total !== 1 ? 's' : ''} tracked`}

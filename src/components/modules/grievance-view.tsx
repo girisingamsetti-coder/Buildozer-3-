@@ -24,7 +24,9 @@ import { StatusBadge } from '@/components/shared/status-badge'
 import PhotoUploader from '@/components/shared/photo-uploader'
 import { format, differenceInDays, parseISO } from 'date-fns'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
-
+import { useNavStore } from '@/stores/nav-store'
+import { useIsMobile } from '@/hooks/use-mobile'
+import { cn } from '@/lib/utils'
 // ---------- types ----------
 interface Grievance {
   id: string
@@ -80,6 +82,11 @@ export default function GrievanceView() {
   const role = useAuthStore((s) => s.role)
   const perms = rolePermissions[role]
   const queryClient = useQueryClient()
+  
+  const mobileViewConfig = useNavStore(s => s.mobileView)
+  const isDeviceMobile = useIsMobile()
+  const isMobile = isDeviceMobile || !!mobileViewConfig
+
 
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
@@ -222,7 +229,7 @@ export default function GrievanceView() {
     <div className="space-y-6">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Grievance Redressal</h1>
           <p className="text-sm text-muted-foreground mt-1">
             {isLoading ? 'Loading...' : `${total} grievance${total !== 1 ? 's' : ''}`}
@@ -247,11 +254,11 @@ export default function GrievanceView() {
 
       {/* ====== Summary Cards ====== */}
       {isLoading ? (
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
-          {[1, 2, 3, 4, 5].map((i) => <Skeleton key={i} className="h-20 rounded-xl" />)}
+        <div className={cn("grid gap-3", isMobile ? "grid-cols-2" : "grid-cols-5")}>
+          {[1, 2, 3, 4, 5].map((i) => <Skeleton key={i} className="h-24 lg:h-20 rounded-xl" />)}
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+        <div className={cn("grid gap-3", isMobile ? "grid-cols-2" : "grid-cols-5")}>
           {[
             { label: 'Total', value: total, icon: MessageSquare, valueColor: 'text-teal-700', bg: 'bg-teal-50 text-teal-700 border-teal-200', iconStyle: 'bg-teal-100 text-teal-600' },
             { label: 'Open', value: openCount, icon: AlertTriangle, valueColor: 'text-emerald-700', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200', iconStyle: 'bg-emerald-100 text-emerald-600' },
@@ -260,11 +267,11 @@ export default function GrievanceView() {
             { label: 'Escalated', value: escalatedCount, icon: ArrowUpRight, valueColor: 'text-rose-700', bg: 'bg-rose-50 text-rose-700 border-rose-200', iconStyle: 'bg-rose-100 text-rose-600' },
           ].map((c) => (
             <Card key={c.label} className={`${c.bg} transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]`}>
-              <CardContent className="p-3">
+              <CardContent className="p-4 sm:p-4 lg:p-3">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">{c.label}</p>
-                    <p className={`text-xl font-bold tracking-tight mt-1 ${c.valueColor}`}>{c.value}</p>
+                    <p className={`text-2xl lg:text-xl font-bold tracking-tight mt-1 ${c.valueColor}`}>{c.value}</p>
                   </div>
                   <div className={`rounded-xl p-2 shrink-0 ${c.iconStyle}`}>
                     <c.icon className="h-5 w-5" />

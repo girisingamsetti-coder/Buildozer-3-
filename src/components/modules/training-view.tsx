@@ -563,7 +563,7 @@ export default function TrainingView() {
     <div className="flex flex-col gap-4 h-[calc(100vh-6rem)] overflow-hidden">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Training & Certification</h1>
           <p className="text-sm text-muted-foreground mt-1">
             {isLoading ? 'Loading...' : `${summary.total} training record${summary.total !== 1 ? 's' : ''} across all workers`}

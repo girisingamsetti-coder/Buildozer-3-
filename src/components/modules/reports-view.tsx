@@ -870,7 +870,7 @@ export default function ReportsView() {
   if (!selectedCategory) {
     return (
       <div className="space-y-6">
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Reports</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Generate and view reports across all modules

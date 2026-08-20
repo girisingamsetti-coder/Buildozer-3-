@@ -278,7 +278,7 @@ export default function WorkerListView() {
     <div className="flex flex-col gap-6 h-full overflow-hidden">
       {/* ====== Page Header ====== */}
       <div className="shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Workforce Register</h1>
           <p className="text-sm text-muted-foreground mt-1">
             {isLoading

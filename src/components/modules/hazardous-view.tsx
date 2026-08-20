@@ -314,7 +314,7 @@ export default function HazardousView() {
     <div className="flex flex-col gap-4 h-full overflow-hidden">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Hazardous Materials Register</h1>
           <p className="text-sm text-muted-foreground mt-1">
             {isLoading ? 'Loading...' : `${materials.length} material${materials.length !== 1 ? 's' : ''} registered`}

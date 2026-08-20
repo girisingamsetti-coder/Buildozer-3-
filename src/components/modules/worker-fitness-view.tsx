@@ -167,7 +167,7 @@ export default function WorkerFitnessView() {
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only">Back</span>
         </Button>
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Fitness & Experience</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
             Record worker fitness status and work experience

@@ -1249,7 +1249,7 @@ export default function SettingsView() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div>
+      <div className="hidden sm:block">
         <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
         <p className="text-sm text-muted-foreground mt-1">Manage users, access, workflows, and system configuration.</p>
       </div>

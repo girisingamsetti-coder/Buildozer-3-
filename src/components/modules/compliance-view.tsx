@@ -218,7 +218,7 @@ export default function ComplianceView() {
     <div className="space-y-3">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
+        <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Site Compliance</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Monitor and manage site facilities, security, and medical infrastructure
