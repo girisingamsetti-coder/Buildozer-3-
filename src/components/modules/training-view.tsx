@@ -235,6 +235,7 @@ function AddTrainingDialog({ open, onOpenChange }: {
   useEffect(() => {
     const w = workersResp?.data
     if (selectedSiteId && selectedSiteId !== 'all' && w && w.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedWorkerIds(new Set(w.map((x) => x.id)))
     } else if (!selectedSiteId || selectedSiteId === 'all') {
       setSelectedWorkerIds(new Set())
@@ -343,6 +344,7 @@ function AddTrainingDialog({ open, onOpenChange }: {
   // Reset state on close
   useEffect(() => {
     if (!open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(1)
       setSelectedSiteId('')
       setSelectedWorkerIds(new Set())

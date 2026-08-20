@@ -1368,7 +1368,7 @@ export async function runDemoSeed(db: PrismaClient): Promise<Record<string, numb
     const tmpl = notificationTemplates[i % notificationTemplates.length]
     const workerName = pick(workerData.slice(0, 30)).fullName
     const contractorName = pick(contractors).name
-    let message = tmpl.message
+    const message = tmpl.message
       .replace('{worker}', workerName)
       .replace('{contractor}', contractorName)
       .replace('{entity}', `#${String(randInt(1, 50)).padStart(3, '0')}`)

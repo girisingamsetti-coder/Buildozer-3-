@@ -207,7 +207,7 @@ function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subti
   }
   const iconStyleClasses = bgMap[iconBg] || 'bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-400';
 
-  let displayCards: { label: string; value: string | number; color: string; pct: string | null }[] = []
+  const displayCards: { label: string; value: string | number; color: string; pct: string | null }[] = []
   if (segments.length <= 3) {
     displayCards.push({
       label: ('TOTAL ' + (unit || '')).trim().toUpperCase(),
