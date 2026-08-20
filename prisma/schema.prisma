@@ -7,219 +7,200 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ===================== MASTER TABLES =====================
-
 model Contractor {
-  id        String   @id @default(cuid())
-  name      String
-  code      String   @unique // e.g. "BSR"
-  gstNumber String?
-  address   String?
-  phone     String?
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  workers            Worker[]
-  sites              Site[]
-  vehicles           Vehicle[]
-  legalCompliances   LegalCompliance[]
-  incidents          Incident[]
-  systemUsers        SystemUser[]
-  labourCamps        LabourCamp[]
+  id               String            @id @default(cuid())
+  name             String
+  code             String            @unique
+  gstNumber        String?
+  address          String?
+  phone            String?
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  incidents        Incident[]
+  labourCamps      LabourCamp[]
+  legalCompliances LegalCompliance[]
+  sites            Site[]
+  systemUsers      SystemUser[]
+  vehicles         Vehicle[]
+  workers          Worker[]
 }
 
 model Site {
-  id          String   @id @default(cuid())
-  name        String
-  code        String   @unique
-  address     String?
-  contractorId String?
-  contractor  Contractor? @relation(fields: [contractorId], references: [id])
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  workers           Worker[]
-  vehicles          Vehicle[]
-  incidents         Incident[]
-  siteFacilities    SiteFacility[]
-  siteSecurityItems SiteSecurityItem[]
-  medInfraItems     MedInfraItem[]
+  id                 String              @id @default(cuid())
+  name               String
+  code               String              @unique
+  address            String?
+  contractorId       String?
+  isActive           Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
   hazardousMaterials HazardousMaterial[]
-  labourCamps       LabourCamp[]
-  systemUsers       SystemUser[]
+  incidents          Incident[]
+  labourCamps        LabourCamp[]
+  medInfraItems      MedInfraItem[]
+  contractor         Contractor?         @relation(fields: [contractorId], references: [id])
+  siteFacilities     SiteFacility[]
+  siteSecurityItems  SiteSecurityItem[]
+  systemUsers        SystemUser[]
+  vehicles           Vehicle[]
+  workers            Worker[]
 }
 
 model Designation {
-  id          String @id @default(cuid())
-  name        String @unique // e.g. "Mason", "Electrician", "Rigger"
-  category    String @default("General") // General, Safety-Critical, Supervisory
+  id          String   @id @default(cuid())
+  name        String   @unique
+  category    String   @default("General")
   description String?
-  isActive    Boolean @default(true)
-
-  workers Worker[]
+  isActive    Boolean  @default(true)
+  workers     Worker[]
 }
 
-// ===================== MODULE 1: WORKER REGISTRATION =====================
-
 model Worker {
-  id                String   @id @default(cuid())
-  employeeNumber    String   @unique // APCRDA-0001
-  fullName          String
-  dateOfBirth       DateTime
-  age               Int      // computed, stored for easy querying
-  gender            String   // Male, Female, Other
-  aadhaarNumber     String   // 12-digit, masked in display
-  aadhaarScanPath   String?
-  permanentAddress  String
-  currentAddress    String?
-  bloodGroup        String   // A+, A-, B+, B-, AB+, AB-, O+, O-
-  qualification     String   // Below 10th, 10th, 12th, ITI, Diploma, Graduate, Other
-  qualificationNote String?
-  designationId     String
-  designation       Designation @relation(fields: [designationId], references: [id])
-  contractorId      String
-  contractor       Contractor @relation(fields: [contractorId], references: [id])
-  siteId            String?
-  site              Site?      @relation(fields: [siteId], references: [id])
-  zone              String?   // Zone/Block on site
-  nativeState       String?   // Indian state the worker is from
-  policeRecords     String   @default("Not Updated") // Updated, Not Updated, Not Applicable
-  labourCampId      String?
-  labourCamp        LabourCamp? @relation(fields: [labourCampId], references: [id])
+  id                  String             @id @default(cuid())
+  employeeNumber      String             @unique
+  fullName            String
+  dateOfBirth         DateTime
+  age                 Int
+  gender              String
+  aadhaarNumber       String
+  aadhaarScanPath     String?
+  permanentAddress    String
+  currentAddress      String?
+  bloodGroup          String
+  qualification       String
+  qualificationNote   String?
+  designationId       String
+  contractorId        String
+  siteId              String?
+  zone                String?
+  nativeState         String?
+  policeRecords       String             @default("Not Updated")
+  labourCampId        String?
   reportingSupervisor String?
-  uanNumber         String?   // Universal Account Number for PF
-  profilePhotoPath  String?
-  isActive          Boolean   @default(true)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  emergencyContacts   EmergencyContact[]
-  nominees            Nominee[]
-  fitness             WorkerFitness?
-  medicalRecords      MedicalRecord[]
-  trainingRecords     TrainingRecord[]
+  uanNumber           String?
+  profilePhotoPath    String?
+  isActive            Boolean            @default(true)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
   attendances         Attendance[]
-  insurances          Insurance[]
-  wageRecords         WageRecord[]
+  emergencyContacts   EmergencyContact[]
   incidents           IncidentWorker[]
-  drivenVehicles      Vehicle[] @relation("VehicleDriver")
+  insurances          Insurance[]
+  medicalRecords      MedicalRecord[]
+  nominees            Nominee[]
+  trainingRecords     TrainingRecord[]
+  drivenVehicles      Vehicle[]          @relation("VehicleDriver")
+  wageRecords         WageRecord[]
+  contractor          Contractor         @relation(fields: [contractorId], references: [id])
+  designation         Designation        @relation(fields: [designationId], references: [id])
+  labourCamp          LabourCamp?        @relation(fields: [labourCampId], references: [id])
+  site                Site?              @relation(fields: [siteId], references: [id])
+  fitness             WorkerFitness?
 }
 
 model EmergencyContact {
-  id         String  @id @default(cuid())
-  workerId   String
-  worker     Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  name       String
+  id           String  @id @default(cuid())
+  workerId     String
+  name         String
   relationship String
-  phone      String
-  isPrimary  Boolean @default(false)
+  phone        String
+  isPrimary    Boolean @default(false)
+  worker       Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
 }
 
 model Nominee {
-  id           String  @id @default(cuid())
-  workerId     String
-  worker       Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  name         String
+  id            String  @id @default(cuid())
+  workerId      String
+  name          String
   relationship  String
-  idNumber     String?
+  idNumber      String?
   contactNumber String?
+  worker        Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
 }
-
-// ===================== MODULE 2: FITNESS & EXPERIENCE =====================
 
 model WorkerFitness {
-  id                    String    @id @default(cuid())
-  workerId              String    @unique
-  worker                Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  fitnessStatus         String    @default("Pending") // Fit, Unfit, FitWithRestriction, Pending
-  fitnessCertificatePath String?
-  fitnessValidityDate   DateTime?
-  totalExperienceYears  Float     @default(0)
-  relevantExperienceYears Float    @default(0)
-  relevantExperienceDesc String?
-  priorEmployer         String?
-  skillLevel            String    @default("Unskilled") // Skilled, SemiSkilled, Unskilled
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-}
-
-// ===================== MODULE 3: MEDICAL EXAMINATION =====================
-
-model MedicalRecord {
   id                      String    @id @default(cuid())
-  workerId                String
-  worker                  Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  examinationDate         DateTime
-  examinationType         String    @default("PreEmployment") // PreEmployment, Periodic, Special
-  examiningDoctor         String?
-  examiningFacility       String?
-  result                  String    @default("Pending") // Fit, Unfit, Conditional, Pending
-  previousHealthIssues    String?   // JSON array of strings
-  chronicDiseases         String?   // JSON array: diabetes, hypertension, asthma, cardiac
-  chronicDiseaseNotes     String?
-  currentMedications      String?   // JSON array of {drug, dosage, frequency}
-  pastSurgeries           String?   // JSON array of {procedure, date, notes}
-  nextCheckupDate         DateTime?
-  checkupFrequencyMonths  Int       @default(12)
-  certificatePath         String?
-  photoPaths              String?    // JSON array of photo paths/base64
-  photos                  String?    // JSON array of base64 data URLs (examination photos)
-  remarks                 String?
+  workerId                String    @unique
+  fitnessStatus           String    @default("Pending")
+  fitnessCertificatePath  String?
+  fitnessValidityDate     DateTime?
+  totalExperienceYears    Float     @default(0)
+  relevantExperienceYears Float     @default(0)
+  relevantExperienceDesc  String?
+  priorEmployer           String?
+  skillLevel              String    @default("Unskilled")
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
+  worker                  Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
 }
 
-// ===================== MODULE 4: TRAINING & CERTIFICATION =====================
+model MedicalRecord {
+  id                     String    @id @default(cuid())
+  workerId               String
+  examinationDate        DateTime
+  examinationType        String    @default("PreEmployment")
+  examiningDoctor        String?
+  examiningFacility      String?
+  result                 String    @default("Pending")
+  previousHealthIssues   String?
+  chronicDiseases        String?
+  chronicDiseaseNotes    String?
+  currentMedications     String?
+  pastSurgeries          String?
+  nextCheckupDate        DateTime?
+  checkupFrequencyMonths Int       @default(12)
+  certificatePath        String?
+  photoPaths             String?
+  photos                 String?
+  remarks                String?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  worker                 Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
+}
 
 model TrainingRecord {
-  id                  String    @id @default(cuid())
-  workerId            String
-  worker              Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  trainingType        String    // JobSpecific, SafetyInduction, POSH, Special, MockDrill
-  trainingTitle       String
-  dateConducted       DateTime
-  durationHours       Float
-  trainerName         String?
-  trainerCredentials  String?
-  trainingAgency      String?
-  certificateNumber   String?
-  certificatePath     String?
-  validityDate        DateTime?
-  status              String    @default("Valid") // Valid, ExpiringSoon, Expired
-  isCompleted         Boolean   @default(false)
-  photoPaths          String?    // JSON array of photo paths/base64 (training session photos)
-  remarks             String?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  id                 String    @id @default(cuid())
+  workerId           String
+  trainingType       String
+  trainingTitle      String
+  dateConducted      DateTime
+  durationHours      Float
+  trainerName        String?
+  trainerCredentials String?
+  trainingAgency     String?
+  certificateNumber  String?
+  certificatePath    String?
+  validityDate       DateTime?
+  status             String    @default("Valid")
+  isCompleted        Boolean   @default(false)
+  photoPaths         String?
+  remarks            String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  worker             Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
 }
 
-// ===================== MODULE 5b: ATTENDANCE =====================
-
 model Attendance {
-  id              String   @id @default(cuid())
-  workerId        String
-  worker          Worker   @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  date            DateTime
-  status          String   @default("Present") // Present, Absent, HalfDay, Leave
-  shiftTiming     String?  // e.g. "6AM-2PM"
-  isBiometric     Boolean  @default(false)
-  overtimeHours   Float?   @default(0)
-  remarks         String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id            String   @id @default(cuid())
+  workerId      String
+  date          DateTime
+  status        String   @default("Present")
+  shiftTiming   String?
+  isBiometric   Boolean  @default(false)
+  overtimeHours Float?   @default(0)
+  remarks       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  worker        Worker   @relation(fields: [workerId], references: [id], onDelete: Cascade)
 
   @@unique([workerId, date])
 }
 
-// ===================== MODULE 5c: INSURANCE =====================
-
 model Insurance {
-  id                String   @id @default(cuid())
+  id                String    @id @default(cuid())
   workerId          String
-  worker            Worker   @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  policyType        String   // WC, ESI, GroupPersonalAccident
+  policyType        String
   policyNumber      String
   insurerName       String?
   coverageAmount    Float?
@@ -227,336 +208,311 @@ model Insurance {
   validityEndDate   DateTime?
   nomineeName       String?
   remarks           String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  worker            Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
 }
 
-// ===================== MODULE 5d: WAGE & PF =====================
-
 model WageRecord {
-  id                  String   @id @default(cuid())
-  workerId            String
-  worker              Worker   @relation(fields: [workerId], references: [id], onDelete: Cascade)
-  month                String   // e.g. "2025-01"
-  dailyRate           Float?
-  monthlyRate         Float?
-  wageCategory        String?  // Skilled, SemiSkilled, Unskilled
-  workingDays         Int      @default(0)
-  totalWages          Float    @default(0)
-  overtimeAmount      Float    @default(0)
-  deductionPF         Float    @default(0)
-  deductionESI        Float    @default(0)
-  deductionOther      Float    @default(0)
-  netPay              Float    @default(0)
-  bankAccountNumber   String?
-  uanNumber           String?  // Universal Account Number for PF
-  pfContributionPct   Float?   @default(12)
-  employerPF          Float?   @default(0)
-  employeePF          Float?   @default(0)
-  esiNumber           String?
-  remarks             String?
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                String   @id @default(cuid())
+  workerId          String
+  month             String
+  dailyRate         Float?
+  monthlyRate       Float?
+  wageCategory      String?
+  workingDays       Int      @default(0)
+  totalWages        Float    @default(0)
+  overtimeAmount    Float    @default(0)
+  deductionPF       Float    @default(0)
+  deductionESI      Float    @default(0)
+  deductionOther    Float    @default(0)
+  netPay            Float    @default(0)
+  bankAccountNumber String?
+  uanNumber         String?
+  pfContributionPct Float?   @default(12)
+  employerPF        Float?   @default(0)
+  employeePF        Float?   @default(0)
+  esiNumber         String?
+  remarks           String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  worker            Worker   @relation(fields: [workerId], references: [id], onDelete: Cascade)
 
   @@unique([workerId, month])
 }
 
-// ===================== MODULE 5i: INCIDENT REGISTER =====================
-
 model Incident {
-  id                  String    @id @default(cuid())
-  incidentNumber      String    @unique
-  incidentType        String    // FireInjury, MinorInjury, MajorFatalInjury, Death
-  date                DateTime
-  time                String?   // HH:mm format
-  locationOnSite      String?
-  description         String
-  rootCause           String?
-  immediateAction     String?
-  firstResponder      String?
-  hospitalReferred    String?
-  severity            String    @default("Medium") // Low, Medium, High, Critical
-  status              String    @default("Open") // Open, UnderInvestigation, Closed
-  isDeath             Boolean   @default(false)
-  policeFIRReference  String?
-  employerNotifiedAt  DateTime?
-  compensationStatus  String?   // NotApplicable, Initiated, InProgress, Completed
-  familyNotified      Boolean   @default(false)
-  closureStatus       String?   // N/A, Pending, Partial, Complete
-  contractorId        String?
-  contractor          Contractor? @relation(fields: [contractorId], references: [id])
-  siteId              String?
-  site                Site?       @relation(fields: [siteId], references: [id])
-  photoPaths           String?    // JSON array of photo paths/base64
-  photos               String?    // JSON array of base64 data URLs (evidence photos)
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-
-  workers      IncidentWorker[]
-  followUps    IncidentFollowUp[]
+  id                 String             @id @default(cuid())
+  incidentNumber     String             @unique
+  incidentType       String
+  date               DateTime
+  time               String?
+  locationOnSite     String?
+  description        String
+  rootCause          String?
+  immediateAction    String?
+  firstResponder     String?
+  hospitalReferred   String?
+  severity           String             @default("Medium")
+  status             String             @default("Open")
+  isDeath            Boolean            @default(false)
+  policeFIRReference String?
+  employerNotifiedAt DateTime?
+  compensationStatus String?
+  familyNotified     Boolean            @default(false)
+  closureStatus      String?
+  contractorId       String?
+  siteId             String?
+  photoPaths         String?
+  photos             String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  contractor         Contractor?        @relation(fields: [contractorId], references: [id])
+  site               Site?              @relation(fields: [siteId], references: [id])
+  followUps          IncidentFollowUp[]
+  workers            IncidentWorker[]
 }
 
 model IncidentWorker {
-  id         String  @id @default(cuid())
+  id         String   @id @default(cuid())
   incidentId String
-  incident   Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
   workerId   String?
-  worker     Worker?  @relation(fields: [workerId], references: [id])
-  workerName String? // denormalized for safety
+  workerName String?
   injuryDesc String?
+  incident   Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  worker     Worker?  @relation(fields: [workerId], references: [id])
 }
 
 model IncidentFollowUp {
-  id              String   @id @default(cuid())
-  incidentId      String
-  incident        Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
-  action          String
-  dueDate         DateTime?
+  id                String    @id @default(cuid())
+  incidentId        String
+  action            String
+  dueDate           DateTime?
   responsiblePerson String?
-  completed       Boolean  @default(false)
-  completedAt     DateTime?
-  remarks         String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  completed         Boolean   @default(false)
+  completedAt       DateTime?
+  remarks           String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  incident          Incident  @relation(fields: [incidentId], references: [id], onDelete: Cascade)
 }
-
-// ===================== MODULE 6: GRIEVANCE REDRESSAL =====================
 
 model Grievance {
-  id              String    @id @default(cuid())
-  grievanceNumber String    @unique
-  dateRaised      DateTime  @default(now())
-  raisedBy        String?   // Worker ID or null for anonymous
-  raisedByName    String?
-  category        String    // Wage, Safety, Harassment, Facility, Other
-  isPOSH          Boolean   @default(false)
-  description     String
-  severity        String    @default("Medium") // Low, Medium, High, Critical
-  assignedTo      String?   // SafetyOfficer, PMC, HR
-  status          String    @default("Open") // Open, InProgress, Resolved, Escalated
+  id                String    @id @default(cuid())
+  grievanceNumber   String    @unique
+  dateRaised        DateTime  @default(now())
+  raisedBy          String?
+  raisedByName      String?
+  category          String
+  isPOSH            Boolean   @default(false)
+  description       String
+  severity          String    @default("Medium")
+  assignedTo        String?
+  status            String    @default("Open")
   resolutionDetails String?
-  resolutionDate  DateTime?
-  closedBy        String?
-  photoPaths       String?    // JSON array of photo paths/base64
-  photos           String?    // JSON array of base64 data URLs (evidence photos)
-  slaDays         Int       @default(7)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  resolutionDate    DateTime?
+  closedBy          String?
+  photoPaths        String?
+  photos            String?
+  slaDays           Int       @default(7)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
-// ===================== MODULE 7: VEHICLES =====================
-
 model Vehicle {
-  id                String   @id @default(cuid())
-  vehicleNumber     String
-  vehicleType       String   // Dumper, JCB, Crane, Tanker, Passenger, Other
-  owner             String   @default("Contractor") // Contractor, Rented
-  condition         String   @default("Fit") // Fit, NeedsRepair, Grounded
+  id                 String            @id @default(cuid())
+  vehicleNumber      String
+  vehicleType        String
+  owner              String            @default("Contractor")
+  condition          String            @default("Fit")
   lastInspectionDate DateTime?
-  nextInspectionDue DateTime?
-  contractorId      String?
-  contractor        Contractor? @relation(fields: [contractorId], references: [id])
-  siteId            String?
-  site              Site?       @relation(fields: [siteId], references: [id])
-  driverId          String?
-  driver            Worker?     @relation("VehicleDriver", fields: [driverId], references: [id])
-  photoPath         String?   // vehicle/equipment photo
-  photos            String?   // JSON array of base64 encoded photo data URLs
-  currentQRCode     String?   // JSON string { qrDataUrl, generatedAt, content }
-  qrCodeHistory     String?   // JSON array of previous QR codes
-  isActive          Boolean  @default(true)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  documents VehicleDocument[]
+  nextInspectionDue  DateTime?
+  contractorId       String?
+  siteId             String?
+  driverId           String?
+  photoPath          String?
+  photos             String?
+  currentQRCode      String?
+  qrCodeHistory      String?
+  isActive           Boolean           @default(true)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  contractor         Contractor?       @relation(fields: [contractorId], references: [id])
+  driver             Worker?           @relation("VehicleDriver", fields: [driverId], references: [id])
+  site               Site?             @relation(fields: [siteId], references: [id])
+  documents          VehicleDocument[]
 }
 
 model VehicleDocument {
-  id              String   @id @default(cuid())
-  vehicleId       String
-  vehicle         Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
-  docType         String   // RC, Fitness, Insurance, PUC, Permit
-  docNumber       String?
-  issueDate       DateTime?
-  expiryDate      DateTime?
-  uploadPath      String?
-  status          String   @default("Valid") // Valid, ExpiringSoon, Expired
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id         String    @id @default(cuid())
+  vehicleId  String
+  docType    String
+  docNumber  String?
+  issueDate  DateTime?
+  expiryDate DateTime?
+  uploadPath String?
+  status     String    @default("Valid")
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  vehicle    Vehicle   @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
 }
 
-// ===================== MODULE 8: HAZARDOUS MATERIALS =====================
-
 model HazardousMaterial {
-  id                        String   @id @default(cuid())
+  id                        String                @id @default(cuid())
   materialName              String
-  category                  String   @default("General") // General, Hazardous, Chemical
-  hazardClassification      String?  // Flammable, Corrosive, Toxic, etc.
+  category                  String                @default("General")
+  hazardClassification      String?
   msdsUploadPath            String?
-  photoPath                 String?   // material/equipment photo
-  photos                    String?   // JSON array of base64 data URLs (storage/labeling photos)
+  photoPath                 String?
+  photos                    String?
   storageLicenseNumber      String?
   storageLicenseExpiry      DateTime?
-  quantityCurrent           Float    @default(0)
+  quantityCurrent           Float                 @default(0)
   quantityMaxPermissible    Float
-  unit                      String   @default("KG")
+  unit                      String                @default("KG")
   storageLocation           String?
-  storageConditionCompliant Boolean  @default(true)
+  storageConditionCompliant Boolean               @default(true)
   handlingResponsiblePerson String?
   emergencyProcedureRef     String?
   siteId                    String?
-  site                      Site?    @relation(fields: [siteId], references: [id])
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
-
-  transactions MaterialTransaction[]
+  createdAt                 DateTime              @default(now())
+  updatedAt                 DateTime              @updatedAt
+  site                      Site?                 @relation(fields: [siteId], references: [id])
+  transactions              MaterialTransaction[]
 }
 
 model MaterialTransaction {
-  id                 String   @id @default(cuid())
-  materialId         String
-  material           HazardousMaterial @relation(fields: [materialId], references: [id], onDelete: Cascade)
-  transactionType    String   // In, Out
-  quantity           Float
-  runningBalance     Float
-  date               DateTime @default(now())
-  remarks            String?
-  createdAt          DateTime @default(now())
+  id              String            @id @default(cuid())
+  materialId      String
+  transactionType String
+  quantity        Float
+  runningBalance  Float
+  date            DateTime          @default(now())
+  remarks         String?
+  createdAt       DateTime          @default(now())
+  material        HazardousMaterial @relation(fields: [materialId], references: [id], onDelete: Cascade)
 }
 
-// ===================== MODULE 5j: LEGAL COMPLIANCE =====================
-
 model LegalCompliance {
-  id                  String   @id @default(cuid())
+  id                  String     @id @default(cuid())
   contractorId        String
-  contractor          Contractor @relation(fields: [contractorId], references: [id], onDelete: Cascade)
-  complianceType      String   // LabourLicense, BOCW, ContractLabour, StatutoryRegister
+  complianceType      String
   licenseNumber       String?
   issuingAuthority    String?
   issueDate           DateTime?
   expiryDate          DateTime?
-  renewalReminderDays Int      @default(30)
-  status              String   @default("Valid") // Valid, ExpiringSoon, Expired
+  renewalReminderDays Int        @default(30)
+  status              String     @default("Valid")
   remarks             String?
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  contractor          Contractor @relation(fields: [contractorId], references: [id], onDelete: Cascade)
 }
 
-// ===================== SITE-LEVEL CHECKLISTS =====================
-
 model SiteFacility {
-  id              String   @id @default(cuid())
-  siteId          String
-  site            Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  item            String   // Shelter, DrinkingWater, Cleanliness, Washroom, WasteDisposal, etc.
-  status          String   @default("Compliant") // Compliant, NonCompliant, Pending
+  id                 String    @id @default(cuid())
+  siteId             String
+  item               String
+  status             String    @default("Compliant")
   lastInspectionDate DateTime?
-  inspector       String?
-  remarks         String?
-  photos          String?   // JSON array of base64 data URLs
-  records         String?   // JSON array of inspection records { date, inspector, status, remarks, photosCount }
-  usageDetails    String?   // JSON { dailyUsage, weeklyUsage, lastUsed, capacity }
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  inspector          String?
+  remarks            String?
+  photos             String?
+  records            String?
+  usageDetails       String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  site               Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 }
 
 model SiteSecurityItem {
-  id              String   @id @default(cuid())
-  siteId          String
-  site            Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  item            String   // PPE, Barricading, ToolSafety, Signboard
-  status          String   @default("Compliant") // Compliant, NonCompliant, Pending
-  compliancePct   Float?   @default(100)
+  id                 String    @id @default(cuid())
+  siteId             String
+  item               String
+  status             String    @default("Compliant")
+  compliancePct      Float?    @default(100)
   lastInspectionDate DateTime?
-  inspector       String?
-  remarks         String?
-  photos          String?   // JSON array of base64 data URLs
-  records         String?   // JSON array of inspection records { date, inspector, status, remarks, photosCount }
-  usageDetails    String?   // JSON { dailyUsage, weeklyUsage, lastUsed, capacity }
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  inspector          String?
+  remarks            String?
+  photos             String?
+  records            String?
+  usageDetails       String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  site               Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 }
 
 model MedInfraItem {
-  id              String   @id @default(cuid())
-  siteId          String
-  site            Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  item            String   // MedicalRoom, FirstAidKit, Ambulance, HealthCheckup, MedicalCamp
-  status          String   @default("Compliant") // Compliant, NonCompliant, Pending
-  details         String?  // JSON with additional info
+  id                 String    @id @default(cuid())
+  siteId             String
+  item               String
+  status             String    @default("Compliant")
+  details            String?
   lastInspectionDate DateTime?
-  inspector       String?
-  remarks         String?
-  photos          String?   // JSON array of base64 data URLs
-  records         String?   // JSON array of inspection records { date, inspector, status, remarks, photosCount }
-  usageDetails    String?   // JSON { dailyUsage, weeklyUsage, lastUsed, capacity }
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  inspector          String?
+  remarks            String?
+  photos             String?
+  records            String?
+  usageDetails       String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  site               Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 }
-
-// ===================== CROSS-CUTTING: SYSTEM USER =====================
 
 model SystemUser {
-  id            String   @id @default(cuid())
-  username      String   @unique
-  password      String   // hashed in real app, plain for demo
-  fullName      String
-  role          String   // ADMIN, SAFETY_OFFICER, PMC, HR_COORDINATOR, LEGAL_ADVISOR
-  contractorId  String?
-  contractor    Contractor? @relation(fields: [contractorId], references: [id])
-  siteId        String?   // PMC users are scoped to a specific site/project
-  site          Site?       @relation(fields: [siteId], references: [id])
-  profilePhoto  String?  // base64 or file path
-  isActive      Boolean  @default(true)
-  lastLogin     DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String      @id @default(cuid())
+  username     String      @unique
+  password     String
+  fullName     String
+  role         String
+  contractorId String?
+  siteId       String?
+  profilePhoto String?
+  isActive     Boolean     @default(true)
+  lastLogin    DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  contractor   Contractor? @relation(fields: [contractorId], references: [id])
+  site         Site?       @relation(fields: [siteId], references: [id])
 }
-
-// ===================== CROSS-CUTTING: AUDIT LOG =====================
 
 model AuditLog {
   id        String   @id @default(cuid())
   userId    String?
   userName  String?
-  action    String   // CREATE, UPDATE, DELETE
-  entity    String   // Worker, MedicalRecord, TrainingRecord, etc.
+  action    String
+  entity    String
   entityId  String?
-  field     String?  // which field changed
+  field     String?
   oldValue  String?
   newValue  String?
   timestamp DateTime @default(now())
 }
 
-// ===================== LABOUR CAMP =====================
-
 model LabourCamp {
-  id            String   @id @default(cuid())
-  name          String
-  contractorId  String
-  contractor    Contractor @relation(fields: [contractorId], references: [id], onDelete: Cascade)
-  siteId        String
-  site          Site       @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  address       String?
-  capacity      Int?
-  currentOccupancy Int?   @default(0)
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  workers Worker[]
+  id               String     @id @default(cuid())
+  name             String
+  contractorId     String
+  siteId           String
+  address          String?
+  capacity         Int?
+  currentOccupancy Int?       @default(0)
+  isActive         Boolean    @default(true)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  contractor       Contractor @relation(fields: [contractorId], references: [id], onDelete: Cascade)
+  site             Site       @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  workers          Worker[]
 }
 
-// ===================== CROSS-CUTTING: NOTIFICATIONS =====================
-
 model Notification {
-  id          String   @id @default(cuid())
-  type        String   // TrainingExpiry, MedicalDue, VehicleDocExpiry, LicenseRenewal, GrievanceSLA, MaterialNearLimit
-  title       String
-  message     String
-  entityType  String?  // Worker, Vehicle, Material, etc.
-  entityId    String?
-  isRead      Boolean  @default(false)
-  priority    String   @default("Medium") // Low, Medium, High, Critical
-  createdAt   DateTime @default(now())
+  id         String   @id @default(cuid())
+  type       String
+  title      String
+  message    String
+  entityType String?
+  entityId   String?
+  isRead     Boolean  @default(false)
+  priority   String   @default("Medium")
+  createdAt  DateTime @default(now())
 }
