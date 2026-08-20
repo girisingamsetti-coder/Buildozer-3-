@@ -270,8 +270,8 @@ function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subti
 
           return (
             <div key={i} className={cn("sub-tile rounded-xl p-2.5 flex flex-col justify-between border transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:border-teal-500 hover:shadow-[0_8px_24px_-4px_rgba(20,184,166,0.2)] hover:brightness-95 dark:hover:brightness-110", isFullWidth && "col-span-2", pushToBottom && "row-start-2")} style={{ backgroundColor: bgColor, borderColor }} >
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-[9px] font-bold tracking-wider truncate" style={{ color: textColor }}>
+              <div className="flex items-center justify-center gap-1">
+                <span className="text-[9px] font-bold tracking-wider truncate text-center" style={{ color: textColor }}>
                   {card.label}
                 </span>
                 {card.pct && (
@@ -280,8 +280,8 @@ function StatCard({ title, icon: Icon, iconBg, iconColor, bigNumber, unit, subti
                   </span>
                 )}
               </div>
-              <div className="mt-2">
-                <span className="text-sm font-extrabold text-slate-900 dark:text-slate-100">{card.value}</span>
+              <div className="mt-2 text-center">
+                <span className="text-base font-black text-slate-900 dark:text-slate-100">{card.value}</span>
               </div>
             </div>
           )
