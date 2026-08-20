@@ -23,8 +23,8 @@ import {
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
-import { useSort } from '@/lib/use-sort'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
+import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { TablePagination } from '@/components/shared/table-pagination'

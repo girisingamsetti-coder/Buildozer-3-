@@ -1,7 +1,7 @@
 'use client'
 
 import { useNavStore, pageTitles } from '@/stores/nav-store'
-import { useAuthStore, roleLabels } from '@/lib/auth-store'
+import { useAuthStore, roleLabels } from '@/stores/auth-store'
 import { Button } from '@/components/ui/button'
 import { Bell, User, Monitor, Moon, Sun, Trash2, Calendar, LogOut, User as UserIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'

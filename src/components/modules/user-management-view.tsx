@@ -23,7 +23,7 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
-import { useAuthStore, roleLabels, type UserRole } from '@/lib/auth-store'
+import { useAuthStore, roleLabels, type UserRole } from '@/stores/auth-store'
 
 // ---------- types ----------
 interface SystemUser {

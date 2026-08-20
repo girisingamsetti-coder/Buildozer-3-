@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuthStore } from '@/lib/auth-store'
+import { useAuthStore } from '@/stores/auth-store'
 import { useNavStore } from '@/stores/nav-store'
 import { SidebarNav } from './sidebar-nav'
 import { TopBar } from './top-bar'

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuthStore, type UserRole } from '@/lib/auth-store'
+import { useAuthStore, type UserRole } from '@/stores/auth-store'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Shield, Eye, Users, Scale, Crown, MapPin, LogIn, ChevronDown, ChevronUp, User, Lock } from 'lucide-react'

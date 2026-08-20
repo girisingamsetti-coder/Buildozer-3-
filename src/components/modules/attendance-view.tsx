@@ -53,7 +53,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import { useNavStore } from '@/stores/nav-store'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'

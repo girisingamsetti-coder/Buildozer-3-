@@ -19,7 +19,7 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import { StatusBadge } from '@/components/shared/status-badge'
 import PhotoUploader from '@/components/shared/photo-uploader'
 import { format, differenceInDays, parseISO } from 'date-fns'

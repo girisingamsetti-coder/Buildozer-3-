@@ -15,8 +15,8 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { useNavStore } from '@/stores/nav-store'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
-import { useSort } from '@/lib/use-sort'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
+import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { format } from 'date-fns'

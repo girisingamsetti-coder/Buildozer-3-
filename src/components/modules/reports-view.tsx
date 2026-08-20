@@ -43,7 +43,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useNavStore } from '@/stores/nav-store'
-import { useSort } from '@/lib/use-sort'
+import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
 

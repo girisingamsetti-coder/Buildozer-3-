@@ -19,7 +19,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table'
 import UserIdCard from '@/components/shared/user-id-card'
-import { roleLabels, type UserRole } from '@/lib/auth-store'
+import { roleLabels, type UserRole } from '@/stores/auth-store'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
 
 // ---------- types ----------

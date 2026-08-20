@@ -26,7 +26,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
-import { useSort } from '@/lib/use-sort'
+import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { TablePagination } from '@/components/shared/table-pagination'
 import { cn } from '@/lib/utils'

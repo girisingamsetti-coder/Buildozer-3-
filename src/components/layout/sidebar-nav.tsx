@@ -1,7 +1,7 @@
 'use client'
 
 import { useNavStore, type PageId } from '@/stores/nav-store'
-import { useAuthStore, rolePermissions, roleLabels } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions, roleLabels } from '@/stores/auth-store'
 import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
 import { useState, useEffect, useCallback } from 'react'

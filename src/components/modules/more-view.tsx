@@ -1,7 +1,7 @@
 'use client'
 
 import { useNavStore, type PageId } from '@/stores/nav-store'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import {
   MapPin,
   Truck,

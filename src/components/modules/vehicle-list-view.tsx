@@ -19,8 +19,8 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog'
 import { useNavStore } from '@/stores/nav-store'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
-import { useSort } from '@/lib/use-sort'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
+import { useSort } from '@/hooks/use-sort'
 import { TablePagination } from '@/components/shared/table-pagination'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { StatusBadge } from '@/components/shared/status-badge'

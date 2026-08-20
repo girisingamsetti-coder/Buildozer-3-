@@ -21,7 +21,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { useNavStore } from '@/stores/nav-store'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
 import { format, isPast, parseISO, differenceInDays } from 'date-fns'

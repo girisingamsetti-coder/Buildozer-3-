@@ -16,7 +16,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { useNavStore } from '@/stores/nav-store'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import { StatusBadge } from '@/components/shared/status-badge'
 import PhotoUploader from '@/components/shared/photo-uploader'
 import { format, isPast, parseISO } from 'date-fns'

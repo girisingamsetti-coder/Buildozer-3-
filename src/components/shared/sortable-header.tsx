@@ -2,7 +2,7 @@
 
 import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react'
 import { TableHead } from '@/components/ui/table'
-import type { SortDir } from '@/lib/use-sort'
+import type { SortDir } from '@/hooks/use-sort'
 
 interface SortableHeaderProps {
   column: string

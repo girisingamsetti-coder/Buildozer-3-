@@ -50,12 +50,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { format, parseISO, isPast, differenceInDays } from 'date-fns'
 import TrainingCertificate from '@/components/shared/training-certificate'
-import { useSort } from '@/lib/use-sort'
+import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { TablePagination } from '@/components/shared/table-pagination'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'

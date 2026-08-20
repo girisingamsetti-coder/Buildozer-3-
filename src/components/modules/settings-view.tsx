@@ -48,8 +48,8 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
-import { useAuthStore, roleLabels, rolePermissions, type UserRole } from '@/lib/auth-store'
-import { useSort } from '@/lib/use-sort'
+import { useAuthStore, roleLabels, rolePermissions, type UserRole } from '@/stores/auth-store'
+import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
 

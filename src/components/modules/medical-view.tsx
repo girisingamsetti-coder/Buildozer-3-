@@ -42,7 +42,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import PhotoUploader from '@/components/shared/photo-uploader'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
