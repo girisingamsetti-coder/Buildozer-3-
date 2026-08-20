@@ -81,15 +81,15 @@ export function TopBar() {
   return (
     <header className="flex items-center justify-between px-3 h-14 shrink-0 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 pt-[env(safe-area-inset-top)]">
       <div className="flex items-center gap-2 flex-1 min-w-0">
-        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-slate-500 shrink-0" onClick={() => setMobileView(false)} title="Exit Mobile View">
-          <Monitor className="h-4 w-4" />
-        </Button>
         <h1 className="text-base font-bold text-slate-900 dark:text-slate-100 truncate">
           {pageTitles[activePage] || 'Buildozer'}
         </h1>
       </div>
 
       <div className="flex items-center gap-1 shrink-0">
+        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-slate-500 shrink-0" onClick={() => setMobileView(false)} title="Exit Mobile View">
+          <Monitor className="h-4 w-4" />
+        </Button>
         {/* Dark Mode */}
         <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8 rounded-full text-slate-600 dark:text-slate-300">
           {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
