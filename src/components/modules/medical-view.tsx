@@ -48,6 +48,7 @@ import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { format, isPast, parseISO } from 'date-fns'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
+import { useNavStore } from '@/stores/nav-store'
 
 // ---------- types ----------
 interface Worker {
@@ -520,6 +521,9 @@ export default function MedicalView() {
   const [typeFilter, setTypeFilter] = useState('')
   const [selectedWorkerId, setSelectedWorkerId] = useState<string | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
+  
+  const mobileView = useNavStore((s) => s.mobileView)
+  const isMobile = !!mobileView
 
   // Debounce search
   const [debouncedSearch, setDebouncedSearch] = useState('')
@@ -627,11 +631,14 @@ export default function MedicalView() {
       </div>
 
       {/* Two-panel layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className={cn(
+        "grid gap-6",
+        isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-12"
+      )}>
         {/* Left Panel: Worker List */}
         <Card className={cn(
-          "lg:col-span-4",
-          selectedWorkerId ? "order-2 lg:order-none" : "order-1 lg:order-none"
+          isMobile ? "block" : "lg:col-span-4 block",
+          isMobile ? "order-1" : (selectedWorkerId ? "order-2 lg:order-none" : "order-1 lg:order-none")
         )}>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between gap-2">
@@ -655,7 +662,7 @@ export default function MedicalView() {
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <ScrollArea className="h-[350px] lg:h-[600px]">
+            <ScrollArea className={cn(isMobile ? "h-[250px]" : "h-[350px] lg:h-[calc(100vh-260px)]")}>
               {workersLoading ? (
                 <div className="p-4"><WorkerListSkeleton /></div>
               ) : workers.length === 0 ? (
@@ -697,8 +704,9 @@ export default function MedicalView() {
 
         {/* Right Panel: Medical Records */}
         <div className={cn(
-          "lg:col-span-8 space-y-4",
-          selectedWorkerId ? "order-1 lg:order-none" : "order-2 lg:order-none"
+          "space-y-4",
+          isMobile ? "block" : "lg:col-span-8 block",
+          isMobile ? "order-2" : (selectedWorkerId ? "order-1 lg:order-none" : "order-2 lg:order-none")
         )}>
           {!selectedWorker ? (
             <Card>
