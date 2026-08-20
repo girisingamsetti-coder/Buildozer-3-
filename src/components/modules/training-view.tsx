@@ -158,16 +158,20 @@ const trainingExportColumns: ExportColumn<TrainingRecord>[] = [
   { key: 'worker', header: 'Worker', accessor: (r) => r.worker?.fullName ?? 'Unknown' },
   { key: 'trainingType', header: 'Type', accessor: (r) => trainingTypeLabel(r.trainingType) },
   { key: 'trainingTitle', header: 'Title' },
-  { key: 'dateConducted', header: 'Date', accessor: (r) => {
+  {
+    key: 'dateConducted', header: 'Date', accessor: (r) => {
       try { return format(parseISO(r.dateConducted), 'dd MMM yyyy') } catch { return r.dateConducted }
-    } },
+    }
+  },
   { key: 'durationHours', header: 'Hours', accessor: (r) => r.durationHours },
   { key: 'trainerName', header: 'Trainer', accessor: (r) => r.trainerName ?? '' },
   { key: 'status', header: 'Status', accessor: (r) => (r.status === 'ExpiringSoon' ? 'Expiring' : r.status) },
-  { key: 'validityDate', header: 'Validity', accessor: (r) => {
+  {
+    key: 'validityDate', header: 'Validity', accessor: (r) => {
       if (!r.validityDate) return ''
       try { return format(parseISO(r.validityDate), 'dd MMM yyyy') } catch { return r.validityDate }
-    } },
+    }
+  },
 ]
 
 // ---------- skeleton ----------
@@ -886,139 +890,139 @@ export default function TrainingView() {
 
       {/* Table / Cards */}
       <div className="flex-1 min-h-0 flex flex-col">
-      <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
-        <CardContent className="flex-1 min-h-0 flex flex-col p-0">
-          {isLoading ? (
-            <div className="p-4"><TableSkeleton /></div>
-          ) : filteredRecords.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
-              <GraduationCap className="h-12 w-12 mb-3 opacity-30" />
-              <p className="text-base font-medium">No training records found</p>
-              <p className="text-sm mt-1">Try adjusting your search or filters</p>
-            </div>
-          ) : (
-            <>
-              {/* Desktop Table */}
-              <div className="hidden lg:block flex-1 min-h-0 overflow-auto">
-                <Table>
-                  <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
-                    <TableRow>
-                      <TableHead className="w-12">S.No</TableHead>
-                      <TableHead className="w-36">Worker</TableHead>
-                      <TableHead className="w-32">Type</TableHead>
-                      <SortableHeader column="trainingTitle" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort}>Title</SortableHeader>
-                      <SortableHeader column="dateConducted" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-28">Date</SortableHeader>
-                      <TableHead className="w-20">Hours</TableHead>
-                      <TableHead className="w-32">Trainer</TableHead>
-                      <SortableHeader column="status" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-28">Status</SortableHeader>
-                      <TableHead className="w-28">Validity</TableHead>
-                      <TableHead className="w-16">Certificate</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {pagedRecords.map((r, index) => (
-                      <TableRow key={r.id}>
-                        <TableCell className="text-muted-foreground text-xs">{(page - 1) * PAGE_SIZE + index + 1}</TableCell>
-                        <TableCell className="font-medium text-sm">
-                          {r.worker?.fullName ?? 'Unknown'}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className={cn('text-xs border-0', trainingTypeColor(r.trainingType))}
-                          >
-                            {trainingTypeLabel(r.trainingType)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-sm">{r.trainingTitle}</TableCell>
-                        <TableCell className="text-sm">
-                          {format(parseISO(r.dateConducted), 'dd MMM yyyy')}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {r.durationHours > 0 ? `${r.durationHours}h` : '—'}
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {r.trainerName || '—'}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className={cn('text-xs', statusBadgeClass(r.status))}>
-                            {r.status === 'ExpiringSoon' ? 'Expiring' : r.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {r.validityDate
-                            ? format(parseISO(r.validityDate), 'dd MMM yyyy')
-                            : '—'}
-                        </TableCell>
-                        <TableCell>
-                          {r.isCompleted && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 text-teal-600 hover:text-teal-700 hover:bg-teal-50 dark:text-teal-400 dark:hover:bg-teal-900/20"
-                              onClick={() => setCertDialog({ open: true, record: r, certNumber: certNumberMap[r.id] || '' })}
-                              title="Download Certificate"
-                            >
-                              <Award className="h-4 w-4" />
-                            </Button>
-                          )}
-                        </TableCell>
+        <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+          <CardContent className="flex-1 min-h-0 flex flex-col p-0">
+            {isLoading ? (
+              <div className="p-4"><TableSkeleton /></div>
+            ) : filteredRecords.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+                <GraduationCap className="h-12 w-12 mb-3 opacity-30" />
+                <p className="text-base font-medium">No training records found</p>
+                <p className="text-sm mt-1">Try adjusting your search or filters</p>
+              </div>
+            ) : (
+              <>
+                {/* Desktop Table */}
+                <div className="hidden lg:block flex-1 min-h-0 overflow-auto">
+                  <Table>
+                    <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
+                      <TableRow>
+                        <TableHead className="w-12">S.No</TableHead>
+                        <TableHead className="w-36">Worker</TableHead>
+                        <TableHead className="w-32">Type</TableHead>
+                        <SortableHeader column="trainingTitle" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort}>Title</SortableHeader>
+                        <SortableHeader column="dateConducted" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-28">Date</SortableHeader>
+                        <TableHead className="w-20">Hours</TableHead>
+                        <TableHead className="w-32">Trainer</TableHead>
+                        <SortableHeader column="status" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-28">Status</SortableHeader>
+                        <TableHead className="w-28">Validity</TableHead>
+                        <TableHead className="w-16">Certificate</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+                    </TableHeader>
+                    <TableBody>
+                      {pagedRecords.map((r, index) => (
+                        <TableRow key={r.id}>
+                          <TableCell className="text-muted-foreground text-xs">{(page - 1) * PAGE_SIZE + index + 1}</TableCell>
+                          <TableCell className="font-medium text-sm">
+                            {r.worker?.fullName ?? 'Unknown'}
+                          </TableCell>
+                          <TableCell>
+                            <Badge
+                              variant="outline"
+                              className={cn('text-xs border-0', trainingTypeColor(r.trainingType))}
+                            >
+                              {trainingTypeLabel(r.trainingType)}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-sm">{r.trainingTitle}</TableCell>
+                          <TableCell className="text-sm">
+                            {format(parseISO(r.dateConducted), 'dd MMM yyyy')}
+                          </TableCell>
+                          <TableCell className="text-sm">
+                            {r.durationHours > 0 ? `${r.durationHours}h` : '—'}
+                          </TableCell>
+                          <TableCell className="text-sm text-muted-foreground">
+                            {r.trainerName || '—'}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={cn('text-xs', statusBadgeClass(r.status))}>
+                              {r.status === 'ExpiringSoon' ? 'Expiring' : r.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-sm">
+                            {r.validityDate
+                              ? format(parseISO(r.validityDate), 'dd MMM yyyy')
+                              : '—'}
+                          </TableCell>
+                          <TableCell>
+                            {r.isCompleted && (
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-teal-600 hover:text-teal-700 hover:bg-teal-50 dark:text-teal-400 dark:hover:bg-teal-900/20"
+                                onClick={() => setCertDialog({ open: true, record: r, certNumber: certNumberMap[r.id] || '' })}
+                                title="Download Certificate"
+                              >
+                                <Award className="h-4 w-4" />
+                              </Button>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
 
-              {/* Mobile / Tablet Cards */}
-              <div className="lg:hidden divide-y">
-                {pagedRecords.map((r) => (
-                  <div key={r.id} className="p-4 space-y-2">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="font-medium text-sm">{r.trainingTitle}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">
-                          {r.worker?.fullName} · {format(parseISO(r.dateConducted), 'dd MMM yyyy')}
-                          {r.durationHours > 0 ? ` · ${r.durationHours}h` : ''}
-                        </p>
+                {/* Mobile / Tablet Cards */}
+                <div className="lg:hidden divide-y">
+                  {pagedRecords.map((r) => (
+                    <div key={r.id} className="p-4 space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <p className="font-medium text-sm">{r.trainingTitle}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            {r.worker?.fullName} · {format(parseISO(r.dateConducted), 'dd MMM yyyy')}
+                            {r.durationHours > 0 ? ` · ${r.durationHours}h` : ''}
+                          </p>
+                        </div>
+                        <Badge variant="outline" className={cn('text-xs shrink-0', statusBadgeClass(r.status))}>
+                          {r.status === 'ExpiringSoon' ? 'Expiring' : r.status}
+                        </Badge>
                       </div>
-                      <Badge variant="outline" className={cn('text-xs shrink-0', statusBadgeClass(r.status))}>
-                        {r.status === 'ExpiringSoon' ? 'Expiring' : r.status}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge variant="outline" className={cn('text-xs border-0', trainingTypeColor(r.trainingType))}>
-                        {trainingTypeLabel(r.trainingType)}
-                      </Badge>
-                      {r.trainerName && (
-                        <span className="text-xs text-muted-foreground">Trainer: {r.trainerName}</span>
-                      )}
-                      {r.validityDate && (
-                        <span className="text-xs text-muted-foreground">
-                          Valid till: {format(parseISO(r.validityDate), 'dd MMM yyyy')}
-                        </span>
-                      )}
-                    </div>
-                    {r.isCompleted && (
-                      <div className="flex justify-end">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-7 gap-1.5 text-xs text-teal-600 hover:text-teal-700 hover:bg-teal-50 dark:text-teal-400 dark:hover:bg-teal-900/20"
-                          onClick={() => setCertDialog({ open: true, record: r, certNumber: certNumberMap[r.id] || '' })}
-                        >
-                          <Award className="h-3.5 w-3.5" />
-                          Certificate
-                        </Button>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge variant="outline" className={cn('text-xs border-0', trainingTypeColor(r.trainingType))}>
+                          {trainingTypeLabel(r.trainingType)}
+                        </Badge>
+                        {r.trainerName && (
+                          <span className="text-xs text-muted-foreground">Trainer: {r.trainerName}</span>
+                        )}
+                        {r.validityDate && (
+                          <span className="text-xs text-muted-foreground">
+                            Valid till: {format(parseISO(r.validityDate), 'dd MMM yyyy')}
+                          </span>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
-      <TablePagination page={page} totalPages={totalPages} total={sorted.length} onPageChange={setPage} pageSize={PAGE_SIZE} />
+                      {r.isCompleted && (
+                        <div className="flex justify-end">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 gap-1.5 text-xs text-teal-600 hover:text-teal-700 hover:bg-teal-50 dark:text-teal-400 dark:hover:bg-teal-900/20"
+                            onClick={() => setCertDialog({ open: true, record: r, certNumber: certNumberMap[r.id] || '' })}
+                          >
+                            <Award className="h-3.5 w-3.5" />
+                            Certificate
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </CardContent>
+        </Card>
+        <TablePagination page={page} totalPages={totalPages} total={sorted.length} onPageChange={setPage} pageSize={PAGE_SIZE} />
       </div>
 
       {/* Add Training Dialog */}
