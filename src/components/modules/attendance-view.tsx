@@ -54,6 +54,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useAuthStore, rolePermissions } from '@/lib/auth-store'
+import { useNavStore } from '@/stores/nav-store'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
@@ -542,6 +544,9 @@ function AttendanceTableSkeleton() {
 export default function AttendanceView() {
   const role = useAuthStore((s) => s.role)
   const perms = rolePermissions[role]
+  const isDeviceMobile = useIsMobile()
+  const mobileViewConfig = useNavStore((s) => s.mobileView)
+  const isMobile = isDeviceMobile || !!mobileViewConfig
   const queryClient = useQueryClient()
 
   const today = new Date()
@@ -878,7 +883,7 @@ export default function AttendanceView() {
 
       {/* Summary Stats */}
       {!isLoading && (
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div className={cn("grid gap-3", isMobile ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-5")}>
           <Card className="h-full bg-teal-50 text-teal-700 border-teal-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
             <CardContent className="p-3 h-full flex items-center gap-2">
               <div className="rounded-xl p-2 shrink-0 bg-teal-100 text-teal-600 flex items-center justify-center">

@@ -16,6 +16,8 @@ import {
   FileText,
   X,
   Award,
+  Loader2,
+  Check,
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -36,6 +38,8 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -200,10 +204,57 @@ function AddTrainingDialog({ open, onOpenChange }: {
   onOpenChange: (open: boolean) => void
 }) {
   const queryClient = useQueryClient()
+  const [step, setStep] = useState<1 | 2>(1)
+  const [selectedSiteId, setSelectedSiteId] = useState<string>('')
+  const [selectedWorkerIds, setSelectedWorkerIds] = useState<Set<string>>(new Set())
 
-  const { register, handleSubmit, control, reset, setValue, formState: { errors } } = useForm<TrainingFormValues>({
+  // Fetch sites for project dropdown
+  const { data: sites = [] } = useQuery<{ id: string; name: string }[]>({
+    queryKey: ['sites'],
+    queryFn: () => fetch('/api/sites').then((r) => r.json()),
+  })
+
+  // Fetch workers filtered by selected site
+  const { data: workersResp, isLoading: workersLoading } = useQuery<WorkersResponse>({
+    queryKey: ['workers-select', selectedSiteId],
+    queryFn: () => {
+      const url = selectedSiteId && selectedSiteId !== 'all'
+        ? `/api/workers?limit=1000&siteId=${selectedSiteId}`
+        : '/api/workers?limit=1000'
+      return fetch(url).then((r) => r.json())
+    },
+    enabled: open,
+  })
+  const workers = workersResp?.data ?? []
+
+  // Auto-select workers when a site is chosen
+  useEffect(() => {
+    const w = workersResp?.data
+    if (selectedSiteId && selectedSiteId !== 'all' && w && w.length > 0) {
+      setSelectedWorkerIds(new Set(w.map((x) => x.id)))
+    } else if (!selectedSiteId || selectedSiteId === 'all') {
+      setSelectedWorkerIds(new Set())
+    }
+  }, [selectedSiteId, workersResp?.data])
+
+  const toggleWorker = (id: string) => {
+    const next = new Set(selectedWorkerIds)
+    if (next.has(id)) next.delete(id)
+    else next.add(id)
+    setSelectedWorkerIds(next)
+  }
+
+  const toggleAll = () => {
+    if (selectedWorkerIds.size === workers.length) {
+      setSelectedWorkerIds(new Set())
+    } else {
+      setSelectedWorkerIds(new Set(workers.map((w) => w.id)))
+    }
+  }
+
+  const { register, handleSubmit, control, reset, formState: { errors } } = useForm<TrainingFormValues>({
     defaultValues: {
-      workerId: '',
+      workerId: 'BATCH', // bypassed
       trainingType: 'SafetyInduction',
       trainingTitle: '',
       dateConducted: format(new Date(), 'yyyy-MM-dd'),
@@ -218,12 +269,6 @@ function AddTrainingDialog({ open, onOpenChange }: {
     },
   })
 
-  const { data: workersResp } = useQuery<WorkersResponse>({
-    queryKey: ['workers-select'],
-    queryFn: () => fetch('/api/workers?limit=100').then((r) => r.json()),
-  })
-  const workers = workersResp?.data ?? []
-
   const mutation = useMutation({
     mutationFn: async (data: TrainingFormValues) => {
       const status = data.validityDate
@@ -234,167 +279,314 @@ function AddTrainingDialog({ open, onOpenChange }: {
             : 'Valid'
         : 'Valid'
 
-      return fetch(`/api/workers/${data.workerId}/training`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          trainingType: data.trainingType,
-          trainingTitle: data.trainingTitle,
-          dateConducted: data.dateConducted,
-          durationHours: parseFloat(data.durationHours) || 0,
-          trainerName: data.trainerName || null,
-          trainerCredentials: data.trainerCredentials || null,
-          trainingAgency: data.trainingAgency || null,
-          certificateNumber: data.certificateNumber || null,
-          validityDate: data.validityDate || null,
-          status,
-          isCompleted: data.isCompleted,
-          remarks: data.remarks || null,
-        }),
-      }).then((r) => r.json())
+      const workerIds = Array.from(selectedWorkerIds)
+
+      const promises = workerIds.map((workerId, index) => {
+        let cert = data.certificateNumber || null
+        if (cert && workerIds.length > 1) {
+          cert = `${cert}-${String(index + 1).padStart(3, '0')}`
+        }
+
+        return fetch(`/api/workers/${workerId}/training`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            trainingType: data.trainingType,
+            trainingTitle: data.trainingTitle,
+            dateConducted: data.dateConducted,
+            durationHours: parseFloat(data.durationHours) || 0,
+            trainerName: data.trainerName || null,
+            trainerCredentials: data.trainerCredentials || null,
+            trainingAgency: data.trainingAgency || null,
+            certificateNumber: cert,
+            validityDate: data.validityDate || null,
+            status,
+            isCompleted: data.isCompleted,
+            remarks: data.remarks || null,
+          }),
+        }).then(async (r) => {
+          if (!r.ok) throw new Error(`Failed to add training: ${await r.text()}`)
+          return r.json()
+        })
+      })
+
+      return Promise.all(promises)
     },
     onSuccess: () => {
-      toast.success('Training record added successfully')
+      toast.success('Training records added successfully')
       queryClient.invalidateQueries({ queryKey: ['training-all'] })
       reset()
+      setStep(1)
+      setSelectedSiteId('')
+      setSelectedWorkerIds(new Set())
       onOpenChange(false)
     },
     onError: (err: Error) => {
-      toast.error(err.message || 'Failed to add training record')
+      toast.error(err.message || 'Failed to add training records')
     },
   })
 
   const onSubmit = (data: TrainingFormValues) => mutation.mutate(data)
 
+  const handleNext = () => {
+    if (selectedWorkerIds.size === 0) {
+      toast.error('Please select at least one worker')
+      return
+    }
+    setStep(2)
+  }
+
+  // Reset state on close
+  useEffect(() => {
+    if (!open) {
+      setStep(1)
+      setSelectedSiteId('')
+      setSelectedWorkerIds(new Set())
+      reset()
+    }
+  }, [open, reset])
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5 text-[#0d9488]" />
-            Add Training Record
-          </DialogTitle>
+      <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col overflow-hidden p-0 gap-0">
+        <DialogHeader className="shrink-0 px-6 py-4 border-b">
+          <DialogTitle className="text-xl">Add Training Record</DialogTitle>
+          <DialogDescription className="text-muted-foreground mt-1.5">
+            Fill in the details step by step to assign a training record
+          </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Worker Select */}
-          <div>
-            <Label>Worker *</Label>
-            <Controller
-              control={control}
-              name="workerId"
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select worker..." />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-60">
-                    {workers
-                      .sort((a, b) => a.fullName.localeCompare(b.fullName))
-                      .map((w) => (
-                        <SelectItem key={w.id} value={w.id}>
-                          {w.fullName} ({w.employeeNumber})
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            {errors.workerId && <p className="text-xs text-destructive mt-1">Required</p>}
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label>Training Type *</Label>
-              <Controller
-                control={control}
-                name="trainingType"
-                render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
+        {/* Stepper (Sticky Top) */}
+        <div className="shrink-0 px-6 py-4 border-b bg-background">
+          <div className="flex items-center justify-between max-w-md mx-auto">
+            {/* Step 1 */}
+            <div className="flex flex-col items-center gap-1.5 group flex-1 min-w-0">
+              <div
+                className={cn(
+                  'flex items-center justify-center h-10 w-10 rounded-full border-2 transition-all duration-200 shrink-0',
+                  step > 1
+                    ? 'bg-primary border-primary text-primary-foreground'
+                    : 'border-primary text-primary bg-primary/10 ring-4 ring-primary/10'
+                )}
+              >
+                {step > 1 ? <Check className="h-5 w-5" /> : <Users className="h-4.5 w-4.5" />}
+              </div>
+              <span className={cn('text-xs font-medium text-center leading-tight transition-colors', step === 1 ? 'text-foreground' : 'text-muted-foreground')}>Select Workers</span>
+            </div>
+
+            {/* Connector */}
+            <div className="flex-1 h-0.5 mx-2 -mt-6 relative">
+              <div className="absolute inset-0 bg-muted-foreground/20 rounded-full" />
+              <div className={cn('absolute inset-y-0 left-0 rounded-full transition-all duration-300', step > 1 ? 'bg-primary w-full' : 'w-0')} />
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex flex-col items-center gap-1.5 group flex-1 min-w-0">
+              <div
+                className={cn(
+                  'flex items-center justify-center h-10 w-10 rounded-full border-2 transition-all duration-200 shrink-0',
+                  step === 2
+                    ? 'border-primary text-primary bg-primary/10 ring-4 ring-primary/10'
+                    : 'border-muted-foreground/30 text-muted-foreground/60 bg-background'
+                )}
+              >
+                <FileText className="h-4.5 w-4.5" />
+              </div>
+              <span className={cn('text-xs font-medium text-center leading-tight transition-colors', step === 2 ? 'text-foreground' : 'text-muted-foreground/60')}>Training Details</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto p-6 bg-muted/30">
+          <div className="bg-background border rounded-xl p-6 shadow-sm min-h-full flex flex-col">
+            <h3 className="text-lg font-semibold mb-1">
+              {step === 1 ? 'Select Workers' : 'Training Information'}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              {step === 1 ? 'Choose the project and select workers for the training' : 'Provide the specific details of the training session'}
+            </p>
+
+            {step === 1 && (
+              <div className="flex flex-col gap-4 flex-1 min-h-0 overflow-hidden">
+                <div className="shrink-0">
+                  <Label>Project / Site *</Label>
+                  <Select value={selectedSiteId} onValueChange={setSelectedSiteId}>
                     <SelectTrigger className="mt-1">
-                      <SelectValue />
+                      <SelectValue placeholder="Select a project to load workers" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="SafetyInduction">Safety Induction</SelectItem>
-                      <SelectItem value="JobSpecific">Job Specific</SelectItem>
-                      <SelectItem value="POSH">POSH</SelectItem>
-                      <SelectItem value="Special">Special</SelectItem>
-                      <SelectItem value="MockDrill">Mock Drill</SelectItem>
+                      <SelectItem value="all">All Projects (Global)</SelectItem>
+                      {sites.map((s) => (
+                        <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
-                )}
-              />
-            </div>
-            <div>
-              <Label>Training Title *</Label>
-              <Input
-                placeholder="e.g. Fire Safety Training"
-                {...register('trainingTitle', { required: true })}
-                className="mt-1"
-              />
-              {errors.trainingTitle && <p className="text-xs text-destructive mt-1">Required</p>}
-            </div>
-            <div>
-              <Label>Date Conducted *</Label>
-              <Input type="date" {...register('dateConducted', { required: true })} className="mt-1" />
-              {errors.dateConducted && <p className="text-xs text-destructive mt-1">Required</p>}
-            </div>
-            <div>
-              <Label>Duration (hours)</Label>
-              <Input type="number" step="0.5" min="0" placeholder="e.g. 4" {...register('durationHours')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Trainer Name</Label>
-              <Input placeholder="Trainer name" {...register('trainerName')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Trainer Credentials</Label>
-              <Input placeholder="e.g. NEBOSH certified" {...register('trainerCredentials')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Training Agency</Label>
-              <Input placeholder="Agency name" {...register('trainingAgency')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Certificate Number</Label>
-              <Input placeholder="Certificate #" {...register('certificateNumber')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Validity Date</Label>
-              <Input type="date" {...register('validityDate')} className="mt-1" />
-            </div>
-          </div>
+                </div>
 
-          <div className="flex items-center gap-2">
-            <Controller
-              control={control}
-              name="isCompleted"
-              render={({ field }) => (
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={(checked) => field.onChange(!!checked)}
-                />
-              )}
-            />
-            <Label className="text-sm">Training Completed</Label>
-          </div>
+                <div className="flex items-center justify-between mt-2 shrink-0">
+                  <Label>Select Workers ({selectedWorkerIds.size} selected)</Label>
+                  {workers.length > 0 && (
+                    <Button type="button" variant="ghost" size="sm" onClick={toggleAll} className="h-8 text-primary hover:text-primary/90">
+                      {selectedWorkerIds.size === workers.length ? 'Deselect All' : 'Select All'}
+                    </Button>
+                  )}
+                </div>
 
-          <div>
-            <Label>Remarks</Label>
-            <Textarea placeholder="Additional remarks..." {...register('remarks')} className="mt-1" />
-          </div>
+                <div className="overflow-y-auto border rounded-md p-2 max-h-[340px]">
+                  {workersLoading ? (
+                    <div className="p-8 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>
+                  ) : workers.length === 0 ? (
+                    <div className="p-8 text-center text-sm text-muted-foreground flex flex-col items-center">
+                      <Users className="h-10 w-10 opacity-20 mb-2" />
+                      No workers found for this project.
+                    </div>
+                  ) : (
+                    <div className="space-y-1">
+                      {workers
+                        .sort((a, b) => a.fullName.localeCompare(b.fullName))
+                        .map((w) => (
+                          <div
+                            key={w.id}
+                            className="flex items-center gap-3 p-3 hover:bg-muted/50 rounded-md cursor-pointer transition-colors border border-transparent hover:border-border"
+                            onClick={() => toggleWorker(w.id)}
+                          >
+                            <Checkbox checked={selectedWorkerIds.has(w.id)} onCheckedChange={() => toggleWorker(w.id)} className="h-5 w-5" />
+                            <div className="text-sm">
+                              <span className="font-medium text-base">{w.fullName}</span>{' '}
+                              <span className="text-muted-foreground ml-1">({w.employeeNumber})</span>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
-          <div className="flex justify-end gap-3 pt-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+            {step === 2 && (
+              <form id="training-form" onSubmit={handleSubmit(onSubmit)} className="space-y-5 flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label>Training Type *</Label>
+                    <Controller
+                      control={control}
+                      name="trainingType"
+                      render={({ field }) => (
+                        <Select value={field.value} onValueChange={field.onChange}>
+                          <SelectTrigger className="mt-1">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="SafetyInduction">Safety Induction</SelectItem>
+                            <SelectItem value="JobSpecific">Job Specific</SelectItem>
+                            <SelectItem value="POSH">POSH</SelectItem>
+                            <SelectItem value="Special">Special</SelectItem>
+                            <SelectItem value="MockDrill">Mock Drill</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                  </div>
+                  <div>
+                    <Label>Training Title *</Label>
+                    <Input
+                      placeholder="e.g. Fire Safety Training"
+                      {...register('trainingTitle', { required: true })}
+                      className="mt-1"
+                    />
+                    {errors.trainingTitle && <p className="text-xs text-destructive mt-1">Required</p>}
+                  </div>
+                  <div>
+                    <Label>Date Conducted *</Label>
+                    <Input type="date" {...register('dateConducted', { required: true })} className="mt-1" />
+                    {errors.dateConducted && <p className="text-xs text-destructive mt-1">Required</p>}
+                  </div>
+                  <div>
+                    <Label>Duration (hours)</Label>
+                    <Input type="number" step="0.5" min="0" placeholder="e.g. 4" {...register('durationHours')} className="mt-1" />
+                  </div>
+                  <div>
+                    <Label>Trainer Name</Label>
+                    <Input placeholder="Trainer name" {...register('trainerName')} className="mt-1" />
+                  </div>
+                  <div>
+                    <Label>Trainer Credentials</Label>
+                    <Input placeholder="e.g. NEBOSH certified" {...register('trainerCredentials')} className="mt-1" />
+                  </div>
+                  <div>
+                    <Label>Training Agency</Label>
+                    <Input placeholder="Agency name" {...register('trainingAgency')} className="mt-1" />
+                  </div>
+                  <div>
+                    <Label>Base Certificate Number</Label>
+                    <Input placeholder="Base Certificate #" {...register('certificateNumber')} className="mt-1" />
+                    <p className="text-[10px] text-muted-foreground mt-0.5 leading-tight">If multiple workers are selected, sequence numbers will be appended automatically.</p>
+                  </div>
+                  <div>
+                    <Label>Validity Date</Label>
+                    <Input type="date" {...register('validityDate')} className="mt-1" />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Controller
+                    control={control}
+                    name="isCompleted"
+                    render={({ field }) => (
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(checked) => field.onChange(!!checked)}
+                      />
+                    )}
+                  />
+                  <Label className="text-sm">Training Completed</Label>
+                </div>
+
+                <div>
+                  <Label>Remarks</Label>
+                  <Textarea placeholder="Additional remarks..." {...register('remarks')} className="mt-1" />
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="shrink-0 px-6 py-4 border-t bg-background flex items-center justify-between">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={step === 1 ? () => onOpenChange(false) : () => setStep(1)}
+            className="w-[100px]"
+          >
+            {step === 1 ? 'Cancel' : 'Back'}
+          </Button>
+
+          <span className="text-sm font-medium text-muted-foreground">
+            {step} of 2
+          </span>
+
+          {step === 1 ? (
+            <Button
+              type="button"
+              onClick={handleNext}
+              className="w-[100px] bg-[#0d9488] hover:bg-[#0f766e] text-white"
+            >
+              Next &rarr;
+            </Button>
+          ) : (
             <Button
               type="submit"
-              className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+              form="training-form"
+              className="w-[140px] bg-[#0d9488] hover:bg-[#0f766e] text-white"
               disabled={mutation.isPending}
             >
-              {mutation.isPending ? 'Saving...' : 'Add Training'}
+              {mutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              {mutation.isPending ? 'Saving...' : `Save (${selectedWorkerIds.size})`}
             </Button>
-          </div>
-        </form>
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   )
