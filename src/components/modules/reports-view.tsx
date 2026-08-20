@@ -902,7 +902,7 @@ export default function ReportsView() {
   const currentCat = CATEGORIES.find((c) => c.id === selectedCategory)
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6 h-full overflow-hidden">
       {/* Header */}
       <div className="flex items-center gap-3">
         <Button variant="outline" size="icon" className="shrink-0" onClick={handleBack}>
@@ -996,8 +996,8 @@ export default function ReportsView() {
       )}
 
       {/* Results */}
-      <Card>
-        <CardContent className="p-0">
+      <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+        <CardContent className="p-0 flex-1 min-h-0 flex flex-col">
           {effectiveIsLoading ? (
             <div className="p-6 space-y-3">
               <Skeleton className="h-6 w-64" />
@@ -1053,7 +1053,7 @@ export default function ReportsView() {
               </div>
 
               {/* Desktop Table */}
-              <div className="hidden lg:block overflow-x-auto max-h-[calc(100vh-12rem)] overflow-y-auto">
+              <div className="hidden lg:block overflow-x-auto flex-1 min-h-0 overflow-y-auto">
                 <Table>
                   <TableHeader className="sticky top-0 z-10 bg-background">
                     <TableRow>
@@ -1087,7 +1087,7 @@ export default function ReportsView() {
               </div>
 
               {/* Mobile Cards */}
-              <div className="lg:hidden divide-y max-h-[60vh] overflow-y-auto">
+              <div className="lg:hidden divide-y flex-1 min-h-0 overflow-y-auto">
                 {rows.map((row, idx) => (
                   <div key={String(row.id ?? idx)} className="p-4">
                     <div className="space-y-2">

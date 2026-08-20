@@ -28,6 +28,7 @@ import {
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
 import { useSort } from '@/lib/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
+import { TablePagination } from '@/components/shared/table-pagination'
 import { cn } from '@/lib/utils'
 
 // ==================== TYPES ====================
@@ -121,10 +122,12 @@ export default function LocationsView() {
   const [contractorFilter, setContractorFilter] = useState('')
   const [siteFilter, setSiteFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
+  const [page, setPage] = useState(1)
 
   // Debounce search
   const handleSearchChange = (value: string) => {
     setSearch(value)
+    setPage(1)
     const t = setTimeout(() => setDebouncedSearch(value), 300)
     return () => clearTimeout(t)
   }
@@ -167,6 +170,11 @@ export default function LocationsView() {
   })) as (Camp & Record<string, unknown>)[]
   const { sorted, sortKey, sortDir, toggleSort } = useSort(flatCamps)
 
+  const PAGE_SIZE = 15
+  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE))
+  const currentPage = page > totalPages ? totalPages : Math.max(1, page)
+  const displayCamps = sorted.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+
   const hasActiveFilter = !!(search || contractorFilter || siteFilter || statusFilter)
   const clearFilters = () => {
     setSearch('')
@@ -174,6 +182,7 @@ export default function LocationsView() {
     setContractorFilter('')
     setSiteFilter('')
     setStatusFilter('')
+    setPage(1)
   }
 
   const activeCamps = camps.filter((c) => c.isActive).length
@@ -195,7 +204,7 @@ export default function LocationsView() {
   })
 
   return (
-    <div className="flex flex-col gap-4 h-[calc(100vh-6rem)] overflow-hidden">
+    <div className="flex flex-col gap-4 h-full overflow-hidden">
       {/* ====== Page Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
         <div className="hidden sm:block">
@@ -251,7 +260,7 @@ export default function LocationsView() {
                 className="pl-9"
               />
             </div>
-            <Select value={contractorFilter} onValueChange={setContractorFilter}>
+            <Select value={contractorFilter} onValueChange={(val) => { setContractorFilter(val); setPage(1); }}>
               <SelectTrigger className="w-full sm:w-48">
                 <SelectValue placeholder="Contractor" />
               </SelectTrigger>
@@ -261,7 +270,7 @@ export default function LocationsView() {
                 ))}
               </SelectContent>
             </Select>
-            <Select value={siteFilter} onValueChange={setSiteFilter}>
+            <Select value={siteFilter} onValueChange={(val) => { setSiteFilter(val); setPage(1); }}>
               <SelectTrigger className="w-full sm:w-48">
                 <SelectValue placeholder="Site" />
               </SelectTrigger>
@@ -271,7 +280,7 @@ export default function LocationsView() {
                 ))}
               </SelectContent>
             </Select>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <Select value={statusFilter} onValueChange={(val) => { setStatusFilter(val); setPage(1); }}>
               <SelectTrigger className="w-full sm:w-36">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
@@ -329,12 +338,13 @@ export default function LocationsView() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sorted.map((camp, index) => {
+                    {displayCamps.map((camp, index) => {
                       const comp = complianceFor(camp)
                       const pct = occupancyPct(camp)
+                      const actualIndex = (currentPage - 1) * PAGE_SIZE + index + 1
                       return (
                         <TableRow key={camp.id} className="hover:bg-muted/50 transition-colors">
-                          <TableCell className="text-xs text-muted-foreground">{index + 1}</TableCell>
+                          <TableCell className="text-xs text-muted-foreground">{actualIndex}</TableCell>
                           <TableCell className="text-sm font-medium">{camp.name}</TableCell>
                           <TableCell className="text-sm">{camp.contractor?.name || '—'}</TableCell>
                           <TableCell className="text-sm">{camp.site?.name || '—'}</TableCell>
@@ -400,8 +410,8 @@ export default function LocationsView() {
               </div>
 
               {/* Mobile Cards */}
-              <div className="md:hidden divide-y">
-                {sorted.map((camp) => {
+              <div className="md:hidden divide-y flex-1 overflow-auto">
+                {displayCamps.map((camp) => {
                   const comp = complianceFor(camp)
                   const pct = occupancyPct(camp)
                   return (
@@ -455,6 +465,10 @@ export default function LocationsView() {
                     </div>
                   )
                 })}
+              </div>
+
+              <div className="shrink-0 p-3 border-t bg-background">
+                <TablePagination page={currentPage} totalPages={totalPages} total={sorted.length} pageSize={PAGE_SIZE} onPageChange={setPage} />
               </div>
             </>
           )}

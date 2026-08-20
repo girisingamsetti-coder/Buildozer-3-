@@ -20,7 +20,7 @@ export default function WorkforceView() {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-[calc(100vh-6rem)] overflow-hidden">
+    <div className="flex flex-col gap-4 h-full overflow-hidden">
       <Tabs
         value={tab}
         onValueChange={handleTabChange}

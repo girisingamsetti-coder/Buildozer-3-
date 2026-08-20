@@ -744,12 +744,12 @@ export default function DashboardView() {
   return (
     <div className="h-full flex flex-col gap-2 overflow-hidden">
       {/* ────── Hero Header and Filters ────── */}
-      <div className="shrink-0 flex items-center justify-between gap-4">
+      <div className={cn("shrink-0 flex gap-4", isMobile ? "flex-col items-stretch" : "items-center justify-between")}>
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-1/2 rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between"
+          className={cn("rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between", isMobile ? "w-full" : "w-1/2")}
         >
           <div>
             <h1 className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-100">{getGreeting()} 👋</h1>
@@ -761,16 +761,18 @@ export default function DashboardView() {
         </motion.div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2 justify-end">
+        <div className={cn("gap-2", isMobile ? "grid grid-cols-2" : "flex flex-wrap items-center justify-end")}>
           {hasActiveFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors"
-              onClick={clearFilters}
-            >
-              Clear Filters
-            </Button>
+            <div className={cn(isMobile ? "col-span-2 flex justify-end" : "")}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors"
+                onClick={clearFilters}
+              >
+                Clear Filters
+              </Button>
+            </div>
           )}
           <Popover>
             <PopoverTrigger asChild>
@@ -778,7 +780,8 @@ export default function DashboardView() {
                 id="date"
                 variant={"outline"}
                 className={cn(
-                  "w-auto px-4 h-9 rounded-full justify-start text-left font-medium text-xs bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all",
+                  "px-4 h-9 rounded-full justify-start text-left font-medium text-xs bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all",
+                  isMobile ? "w-full" : "w-auto",
                   !dateRange && "text-muted-foreground"
                 )}
               >
@@ -833,7 +836,7 @@ export default function DashboardView() {
             </PopoverContent>
           </Popover>
           <Select value={contractorFilter} onValueChange={setContractorFilter}>
-            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+            <SelectTrigger className={cn("px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all", isMobile ? "w-full" : "w-auto")}>
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <HardHat className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Contractor" />
@@ -846,7 +849,7 @@ export default function DashboardView() {
             </SelectContent>
           </Select>
           <Select value={campFilter} onValueChange={setCampFilter}>
-            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+            <SelectTrigger className={cn("px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all", isMobile ? "w-full" : "w-auto")}>
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <Tent className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Camp" />
@@ -859,7 +862,7 @@ export default function DashboardView() {
             </SelectContent>
           </Select>
           <Select value={projectFilter} onValueChange={setProjectFilter}>
-            <SelectTrigger className="w-auto px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+            <SelectTrigger className={cn("px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all", isMobile ? "w-full" : "w-auto")}>
               <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <FolderKanban className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
                 <SelectValue placeholder="Project" />
@@ -983,7 +986,7 @@ export default function DashboardView() {
               <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex-1 min-h-0 flex flex-col">
                 <TabsList className="w-full flex gap-1 bg-slate-100/70 dark:bg-slate-800/70 p-1 shrink-0 h-auto mb-0 mt-0">
                   {tabs.map(t => (
-                    <TabsTrigger key={t.id} value={t.id} className={cn('flex-1 text-[10px] py-1.5 rounded-md font-bold transition-all duration-300 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 data-[state=active]:shadow-sm text-slate-500 dark:text-slate-400 hover:z-10 hover:-translate-y-1 hover:shadow-[0_8px_24px_-4px_rgba(20,184,166,0.2)] hover:text-teal-600 dark:hover:text-teal-400 hover:bg-white dark:hover:bg-slate-700')}>{t.label}</TabsTrigger>
+                    <TabsTrigger key={t.id} value={t.id} className={cn('flex-1 text-[10px] py-1.5 rounded-md font-bold data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 data-[state=active]:shadow-sm text-slate-500 dark:text-slate-400')}>{t.label}</TabsTrigger>
                   ))}
                 </TabsList>
                 {tabs.map(t => (
