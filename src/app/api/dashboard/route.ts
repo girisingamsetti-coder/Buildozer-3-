@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { successResponse, handleApiError } from '@/lib/api-utils'
+import {
+  OPEN_GRIEVANCE_STATUSES,
+  OPEN_INCIDENT_STATUSES,
+  TRAINING_EXPIRY_WARNING_DAYS,
+} from '@/lib/constants'
 
 // GET /api/dashboard
 export async function GET() {
@@ -40,14 +46,14 @@ export async function GET() {
     ] = await Promise.all([
       db.worker.count(),
       db.worker.count({ where: { isActive: true } }),
-      db.grievance.count({ where: { status: { in: ['Open', 'InProgress'] } } }),
-      db.incident.count({ where: { status: { in: ['Open', 'UnderInvestigation'] } } }),
+      db.grievance.count({ where: { status: { in: [...OPEN_GRIEVANCE_STATUSES] } } }),
+      db.incident.count({ where: { status: { in: [...OPEN_INCIDENT_STATUSES] } } }),
       db.medicalRecord.count({ where: { result: 'Pending' } }),
       // Training expiring within 30 days
       db.trainingRecord.count({
         where: {
           validityDate: {
-            lte: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            lte: new Date(Date.now() + TRAINING_EXPIRY_WARNING_DAYS * 24 * 60 * 60 * 1000),
             gte: new Date(),
           },
           status: 'Valid',
@@ -318,7 +324,6 @@ export async function GET() {
       },
     })
   } catch (error) {
-    console.error('GET /api/dashboard error:', error)
-    return NextResponse.json({ error: 'Failed to fetch dashboard stats' }, { status: 500 })
+    return handleApiError(error, 'GET /api/dashboard')
   }
 }

@@ -1,5 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
+import {
+  paginatedResponse,
+  successResponse,
+  errorResponse,
+  handleApiError,
+  parsePagination,
+} from '@/lib/api-utils'
 
 // GET /api/incidents
 export async function GET(req: NextRequest) {
@@ -9,9 +16,7 @@ export async function GET(req: NextRequest) {
     const incidentType = searchParams.get('incidentType') || undefined
     const severity = searchParams.get('severity') || undefined
     const status = searchParams.get('status') || undefined
-    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10))
-    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)))
-    const skip = (page - 1) * limit
+    const { page, limit, skip } = parsePagination(searchParams)
 
     const where: Record<string, unknown> = {}
 
@@ -42,10 +47,9 @@ export async function GET(req: NextRequest) {
       db.incident.count({ where }),
     ])
 
-    return NextResponse.json({ data: incidents, total, page, limit })
+    return paginatedResponse(incidents, total, page, limit)
   } catch (error) {
-    console.error('GET /api/incidents error:', error)
-    return NextResponse.json({ error: 'Failed to fetch incidents' }, { status: 500 })
+    return handleApiError(error, 'GET /api/incidents')
   }
 }
 
@@ -55,7 +59,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
 
     if (!body.incidentType || !body.date || !body.description) {
-      return NextResponse.json({ error: 'incidentType, date, and description are required' }, { status: 400 })
+      return errorResponse('incidentType, date, and description are required', 400)
     }
 
     // Auto-generate incident number: INC-YYYY-XXX
@@ -104,9 +108,8 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ data: incident }, { status: 201 })
+    return successResponse(incident, 201)
   } catch (error) {
-    console.error('POST /api/incidents error:', error)
-    return NextResponse.json({ error: 'Failed to create incident' }, { status: 500 })
+    return handleApiError(error, 'POST /api/incidents')
   }
 }

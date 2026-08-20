@@ -1,5 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
+import {
+  paginatedResponse,
+  successResponse,
+  errorResponse,
+  handleApiError,
+  parsePagination,
+} from '@/lib/api-utils'
+import { AGE_RANGE, AADHAAR_REGEX } from '@/lib/constants'
 
 function calculateAge(dob: Date): number {
   const today = new Date()
@@ -20,9 +28,7 @@ export async function GET(req: NextRequest) {
     const labourCampId = searchParams.get('labourCampId') || undefined
     const gender = searchParams.get('gender') || undefined
     const status = searchParams.get('status') || undefined
-    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10))
-    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)))
-    const skip = (page - 1) * limit
+    const { page, limit, skip } = parsePagination(searchParams)
 
     const where: Record<string, unknown> = {}
 
@@ -68,10 +74,9 @@ export async function GET(req: NextRequest) {
       db.worker.count({ where }),
     ])
 
-    return NextResponse.json({ data: workers, total, page, limit })
+    return paginatedResponse(workers, total, page, limit)
   } catch (error) {
-    console.error('GET /api/workers error:', error)
-    return NextResponse.json({ error: 'Failed to fetch workers' }, { status: 500 })
+    return handleApiError(error, 'GET /api/workers')
   }
 }
 
@@ -89,31 +94,31 @@ export async function POST(req: NextRequest) {
 
     // Validate required fields
     if (!fullName || !dateOfBirth || !gender || !aadhaarNumber || !permanentAddress || !bloodGroup || !qualification || !designationId || !contractorId) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+      return errorResponse('Missing required fields', 400)
     }
 
-    // Validate age 18-55
+    // Validate age range
     const dob = new Date(dateOfBirth)
     const age = calculateAge(dob)
-    if (age < 18 || age > 55) {
-      return NextResponse.json({ error: 'Age must be between 18 and 55', field: 'dateOfBirth' }, { status: 400 })
+    if (age < AGE_RANGE.min || age > AGE_RANGE.max) {
+      return errorResponse(`Age must be between ${AGE_RANGE.min} and ${AGE_RANGE.max}`, 400, 'dateOfBirth')
     }
 
     // Validate aadhaar 12-digit
-    if (!/^\d{12}$/.test(aadhaarNumber)) {
-      return NextResponse.json({ error: 'Aadhaar must be exactly 12 digits', field: 'aadhaarNumber' }, { status: 400 })
+    if (!AADHAAR_REGEX.test(aadhaarNumber)) {
+      return errorResponse('Aadhaar must be exactly 12 digits', 400, 'aadhaarNumber')
     }
 
     // Validate designation exists
     const designation = await db.designation.findUnique({ where: { id: designationId } })
     if (!designation) {
-      return NextResponse.json({ error: 'Designation not found' }, { status: 400 })
+      return errorResponse('Designation not found', 400)
     }
 
     // Validate contractor exists
     const contractor = await db.contractor.findUnique({ where: { id: contractorId } })
     if (!contractor) {
-      return NextResponse.json({ error: 'Contractor not found' }, { status: 400 })
+      return errorResponse('Contractor not found', 400)
     }
 
     // Auto-generate employee number
@@ -168,12 +173,8 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ data: worker }, { status: 201 })
+    return successResponse(worker, 201)
   } catch (error: unknown) {
-    console.error('POST /api/workers error:', error)
-    const msg = error instanceof Error && error.message.includes('Unique')
-      ? 'Employee number or aadhaar already exists'
-      : 'Failed to create worker'
-    return NextResponse.json({ error: msg }, { status: 500 })
+    return handleApiError(error, 'POST /api/workers')
   }
 }

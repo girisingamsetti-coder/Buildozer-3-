@@ -1,5 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
+import {
+  paginatedResponse,
+  successResponse,
+  errorResponse,
+  handleApiError,
+  parsePagination,
+} from '@/lib/api-utils'
 
 // GET /api/vehicles
 export async function GET(req: NextRequest) {
@@ -8,9 +15,7 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get('search') || ''
     const vehicleType = searchParams.get('vehicleType') || undefined
     const condition = searchParams.get('condition') || undefined
-    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10))
-    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)))
-    const skip = (page - 1) * limit
+    const { page, limit, skip } = parsePagination(searchParams)
 
     const where: Record<string, unknown> = {}
 
@@ -38,10 +43,9 @@ export async function GET(req: NextRequest) {
       db.vehicle.count({ where }),
     ])
 
-    return NextResponse.json({ data: vehicles, total, page, limit })
+    return paginatedResponse(vehicles, total, page, limit)
   } catch (error) {
-    console.error('GET /api/vehicles error:', error)
-    return NextResponse.json({ error: 'Failed to fetch vehicles' }, { status: 500 })
+    return handleApiError(error, 'GET /api/vehicles')
   }
 }
 
@@ -51,7 +55,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
 
     if (!body.vehicleNumber || !body.vehicleType) {
-      return NextResponse.json({ error: 'vehicleNumber and vehicleType are required' }, { status: 400 })
+      return errorResponse('vehicleNumber and vehicleType are required', 400)
     }
 
     const vehicle = await db.vehicle.create({
@@ -73,9 +77,8 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ data: vehicle }, { status: 201 })
+    return successResponse(vehicle, 201)
   } catch (error) {
-    console.error('POST /api/vehicles error:', error)
-    return NextResponse.json({ error: 'Failed to create vehicle' }, { status: 500 })
+    return handleApiError(error, 'POST /api/vehicles')
   }
 }

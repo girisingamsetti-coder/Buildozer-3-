@@ -1,5 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
+import {
+  paginatedResponse,
+  successResponse,
+  errorResponse,
+  handleApiError,
+  parsePagination,
+} from '@/lib/api-utils'
+import { DEFAULT_GRIEVANCE_SLA_DAYS } from '@/lib/constants'
 
 // GET /api/grievances
 export async function GET(req: NextRequest) {
@@ -9,9 +17,7 @@ export async function GET(req: NextRequest) {
     const status = searchParams.get('status') || undefined
     const category = searchParams.get('category') || undefined
     const severity = searchParams.get('severity') || undefined
-    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10))
-    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)))
-    const skip = (page - 1) * limit
+    const { page, limit, skip } = parsePagination(searchParams)
 
     const where: Record<string, unknown> = {}
 
@@ -36,10 +42,9 @@ export async function GET(req: NextRequest) {
       db.grievance.count({ where }),
     ])
 
-    return NextResponse.json({ data: grievances, total, page, limit })
+    return paginatedResponse(grievances, total, page, limit)
   } catch (error) {
-    console.error('GET /api/grievances error:', error)
-    return NextResponse.json({ error: 'Failed to fetch grievances' }, { status: 500 })
+    return handleApiError(error, 'GET /api/grievances')
   }
 }
 
@@ -49,7 +54,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
 
     if (!body.category || !body.description) {
-      return NextResponse.json({ error: 'category and description are required' }, { status: 400 })
+      return errorResponse('category and description are required', 400)
     }
 
     // Auto-generate grievance number: GRV-YYYY-XXX
@@ -72,15 +77,14 @@ export async function POST(req: NextRequest) {
         severity: body.severity || 'Medium',
         assignedTo: body.assignedTo || null,
         status: body.status || 'Open',
-        slaDays: body.slaDays ?? 7,
+        slaDays: body.slaDays ?? DEFAULT_GRIEVANCE_SLA_DAYS,
         photoPaths: body.photoPaths || null,
         photos: body.photos || null,
       },
     })
 
-    return NextResponse.json({ data: grievance }, { status: 201 })
+    return successResponse(grievance, 201)
   } catch (error) {
-    console.error('POST /api/grievances error:', error)
-    return NextResponse.json({ error: 'Failed to create grievance' }, { status: 500 })
+    return handleApiError(error, 'POST /api/grievances')
   }
 }
