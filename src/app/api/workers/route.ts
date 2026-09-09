@@ -92,38 +92,45 @@ export async function POST(req: NextRequest) {
       uanNumber, labourCampId,
     } = body
 
-    // Validate required fields
-    if (!fullName || !dateOfBirth || !gender || !aadhaarNumber || !permanentAddress || !bloodGroup || !qualification || !designationId || !contractorId) {
-      return errorResponse('Missing required fields', 400)
-    }
+    let dob: Date | undefined
+    let age: number | undefined
 
-    // Validate age range
-    const dob = new Date(dateOfBirth)
-    const age = calculateAge(dob)
-    if (age < AGE_RANGE.min || age > AGE_RANGE.max) {
-      return errorResponse(`Age must be between ${AGE_RANGE.min} and ${AGE_RANGE.max}`, 400, 'dateOfBirth')
+    // Validate age if provided
+    if (dateOfBirth) {
+      dob = new Date(dateOfBirth)
+      age = calculateAge(dob)
+      if (age < AGE_RANGE.min || age > AGE_RANGE.max) {
+        return errorResponse(`Age must be between ${AGE_RANGE.min} and ${AGE_RANGE.max}`, 400, 'dateOfBirth')
+      }
     }
 
     // Validate aadhaar 12-digit
-    if (!AADHAAR_REGEX.test(aadhaarNumber)) {
+    if (aadhaarNumber && !AADHAAR_REGEX.test(aadhaarNumber)) {
       return errorResponse('Aadhaar must be exactly 12 digits', 400, 'aadhaarNumber')
     }
 
     // Validate designation exists
-    const designation = await db.designation.findUnique({ where: { id: designationId } })
-    if (!designation) {
-      return errorResponse('Designation not found', 400)
+    let designation = null
+    if (designationId) {
+      designation = await db.designation.findUnique({ where: { id: designationId } })
+      if (!designation) {
+        return errorResponse('Designation not found', 400)
+      }
     }
 
     // Validate contractor exists
-    const contractor = await db.contractor.findUnique({ where: { id: contractorId } })
-    if (!contractor) {
-      return errorResponse('Contractor not found', 400)
+    let contractor = null
+    if (contractorId) {
+      contractor = await db.contractor.findUnique({ where: { id: contractorId } })
+      if (!contractor) {
+        return errorResponse('Contractor not found', 400)
+      }
     }
 
     // Auto-generate employee number
     const count = await db.worker.count()
-    const employeeNumber = `${contractor.code}-WK-${String(count + 1).padStart(4, '0')}`
+    const contractorCode = contractor ? contractor.code : 'WK'
+    const employeeNumber = `${contractorCode}-WK-${String(count + 1).padStart(4, '0')}`
 
     const worker = await db.worker.create({
       data: {

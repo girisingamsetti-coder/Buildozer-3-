@@ -59,19 +59,19 @@ model Designation {
 model Worker {
   id                  String             @id @default(cuid())
   employeeNumber      String             @unique
-  fullName            String
-  dateOfBirth         DateTime
-  age                 Int
-  gender              String
-  aadhaarNumber       String
+  fullName            String?
+  dateOfBirth         DateTime?
+  age                 Int?
+  gender              String?
+  aadhaarNumber       String?
   aadhaarScanPath     String?
-  permanentAddress    String
+  permanentAddress    String?
   currentAddress      String?
-  bloodGroup          String
-  qualification       String
+  bloodGroup          String?
+  qualification       String?
   qualificationNote   String?
-  designationId       String
-  contractorId        String
+  designationId       String?
+  contractorId        String?
   siteId              String?
   zone                String?
   nativeState         String?
@@ -92,8 +92,8 @@ model Worker {
   trainingRecords     TrainingRecord[]
   drivenVehicles      Vehicle[]          @relation("VehicleDriver")
   wageRecords         WageRecord[]
-  contractor          Contractor         @relation(fields: [contractorId], references: [id])
-  designation         Designation        @relation(fields: [designationId], references: [id])
+  contractor          Contractor?        @relation(fields: [contractorId], references: [id])
+  designation         Designation?       @relation(fields: [designationId], references: [id])
   labourCamp          LabourCamp?        @relation(fields: [labourCampId], references: [id])
   site                Site?              @relation(fields: [siteId], references: [id])
   fitness             WorkerFitness?
@@ -102,9 +102,9 @@ model Worker {
 model EmergencyContact {
   id           String  @id @default(cuid())
   workerId     String
-  name         String
-  relationship String
-  phone        String
+  name         String?
+  relationship String?
+  phone        String?
   isPrimary    Boolean @default(false)
   worker       Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
 }
@@ -112,8 +112,8 @@ model EmergencyContact {
 model Nominee {
   id            String  @id @default(cuid())
   workerId      String
-  name          String
-  relationship  String
+  name          String?
+  relationship  String?
   idNumber      String?
   contactNumber String?
   worker        Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
@@ -122,14 +122,14 @@ model Nominee {
 model WorkerFitness {
   id                      String    @id @default(cuid())
   workerId                String    @unique
-  fitnessStatus           String    @default("Pending")
+  fitnessStatus           String?   @default("Pending")
   fitnessCertificatePath  String?
   fitnessValidityDate     DateTime?
-  totalExperienceYears    Float     @default(0)
-  relevantExperienceYears Float     @default(0)
+  totalExperienceYears    Float?    @default(0)
+  relevantExperienceYears Float?    @default(0)
   relevantExperienceDesc  String?
   priorEmployer           String?
-  skillLevel              String    @default("Unskilled")
+  skillLevel              String?   @default("Unskilled")
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
   worker                  Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)

@@ -61,41 +61,36 @@ const QUALIFICATIONS = ['Below 10th', '10th', '12th', 'ITI', 'Diploma', 'Graduat
 
 // ---------- schema ----------
 const emergencyContactSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  relationship: z.string().min(1, 'Relationship is required'),
-  phone: z.string().min(1, 'Phone is required'),
+  name: z.string().optional(),
+  relationship: z.string().optional(),
+  phone: z.string().optional(),
   isPrimary: z.boolean().default(false),
 })
 
 const nomineeSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  relationship: z.string().min(1, 'Relationship is required'),
+  name: z.string().optional(),
+  relationship: z.string().optional(),
   idNumber: z.string().optional(),
   contactNumber: z.string().optional(),
 })
 
 const workerFormSchema = z.object({
-  fullName: z.string().min(1, 'Full name is required'),
-  dateOfBirth: z.string().min(1, 'Date of birth is required'),
-  gender: z.string().min(1, 'Gender is required'),
-  bloodGroup: z.string().min(1, 'Blood group is required'),
-  qualification: z.string().min(1, 'Qualification is required'),
+  fullName: z.string().optional(),
+  dateOfBirth: z.string().optional(),
+  gender: z.string().optional(),
+  bloodGroup: z.string().optional(),
+  qualification: z.string().optional(),
   qualificationNote: z.string().optional(),
-  aadhaarNumber: z
-    .string()
-    .min(1, 'Aadhaar number is required')
-    .regex(/^\d{12}$/, 'Must be exactly 12 digits'),
-  permanentAddress: z.string().min(1, 'Permanent address is required'),
+  aadhaarNumber: z.string().optional(),
+  permanentAddress: z.string().optional(),
   currentAddress: z.string().optional(),
-  contractorId: z.string().min(1, 'Contractor is required'),
+  contractorId: z.string().optional(),
   siteId: z.string().optional(),
-  designationId: z.string().min(1, 'Designation is required'),
+  designationId: z.string().optional(),
   zone: z.string().optional(),
   reportingSupervisor: z.string().optional(),
   uanNumber: z.string().optional(),
-  emergencyContacts: z
-    .array(emergencyContactSchema)
-    .min(1, 'At least one emergency contact is required'),
+  emergencyContacts: z.array(emergencyContactSchema).optional(),
   nominees: z.array(nomineeSchema).optional(),
 }).refine(
   (data) => {
@@ -614,7 +609,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="fullName"
                             render={({ field }) => (
                               <FormItem className="sm:col-span-2">
-                                <FormLabel>Full Name *</FormLabel>
+                                <FormLabel>Full Name</FormLabel>
                                 <FormControl>
                                   <Input placeholder="Enter full name" {...field} />
                                 </FormControl>
@@ -628,7 +623,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="dateOfBirth"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Date of Birth *</FormLabel>
+                                <FormLabel>Date of Birth</FormLabel>
                                 <FormControl>
                                   <Input type="date" {...field} />
                                 </FormControl>
@@ -642,7 +637,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="gender"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Gender *</FormLabel>
+                                <FormLabel>Gender</FormLabel>
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                   <FormControl>
                                     <SelectTrigger className="w-full">
@@ -665,7 +660,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="bloodGroup"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Blood Group *</FormLabel>
+                                <FormLabel>Blood Group</FormLabel>
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                   <FormControl>
                                     <SelectTrigger className="w-full">
@@ -688,7 +683,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="qualification"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Qualification *</FormLabel>
+                                <FormLabel>Qualification</FormLabel>
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                   <FormControl>
                                     <SelectTrigger className="w-full">
@@ -736,7 +731,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="aadhaarNumber"
                             render={({ field }) => (
                               <FormItem className="max-w-xs">
-                                <FormLabel>Aadhaar Number *</FormLabel>
+                                <FormLabel>Aadhaar Number</FormLabel>
                                 <FormControl>
                                   <Input
                                     placeholder="12-digit number"
@@ -758,7 +753,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="permanentAddress"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Permanent Address *</FormLabel>
+                                <FormLabel>Permanent Address</FormLabel>
                                 <FormControl>
                                   <Textarea
                                     placeholder="Full permanent address"
@@ -805,7 +800,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="contractorId"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Contractor *</FormLabel>
+                                <FormLabel>Contractor</FormLabel>
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                   <FormControl>
                                     <SelectTrigger className="w-full">
@@ -851,7 +846,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                             name="designationId"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Designation *</FormLabel>
+                                <FormLabel>Designation</FormLabel>
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                   <FormControl>
                                     <SelectTrigger className="w-full">
@@ -961,7 +956,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                                   name={`emergencyContacts.${index}.name`}
                                   render={({ field: f }) => (
                                     <FormItem>
-                                      <FormLabel>Name *</FormLabel>
+                                      <FormLabel>Name</FormLabel>
                                       <FormControl>
                                         <Input placeholder="Contact name" {...f} />
                                       </FormControl>
@@ -974,7 +969,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                                   name={`emergencyContacts.${index}.relationship`}
                                   render={({ field: f }) => (
                                     <FormItem>
-                                      <FormLabel>Relationship *</FormLabel>
+                                      <FormLabel>Relationship</FormLabel>
                                       <FormControl>
                                         <Input placeholder="e.g. Spouse, Father" {...f} />
                                       </FormControl>
@@ -987,7 +982,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                                   name={`emergencyContacts.${index}.phone`}
                                   render={({ field: f }) => (
                                     <FormItem>
-                                      <FormLabel>Phone *</FormLabel>
+                                      <FormLabel>Phone</FormLabel>
                                       <FormControl>
                                         <Input placeholder="Phone number" {...f} />
                                       </FormControl>
@@ -1076,7 +1071,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                                     name={`nominees.${index}.name`}
                                     render={({ field: f }) => (
                                       <FormItem>
-                                        <FormLabel>Name *</FormLabel>
+                                        <FormLabel>Name</FormLabel>
                                         <FormControl>
                                           <Input placeholder="Nominee name" {...f} />
                                         </FormControl>
@@ -1089,7 +1084,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                                     name={`nominees.${index}.relationship`}
                                     render={({ field: f }) => (
                                       <FormItem>
-                                        <FormLabel>Relationship *</FormLabel>
+                                        <FormLabel>Relationship</FormLabel>
                                         <FormControl>
                                           <Input placeholder="e.g. Wife, Son" {...f} />
                                         </FormControl>
