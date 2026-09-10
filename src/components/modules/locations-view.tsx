@@ -595,23 +595,16 @@ function AddLocationDialog({
   })
 
   const handleNext = () => {
-    // Validate step 1 only for add mode
-    if (!contractorId && !siteId && !campName.trim() && !capacity && !address) {
-      toast.error('Failed to Create')
-      return
-    }
-    if (!contractorId || !siteId || !campName.trim()) {
-      toast.error('Failed to Create')
-      return
-    }
     setStep(2)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Facilities validation — at least one field must be filled
-    if (!washroomCount && !bedCount && !medicalRoom && !cctvAvailable) {
+    // Final validation — all required fields from both steps
+    const missingDetails = !contractorId || !siteId || !campName.trim()
+    const missingFacilities = !washroomCount && !bedCount && !medicalRoom && !cctvAvailable
+    if (missingDetails || missingFacilities) {
       toast.error('Failed to Create')
       return
     }
