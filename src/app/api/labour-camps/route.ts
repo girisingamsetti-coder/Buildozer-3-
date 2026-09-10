@@ -36,14 +36,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, contractorId, siteId, address, capacity } = body
+    const { name, contractorId, siteId, address, capacity, washroomCount, bedCount, medicalRoom, cctvAvailable } = body
 
     if (!name || !contractorId || !siteId) {
       return NextResponse.json({ error: 'Name, contractorId, and siteId are required' }, { status: 400 })
     }
 
     const camp = await db.labourCamp.create({
-      data: { name, contractorId, siteId, address, capacity },
+      data: { name, contractorId, siteId, address, capacity, washroomCount, bedCount, medicalRoom, cctvAvailable },
       include: {
         contractor: { select: { id: true, name: true, code: true } },
         site: { select: { id: true, name: true, code: true } },
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
-    const { id, name, address, capacity, isActive } = body
+    const { id, name, address, capacity, isActive, washroomCount, bedCount, medicalRoom, cctvAvailable } = body
 
     if (!id) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 })
@@ -69,7 +69,7 @@ export async function PUT(request: NextRequest) {
 
     const camp = await db.labourCamp.update({
       where: { id },
-      data: { name, address, capacity, isActive },
+      data: { name, address, capacity, isActive, washroomCount, bedCount, medicalRoom, cctvAvailable },
       include: {
         contractor: { select: { id: true, name: true, code: true } },
         site: { select: { id: true, name: true, code: true } },

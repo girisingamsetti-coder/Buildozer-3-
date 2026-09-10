@@ -498,6 +498,10 @@ model LabourCamp {
   capacity         Int?
   currentOccupancy Int?       @default(0)
   isActive         Boolean    @default(true)
+  washroomCount    Int?
+  bedCount         Int?
+  medicalRoom      Boolean    @default(false)
+  cctvAvailable    Boolean    @default(false)
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   contractor       Contractor @relation(fields: [contractorId], references: [id], onDelete: Cascade)

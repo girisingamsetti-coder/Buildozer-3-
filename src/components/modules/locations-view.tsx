@@ -57,6 +57,10 @@ interface Camp {
   capacity?: number | null
   currentOccupancy?: number | null
   isActive: boolean
+  washroomCount?: number | null
+  bedCount?: number | null
+  medicalRoom?: boolean
+  cctvAvailable?: boolean
   contractor: { id: string; name: string; code: string }
   site: { id: string; name: string; code: string }
   _count: { workers: number }
@@ -536,9 +540,10 @@ function AddLocationDialog({
   const queryClient = useQueryClient()
   const isEdit = !!editingCamp
 
-  // Initialise form state from editingCamp on mount (the parent remounts this
-  // component via a key whenever the dialog opens for add/edit, so these
-  // initialisers run fresh each time).
+  // Step state (only for add mode)
+  const [step, setStep] = useState<1 | 2>(1)
+
+  // Step 1: Location Details
   const [contractorId, setContractorId] = useState(editingCamp?.contractorId || '')
   const [siteId, setSiteId] = useState(editingCamp?.siteId || '')
   const [campName, setCampName] = useState(editingCamp?.name || '')
@@ -546,7 +551,12 @@ function AddLocationDialog({
   const [address, setAddress] = useState(editingCamp?.address || '')
   const [isActive, setIsActive] = useState(editingCamp?.isActive ?? true)
 
-  // Extra camp-name options added via the "+" button (local only)
+  // Step 2: Facilities
+  const [washroomCount, setWashroomCount] = useState(editingCamp?.washroomCount != null ? String(editingCamp.washroomCount) : '')
+  const [bedCount, setBedCount] = useState(editingCamp?.bedCount != null ? String(editingCamp.bedCount) : '')
+  const [medicalRoom, setMedicalRoom] = useState(editingCamp?.medicalRoom ?? false)
+  const [cctvAvailable, setCctvAvailable] = useState(editingCamp?.cctvAvailable ?? false)
+
   const [extraCampNames, setExtraCampNames] = useState<string[]>([])
   const [contractorDialogOpen, setContractorDialogOpen] = useState(false)
   const [siteDialogOpen, setSiteDialogOpen] = useState(false)
@@ -558,18 +568,12 @@ function AddLocationDialog({
   }, [existingCampNames, extraCampNames])
 
   const mutation = useMutation({
-    mutationFn: async (body: { name: string; contractorId: string; siteId: string; capacity?: number; address?: string; isActive?: boolean }) => {
+    mutationFn: async (body: Record<string, unknown>) => {
       if (isEdit && editingCamp) {
         const res = await fetch('/api/labour-camps', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: editingCamp.id,
-            name: body.name,
-            capacity: body.capacity,
-            address: body.address,
-            isActive: body.isActive,
-          }),
+          body: JSON.stringify({ id: editingCamp.id, ...body }),
         })
         if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Failed to update location') }
         return res.json()
@@ -590,17 +594,24 @@ function AddLocationDialog({
     onError: (err: Error) => toast.error(err.message || 'Operation failed'),
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // If no data provided at all
+  const handleNext = () => {
+    // Validate step 1 only for add mode
     if (!contractorId && !siteId && !campName.trim() && !capacity && !address) {
       toast.error('Failed to Create')
       return
     }
-
-    // If some required data is missing, we'll also just show "Failed to Create"
     if (!contractorId || !siteId || !campName.trim()) {
+      toast.error('Failed to Create')
+      return
+    }
+    setStep(2)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Facilities validation — at least one field must be filled
+    if (!washroomCount && !bedCount && !medicalRoom && !cctvAvailable) {
       toast.error('Failed to Create')
       return
     }
@@ -612,8 +623,14 @@ function AddLocationDialog({
       capacity: capacity ? Number(capacity) : undefined,
       address: address.trim() || undefined,
       isActive: isEdit ? isActive : undefined,
+      washroomCount: washroomCount ? Number(washroomCount) : undefined,
+      bedCount: bedCount ? Number(bedCount) : undefined,
+      medicalRoom,
+      cctvAvailable,
     })
   }
+
+  const steps = ['Location Details', 'Facilities']
 
   return (
     <>
@@ -622,148 +639,212 @@ function AddLocationDialog({
           <DialogHeader>
             <DialogTitle>{isEdit ? 'Edit Location' : 'Add New Location'}</DialogTitle>
             <DialogDescription>
-              {isEdit ? 'Update camp details.' : 'Select a contractor, project and camp name to create a location. Use the + button to add new entries.'}
+              {isEdit ? 'Update camp details.' : 'Fill in the details to create a new location.'}
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4 py-1">
-            {/* Contractor dropdown + add new */}
-            <div className="space-y-1.5">
-              <Label className="text-xs font-semibold">Contractor</Label>
-              <div className="flex items-center gap-2">
-                <Select value={contractorId} onValueChange={setContractorId} disabled={isEdit}>
-                  <SelectTrigger className="h-9 text-sm flex-1">
-                    <SelectValue placeholder="Select contractor" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {contractors.map((c) => (
-                      <SelectItem key={c.id} value={c.id}>{c.name} ({c.code})</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  className="h-9 w-9 shrink-0 border-[#0d9488]/40 text-[#0d9488] hover:bg-[#0d9488]/10"
-                  onClick={() => setContractorDialogOpen(true)}
-                  title="Add new contractor"
-                  disabled={isEdit}
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
 
-            {/* Camp Name dropdown + add new */}
-            <div className="space-y-1.5">
-              <Label className="text-xs font-semibold">Camp Name</Label>
-              <div className="flex items-center gap-2">
-                <Select value={campName} onValueChange={setCampName}>
-                  <SelectTrigger className="h-9 text-sm flex-1">
-                    <SelectValue placeholder="Select or add camp name" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {allCampNames.map((name) => (
-                      <SelectItem key={name} value={name}>{name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  className="h-9 w-9 shrink-0 border-[#0d9488]/40 text-[#0d9488] hover:bg-[#0d9488]/10"
-                  onClick={() => setCampNameDialogOpen(true)}
-                  title="Add new camp name"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
+          {/* Step indicator (add mode only) */}
+          {!isEdit && (
+            <div className="flex items-center gap-0 mb-1">
+              {steps.map((label, i) => {
+                const stepNum = i + 1
+                const isActive = step === stepNum
+                const isDone = step > stepNum
+                return (
+                  <div key={label} className="flex items-center flex-1">
+                    <div className="flex items-center gap-2">
+                      <div className={cn(
+                        'h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors',
+                        isActive ? 'bg-[#0d9488] border-[#0d9488] text-white' :
+                          isDone ? 'bg-[#0d9488]/20 border-[#0d9488] text-[#0d9488]' :
+                            'bg-muted border-muted-foreground/30 text-muted-foreground'
+                      )}>
+                        {stepNum}
+                      </div>
+                      <span className={cn('text-xs font-medium', isActive ? 'text-[#0d9488]' : 'text-muted-foreground')}>
+                        {label}
+                      </span>
+                    </div>
+                    {i < steps.length - 1 && (
+                      <div className={cn('flex-1 h-px mx-3', step > stepNum ? 'bg-[#0d9488]' : 'bg-muted-foreground/20')} />
+                    )}
+                  </div>
+                )
+              })}
             </div>
+          )}
 
-            {/* Project Name dropdown + add new */}
-            <div className="space-y-1.5">
-              <Label className="text-xs font-semibold">Project Name</Label>
-              <div className="flex items-center gap-2">
-                <Select value={siteId} onValueChange={setSiteId} disabled={isEdit}>
-                  <SelectTrigger className="h-9 text-sm flex-1">
-                    <SelectValue placeholder="Select project" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sites.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>{s.name} ({s.code})</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  className="h-9 w-9 shrink-0 border-[#0d9488]/40 text-[#0d9488] hover:bg-[#0d9488]/10"
-                  onClick={() => setSiteDialogOpen(true)}
-                  title="Add new project"
-                  disabled={isEdit}
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Capacity + Address */}
-            <div className="grid grid-cols-2 gap-3">
+          {/* STEP 1: Location Details */}
+          {(step === 1 || isEdit) && (
+            <div className="space-y-4 py-1">
+              {/* Contractor */}
               <div className="space-y-1.5">
-                <Label className="text-xs font-semibold">Camp Capacity</Label>
-                <Input
-                  type="number"
-                  min="0"
-                  placeholder="e.g. 50"
-                  value={capacity}
-                  onChange={(e) => setCapacity(e.target.value)}
-                  className="h-9 text-sm"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-xs font-semibold">Address</Label>
-                <Input
-                  placeholder="Optional"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="h-9 text-sm"
-                />
-              </div>
-            </div>
-
-            {/* Active/Inactive toggle (only shown in edit mode) */}
-            {isEdit && (
-              <div className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2">
-                <div>
-                  <Label className="text-xs font-semibold">Camp Status</Label>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">Toggle to activate or deactivate this camp</p>
-                </div>
+                <Label className="text-xs font-semibold">Contractor</Label>
                 <div className="flex items-center gap-2">
-                  <span className={cn('text-xs font-medium', isActive ? 'text-emerald-600' : 'text-red-600')}>
-                    {isActive ? 'Active' : 'Inactive'}
-                  </span>
-                  <Switch
-                    checked={isActive}
-                    onCheckedChange={setIsActive}
-                  />
+                  <Select value={contractorId} onValueChange={setContractorId} disabled={isEdit}>
+                    <SelectTrigger className="h-9 text-sm flex-1">
+                      <SelectValue placeholder="Select contractor" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {contractors.map((c) => (
+                        <SelectItem key={c.id} value={c.id}>{c.name} ({c.code})</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button type="button" variant="outline" size="icon"
+                    className="h-9 w-9 shrink-0 border-[#0d9488]/40 text-[#0d9488] hover:bg-[#0d9488]/10"
+                    onClick={() => setContractorDialogOpen(true)} disabled={isEdit}>
+                    <Plus className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
-            )}
 
-            <DialogFooter className="pt-2">
-              <Button type="button" variant="outline" size="sm" onClick={() => onOpenChange(false)}>Cancel</Button>
-              <Button type="submit" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white" disabled={mutation.isPending}>
-                {mutation.isPending ? 'Saving...' : isEdit ? 'Update' : 'Create Location'}
-              </Button>
-            </DialogFooter>
-          </form>
+              {/* Camp Name */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-semibold">Camp Name</Label>
+                <div className="flex items-center gap-2">
+                  <Select value={campName} onValueChange={setCampName}>
+                    <SelectTrigger className="h-9 text-sm flex-1">
+                      <SelectValue placeholder="Select or add camp name" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {allCampNames.map((name) => (
+                        <SelectItem key={name} value={name}>{name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button type="button" variant="outline" size="icon"
+                    className="h-9 w-9 shrink-0 border-[#0d9488]/40 text-[#0d9488] hover:bg-[#0d9488]/10"
+                    onClick={() => setCampNameDialogOpen(true)}>
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Project Name */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-semibold">Project Name</Label>
+                <div className="flex items-center gap-2">
+                  <Select value={siteId} onValueChange={setSiteId} disabled={isEdit}>
+                    <SelectTrigger className="h-9 text-sm flex-1">
+                      <SelectValue placeholder="Select project" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sites.map((s) => (
+                        <SelectItem key={s.id} value={s.id}>{s.name} ({s.code})</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button type="button" variant="outline" size="icon"
+                    className="h-9 w-9 shrink-0 border-[#0d9488]/40 text-[#0d9488] hover:bg-[#0d9488]/10"
+                    onClick={() => setSiteDialogOpen(true)} disabled={isEdit}>
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Capacity + Address */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-semibold">Camp Capacity</Label>
+                  <Input type="number" min="0" placeholder="e.g. 50" value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)} className="h-9 text-sm" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-semibold">Address</Label>
+                  <Input placeholder="Optional" value={address}
+                    onChange={(e) => setAddress(e.target.value)} className="h-9 text-sm" />
+                </div>
+              </div>
+
+              {/* Active toggle (edit only) */}
+              {isEdit && (
+                <div className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2">
+                  <div>
+                    <Label className="text-xs font-semibold">Camp Status</Label>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">Toggle to activate or deactivate this camp</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={cn('text-xs font-medium', isActive ? 'text-emerald-600' : 'text-red-600')}>
+                      {isActive ? 'Active' : 'Inactive'}
+                    </span>
+                    <Switch checked={isActive} onCheckedChange={setIsActive} />
+                  </div>
+                </div>
+              )}
+
+              <DialogFooter className="pt-2">
+                <Button type="button" variant="outline" size="sm" onClick={() => onOpenChange(false)}>Cancel</Button>
+                {isEdit ? (
+                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
+                    onClick={() => handleSubmit({ preventDefault: () => {} } as React.FormEvent)}
+                    disabled={mutation.isPending}>
+                    {mutation.isPending ? 'Saving...' : 'Update'}
+                  </Button>
+                ) : (
+                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white" onClick={handleNext}>
+                    Next →
+                  </Button>
+                )}
+              </DialogFooter>
+            </div>
+          )}
+
+          {/* STEP 2: Facilities */}
+          {step === 2 && !isEdit && (
+            <form onSubmit={handleSubmit} className="space-y-4 py-1">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-semibold">Washrooms Count</Label>
+                  <Input type="number" min="0" placeholder="e.g. 4" value={washroomCount}
+                    onChange={(e) => setWashroomCount(e.target.value)} className="h-9 text-sm" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-semibold">Bed Count</Label>
+                  <Input type="number" min="0" placeholder="e.g. 100" value={bedCount}
+                    onChange={(e) => setBedCount(e.target.value)} className="h-9 text-sm" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2.5">
+                  <div>
+                    <Label className="text-xs font-semibold">Medical Room</Label>
+                    <p className="text-[10px] text-muted-foreground">Available on-site</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={cn('text-xs font-medium', medicalRoom ? 'text-emerald-600' : 'text-slate-400')}>
+                      {medicalRoom ? 'Yes' : 'No'}
+                    </span>
+                    <Switch checked={medicalRoom} onCheckedChange={setMedicalRoom} />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2.5">
+                  <div>
+                    <Label className="text-xs font-semibold">CCTV</Label>
+                    <p className="text-[10px] text-muted-foreground">Surveillance available</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={cn('text-xs font-medium', cctvAvailable ? 'text-emerald-600' : 'text-slate-400')}>
+                      {cctvAvailable ? 'Yes' : 'No'}
+                    </span>
+                    <Switch checked={cctvAvailable} onCheckedChange={setCctvAvailable} />
+                  </div>
+                </div>
+              </div>
+
+              <DialogFooter className="pt-2">
+                <Button type="button" variant="outline" size="sm" onClick={() => setStep(1)}>← Back</Button>
+                <Button type="submit" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white" disabled={mutation.isPending}>
+                  {mutation.isPending ? 'Saving...' : 'Create Location'}
+                </Button>
+              </DialogFooter>
+            </form>
+          )}
         </DialogContent>
       </Dialog>
 
-      {/* Sub-dialogs for the "+" buttons (conditionally rendered so they
-          mount fresh — with empty fields — each time they open). */}
       {contractorDialogOpen && (
         <QuickContractorDialog
           open={contractorDialogOpen}
