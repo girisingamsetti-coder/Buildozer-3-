@@ -262,21 +262,6 @@ export function SidebarNav() {
               <TooltipContent side={collapsed ? "right" : "top"}>{mobileView ? 'Exit Mobile Preview' : 'Mobile Preview'}</TooltipContent>
             </Tooltip>
 
-            {/* Dark/Light mode toggle */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleTheme}
-                  className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300 transition-all duration-200 hover:scale-110 hover:shadow-sm"
-                  title="Toggle theme"
-                >
-                  {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side={collapsed ? "right" : "top"}>{isDark ? 'Switch to Light' : 'Switch to Dark'}</TooltipContent>
-            </Tooltip>
 
             {/* Notifications */}
             <Popover open={notifOpen} onOpenChange={setNotifOpen}>
