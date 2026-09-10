@@ -66,6 +66,7 @@ const navItems: { id: PageId; label: string; icon: typeof LayoutDashboard }[] = 
   { id: 'medical', label: 'Medical', icon: HeartPulse },
   { id: 'grievance', label: 'Grievances', icon: MessageSquareWarning },
   { id: 'hazardous', label: 'Hazardous Materials', icon: Flame },
+  { id: 'es-forms', label: 'E&S Forms', icon: FileBarChart },
   { id: 'legal', label: 'Legal', icon: Scale },
   { id: 'compliance', label: 'Site Compliance', icon: ClipboardCheck },
   { id: 'reports', label: 'Reports', icon: FileBarChart },

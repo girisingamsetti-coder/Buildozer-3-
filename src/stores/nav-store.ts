@@ -21,6 +21,7 @@ export type PageId =
   | 'compliance'
   | 'settings'
   | 'reports'
+  | 'es-forms'
   | 'more'
 
 interface NavState {
@@ -67,6 +68,7 @@ export const pageTitles: Record<PageId, string> = {
   compliance: 'Site Compliance',
   settings: 'Settings',
   reports: 'Reports',
+  'es-forms': 'E&S Forms',
   more: 'More Options',
 }
 

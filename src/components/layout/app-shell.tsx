@@ -34,6 +34,7 @@ const LegalView = lazy(() => import('@/components/modules/legal-view'))
 const ComplianceView = lazy(() => import('@/components/modules/compliance-view'))
 const SettingsView = lazy(() => import('@/components/modules/settings-view'))
 const ReportsView = lazy(() => import('@/components/modules/reports-view'))
+const EsFormsView = lazy(() => import('@/components/modules/es-forms-view'))
 const MoreView = lazy(() => import('@/components/modules/more-view'))
 
 function LoadingFallback() {
@@ -73,6 +74,7 @@ const pageComponents: Record<string, React.LazyExoticComponent<any>> = {
   compliance: ComplianceView,
   settings: SettingsView,
   reports: ReportsView,
+  'es-forms': EsFormsView,
   more: MoreView,
 }
 
