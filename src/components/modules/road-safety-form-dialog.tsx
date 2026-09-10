@@ -437,30 +437,10 @@ function Step4({
   const yesCount = checklist.filter(c => c.answer === 'yes').length
   const noCount  = checklist.filter(c => c.answer === 'no').length
   const unanswered = checklist.filter(c => c.answer === null && !CHECKLIST_ITEMS[c.sno - 1].isTextarea).length
-  const missingRemarks = checklist.filter(c => c.answer === 'no' && !c.remarks.trim()).length
-  const missingAuditDoc = conducted === true && !auditFile
-
-  const errors: string[] = []
-  if (!projectName) errors.push('No project selected')
-  if (!month || !year) errors.push('Reporting month not set')
-  if (unanswered > 0) errors.push(`${unanswered} checklist item(s) not answered`)
-  if (missingRemarks > 0) errors.push(`${missingRemarks} "No" item(s) missing mandatory remarks`)
-  if (conducted === null) errors.push('Safety audit question not answered')
-  if (missingAuditDoc) errors.push('Safety audit document not uploaded')
-
   const noItems = checklist.filter(c => c.answer === 'no')
 
   return (
     <div className="space-y-4">
-      {/* Errors */}
-      {errors.length > 0 && (
-        <Card className="border-red-300 bg-red-50/50 dark:bg-red-950/10">
-          <CardContent className="p-3 space-y-1">
-            <p className="text-xs font-bold text-red-600 flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" /> Cannot submit — fix the following:</p>
-            {errors.map(e => <p key={e} className="text-xs text-red-500 pl-5">• {e}</p>)}
-          </CardContent>
-        </Card>
-      )}
 
       {/* Project Summary */}
       <Card>
@@ -541,8 +521,7 @@ function Step4({
         <Button
           type="button"
           size="sm"
-          disabled={errors.length > 0}
-          className="flex-1 bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5 disabled:opacity-50"
+          className="flex-1 bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5"
           onClick={onSubmit}
         >
           <Send className="h-3.5 w-3.5" /> Submit Form
@@ -581,14 +560,6 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
     setChecklist(prev => prev.map((e, i) => i === idx ? { ...e, ...partial } : e))
   }, [])
 
-  const canProceedStep1 = !!projectName && !!month && !!year
-  const canProceedStep2 = (() => {
-    const nonTextItems = checklist.filter((_, i) => !CHECKLIST_ITEMS[i].isTextarea)
-    return nonTextItems.every(c => c.answer !== null) &&
-      checklist.filter(c => c.answer === 'no').every(c => c.remarks.trim().length > 0)
-  })()
-  const canProceedStep3 = conducted !== null && !(conducted === true && !auditFile)
-
   const buildSubmission = (status: 'Draft' | 'Submitted'): RoadSafetySubmission => {
     const proj = AMARAVATI_PROJECTS.find(p => p.name === projectName)!
     return {
@@ -614,16 +585,25 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
   }
 
   const handleSubmit = () => {
+    // Fail only if nothing at all has been filled
+    const hasAnyData =
+      !!projectName ||
+      checklist.some(c => c.answer !== null || c.textValue.trim()) ||
+      conducted !== null
+    if (!hasAnyData) {
+      toast.error('Failed to Create')
+      return
+    }
     const submissions = loadRoadSafetySubmissions()
     saveRoadSafetySubmissions([buildSubmission('Submitted'), ...submissions])
-    toast.success('Road Safety form submitted successfully!')
+    toast.success('Successfully Submitted')
     onSaved(); onOpenChange(false)
   }
 
   const next = () => setStep(s => Math.min(s + 1, 3))
   const prev = () => setStep(s => Math.max(s - 1, 0))
 
-  const canNext = [canProceedStep1, canProceedStep2, canProceedStep3, false][step]
+  const canNext = step < 3 // always allow Next
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
