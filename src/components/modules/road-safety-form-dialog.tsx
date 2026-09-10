@@ -198,7 +198,7 @@ function Step1({
 
   return (
     <div className="space-y-5">
-      <div className="space-y-4">
+      <div className="grid grid-cols-3 gap-4">
         <div className="space-y-1.5">
           <Label className="text-xs font-semibold">Project *</Label>
           <Select value={projectName} onValueChange={setProjectName}>
