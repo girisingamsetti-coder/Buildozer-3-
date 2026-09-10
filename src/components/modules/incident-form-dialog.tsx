@@ -109,7 +109,7 @@ export default function IncidentFormDialog() {
       }}
     >
       <DialogContent
-        className="max-w-[calc(100%-1rem)] sm:max-w-2xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden"
+        className="w-[96vw] max-w-2xl max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
       >
@@ -388,7 +388,7 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
       </div>
 
       {/* Step content (scrollable) */}
-      <div className="flex-1 min-h-0 overflow-y-auto px-5 py-4">
+      <div className="flex-1 min-h-0 min-w-0 overflow-y-auto px-4 sm:px-5 py-4">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={currentStep}

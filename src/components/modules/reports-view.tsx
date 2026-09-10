@@ -869,7 +869,7 @@ export default function ReportsView() {
   // ---------- category selection view ----------
   if (!selectedCategory) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 min-w-0 pb-6">
         <div className="hidden sm:block">
           <h1 className="text-2xl font-bold tracking-tight">Reports</h1>
           <p className="text-sm text-muted-foreground mt-1">
@@ -902,7 +902,7 @@ export default function ReportsView() {
   const currentCat = CATEGORIES.find((c) => c.id === selectedCategory)
 
   return (
-    <div className="flex flex-col gap-6 h-full overflow-hidden">
+    <div className="flex flex-col gap-6 h-full min-w-0 overflow-hidden">
       {/* Header */}
       <div className="flex items-center gap-3">
         <Button variant="outline" size="icon" className="shrink-0" onClick={handleBack}>

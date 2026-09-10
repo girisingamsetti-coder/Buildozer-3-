@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
           items.push({
             id: `wphoto-${w.id}`,
             kind: 'photo',
-            title: w.fullName,
+            title: w.fullName || 'Worker',
             subtitle: 'Worker profile photo',
             location: [w.contractor?.name, w.site?.name].filter(Boolean).join(' • ') || '—',
             timestamp: w.createdAt.toISOString(),
@@ -75,7 +75,7 @@ export async function GET(req: NextRequest) {
           items.push({
             id: `mphoto-${m.id}`,
             kind: 'photo',
-            title: m.worker.fullName,
+            title: m.worker.fullName || 'Worker',
             subtitle: `Medical exam • ${m.examinationType}`,
             location: [m.worker.contractor?.name, m.worker.site?.name].filter(Boolean).join(' • ') || '—',
             timestamp: m.createdAt.toISOString(),
@@ -137,7 +137,7 @@ export async function GET(req: NextRequest) {
         items.push({
           id: `entry-${w.id}`,
           kind: 'entry',
-          title: w.fullName,
+          title: w.fullName || 'Worker',
           subtitle: `New worker • ${w.designation?.name ?? '—'}`,
           location: [w.contractor?.name, w.site?.name].filter(Boolean).join(' • ') || '—',
           timestamp: w.createdAt.toISOString(),
@@ -166,7 +166,7 @@ export async function GET(req: NextRequest) {
         items.push({
           id: `med-${m.id}`,
           kind: 'medical',
-          title: m.worker.fullName,
+          title: m.worker.fullName || 'Worker',
           subtitle: `Medical • ${m.examinationType}`,
           location: [m.worker.contractor?.name, m.worker.site?.name].filter(Boolean).join(' • ') || '—',
           timestamp: m.createdAt.toISOString(),
@@ -196,7 +196,7 @@ export async function GET(req: NextRequest) {
         items.push({
           id: `trn-${t.id}`,
           kind: 'training',
-          title: t.worker.fullName,
+          title: t.worker.fullName || 'Worker',
           subtitle: `Training • ${t.trainingTitle}`,
           location: [t.worker.contractor?.name, t.worker.site?.name].filter(Boolean).join(' • ') || '—',
           timestamp: t.createdAt.toISOString(),

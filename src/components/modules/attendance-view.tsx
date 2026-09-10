@@ -778,7 +778,7 @@ export default function AttendanceView() {
   const isSameMonth = format(selectedDate, 'yyyy-MM') === monthStr
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-w-0 pb-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="hidden sm:block">
@@ -814,7 +814,7 @@ export default function AttendanceView() {
       </div>
 
       {/* Controls Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row flex-wrap sm:items-center gap-3 sm:gap-4">
         {/* Month Navigator */}
         <Card className="flex-1">
           <CardContent className="p-3 flex items-center justify-between">

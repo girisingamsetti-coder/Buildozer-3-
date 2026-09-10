@@ -209,7 +209,7 @@ export default function VehicleListView() {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-full overflow-hidden">
+    <div className="flex flex-col gap-4 h-full min-w-0 overflow-hidden">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="hidden sm:block">
@@ -309,7 +309,7 @@ export default function VehicleListView() {
       {/* Filters */}
       <Card className="shrink-0 py-0">
         <CardContent className="px-3 py-2">
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3">
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search by vehicle number..." value={search} onChange={(e) => handleSearchChange(e.target.value)} className="pl-9" />

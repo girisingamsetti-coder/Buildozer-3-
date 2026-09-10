@@ -108,7 +108,7 @@ export function GlobalHeader() {
   return (
     <header className="flex items-center justify-between h-14 shrink-0 bg-[#2b3544] text-white select-none w-full shadow-md z-[60]">
       {/* Left Section: Logos & Title */}
-      <div className="flex items-center h-full px-4 gap-4">
+      <div className="flex items-center h-full px-4 gap-4 shrink-0">
         {/* AP Logo Placeholder */}
         <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center p-0.5 overflow-hidden border-2 border-emerald-600 shadow-sm shrink-0">
           <div className="w-full h-full rounded-full border-2 border-emerald-500 border-dashed animate-[spin_10s_linear_infinite]" />
@@ -130,7 +130,7 @@ export function GlobalHeader() {
       </div>
 
       {/* Middle Section: Navigation */}
-      <div className="flex-1 flex items-center h-full overflow-x-auto no-scrollbar gap-1 px-4">
+      <div className="flex-1 min-w-0 flex items-center h-full overflow-x-auto no-scrollbar gap-1 px-4">
         {navItems.map((item, idx) => (
           <button
             key={idx}

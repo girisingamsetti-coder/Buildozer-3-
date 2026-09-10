@@ -226,7 +226,7 @@ export default function GrievanceView() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-w-0 pb-6">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="hidden sm:block">
@@ -286,7 +286,7 @@ export default function GrievanceView() {
       {/* ====== Filters ====== */}
       <Card className="py-0">
         <CardContent className="px-3 py-2">
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search by number, description, or name..." value={search} onChange={(e) => handleSearchChange(e.target.value)} className="pl-9" />
@@ -483,7 +483,7 @@ export default function GrievanceView() {
 
       {/* ====== Raise Grievance Dialog ====== */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Raise Grievance</DialogTitle>
           </DialogHeader>

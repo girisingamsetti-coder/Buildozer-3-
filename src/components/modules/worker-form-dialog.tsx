@@ -522,7 +522,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
       </div>
 
       {/* ====== Scrollable Step Content ====== */}
-      <div className="flex-1 overflow-y-auto px-6 py-4">
+      <div className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-6 py-4">
         {/* Loading state for edit mode while existing worker is fetched */}
         {isEdit && isLoadingWorker ? (
           <div className="space-y-4">
@@ -1228,7 +1228,7 @@ export default function WorkerFormDialog() {
       }}
     >
       <DialogContent
-        className="max-w-[calc(100%-1rem)] sm:max-w-3xl max-h-[90vh] w-full flex flex-col p-0 gap-0 overflow-hidden"
+        className="w-[96vw] max-w-3xl max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
         showCloseButton
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}

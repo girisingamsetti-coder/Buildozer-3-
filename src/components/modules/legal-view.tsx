@@ -285,7 +285,7 @@ export default function LegalView() {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-full overflow-hidden">
+    <div className="flex flex-col gap-4 h-full min-w-0 overflow-hidden">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="hidden sm:block">
@@ -353,7 +353,7 @@ export default function LegalView() {
       {/* ====== Filters ====== */}
       <Card className="py-0 shrink-0">
         <CardContent className="px-3 py-2">
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -410,7 +410,7 @@ export default function LegalView() {
       ) : (
         <div className="flex-1 min-h-0 flex flex-col">
           {/* Desktop Table */}
-          <div className="hidden md:flex flex-col overflow-auto flex-1 min-h-0">
+          <div className="hidden md:flex flex-col overflow-auto flex-1 min-h-0 w-full min-w-0">
             <Card className="flex-1 min-h-0 flex flex-col">
               <CardContent className="p-0 flex-1 min-h-0 overflow-visible">
                 <Table>
@@ -576,7 +576,7 @@ export default function LegalView() {
         setDialogOpen(open)
         if (!open) { resetForm(); setEditId(null) }
       }}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editId ? 'Edit Compliance Record' : 'Add Compliance Record'}</DialogTitle>
           </DialogHeader>

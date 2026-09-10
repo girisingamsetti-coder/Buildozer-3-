@@ -435,7 +435,7 @@ export default function WorkerFormView() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-3xl mx-auto min-w-0 pb-6">
       {/* ====== Header ====== */}
       <div className="flex items-center gap-4 mb-6">
         <Button variant="outline" size="icon" className="shrink-0" onClick={goBack}>

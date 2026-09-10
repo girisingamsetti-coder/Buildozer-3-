@@ -24,16 +24,16 @@ import { cn } from '@/lib/utils'
 // ==================== CONSTANTS ====================
 
 export const AMARAVATI_PROJECTS = [
-  { name: 'Seed Access Road',        number: 'AMR-001', title: 'Construction of Seed Access Road',           manager: 'K. Ramesh',   boq: 'BOQ-2024-001', boqDesc: 'Road construction & allied works',             customer: 'CRDA Amaravati' },
-  { name: 'Capital Building (CBD)',  number: 'AMR-002', title: 'Capital City CBD Development',               manager: 'P. Srinivas', boq: 'BOQ-2024-002', boqDesc: 'Commercial & civic infrastructure works',      customer: 'CRDA Amaravati' },
-  { name: 'Government Complex',      number: 'AMR-003', title: 'Integrated Government Offices Complex',      manager: 'M. Rao',      boq: 'BOQ-2024-003', boqDesc: 'Multi-block government office construction',    customer: 'CRDA Amaravati' },
-  { name: 'High Court Complex',      number: 'AMR-004', title: 'Andhra Pradesh High Court Complex',          manager: 'R. Sharma',   boq: 'BOQ-2024-004', boqDesc: 'Judicial complex construction & landscaping',  customer: 'CRDA Amaravati' },
-  { name: 'Legislative Assembly',    number: 'AMR-005', title: 'AP Legislative Assembly Building',           manager: 'S. Reddy',    boq: 'BOQ-2024-005', boqDesc: 'Assembly hall, offices & utility works',       customer: 'CRDA Amaravati' },
-  { name: 'Secretariat Building',    number: 'AMR-006', title: 'AP State Secretariat Complex',               manager: 'A. Kumar',    boq: 'BOQ-2024-006', boqDesc: 'Administrative block & support facilities',    customer: 'CRDA Amaravati' },
-  { name: 'Amaravati Riverfront',    number: 'AMR-007', title: 'Riverfront Development – Krishna River',     manager: 'V. Prasad',   boq: 'BOQ-2024-007', boqDesc: 'Promenade, ghats & public infrastructure',     customer: 'CRDA Amaravati' },
-  { name: 'CRDA Township Phase 1',   number: 'AMR-008', title: 'Amaravati Residential Township Phase 1',    manager: 'L. Naidu',    boq: 'BOQ-2024-008', boqDesc: 'Residential plots, roads & utilities',          customer: 'CRDA Amaravati' },
-  { name: 'PMGSY Roads Package',     number: 'AMR-009', title: 'PMGSY Rural Road Connectivity Package',     manager: 'B. Raju',     boq: 'BOQ-2024-009', boqDesc: 'Village road upgradation & surfacing works',    customer: 'CRDA Amaravati' },
-  { name: 'Town & Country Planning', number: 'AMR-010', title: 'Amaravati Town & Country Planning Works',   manager: 'N. Devi',     boq: 'BOQ-2024-010', boqDesc: 'Urban planning infrastructure & zoning works',  customer: 'CRDA Amaravati' },
+  { id: 'AMR-001', name: 'Seed Access Road',        number: 'AMR-001', title: 'Construction of Seed Access Road',           manager: 'K. Ramesh',   boq: 'BOQ-2024-001', boqDesc: 'Road construction & allied works',             customer: 'CRDA Amaravati' },
+  { id: 'AMR-002', name: 'Capital Building (CBD)',  number: 'AMR-002', title: 'Capital City CBD Development',               manager: 'P. Srinivas', boq: 'BOQ-2024-002', boqDesc: 'Commercial & civic infrastructure works',      customer: 'CRDA Amaravati' },
+  { id: 'AMR-003', name: 'Government Complex',      number: 'AMR-003', title: 'Integrated Government Offices Complex',      manager: 'M. Rao',      boq: 'BOQ-2024-003', boqDesc: 'Multi-block government office construction',    customer: 'CRDA Amaravati' },
+  { id: 'AMR-004', name: 'High Court Complex',      number: 'AMR-004', title: 'Andhra Pradesh High Court Complex',          manager: 'R. Sharma',   boq: 'BOQ-2024-004', boqDesc: 'Judicial complex construction & landscaping',  customer: 'CRDA Amaravati' },
+  { id: 'AMR-005', name: 'Legislative Assembly',    number: 'AMR-005', title: 'AP Legislative Assembly Building',           manager: 'S. Reddy',    boq: 'BOQ-2024-005', boqDesc: 'Assembly hall, offices & utility works',       customer: 'CRDA Amaravati' },
+  { id: 'AMR-006', name: 'Secretariat Building',    number: 'AMR-006', title: 'AP State Secretariat Complex',               manager: 'A. Kumar',    boq: 'BOQ-2024-006', boqDesc: 'Administrative block & support facilities',    customer: 'CRDA Amaravati' },
+  { id: 'AMR-007', name: 'Amaravati Riverfront',    number: 'AMR-007', title: 'Riverfront Development – Krishna River',     manager: 'V. Prasad',   boq: 'BOQ-2024-007', boqDesc: 'Promenade, ghats & public infrastructure',     customer: 'CRDA Amaravati' },
+  { id: 'AMR-008', name: 'CRDA Township Phase 1',   number: 'AMR-008', title: 'Amaravati Residential Township Phase 1',    manager: 'L. Naidu',    boq: 'BOQ-2024-008', boqDesc: 'Residential plots, roads & utilities',          customer: 'CRDA Amaravati' },
+  { id: 'AMR-009', name: 'PMGSY Roads Package',     number: 'AMR-009', title: 'PMGSY Rural Road Connectivity Package',     manager: 'B. Raju',     boq: 'BOQ-2024-009', boqDesc: 'Village road upgradation & surfacing works',    customer: 'CRDA Amaravati' },
+  { id: 'AMR-010', name: 'Town & Country Planning', number: 'AMR-010', title: 'Amaravati Town & Country Planning Works',   manager: 'N. Devi',     boq: 'BOQ-2024-010', boqDesc: 'Urban planning infrastructure & zoning works',  customer: 'CRDA Amaravati' },
 ]
 
 const MONTHS = [
@@ -605,7 +605,7 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] sm:max-w-5xl h-[85vh] max-h-[85vh] flex flex-col p-0 gap-0">
+      <DialogContent className="w-[96vw] max-w-5xl h-[85vh] max-h-[85vh] flex flex-col p-0 gap-0">
         <DialogHeader className="px-5 pt-5 pb-3 border-b shrink-0">
           <DialogTitle className="text-base font-bold flex items-center gap-2">
             <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-[#0d9488] text-white">
@@ -616,7 +616,7 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
           <StepProgress current={step} />
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto px-5 py-4">
+        <div className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-5 py-4">
           {step === 0 && (
             <div className="space-y-6">
               {/* Project, Month & Year */}

@@ -11,6 +11,18 @@ import RoadSafetyFormDialog, {
 import EVMFormDialog, {
   loadEVMSubmissions, saveEVMSubmissions, type EVMSubmission,
 } from './evm-form-dialog'
+import SocialSafeguardFormDialog, {
+  loadSocialSafeguardSubmissions, saveSocialSafeguardSubmissions, type SocialSafeguardSubmission,
+} from './social-safeguard-form-dialog'
+import SkillTrainingFormDialog, {
+  loadSkillTrainingSubmissions, saveSkillTrainingSubmissions, type SkillTrainingSubmission,
+} from './skill-training-form-dialog'
+import LabourLawFormDialog, {
+  loadLabourLawSubmissions, saveLabourLawSubmissions, type LabourLawSubmission,
+} from './labour-law-form-dialog'
+import GenderFormDialog, {
+  loadGenderSubmissions, saveGenderSubmissions, type GenderSubmission,
+} from './gender-form-dialog'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -18,6 +30,7 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+  DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent
 } from '@/components/ui/dropdown-menu'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
@@ -422,10 +435,23 @@ export default function EsFormsView() {
   const [evmOpen, setEvmOpen] = useState(false)
   const [evmSubmissions, setEvmSubmissions] = useState<EVMSubmission[]>(() => loadEVMSubmissions())
 
+  const [ssOpen, setSsOpen] = useState(false)
+  const [ssSubmissions, setSsSubmissions] = useState<SocialSafeguardSubmission[]>(() => loadSocialSafeguardSubmissions())
+  const [stOpen, setStOpen] = useState(false)
+  const [stSubmissions, setStSubmissions] = useState<SkillTrainingSubmission[]>(() => loadSkillTrainingSubmissions())
+  const [llOpen, setLlOpen] = useState(false)
+  const [llSubmissions, setLlSubmissions] = useState<LabourLawSubmission[]>(() => loadLabourLawSubmissions())
+  const [genOpen, setGenOpen] = useState(false)
+  const [genSubmissions, setGenSubmissions] = useState<GenderSubmission[]>(() => loadGenderSubmissions())
+
   const [editingEntry, setEditingEntry] = useState<FormEntry | null>(null)
 
   const refreshRS = () => setRsSubmissions(loadRoadSafetySubmissions())
   const refreshEVM = () => setEvmSubmissions(loadEVMSubmissions())
+  const refreshSS = () => setSsSubmissions(loadSocialSafeguardSubmissions())
+  const refreshST = () => setStSubmissions(loadSkillTrainingSubmissions())
+  const refreshLL = () => setLlSubmissions(loadLabourLawSubmissions())
+  const refreshGen = () => setGenSubmissions(loadGenderSubmissions())
 
   const handleSave = (entry: FormEntry) => {
     const isEdit = forms.some(f => f.id === entry.id)
@@ -461,7 +487,7 @@ export default function EsFormsView() {
   const hasFilter = !!(search || typeFilter || statusFilter)
 
   return (
-    <div className="flex flex-col gap-4 h-full overflow-y-auto pb-6 pr-2">
+    <div className="flex flex-col gap-4 h-full min-w-0 overflow-y-auto pb-6 pr-2">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
         <div className="hidden sm:block">
@@ -476,27 +502,45 @@ export default function EsFormsView() {
               <ChevronDown className="h-3.5 w-3.5" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-44">
-            {FORM_TYPES.map(type => (
-              <DropdownMenuItem
-                key={type}
-                onClick={() => {
-                  if (type === 'Road Safety') { setRsOpen(true) }
-                  else if (type === 'EVM') { setEvmOpen(true) }
-                  else { setAddType(type); setAddOpen(true) }
-                }}
-                className="cursor-pointer gap-2"
-              >
-                <FileText className="h-3.5 w-3.5 text-[#0d9488]" />
-                {type}
-              </DropdownMenuItem>
-            ))}
+          <DropdownMenuContent align="end" className="w-56">
+            {FORM_TYPES.map(type => {
+              if (type === 'Social') {
+                return (
+                  <DropdownMenuSub key={type}>
+                    <DropdownMenuSubTrigger className="gap-2">
+                      <FileText className="h-3.5 w-3.5 text-[#0d9488]" />
+                      {type}
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent className="w-72">
+                      <DropdownMenuItem onClick={() => setSsOpen(true)}>Social Safeguard Compliance for MPR</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setStOpen(true)}>Skill Training & Employment</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setLlOpen(true)}>Labour Law Compliance</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setGenOpen(true)}>Gender</DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                )
+              }
+              return (
+                <DropdownMenuItem
+                  key={type}
+                  onClick={() => {
+                    if (type === 'Road Safety') { setRsOpen(true) }
+                    else if (type === 'EVM') { setEvmOpen(true) }
+                    else { setAddType(type); setAddOpen(true) }
+                  }}
+                  className="cursor-pointer gap-2"
+                >
+                  <FileText className="h-3.5 w-3.5 text-[#0d9488]" />
+                  {type}
+                </DropdownMenuItem>
+              )
+            })}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
 
-      {/* Stat Cards — fills full width */}
-      <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 shrink-0">
+      {/* Stat Cards — responsive grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-3 shrink-0">
         {FORM_TYPES.map(type => (
           <StatCard key={type} formType={type} entries={forms.filter(f => f.formType === type)} />
         ))}
@@ -640,11 +684,192 @@ export default function EsFormsView() {
         </Card>
       )}
 
+      {/* Social Modules Dashboards */}
+      {ssSubmissions.length > 0 && (
+        <Card className="shrink-0">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <p className="text-sm font-bold text-[#0d9488]">Social Safeguard Compliance for MPR</p>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setSsOpen(true)}>
+                <Plus className="h-3 w-3" /> New Report
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="text-xs w-full">
+                <thead>
+                  <tr className="bg-muted/40 border-b">
+                    <th className="text-left px-4 py-2 font-semibold">Project</th>
+                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                    <th className="text-left px-4 py-2 font-semibold">Status</th>
+                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                    <th className="px-3 py-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ssSubmissions.map(sub => (
+                    <tr key={sub.id} className="border-b hover:bg-muted/20">
+                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                      <td className="px-4 py-2">
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                      <td className="px-3 py-2">
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=ssSubmissions.filter(r=>r.id!==sub.id); setSsSubmissions(u); saveSocialSafeguardSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {stSubmissions.length > 0 && (
+        <Card className="shrink-0">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <p className="text-sm font-bold text-[#0d9488]">Skill Training & Employment</p>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setStOpen(true)}>
+                <Plus className="h-3 w-3" /> New Report
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="text-xs w-full">
+                <thead>
+                  <tr className="bg-muted/40 border-b">
+                    <th className="text-left px-4 py-2 font-semibold">Project</th>
+                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                    <th className="text-left px-4 py-2 font-semibold">Status</th>
+                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                    <th className="px-3 py-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stSubmissions.map(sub => (
+                    <tr key={sub.id} className="border-b hover:bg-muted/20">
+                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                      <td className="px-4 py-2">
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                      <td className="px-3 py-2">
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=stSubmissions.filter(r=>r.id!==sub.id); setStSubmissions(u); saveSkillTrainingSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {llSubmissions.length > 0 && (
+        <Card className="shrink-0">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <p className="text-sm font-bold text-[#0d9488]">Labour Law Compliance</p>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setLlOpen(true)}>
+                <Plus className="h-3 w-3" /> New Report
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="text-xs w-full">
+                <thead>
+                  <tr className="bg-muted/40 border-b">
+                    <th className="text-left px-4 py-2 font-semibold">Project</th>
+                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                    <th className="text-left px-4 py-2 font-semibold">Status</th>
+                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                    <th className="px-3 py-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {llSubmissions.map(sub => (
+                    <tr key={sub.id} className="border-b hover:bg-muted/20">
+                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                      <td className="px-4 py-2">
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                      <td className="px-3 py-2">
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=llSubmissions.filter(r=>r.id!==sub.id); setLlSubmissions(u); saveLabourLawSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {genSubmissions.length > 0 && (
+        <Card className="shrink-0">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <p className="text-sm font-bold text-[#0d9488]">Gender & GBV Compliance</p>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setGenOpen(true)}>
+                <Plus className="h-3 w-3" /> New Report
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="text-xs w-full">
+                <thead>
+                  <tr className="bg-muted/40 border-b">
+                    <th className="text-left px-4 py-2 font-semibold">Project</th>
+                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                    <th className="text-center px-4 py-2 font-semibold">GBV Instances?</th>
+                    <th className="text-left px-4 py-2 font-semibold">Status</th>
+                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                    <th className="px-3 py-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {genSubmissions.map(sub => (
+                    <tr key={sub.id} className="border-b hover:bg-muted/20">
+                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                      <td className="px-4 py-2 text-center">
+                        {sub.gbvInstances === 'Yes' ? (
+                          <span className="text-red-600 font-bold">Yes</span>
+                        ) : sub.gbvInstances === 'No' ? (
+                          <span className="text-emerald-600 font-bold">No</span>
+                        ) : '—'}
+                      </td>
+                      <td className="px-4 py-2">
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                      <td className="px-3 py-2">
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=genSubmissions.filter(r=>r.id!==sub.id); setGenSubmissions(u); saveGenderSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Forms Summary Table */}
       <Card className="flex flex-col mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
           <p className="text-sm font-bold text-[#0d9488] shrink-0">Forms Summary</p>
-          <div className="flex flex-col sm:flex-row gap-2 flex-1 justify-end">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2 flex-1 justify-end">
             <div className="relative w-full max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search by form type, person, location..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
@@ -666,7 +891,7 @@ export default function EsFormsView() {
           </div>
         </div>
         <CardContent className="p-0">
-          <Table containerClassName="max-h-[650px] overflow-auto">
+          <Table containerClassName="max-h-[min(650px,calc(100vh-250px))] overflow-auto">
             <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
               <TableRow>
                 <TableHead className="text-xs font-bold text-foreground">Form Type</TableHead>
@@ -739,6 +964,18 @@ export default function EsFormsView() {
       )}
       {evmOpen && (
         <EVMFormDialog open={evmOpen} onOpenChange={setEvmOpen} onSaved={refreshEVM} />
+      )}
+      {ssOpen && (
+        <SocialSafeguardFormDialog open={ssOpen} onOpenChange={setSsOpen} onSaved={refreshSS} />
+      )}
+      {stOpen && (
+        <SkillTrainingFormDialog open={stOpen} onOpenChange={setStOpen} onSaved={refreshST} />
+      )}
+      {llOpen && (
+        <LabourLawFormDialog open={llOpen} onOpenChange={setLlOpen} onSaved={refreshLL} />
+      )}
+      {genOpen && (
+        <GenderFormDialog open={genOpen} onOpenChange={setGenOpen} onSaved={refreshGen} />
       )}
     </div>
   )

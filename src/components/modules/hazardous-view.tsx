@@ -311,7 +311,7 @@ export default function HazardousView() {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-full overflow-hidden">
+    <div className="flex flex-col gap-4 h-full min-w-0 overflow-hidden">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="hidden sm:block">
@@ -409,7 +409,7 @@ export default function HazardousView() {
         <>
           <div className="flex-1 min-h-0 flex flex-col">
             {/* Desktop Table */}
-            <div className="hidden md:flex flex-col overflow-auto flex-1 min-h-0">
+            <div className="hidden md:flex flex-col overflow-auto flex-1 min-h-0 w-full min-w-0">
               <Card className="flex-1 min-h-0 flex flex-col">
                 <CardContent className="p-0 flex-1 min-h-0 overflow-visible">
                 <Table>
@@ -596,7 +596,7 @@ export default function HazardousView() {
 
       {/* ====== Add Material Dialog ====== */}
       <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Add Hazardous Material</DialogTitle>
           </DialogHeader>
@@ -684,7 +684,7 @@ export default function HazardousView() {
 
       {/* ====== Add Transaction Dialog ====== */}
       <Dialog open={txnDialogOpen} onOpenChange={setTxnDialogOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="w-[95vw] sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Add Transaction</DialogTitle>
           </DialogHeader>

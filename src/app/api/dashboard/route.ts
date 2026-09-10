@@ -149,7 +149,8 @@ export async function GET() {
     // ─── Gender breakdown ───
     const genderBreakdown: Record<string, number> = {}
     for (const w of allWorkers) {
-      genderBreakdown[w.gender] = (genderBreakdown[w.gender] || 0) + 1
+      const g = w.gender || 'Other'
+      genderBreakdown[g] = (genderBreakdown[g] || 0) + 1
     }
 
     // ─── Skilled vs Unskilled (based on designation category + fitness skillLevel) ───

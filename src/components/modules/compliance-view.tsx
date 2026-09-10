@@ -215,7 +215,7 @@ export default function ComplianceView() {
   }, [])
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 min-w-0 pb-6">
       {/* ====== Header ====== */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="hidden sm:block">

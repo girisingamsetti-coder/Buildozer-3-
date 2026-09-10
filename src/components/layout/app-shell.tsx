@@ -131,7 +131,7 @@ export function AppShell() {
           ) : (
             <>
               <main className="flex-1 overflow-hidden">
-                <div className="px-3 sm:px-4 pt-3 pb-0 h-full flex flex-col">{pageContent}</div>
+                <div className="px-3 sm:px-4 pt-3 pb-0 h-full flex flex-col min-w-0">{pageContent}</div>
               </main>
             </>
           )}

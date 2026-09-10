@@ -881,7 +881,7 @@ export default function DashboardView() {
       <div
         className={cn("flex-1 min-h-0 px-2 pt-2 pb-0 -mx-2 -mt-2", isMobile ? "flex flex-col gap-4 overflow-y-auto" : "grid")}
         style={isMobile ? {} : {
-          gridTemplateColumns: '1fr 372px',
+          gridTemplateColumns: '1fr clamp(280px, 22vw, 372px)',
           gridTemplateRows: 'minmax(0, 0.67fr) minmax(0, 0.67fr) minmax(0, 0.78fr)',
           gap: '6px 8px',
         }}
@@ -959,7 +959,7 @@ export default function DashboardView() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.15 }}
           className={cn("min-h-0", isMobile ? "flex flex-col gap-2" : "grid")}
-          style={isMobile ? {} : { gridTemplateColumns: '322px 1fr', gap: '8px', gridColumn: '1', gridRow: '3' }}
+          style={isMobile ? {} : { gridTemplateColumns: 'minmax(250px, 322px) 1fr', gap: '8px', gridColumn: '1', gridRow: '3' }}
         >
           <RankedListCard className={cn(isMobile && "min-h-[250px]")} title="Camps per Contractor" icon={Building2} items={campsPerContractorData} colorPool={['#8b5cf6', '#ec4899', '#0ea5e9', '#eab308', '#f97316', '#14b8a6', '#94a3b8']} />
           <BarChartCard className={cn(isMobile && "min-h-[300px]")} title="Workforce per Camp" icon={Users} data={workforcePerCampData} maxBarSize={10} />
