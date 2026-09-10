@@ -111,13 +111,22 @@ function StatCard({ formType, entries }: { formType: FormType; entries: FormEntr
   const chartData = breakdown.length > 0 ? breakdown : [{ name: 'None', value: 1, color: '#e2e8f0' }]
 
   return (
-    <Card className="flex-shrink-0 w-[190px] border shadow-sm">
+    <Card className="flex-1 min-w-0 border shadow-sm">
       <CardContent className="p-3 flex flex-col gap-2">
-        <p className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate">{formType}</p>
+        <p className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate text-center">{formType}</p>
         <div className="relative flex items-center justify-center">
-          <ResponsiveContainer width={140} height={110}>
+          <ResponsiveContainer width="100%" height={120}>
             <PieChart>
-              <Pie data={chartData} cx="50%" cy="50%" innerRadius={33} outerRadius={50} dataKey="value" strokeWidth={1}>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                innerRadius="55%"
+                outerRadius="80%"
+                dataKey="value"
+                strokeWidth={0}
+                cornerRadius={5}
+              >
                 {chartData.map((entry, i) => (
                   <Cell key={i} fill={entry.color} />
                 ))}
@@ -289,8 +298,8 @@ export default function EsFormsView() {
         </DropdownMenu>
       </div>
 
-      {/* Stat Cards */}
-      <div className="flex gap-3 overflow-x-auto pb-1 shrink-0">
+      {/* Stat Cards — fills full width */}
+      <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 shrink-0">
         {FORM_TYPES.map(type => (
           <StatCard key={type} formType={type} entries={forms.filter(f => f.formType === type)} />
         ))}
