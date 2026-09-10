@@ -3,8 +3,11 @@
 import { useState, useMemo } from 'react'
 import { toast } from 'sonner'
 import {
-  Plus, Search, X, FileText, ChevronDown, Trash2, Calendar,
+  Plus, Search, X, FileText, ChevronDown, Trash2, Calendar, CheckCircle2, XCircle, Clock, AlertTriangle,
 } from 'lucide-react'
+import RoadSafetyFormDialog, {
+  loadRoadSafetySubmissions, saveRoadSafetySubmissions, type RoadSafetySubmission,
+} from './road-safety-form-dialog'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -391,6 +394,10 @@ export default function EsFormsView() {
   const [statusFilter, setStatusFilter] = useState<string>('')
   const [addOpen, setAddOpen] = useState(false)
   const [addType, setAddType] = useState<FormType | null>(null)
+  const [rsOpen, setRsOpen] = useState(false)
+  const [rsSubmissions, setRsSubmissions] = useState<RoadSafetySubmission[]>(() => loadRoadSafetySubmissions())
+
+  const refreshRS = () => setRsSubmissions(loadRoadSafetySubmissions())
 
   const handleSave = (entry: FormEntry) => {
     const updated = [entry, ...forms]
@@ -435,7 +442,14 @@ export default function EsFormsView() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44">
             {FORM_TYPES.map(type => (
-              <DropdownMenuItem key={type} onClick={() => { setAddType(type); setAddOpen(true) }} className="cursor-pointer gap-2">
+              <DropdownMenuItem
+                key={type}
+                onClick={() => {
+                  if (type === 'Road Safety') { setRsOpen(true) }
+                  else { setAddType(type); setAddOpen(true) }
+                }}
+                className="cursor-pointer gap-2"
+              >
                 <FileText className="h-3.5 w-3.5 text-[#0d9488]" />
                 {type}
               </DropdownMenuItem>
@@ -453,6 +467,74 @@ export default function EsFormsView() {
 
       {/* Project Summary Table */}
       <ProjectSummaryTable forms={forms} />
+
+      {/* Road Safety Submissions Dashboard */}
+      {rsSubmissions.length > 0 && (
+        <Card className="shrink-0">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <p className="text-sm font-bold text-[#0d9488]" >Road Safety Submissions</p>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setRsOpen(true)}>
+                <Plus className="h-3 w-3" /> New Submission
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="text-xs w-full">
+                <thead>
+                  <tr className="bg-muted/40 border-b">
+                    <th className="text-left px-4 py-2 font-semibold">Project</th>
+                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                    <th className="text-center px-3 py-2 font-semibold text-emerald-600">Yes</th>
+                    <th className="text-center px-3 py-2 font-semibold text-red-500">No</th>
+                    <th className="text-left px-4 py-2 font-semibold">Status</th>
+                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                    <th className="px-3 py-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rsSubmissions.map(rs => {
+                    const yes = rs.checklist.filter(c => c.answer === 'yes').length
+                    const no  = rs.checklist.filter(c => c.answer === 'no').length
+                    const statusConfig = {
+                      'Draft':                   { color: 'bg-slate-100 text-slate-600',   icon: Clock },
+                      'Submitted':               { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                      'Needs Corrective Action': { color: 'bg-red-100 text-red-600',       icon: AlertTriangle },
+                    }[rs.status]
+                    const Icon = statusConfig?.icon || Clock
+                    return (
+                      <tr key={rs.id} className="border-b hover:bg-muted/20">
+                        <td className="px-4 py-2 font-medium">{rs.projectName}</td>
+                        <td className="px-4 py-2 text-muted-foreground">{rs.reportingMonth}</td>
+                        <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
+                        <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
+                        <td className="px-4 py-2">
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
+                            <Icon className="h-2.5 w-2.5" />{rs.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2 text-muted-foreground">
+                          {rs.submittedAt ? new Date(rs.submittedAt).toLocaleDateString('en-IN') : '—'}
+                        </td>
+                        <td className="px-3 py-2">
+                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                            onClick={() => {
+                              const updated = rsSubmissions.filter(r => r.id !== rs.id)
+                              setRsSubmissions(updated)
+                              saveRoadSafetySubmissions(updated)
+                              toast.success('Deleted')
+                            }}>
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Filter Bar */}
       <Card className="shrink-0 py-0">
@@ -534,6 +616,9 @@ export default function EsFormsView() {
 
       {addOpen && (
         <AddFormDialog key={String(addType)} open={addOpen} onOpenChange={setAddOpen} defaultType={addType} onSave={handleSave} />
+      )}
+      {rsOpen && (
+        <RoadSafetyFormDialog open={rsOpen} onOpenChange={setRsOpen} onSaved={refreshRS} />
       )}
     </div>
   )
