@@ -156,7 +156,7 @@ function FileUploadButton({
 
 // ==================== STEP PROGRESS ====================
 
-const STEPS = ['Project & Month', 'Checklist', 'Safety Audit', 'Review & Submit']
+const STEPS = ['Project Checklist', 'Review & Submit']
 
 function StepProgress({ current }: { current: number }) {
   return (
@@ -598,10 +598,10 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
     onSaved(); onOpenChange(false)
   }
 
-  const next = () => setStep(s => Math.min(s + 1, 3))
+  const next = () => setStep(s => Math.min(s + 1, 1))
   const prev = () => setStep(s => Math.max(s - 1, 0))
 
-  const canNext = step < 3 // always allow Next
+  const canNext = step < 1 // always allow Next
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -617,10 +617,24 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto px-5 py-4">
-          {step === 0 && <Step1 projectName={projectName} setProjectName={setProjectName} month={month} setMonth={setMonth} year={year} setYear={setYear} />}
-          {step === 1 && <Step2 checklist={checklist} onChange={handleChecklistChange} />}
-          {step === 2 && <Step3 conducted={conducted} setConducted={setConducted} remarks={auditRemarks} setRemarks={setAuditRemarks} file={auditFile} setFile={setAuditFile} />}
-          {step === 3 && <Step4 projectName={projectName} month={month} year={year} checklist={checklist} conducted={conducted} auditFile={auditFile} auditRemarks={auditRemarks} onSaveDraft={handleSaveDraft} onSubmit={handleSubmit} />}
+          {step === 0 && (
+            <div className="space-y-6">
+              {/* Project, Month & Year */}
+              <div>
+                <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-3">Project Information</p>
+                <Step1 projectName={projectName} setProjectName={setProjectName} month={month} setMonth={setMonth} year={year} setYear={setYear} />
+              </div>
+              <div className="border-t pt-5">
+                <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-3">Road Safety Checklist</p>
+                <Step2 checklist={checklist} onChange={handleChecklistChange} />
+              </div>
+              <div className="border-t pt-5">
+                <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-3">Safety Audit</p>
+                <Step3 conducted={conducted} setConducted={setConducted} remarks={auditRemarks} setRemarks={setAuditRemarks} file={auditFile} setFile={setAuditFile} />
+              </div>
+            </div>
+          )}
+          {step === 1 && <Step4 projectName={projectName} month={month} year={year} checklist={checklist} conducted={conducted} auditFile={auditFile} auditRemarks={auditRemarks} onSaveDraft={handleSaveDraft} onSubmit={handleSubmit} />}
         </div>
 
         {/* Footer nav */}
@@ -629,8 +643,8 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
             <ChevronLeft className="h-3.5 w-3.5" /> Previous
           </Button>
           <span className="text-xs text-muted-foreground">Step {step + 1} of {STEPS.length}</span>
-          {step < 3 ? (
-            <Button type="button" size="sm" onClick={next} disabled={!canNext} className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5">
+          {step < 1 ? (
+            <Button type="button" size="sm" onClick={next} className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5">
               Next <ChevronRight className="h-3.5 w-3.5" />
             </Button>
           ) : (
