@@ -194,13 +194,12 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
                           className="px-3 py-2 text-center border border-slate-200 dark:border-slate-700 tabular-nums"
                         >
                           {val > 0 ? (
-                            <span className={`font-semibold ${
-                              sub === 'Approved' ? 'text-emerald-600' :
+                            <span className={`font-semibold ${sub === 'Approved' ? 'text-emerald-600' :
                               sub === 'Rejected' ? 'text-red-500' :
-                              sub === 'Not Ready' ? 'text-orange-500' :
-                              sub === 'Created' ? 'text-[#0d9488]' :
-                              'text-slate-700 dark:text-slate-300'
-                            }`}>{val}</span>
+                                sub === 'Not Ready' ? 'text-orange-500' :
+                                  sub === 'Created' ? 'text-[#0d9488]' :
+                                    'text-slate-700 dark:text-slate-300'
+                              }`}>{val}</span>
                           ) : (
                             <span className="text-muted-foreground">—</span>
                           )}
@@ -224,13 +223,12 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
                         className="px-3 py-2 text-center border border-slate-200 dark:border-slate-700 tabular-nums"
                       >
                         {total > 0 ? (
-                          <span className={`font-bold ${
-                            sub === 'Approved' ? 'text-emerald-600' :
+                          <span className={`font-bold ${sub === 'Approved' ? 'text-emerald-600' :
                             sub === 'Rejected' ? 'text-red-500' :
-                            sub === 'Not Ready' ? 'text-orange-500' :
-                            sub === 'Created' ? 'text-[#0d9488]' :
-                            'text-slate-700 dark:text-slate-300'
-                          }`}>{total}</span>
+                              sub === 'Not Ready' ? 'text-orange-500' :
+                                sub === 'Created' ? 'text-[#0d9488]' :
+                                  'text-slate-700 dark:text-slate-300'
+                            }`}>{total}</span>
                         ) : '—'}
                       </td>
                     )
