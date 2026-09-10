@@ -294,11 +294,11 @@ export default function WorkerFormView() {
         emergencyContacts:
           w.emergencyContacts.length > 0
             ? w.emergencyContacts.map((ec) => ({
-                name: ec.name,
-                relationship: ec.relationship,
-                phone: ec.phone,
-                isPrimary: ec.isPrimary,
-              }))
+              name: ec.name,
+              relationship: ec.relationship,
+              phone: ec.phone,
+              isPrimary: ec.isPrimary,
+            }))
             : [{ name: '', relationship: '', phone: '', isPrimary: true }],
         nominees: w.nominees.map((n) => ({
           name: n.name,
