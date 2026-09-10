@@ -8,6 +8,9 @@ import {
 import RoadSafetyFormDialog, {
   loadRoadSafetySubmissions, saveRoadSafetySubmissions, type RoadSafetySubmission,
 } from './road-safety-form-dialog'
+import EVMFormDialog, {
+  loadEVMSubmissions, saveEVMSubmissions, type EVMSubmission,
+} from './evm-form-dialog'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -396,8 +399,11 @@ export default function EsFormsView() {
   const [addType, setAddType] = useState<FormType | null>(null)
   const [rsOpen, setRsOpen] = useState(false)
   const [rsSubmissions, setRsSubmissions] = useState<RoadSafetySubmission[]>(() => loadRoadSafetySubmissions())
+  const [evmOpen, setEvmOpen] = useState(false)
+  const [evmSubmissions, setEvmSubmissions] = useState<EVMSubmission[]>(() => loadEVMSubmissions())
 
   const refreshRS = () => setRsSubmissions(loadRoadSafetySubmissions())
+  const refreshEVM = () => setEvmSubmissions(loadEVMSubmissions())
 
   const handleSave = (entry: FormEntry) => {
     const updated = [entry, ...forms]
@@ -446,6 +452,7 @@ export default function EsFormsView() {
                 key={type}
                 onClick={() => {
                   if (type === 'Road Safety') { setRsOpen(true) }
+                  else if (type === 'EVM') { setEvmOpen(true) }
                   else { setAddType(type); setAddOpen(true) }
                 }}
                 className="cursor-pointer gap-2"
@@ -536,7 +543,72 @@ export default function EsFormsView() {
         </Card>
       )}
 
-      {/* Filter Bar */}
+      {/* EVM Submissions Dashboard */}
+      {evmSubmissions.length > 0 && (
+        <Card className="shrink-0">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <p className="text-sm font-bold text-[#0d9488]">EVM — Environmental Compliance Monitoring</p>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setEvmOpen(true)}>
+                <Plus className="h-3 w-3" /> New EVM Report
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="text-xs w-full">
+                <thead>
+                  <tr className="bg-muted/40 border-b">
+                    <th className="text-left px-4 py-2 font-semibold">Project</th>
+                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                    <th className="text-left px-4 py-2 font-semibold">Status</th>
+                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                    <th className="px-3 py-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {evmSubmissions.map(ev => {
+                    const statusConfig = {
+                      'Draft':                    { color: 'bg-slate-100 text-slate-600',     icon: Clock },
+                      'Submitted':                { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                      'Pending PM Certification': { color: 'bg-blue-100 text-blue-700',       icon: Clock },
+                      'Pending PMC':              { color: 'bg-amber-100 text-amber-700',     icon: Clock },
+                      'Pending PgMC':             { color: 'bg-purple-100 text-purple-700',   icon: Clock },
+                      'Pending ESMU':             { color: 'bg-indigo-100 text-indigo-700',   icon: Clock },
+                      'Returned':                 { color: 'bg-orange-100 text-orange-700',   icon: AlertTriangle },
+                      'Approved':                 { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                    }[ev.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
+                    const Icon = statusConfig.icon
+                    return (
+                      <tr key={ev.id} className="border-b hover:bg-muted/20">
+                        <td className="px-4 py-2 font-medium">{ev.projectName || '—'}</td>
+                        <td className="px-4 py-2 text-muted-foreground">{ev.reportingMonth}</td>
+                        <td className="px-4 py-2">
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig.color}`}>
+                            <Icon className="h-2.5 w-2.5" />{ev.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2 text-muted-foreground">
+                          {ev.submittedAt ? new Date(ev.submittedAt).toLocaleDateString('en-IN') : '—'}
+                        </td>
+                        <td className="px-3 py-2">
+                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                            onClick={() => {
+                              const updated = evmSubmissions.filter(r => r.id !== ev.id)
+                              setEvmSubmissions(updated)
+                              saveEVMSubmissions(updated)
+                              toast.success('Deleted')
+                            }}>
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
       <Card className="shrink-0 py-0">
         <CardContent className="px-3 py-2">
           <div className="flex flex-col sm:flex-row gap-2">
@@ -619,6 +691,9 @@ export default function EsFormsView() {
       )}
       {rsOpen && (
         <RoadSafetyFormDialog open={rsOpen} onOpenChange={setRsOpen} onSaved={refreshRS} />
+      )}
+      {evmOpen && (
+        <EVMFormDialog open={evmOpen} onOpenChange={setEvmOpen} onSaved={refreshEVM} />
       )}
     </div>
   )
