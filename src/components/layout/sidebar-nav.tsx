@@ -44,6 +44,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
 } from '@/components/ui/dropdown-menu'
 import {
   Tooltip,
@@ -87,9 +91,17 @@ function getInitials(name: string): string {
 
 export function SidebarNav() {
   const { activePage, setPage, sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed, mobileView, toggleMobileView } = useNavStore()
-  const { logout, userName, role } = useAuthStore()
+  const { logout, login, userName, role } = useAuthStore()
   const permissions = rolePermissions[role] ?? rolePermissions.SAFETY_OFFICER
   const { theme, setTheme } = useTheme()
+
+  const demoUsers = [
+    { name: 'Demo Admin', role: 'ADMIN' as const },
+    { name: 'Demo Safety Officer', role: 'SAFETY_OFFICER' as const },
+    { name: 'Demo PMC', role: 'PMC' as const },
+    { name: 'Demo HR', role: 'HR_COORDINATOR' as const },
+    { name: 'Demo Legal', role: 'LEGAL_ADVISOR' as const },
+  ]
   const [mounted, setMounted] = useState(false)
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [notifOpen, setNotifOpen] = useState(false)
@@ -359,6 +371,27 @@ export function SidebarNav() {
                   <Calendar className="h-4 w-4 mr-2" />
                   Calendar
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="cursor-pointer">
+                    <Users className="h-4 w-4 mr-2" />
+                    <span>Switch User</span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      {demoUsers.map((u) => (
+                        <DropdownMenuItem 
+                          key={u.role} 
+                          onClick={() => { login(u.name, u.role); setSidebarOpen(false); }}
+                          className="cursor-pointer flex flex-col items-start gap-0.5 py-2"
+                        >
+                          <span className="font-medium text-sm">{u.name}</span>
+                          <span className="text-xs text-muted-foreground">{roleLabels[u.role]}</span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-600 focus:text-red-700 focus:bg-red-50">
                   <LogOut className="h-4 w-4 mr-2" />

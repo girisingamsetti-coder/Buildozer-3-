@@ -78,9 +78,9 @@ export const rolePermissions: Record<UserRole, {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: false,
-  userName: '',
-  role: 'SAFETY_OFFICER' as UserRole,
+  isAuthenticated: true,
+  userName: 'Demo Admin',
+  role: 'ADMIN' as UserRole,
   contractorId: null,
   contractorName: null,
   siteId: null,
