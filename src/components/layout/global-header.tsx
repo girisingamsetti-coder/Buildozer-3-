@@ -16,8 +16,11 @@ import {
   FileBarChart,
   ChevronDown,
   LogOut,
-  Calendar
+  Calendar,
+  Moon,
+  Sun
 } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -60,6 +63,15 @@ export function GlobalHeader() {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [notifOpen, setNotifOpen] = useState(false)
   const [clearing, setClearing] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
+  const isDark = mounted && theme === 'dark'
 
   const demoUsers = [
     { name: 'Demo Admin', role: 'ADMIN' as const },
@@ -151,6 +163,11 @@ export function GlobalHeader() {
 
       {/* Right Section: Notifications & Profile */}
       <div className="flex items-center gap-2 px-4 shrink-0 h-full border-l border-slate-600 pl-4 ml-2">
+        {/* Theme Toggle */}
+        <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 rounded-full text-slate-300 hover:text-white hover:bg-slate-700">
+          {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+        </Button>
+
         {/* Notifications */}
         <Popover open={notifOpen} onOpenChange={setNotifOpen}>
           <PopoverTrigger asChild>
