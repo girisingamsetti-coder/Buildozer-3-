@@ -198,7 +198,7 @@ function Step1({
 
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="space-y-4">
         <div className="space-y-1.5">
           <Label className="text-xs font-semibold">Project *</Label>
           <Select value={projectName} onValueChange={setProjectName}>
@@ -208,21 +208,19 @@ function Step1({
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2">
-          <div className="flex-1 space-y-1.5">
-            <Label className="text-xs font-semibold">Reporting Month *</Label>
-            <Select value={month} onValueChange={setMonth}>
-              <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Month" /></SelectTrigger>
-              <SelectContent>{MONTHS.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
-            </Select>
-          </div>
-          <div className="w-24 space-y-1.5">
-            <Label className="text-xs font-semibold">Year *</Label>
-            <Select value={year} onValueChange={setYear}>
-              <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-              <SelectContent>{YEARS.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}</SelectContent>
-            </Select>
-          </div>
+        <div className="space-y-1.5">
+          <Label className="text-xs font-semibold">Reporting Month *</Label>
+          <Select value={month} onValueChange={setMonth}>
+            <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select month" /></SelectTrigger>
+            <SelectContent>{MONTHS.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-1.5">
+          <Label className="text-xs font-semibold">Year *</Label>
+          <Select value={year} onValueChange={setYear}>
+            <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
+            <SelectContent>{YEARS.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}</SelectContent>
+          </Select>
         </div>
       </div>
 
