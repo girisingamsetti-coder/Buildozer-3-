@@ -635,9 +635,12 @@ export default function EsFormsView() {
         </CardContent>
       </Card>
 
-      {/* Table */}
-      <Card className="flex flex-col min-h-[600px] mb-6">
-        <CardContent className="p-0">
+      {/* Forms Summary Table */}
+      <Card className="flex flex-col mb-6">
+        <div className="px-4 py-3 border-b bg-muted/20">
+          <p className="text-sm font-bold text-[#0d9488]">Forms Summary</p>
+        </div>
+        <CardContent className="p-0 overflow-y-auto max-h-[650px]">
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>
