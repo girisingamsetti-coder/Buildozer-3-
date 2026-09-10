@@ -134,7 +134,7 @@ export default function WorkerIdCard({ worker }: { worker: WorkerCardData }) {
             }}
           >
             <div style={{ fontSize: '13px', fontWeight: 800, color: '#0d9488', letterSpacing: '-0.5px' }}>
-              Buildozer
+              AICCC Workforce
             </div>
             <div style={{ fontSize: '9px', color: '#64748b', textAlign: 'right', maxWidth: '100px' }}>
               {worker.contractor.name}

@@ -177,14 +177,12 @@ export function SidebarNav() {
           'flex items-center border-b border-teal-100/60 dark:border-slate-800 shrink-0',
           collapsed ? 'h-14 justify-center px-2' : 'h-20 px-3'
         )}>
-          <img
-            src="/buildozer-logo.png"
-            alt="Buildozer"
-            className={cn(
-              'object-contain transition-all duration-300',
-              collapsed ? 'w-10 h-10 rounded-xl' : 'w-full rounded-2xl'
-            )}
-          />
+          <div className={cn(
+            "font-black text-slate-800 dark:text-slate-200 tracking-tight flex items-center justify-center w-full",
+            collapsed ? 'text-xl' : 'text-2xl'
+          )}>
+            {collapsed ? 'W' : 'Workforce'}
+          </div>
           {/* Mobile close */}
           <Button
             variant="ghost"

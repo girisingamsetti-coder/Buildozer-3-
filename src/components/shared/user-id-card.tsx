@@ -84,11 +84,11 @@ function drawCard(
   ctx.fillStyle = grad
   ctx.fillRect(0, 0, W, 38)
 
-  // Header text: Buildozer
+  // Header text: AICCC Workforce
   ctx.fillStyle = '#ffffff'
   ctx.font = 'bold 13px Inter, system-ui, sans-serif'
   ctx.textBaseline = 'middle'
-  ctx.fillText('Buildozer', 12, 16)
+  ctx.fillText('AICCC Workforce', 12, 16)
 
   // Header text: right side - card type
   ctx.font = '600 7.5px Inter, system-ui, sans-serif'
@@ -307,7 +307,7 @@ export default function UserIdCard({
           }}
         >
           <span style={{ color: '#ffffff', fontSize: '13px', fontWeight: 800, letterSpacing: '-0.3px' }}>
-            Buildozer
+            AICCC Workforce
           </span>
           <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '7.5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
             Identity Card

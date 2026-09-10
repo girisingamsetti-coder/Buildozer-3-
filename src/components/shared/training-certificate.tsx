@@ -143,7 +143,7 @@ function drawCertificate(ctx: CanvasRenderingContext2D, props: TrainingCertifica
   ctx.fillStyle = TEAL
   ctx.font = 'bold 22px system-ui, -apple-system, sans-serif'
   ctx.textAlign = 'left'
-  ctx.fillText('Buildozer', 60, 65)
+  ctx.fillText('AICCC Workforce', 60, 65)
 
   // === COMPANY NAME (top right) ===
   ctx.fillStyle = DARK

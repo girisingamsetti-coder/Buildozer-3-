@@ -3,6 +3,7 @@
 import { useAuthStore } from '@/stores/auth-store'
 import { useNavStore } from '@/stores/nav-store'
 import { SidebarNav } from './sidebar-nav'
+import { GlobalHeader } from './global-header'
 import { TopBar } from './top-bar'
 import { MobileBottomNav } from './mobile-bottom-nav'
 import { LoginScreen } from './login-screen'
@@ -101,35 +102,38 @@ export function AppShell() {
   const currentDevice = typeof mobileView === 'string' ? deviceDimensions[mobileView] : null;
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      {!isMobile && <SidebarNav />}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {isMobile ? (
-          <div className="flex-1 overflow-hidden bg-muted/50 flex items-center justify-center p-0 sm:p-4 lg:p-6">
-            <div
-              className="mobile-frame bg-background shadow-2xl ring-1 ring-black/10 sm:rounded-[2.5rem] overflow-hidden flex flex-col relative"
-              style={{
-                width: currentDevice ? currentDevice.width : '420px',
-                height: currentDevice ? currentDevice.height : '100%',
-                maxHeight: '100%',
-              }}
-            >
-              {/* Optional simulated notch removed as per request */}
-              {/* TopBar inside the mobile frame so it aligns with content */}
-              <TopBar />
-              <main className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950">
-                <div className="p-4 pb-20">{pageContent}</div>
-              </main>
-              <MobileBottomNav />
+    <div className="flex flex-col h-screen overflow-hidden bg-background">
+      <GlobalHeader />
+      <div className="flex-1 flex overflow-hidden">
+        {!isMobile && <SidebarNav />}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          {isMobile ? (
+            <div className="flex-1 overflow-hidden bg-muted/50 flex items-center justify-center p-0 sm:p-4 lg:p-6">
+              <div
+                className="mobile-frame bg-background shadow-2xl ring-1 ring-black/10 sm:rounded-[2.5rem] overflow-hidden flex flex-col relative"
+                style={{
+                  width: currentDevice ? currentDevice.width : '420px',
+                  height: currentDevice ? currentDevice.height : '100%',
+                  maxHeight: '100%',
+                }}
+              >
+                {/* Optional simulated notch removed as per request */}
+                {/* TopBar inside the mobile frame so it aligns with content */}
+                <TopBar />
+                <main className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950">
+                  <div className="p-4 pb-20">{pageContent}</div>
+                </main>
+                <MobileBottomNav />
+              </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <main className="flex-1 overflow-hidden">
-              <div className="px-3 sm:px-4 pt-3 pb-0 h-full flex flex-col">{pageContent}</div>
-            </main>
-          </>
-        )}
+          ) : (
+            <>
+              <main className="flex-1 overflow-hidden">
+                <div className="px-3 sm:px-4 pt-3 pb-0 h-full flex flex-col">{pageContent}</div>
+              </main>
+            </>
+          )}
+        </div>
       </div>
       {/* Global wizard dialogs — always mounted so any caller can open them */}
       <WorkerFormDialog />

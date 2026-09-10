@@ -94,14 +94,10 @@ export function LoginScreen() {
       {/* Right-aligned content */}
       <div className="relative z-10 ml-auto flex flex-col items-center justify-center gap-5 p-6 lg:p-12 lg:pr-16 w-full max-w-sm">
         {/* Logo on top */}
-        <Image
-          src="/buildozer-login-logo.png"
-          alt="Buildozer Logo"
-          width={360}
-          height={360}
-          className="rounded-2xl"
-          priority
-        />
+        <div className="flex flex-col items-center justify-center gap-2 mb-4 bg-white/80 p-4 rounded-2xl backdrop-blur-sm w-full">
+          <h1 className="text-3xl font-black text-slate-800 tracking-tight">AICCC</h1>
+          <h2 className="text-sm font-semibold text-teal-600 uppercase tracking-widest">Workforce Management</h2>
+        </div>
 
         {/* Login card */}
         <Card className="w-full bg-white/80 backdrop-blur-sm border-white/50">
