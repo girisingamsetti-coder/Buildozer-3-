@@ -174,15 +174,10 @@ export function SidebarNav() {
       )}>
         {/* Header */}
         <div className={cn(
-          'flex items-center border-b border-teal-100/60 dark:border-slate-800 shrink-0',
+          'flex items-center border-b border-teal-100/60 dark:border-slate-800 shrink-0 lg:hidden',
           collapsed ? 'h-14 justify-center px-2' : 'h-20 px-3'
         )}>
-          <div className={cn(
-            "font-black text-slate-800 dark:text-slate-200 tracking-tight flex items-center justify-center w-full",
-            collapsed ? 'text-xl' : 'text-2xl'
-          )}>
-            {collapsed ? 'E' : 'E&S'}
-          </div>
+
           {/* Mobile close */}
           <Button
             variant="ghost"
