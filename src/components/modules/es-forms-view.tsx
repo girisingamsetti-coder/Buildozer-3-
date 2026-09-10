@@ -637,7 +637,7 @@ export default function EsFormsView() {
 
       {/* Table */}
       <Card className="flex flex-col min-h-[600px] mb-6">
-        <CardContent className="p-0 flex-1 overflow-auto">
+        <CardContent className="p-0">
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>
