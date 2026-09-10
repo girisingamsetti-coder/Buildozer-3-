@@ -103,7 +103,6 @@ export function GlobalHeader() {
     { label: 'Grievances', icon: MessageSquareWarning, active: false },
     { label: 'Ground Observations', icon: Eye, active: false },
     { label: 'Reports', icon: FileText, active: false },
-    { label: 'AICCC Reports', icon: FileBarChart, active: false },
   ]
 
   return (
