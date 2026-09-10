@@ -123,10 +123,9 @@ export function GlobalHeader() {
 
         <div className="h-8 w-px bg-slate-600 shrink-0 mx-2" />
 
-        {/* Amaravati Logo Placeholder */}
-        <div className="flex flex-col items-center justify-center">
-          <div className="h-6 w-16 bg-gradient-to-t from-amber-200/20 to-amber-100/5 rounded-t-full border-b-2 border-amber-500" />
-          <span className="text-[8px] tracking-[0.2em] text-white/80 mt-0.5">AMARAVATI</span>
+        {/* Amaravati Logo */}
+        <div className="flex items-center justify-center">
+          <img src="/amaravati-logo.png" alt="Amaravati The People's Capital" className="h-10 w-auto object-contain" />
         </div>
       </div>
 
