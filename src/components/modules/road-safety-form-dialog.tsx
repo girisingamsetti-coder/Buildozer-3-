@@ -627,7 +627,7 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] sm:max-w-5xl h-[95vh] max-h-[95vh] flex flex-col p-0 gap-0">
+      <DialogContent className="w-[95vw] sm:max-w-5xl h-[85vh] max-h-[85vh] flex flex-col p-0 gap-0">
         <DialogHeader className="px-5 pt-5 pb-3 border-b shrink-0">
           <DialogTitle className="text-base font-bold flex items-center gap-2">
             <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-[#0d9488] text-white">
