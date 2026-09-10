@@ -55,13 +55,24 @@ const STATUS_OPTIONS: FormStatus[] = ['PMC', 'PGMC', 'CRDA', 'Approved', 'Reject
 
 // ==================== LOCAL STORAGE ====================
 
-const STORAGE_KEY = 'es-forms-data'
+const STORAGE_KEY = 'es-forms-data-v2'
 
 function seedData(): FormEntry[] {
   const forms: FormEntry[] = []
   const statuses: FormStatus[] = ['PMC', 'PGMC', 'CRDA', 'Approved', 'Rejected', 'Pending']
   const names = ['Ravi Kumar', 'Sita Devi', 'Arjun Rao', 'Priya Reddy', 'Suresh Babu', 'Meena Sharma']
-  const locations = ['Zone A Camp', 'Zone B Camp', 'Main Site', 'Sector 4', 'North Block', 'East Gate']
+  const locations = [
+    'Seed Access Road',
+    'Capital Building (CBD)',
+    'Government Complex',
+    'High Court Complex',
+    'Legislative Assembly',
+    'Secretariat Building',
+    'Amaravati Riverfront',
+    'CRDA Township Phase 1',
+    'PMGSY Roads Package',
+    'Town & Country Planning',
+  ]
   const counts: Record<FormType, number> = { EHS: 18, OHS: 14, EVM: 12, 'Road Safety': 10, Social: 16, 'Social Legacy': 8 }
   FORM_TYPES.forEach(type => {
     for (let i = 0; i < counts[type]; i++) {
