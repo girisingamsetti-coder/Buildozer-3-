@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { toast } from 'sonner'
 import {
-  Plus, Search, X, FileText, ChevronDown, Trash2, Calendar, CheckCircle2, XCircle, Clock, AlertTriangle,
+  Plus, Search, X, FileText, ChevronDown, Trash2, Calendar, CheckCircle2, XCircle, Clock, AlertTriangle, Pencil,
 } from 'lucide-react'
 import RoadSafetyFormDialog, {
   loadRoadSafetySubmissions, saveRoadSafetySubmissions, type RoadSafetySubmission,
@@ -311,12 +311,13 @@ function StatCard({ formType, entries }: { formType: FormType; entries: FormEntr
 // ==================== ADD FORM DIALOG ====================
 
 function AddFormDialog({
-  open, onOpenChange, defaultType, onSave,
+  open, onOpenChange, defaultType, onSave, editingEntry
 }: {
   open: boolean
   onOpenChange: (open: boolean) => void
   defaultType: FormType | null
   onSave: (entry: FormEntry) => void
+  editingEntry?: FormEntry | null
 }) {
   const [formType, setFormType] = useState<FormType>(defaultType || 'EHS')
   const [submittedBy, setSubmittedBy] = useState('')
@@ -325,14 +326,31 @@ function AddFormDialog({
   const [status, setStatus] = useState<FormStatus>('Pending')
   const [remarks, setRemarks] = useState('')
 
+  useEffect(() => {
+    if (editingEntry && open) {
+      setFormType(editingEntry.formType)
+      setSubmittedBy(editingEntry.submittedBy)
+      setLocation(editingEntry.location)
+      setDate(editingEntry.date)
+      setStatus(editingEntry.status)
+      setRemarks(editingEntry.remarks || '')
+    } else if (open && !editingEntry) {
+      setFormType(defaultType || 'EHS')
+      setSubmittedBy('')
+      setLocation('')
+      setDate(new Date().toISOString().split('T')[0])
+      setStatus('Pending')
+      setRemarks('')
+    }
+  }, [editingEntry, open, defaultType])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!submittedBy && !location) {
       toast.error('Failed to Create')
       return
     }
-    onSave({ id: `${formType}-${Date.now()}`, formType, submittedBy: submittedBy || '—', location: location || '—', date, status, remarks })
-    toast.success('Form submission recorded')
+    onSave({ id: editingEntry?.id || `${formType}-${Date.now()}`, formType, submittedBy: submittedBy || '—', location: location || '—', date, status, remarks })
     onOpenChange(false)
   }
 
@@ -340,8 +358,10 @@ function AddFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>New Form Submission</DialogTitle>
-          <DialogDescription>Record a new E&S form submission.</DialogDescription>
+          <DialogTitle>{editingEntry ? 'Edit Form Submission' : 'New Form Submission'}</DialogTitle>
+          <DialogDescription>
+            {editingEntry ? 'Update existing E&S form details.' : 'Record a new E&S form submission.'}
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-1">
           <div className="grid grid-cols-2 gap-3">
@@ -402,11 +422,21 @@ export default function EsFormsView() {
   const [evmOpen, setEvmOpen] = useState(false)
   const [evmSubmissions, setEvmSubmissions] = useState<EVMSubmission[]>(() => loadEVMSubmissions())
 
+  const [editingEntry, setEditingEntry] = useState<FormEntry | null>(null)
+
   const refreshRS = () => setRsSubmissions(loadRoadSafetySubmissions())
   const refreshEVM = () => setEvmSubmissions(loadEVMSubmissions())
 
   const handleSave = (entry: FormEntry) => {
-    const updated = [entry, ...forms]
+    const isEdit = forms.some(f => f.id === entry.id)
+    let updated;
+    if (isEdit) {
+      updated = forms.map(f => f.id === entry.id ? entry : f)
+      toast.success('Form updated successfully')
+    } else {
+      updated = [entry, ...forms]
+      toast.success('Form submission recorded')
+    }
     setForms(updated)
     saveForms(updated)
   }
@@ -673,10 +703,16 @@ export default function EsFormsView() {
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground max-w-[120px] truncate">{entry.remarks || '—'}</TableCell>
                   <TableCell>
-                    <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
-                      onClick={() => handleDelete(entry.id)}>
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </Button>
+                    <div className="flex items-center justify-end gap-1">
+                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-blue-500 hover:text-blue-600 hover:bg-blue-50"
+                        onClick={() => { setEditingEntry(entry); setAddType(entry.formType); setAddOpen(true); }}>
+                        <Pencil className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
+                        onClick={() => handleDelete(entry.id)}>
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -686,7 +722,17 @@ export default function EsFormsView() {
       </Card>
 
       {addOpen && (
-        <AddFormDialog key={String(addType)} open={addOpen} onOpenChange={setAddOpen} defaultType={addType} onSave={handleSave} />
+        <AddFormDialog 
+          key={editingEntry ? editingEntry.id : String(addType)} 
+          open={addOpen} 
+          onOpenChange={(open) => {
+            setAddOpen(open);
+            if (!open) setEditingEntry(null);
+          }} 
+          defaultType={addType} 
+          onSave={handleSave} 
+          editingEntry={editingEntry}
+        />
       )}
       {rsOpen && (
         <RoadSafetyFormDialog open={rsOpen} onOpenChange={setRsOpen} onSaved={refreshRS} />
