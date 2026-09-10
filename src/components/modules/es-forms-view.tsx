@@ -610,35 +610,30 @@ export default function EsFormsView() {
         </Card>
       )}
 
-      <Card className="shrink-0 py-0">
-        <CardContent className="px-3 py-2">
-          <div className="flex flex-col sm:flex-row gap-2">
-            <div className="relative flex-1 min-w-0">
+      {/* Forms Summary Table */}
+      <Card className="flex flex-col mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
+          <p className="text-sm font-bold text-[#0d9488] shrink-0">Forms Summary</p>
+          <div className="flex flex-col sm:flex-row gap-2 flex-1 justify-end">
+            <div className="relative w-full max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search by form type, person, location..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9" />
+              <Input placeholder="Search by form type, person, location..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
             </div>
             <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-full sm:w-40"><SelectValue placeholder="Form Type" /></SelectTrigger>
-              <SelectContent>{FORM_TYPES.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+              <SelectTrigger className="w-full sm:w-36 h-8 text-xs"><SelectValue placeholder="Form Type" /></SelectTrigger>
+              <SelectContent>{FORM_TYPES.map(t => <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>)}</SelectContent>
             </Select>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full sm:w-36"><SelectValue placeholder="Status" /></SelectTrigger>
-              <SelectContent>{STATUS_OPTIONS.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+              <SelectTrigger className="w-full sm:w-32 h-8 text-xs"><SelectValue placeholder="Status" /></SelectTrigger>
+              <SelectContent>{STATUS_OPTIONS.map(s => <SelectItem key={s} value={s} className="text-xs">{s}</SelectItem>)}</SelectContent>
             </Select>
             {hasFilter && (
-              <Button variant="outline" size="sm" className="bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100"
+              <Button variant="outline" size="sm" className="h-8 bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 text-xs px-2"
                 onClick={() => { setSearch(''); setTypeFilter(''); setStatusFilter('') }}>
                 Clear <X className="h-3.5 w-3.5 ml-1" />
               </Button>
             )}
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Forms Summary Table */}
-      <Card className="flex flex-col mb-6">
-        <div className="px-4 py-3 border-b bg-muted/20">
-          <p className="text-sm font-bold text-[#0d9488]">Forms Summary</p>
         </div>
         <CardContent className="p-0">
           <Table containerClassName="max-h-[650px] overflow-auto">
