@@ -592,9 +592,19 @@ function AddLocationDialog({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!contractorId) { toast.error('Please select a contractor'); return }
-    if (!siteId) { toast.error('Please select a project'); return }
-    if (!campName.trim()) { toast.error('Please enter or select a camp name'); return }
+    
+    // If no data provided at all
+    if (!contractorId && !siteId && !campName.trim() && !capacity && !address) {
+      toast.error('Failed to Create')
+      return
+    }
+
+    // If some required data is missing, we'll also just show "Failed to Create"
+    if (!contractorId || !siteId || !campName.trim()) {
+      toast.error('Failed to Create')
+      return
+    }
+
     mutation.mutate({
       name: campName.trim(),
       contractorId,
@@ -618,7 +628,7 @@ function AddLocationDialog({
           <form onSubmit={handleSubmit} className="space-y-4 py-1">
             {/* Contractor dropdown + add new */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold">Contractor *</Label>
+              <Label className="text-xs font-semibold">Contractor</Label>
               <div className="flex items-center gap-2">
                 <Select value={contractorId} onValueChange={setContractorId} disabled={isEdit}>
                   <SelectTrigger className="h-9 text-sm flex-1">
@@ -646,7 +656,7 @@ function AddLocationDialog({
 
             {/* Camp Name dropdown + add new */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold">Camp Name *</Label>
+              <Label className="text-xs font-semibold">Camp Name</Label>
               <div className="flex items-center gap-2">
                 <Select value={campName} onValueChange={setCampName}>
                   <SelectTrigger className="h-9 text-sm flex-1">
@@ -673,7 +683,7 @@ function AddLocationDialog({
 
             {/* Project Name dropdown + add new */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold">Project Name *</Label>
+              <Label className="text-xs font-semibold">Project Name</Label>
               <div className="flex items-center gap-2">
                 <Select value={siteId} onValueChange={setSiteId} disabled={isEdit}>
                   <SelectTrigger className="h-9 text-sm flex-1">

@@ -331,13 +331,15 @@ function AddTrainingDialog({ open, onOpenChange }: {
     },
   })
 
-  const onSubmit = (data: TrainingFormValues) => mutation.mutate(data)
-
-  const handleNext = () => {
-    if (selectedWorkerIds.size === 0) {
-      toast.error('Please select at least one worker')
+  const onSubmit = (data: TrainingFormValues) => {
+    if (selectedWorkerIds.size === 0 || !data.trainingType || !data.trainingTitle.trim() || !data.dateConducted) {
+      toast.error('Failed to Create')
       return
     }
+    mutation.mutate(data)
+  }
+
+  const handleNext = () => {
     setStep(2)
   }
 
@@ -416,7 +418,7 @@ function AddTrainingDialog({ open, onOpenChange }: {
             {step === 1 && (
               <div className="flex flex-col gap-4 flex-1 min-h-0 overflow-hidden">
                 <div className="shrink-0">
-                  <Label>Project / Site *</Label>
+                  <Label>Project / Site</Label>
                   <Select value={selectedSiteId} onValueChange={setSelectedSiteId}>
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Select a project to load workers" />
@@ -474,7 +476,7 @@ function AddTrainingDialog({ open, onOpenChange }: {
               <form id="training-form" onSubmit={handleSubmit(onSubmit)} className="space-y-5 flex-1">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label>Training Type *</Label>
+                    <Label>Training Type</Label>
                     <Controller
                       control={control}
                       name="trainingType"
@@ -495,18 +497,16 @@ function AddTrainingDialog({ open, onOpenChange }: {
                     />
                   </div>
                   <div>
-                    <Label>Training Title *</Label>
+                    <Label>Training Title</Label>
                     <Input
                       placeholder="e.g. Fire Safety Training"
-                      {...register('trainingTitle', { required: true })}
+                      {...register('trainingTitle')}
                       className="mt-1"
                     />
-                    {errors.trainingTitle && <p className="text-xs text-destructive mt-1">Required</p>}
                   </div>
                   <div>
-                    <Label>Date Conducted *</Label>
-                    <Input type="date" {...register('dateConducted', { required: true })} className="mt-1" />
-                    {errors.dateConducted && <p className="text-xs text-destructive mt-1">Required</p>}
+                    <Label>Date Conducted</Label>
+                    <Input type="date" {...register('dateConducted')} className="mt-1" />
                   </div>
                   <div>
                     <Label>Duration (hours)</Label>

@@ -105,6 +105,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Validate aadhaar 12-digit
+<<<<<<< HEAD
     if (aadhaarNumber && !AADHAAR_REGEX.test(aadhaarNumber)) {
       return errorResponse('Aadhaar must be exactly 12 digits', 400, 'aadhaarNumber')
     }

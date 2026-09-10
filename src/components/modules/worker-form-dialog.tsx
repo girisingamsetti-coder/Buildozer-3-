@@ -87,6 +87,7 @@ const workerFormSchema = z.object({
   contractorId: z.string().optional(),
   siteId: z.string().optional(),
   designationId: z.string().optional(),
+  labourCampId: z.string().optional(),
   zone: z.string().optional(),
   reportingSupervisor: z.string().optional(),
   uanNumber: z.string().optional(),
@@ -136,6 +137,7 @@ interface WorkerData {
   contractorId: string
   siteId: string | null
   designationId: string
+  labourCampId: string | null
   zone: string | null
   reportingSupervisor: string | null
   uanNumber: string | null
@@ -159,28 +161,28 @@ const STEPS: StepDef[] = [
     title: 'Personal Information',
     description: 'Basic identity and demographic details',
     icon: User,
-    fields: ['fullName', 'dateOfBirth', 'gender', 'bloodGroup', 'qualification'],
+    fields: [],
   },
   {
     id: 1,
     title: 'Contact Information',
     description: 'Aadhaar and address details',
     icon: Contact,
-    fields: ['aadhaarNumber', 'permanentAddress'],
+    fields: [],
   },
   {
     id: 2,
     title: 'Assignment',
     description: 'Contractor, site, and role assignment',
     icon: Briefcase,
-    fields: ['contractorId', 'designationId'],
+    fields: [],
   },
   {
     id: 3,
     title: 'Emergency Contacts',
-    description: 'At least one contact is required',
+    description: 'Optional emergency contacts',
     icon: Phone,
-    fields: ['emergencyContacts'],
+    fields: [],
   },
   {
     id: 4,
@@ -227,6 +229,11 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
     queryFn: () => fetch('/api/sites').then((r) => r.json()),
   })
 
+  const { data: labourCamps } = useQuery<{ id: string; name: string }[]>({
+    queryKey: ['labour-camps'],
+    queryFn: () => fetch('/api/labour-camps').then((r) => r.json()),
+  })
+
   // Fetch existing worker for edit
   const { data: existingWorker, isLoading: isLoadingWorker } = useQuery<{
     data: WorkerData
@@ -251,6 +258,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
       contractorId: '',
       siteId: '',
       designationId: '',
+      labourCampId: '',
       zone: '',
       reportingSupervisor: '',
       uanNumber: '',
@@ -291,6 +299,7 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
         contractorId: w.contractorId,
         siteId: w.siteId ?? '',
         designationId: w.designationId,
+        labourCampId: w.labourCampId ?? '',
         zone: w.zone ?? '',
         reportingSupervisor: w.reportingSupervisor ?? '',
         uanNumber: w.uanNumber ?? '',
@@ -856,6 +865,29 @@ function WorkerFormDialogInner({ editId, onClose }: InnerProps) {
                                   <SelectContent>
                                     {designations?.map((d) => (
                                       <SelectItem key={d.id} value={d.id}>{d.name}</SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="labourCampId"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Location (Labour Camp)</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className="w-full">
+                                      <SelectValue placeholder="Select location" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {labourCamps?.map((lc) => (
+                                      <SelectItem key={lc.id} value={lc.id}>{lc.name}</SelectItem>
                                     ))}
                                   </SelectContent>
                                 </Select>
