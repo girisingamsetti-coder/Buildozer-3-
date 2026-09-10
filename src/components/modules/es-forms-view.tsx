@@ -640,16 +640,16 @@ export default function EsFormsView() {
         <div className="px-4 py-3 border-b bg-muted/20">
           <p className="text-sm font-bold text-[#0d9488]">Forms Summary</p>
         </div>
-        <CardContent className="p-0 overflow-y-auto max-h-[650px]">
-          <Table>
-            <TableHeader className="sticky top-0 bg-background z-10">
+        <CardContent className="p-0">
+          <Table containerClassName="max-h-[650px] overflow-auto">
+            <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
               <TableRow>
-                <TableHead className="text-xs">Form Type</TableHead>
-                <TableHead className="text-xs">Submitted By</TableHead>
-                <TableHead className="text-xs">Location</TableHead>
-                <TableHead className="text-xs">Date</TableHead>
-                <TableHead className="text-xs">Status</TableHead>
-                <TableHead className="text-xs">Remarks</TableHead>
+                <TableHead className="text-xs font-bold text-foreground">Form Type</TableHead>
+                <TableHead className="text-xs font-bold text-foreground">Submitted By</TableHead>
+                <TableHead className="text-xs font-bold text-foreground">Location</TableHead>
+                <TableHead className="text-xs font-bold text-foreground">Date</TableHead>
+                <TableHead className="text-xs font-bold text-foreground">Status</TableHead>
+                <TableHead className="text-xs font-bold text-foreground">Remarks</TableHead>
                 <TableHead className="text-xs w-14"></TableHead>
               </TableRow>
             </TableHeader>
