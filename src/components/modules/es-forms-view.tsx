@@ -431,7 +431,7 @@ export default function EsFormsView() {
   const hasFilter = !!(search || typeFilter || statusFilter)
 
   return (
-    <div className="flex flex-col gap-4 h-full overflow-hidden">
+    <div className="flex flex-col gap-4 h-full overflow-y-auto pb-6 pr-2">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
         <div className="hidden sm:block">
@@ -485,7 +485,7 @@ export default function EsFormsView() {
                 <Plus className="h-3 w-3" /> New Submission
               </Button>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto min-h-[400px]">
               <table className="text-xs w-full">
                 <thead>
                   <tr className="bg-muted/40 border-b">
@@ -553,7 +553,7 @@ export default function EsFormsView() {
                 <Plus className="h-3 w-3" /> New EVM Report
               </Button>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto min-h-[400px]">
               <table className="text-xs w-full">
                 <thead>
                   <tr className="bg-muted/40 border-b">
@@ -609,6 +609,7 @@ export default function EsFormsView() {
           </CardContent>
         </Card>
       )}
+
       <Card className="shrink-0 py-0">
         <CardContent className="px-3 py-2">
           <div className="flex flex-col sm:flex-row gap-2">
@@ -635,7 +636,7 @@ export default function EsFormsView() {
       </Card>
 
       {/* Table */}
-      <Card className="flex-1 overflow-hidden flex flex-col">
+      <Card className="flex flex-col min-h-[600px] mb-6">
         <CardContent className="p-0 flex-1 overflow-auto">
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
