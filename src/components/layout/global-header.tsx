@@ -16,11 +16,8 @@ import {
   FileBarChart,
   ChevronDown,
   LogOut,
-  Calendar,
-  Moon,
-  Sun
+  Calendar
 } from 'lucide-react'
-import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -63,15 +60,6 @@ export function GlobalHeader() {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [notifOpen, setNotifOpen] = useState(false)
   const [clearing, setClearing] = useState(false)
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
-  const isDark = mounted && theme === 'dark'
 
   const demoUsers = [
     { name: 'Demo Admin', role: 'ADMIN' as const },
@@ -110,7 +98,7 @@ export function GlobalHeader() {
     { label: 'Works', icon: LayoutGrid, active: false },
     { label: 'Bills', icon: FileText, active: false },
     { label: 'Physical Progress', icon: TrendingUp, active: false },
-    { label: 'Workforce', icon: Users, active: true },
+    { label: 'E&S', icon: Users, active: true },
     { label: 'Lands', icon: MapPin, active: false },
     { label: 'Grievances', icon: MessageSquareWarning, active: false },
     { label: 'Ground Observations', icon: Eye, active: false },
@@ -124,11 +112,11 @@ export function GlobalHeader() {
       <div className="flex items-center h-full px-4 gap-4">
         {/* AP Logo Placeholder */}
         <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center p-0.5 overflow-hidden border-2 border-emerald-600 shadow-sm shrink-0">
-           <div className="w-full h-full rounded-full border-2 border-emerald-500 border-dashed animate-[spin_10s_linear_infinite]" />
+          <div className="w-full h-full rounded-full border-2 border-emerald-500 border-dashed animate-[spin_10s_linear_infinite]" />
         </div>
-        
+
         <div className="h-8 w-px bg-slate-600 shrink-0" />
-        
+
         <div className="flex flex-col justify-center">
           <span className="text-sm font-bold tracking-wider leading-none text-white">AICCC</span>
           <span className="text-[10px] text-slate-300 font-medium leading-none mt-1">Amaravati Integrated Command Control Center</span>
@@ -150,8 +138,8 @@ export function GlobalHeader() {
             key={idx}
             className={cn(
               "flex items-center gap-1.5 px-3 py-1.5 h-10 rounded-md whitespace-nowrap transition-colors",
-              item.active 
-                ? "bg-slate-700/80 text-white font-semibold relative after:absolute after:bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:bg-white after:rounded-full" 
+              item.active
+                ? "bg-slate-700/80 text-white font-semibold relative after:absolute after:bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:bg-white after:rounded-full"
                 : "text-slate-300 hover:bg-slate-700/50 hover:text-white text-sm"
             )}
           >
@@ -163,11 +151,6 @@ export function GlobalHeader() {
 
       {/* Right Section: Notifications & Profile */}
       <div className="flex items-center gap-2 px-4 shrink-0 h-full border-l border-slate-600 pl-4 ml-2">
-        {/* Theme Toggle */}
-        <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 rounded-full text-slate-300 hover:text-white hover:bg-slate-700">
-          {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-        </Button>
-
         {/* Notifications */}
         <Popover open={notifOpen} onOpenChange={setNotifOpen}>
           <PopoverTrigger asChild>
@@ -246,8 +229,8 @@ export function GlobalHeader() {
               <DropdownMenuPortal>
                 <DropdownMenuSubContent className="z-[110]">
                   {demoUsers.map((u) => (
-                    <DropdownMenuItem 
-                      key={u.role} 
+                    <DropdownMenuItem
+                      key={u.role}
                       onClick={() => login(u.name, u.role)}
                       className="cursor-pointer flex flex-col items-start gap-0.5 py-2"
                     >

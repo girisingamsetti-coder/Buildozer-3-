@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AICCC Workforce",
+  title: "AICCC E&S",
   description: "Register, track, and manage workforce, safety, compliance and assets for infrastructure project sites.",
 };
 

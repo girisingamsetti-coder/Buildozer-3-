@@ -181,7 +181,7 @@ export function SidebarNav() {
             "font-black text-slate-800 dark:text-slate-200 tracking-tight flex items-center justify-center w-full",
             collapsed ? 'text-xl' : 'text-2xl'
           )}>
-            {collapsed ? 'W' : 'Workforce'}
+            {collapsed ? 'E' : 'E&S'}
           </div>
           {/* Mobile close */}
           <Button

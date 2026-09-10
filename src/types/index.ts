@@ -1,5 +1,5 @@
 /**
- * Shared type definitions and enums for the AICCC Workforce application.
+ * Shared type definitions and enums for the AICCC E&S application.
  *
  * Centralises domain types that are used across both client components
  * and API routes so we have a single source of truth.

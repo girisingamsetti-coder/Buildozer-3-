@@ -96,7 +96,7 @@ export function LoginScreen() {
         {/* Logo on top */}
         <div className="flex flex-col items-center justify-center gap-2 mb-4 bg-white/80 p-4 rounded-2xl backdrop-blur-sm w-full">
           <h1 className="text-3xl font-black text-slate-800 tracking-tight">AICCC</h1>
-          <h2 className="text-sm font-semibold text-teal-600 uppercase tracking-widest">Workforce Management</h2>
+          <h2 className="text-sm font-semibold text-teal-600 uppercase tracking-widest">E&S Management</h2>
         </div>
 
         {/* Login card */}
