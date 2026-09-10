@@ -97,6 +97,143 @@ function saveForms(forms: FormEntry[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(forms))
 }
 
+// ==================== PROJECT SUMMARY TABLE ====================
+
+const SUB_COLS = ['Created', 'Not Ready', 'PMC', 'PGMC', 'CRDA', 'Approved', 'In Progress', 'Rejected'] as const
+type SubCol = typeof SUB_COLS[number]
+
+const STATUS_TO_SUBCOL: Record<FormStatus, SubCol | null> = {
+  PMC: 'PMC',
+  PGMC: 'PGMC',
+  CRDA: 'CRDA',
+  Approved: 'Approved',
+  Rejected: 'Rejected',
+  Pending: 'Not Ready',
+}
+
+function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
+  const projects = Array.from(new Set(forms.map(f => f.location))).sort()
+
+  const getCellValue = (project: string, type: FormType, sub: SubCol): number => {
+    const projectForms = forms.filter(f => f.location === project && f.formType === type)
+    if (sub === 'Created') return projectForms.length
+    const mapped = STATUS_TO_SUBCOL
+    return projectForms.filter(f => mapped[f.status] === sub).length
+  }
+
+  const HEADER_BG = 'bg-[#3b5998]'
+  const HEADER_TEXT = 'text-white text-[10px] font-semibold'
+
+  return (
+    <Card className="shrink-0">
+      <CardContent className="p-0">
+        <div className="overflow-x-auto">
+          <table className="text-xs border-collapse w-max min-w-full">
+            <thead>
+              {/* Row 1: Project + Form Type groups */}
+              <tr>
+                <th
+                  rowSpan={2}
+                  className={`${HEADER_BG} ${HEADER_TEXT} sticky left-0 z-20 px-3 py-2 text-left border border-blue-400/40 min-w-[140px] align-middle`}
+                >
+                  Project
+                </th>
+                {FORM_TYPES.map(type => (
+                  <th
+                    key={type}
+                    colSpan={SUB_COLS.length}
+                    className={`${HEADER_BG} ${HEADER_TEXT} px-2 py-2 text-center border border-blue-400/40 whitespace-nowrap`}
+                  >
+                    {type}
+                  </th>
+                ))}
+              </tr>
+              {/* Row 2: Sub-columns */}
+              <tr>
+                {FORM_TYPES.map(type =>
+                  SUB_COLS.map(sub => (
+                    <th
+                      key={`${type}-${sub}`}
+                      className={`${HEADER_BG} ${HEADER_TEXT} px-2 py-1.5 text-center border border-blue-400/40 whitespace-nowrap`}
+                    >
+                      {sub}
+                    </th>
+                  ))
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {projects.length === 0 ? (
+                <tr>
+                  <td colSpan={1 + FORM_TYPES.length * SUB_COLS.length} className="text-center py-6 text-muted-foreground">
+                    No data available
+                  </td>
+                </tr>
+              ) : projects.map((project, pi) => (
+                <tr key={project} className={pi % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
+                  <td className="sticky left-0 z-10 px-3 py-2 font-medium text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-inherit min-w-[140px] whitespace-nowrap">
+                    {project}
+                  </td>
+                  {FORM_TYPES.map(type =>
+                    SUB_COLS.map(sub => {
+                      const val = getCellValue(project, type, sub)
+                      return (
+                        <td
+                          key={`${type}-${sub}`}
+                          className="px-3 py-2 text-center border border-slate-200 dark:border-slate-700 tabular-nums"
+                        >
+                          {val > 0 ? (
+                            <span className={`font-semibold ${
+                              sub === 'Approved' ? 'text-emerald-600' :
+                              sub === 'Rejected' ? 'text-red-500' :
+                              sub === 'Not Ready' ? 'text-orange-500' :
+                              sub === 'Created' ? 'text-[#0d9488]' :
+                              'text-slate-700 dark:text-slate-300'
+                            }`}>{val}</span>
+                          ) : (
+                            <span className="text-muted-foreground">—</span>
+                          )}
+                        </td>
+                      )
+                    })
+                  )}
+                </tr>
+              ))}
+              {/* Totals row */}
+              <tr className="bg-blue-50 dark:bg-blue-950/30 font-semibold">
+                <td className="sticky left-0 z-10 px-3 py-2 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-blue-50 dark:bg-blue-950/30 whitespace-nowrap">
+                  Total
+                </td>
+                {FORM_TYPES.map(type =>
+                  SUB_COLS.map(sub => {
+                    const total = projects.reduce((acc, p) => acc + getCellValue(p, type, sub), 0)
+                    return (
+                      <td
+                        key={`total-${type}-${sub}`}
+                        className="px-3 py-2 text-center border border-slate-200 dark:border-slate-700 tabular-nums"
+                      >
+                        {total > 0 ? (
+                          <span className={`font-bold ${
+                            sub === 'Approved' ? 'text-emerald-600' :
+                            sub === 'Rejected' ? 'text-red-500' :
+                            sub === 'Not Ready' ? 'text-orange-500' :
+                            sub === 'Created' ? 'text-[#0d9488]' :
+                            'text-slate-700 dark:text-slate-300'
+                          }`}>{total}</span>
+                        ) : '—'}
+                      </td>
+                    )
+                  })
+                )}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 // ==================== STAT CARD ====================
 
 function StatCard({ formType, entries }: { formType: FormType; entries: FormEntry[] }) {
@@ -304,6 +441,9 @@ export default function EsFormsView() {
           <StatCard key={type} formType={type} entries={forms.filter(f => f.formType === type)} />
         ))}
       </div>
+
+      {/* Project Summary Table */}
+      <ProjectSummaryTable forms={forms} />
 
       {/* Filter Bar */}
       <Card className="shrink-0 py-0">
