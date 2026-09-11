@@ -109,7 +109,7 @@ export default function IncidentFormDialog() {
       }}
     >
       <DialogContent
-        className="w-[96vw] max-w-2xl max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
+        className="w-[96vw] sm:!max-w-[1100px] max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
       >

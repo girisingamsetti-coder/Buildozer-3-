@@ -94,6 +94,35 @@ function TableWrapper({ headers, children, onAdd, addLabel = 'Add Row' }: { head
   )
 }
 
+// ==================== STEP PROGRESS ====================
+
+function StepProgress({ current, steps }: { current: number, steps: string[] }) {
+  return (
+    <div className="flex items-center gap-0 mb-2 mt-2">
+      {steps.map((s, i) => (
+        <div key={s} className="flex items-center flex-1">
+          <div className="flex flex-col items-center gap-1 flex-1">
+            <div className={cn(
+              'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all',
+              i < current  ? 'bg-[#0d9488] border-[#0d9488] text-white' :
+              i === current ? 'border-[#0d9488] text-[#0d9488] bg-white dark:bg-slate-900' :
+                             'border-slate-300 text-slate-400 bg-white dark:bg-slate-900',
+            )}>
+              {i < current ? <CheckCircle2 className="h-4 w-4" /> : i + 1}
+            </div>
+            <span className={cn('text-[9px] text-center leading-tight hidden sm:block', i === current ? 'text-[#0d9488] font-semibold' : 'text-muted-foreground')}>
+              {s}
+            </span>
+          </div>
+          {i < steps.length - 1 && (
+            <div className={cn('h-0.5 flex-1 mx-1 mb-4', i < current ? 'bg-[#0d9488]' : 'bg-slate-200')} />
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function GenderFormDialog({ open, onOpenChange, onSaved }: { open: boolean; onOpenChange: (open: boolean) => void; onSaved: () => void }) {
   const [step, setStep] = useState(0)
   const [selectedProjectId, setSelectedProjectId] = useState<string>('')
@@ -117,30 +146,24 @@ export default function GenderFormDialog({ open, onOpenChange, onSaved }: { open
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[96vw] xl:w-[1000px] max-w-[1100px] h-[85vh] max-h-[85vh] flex flex-col p-0 overflow-hidden bg-slate-50">
-        <div className="shrink-0 flex items-center justify-between px-6 py-4 bg-white border-b">
-          <div>
-            <DialogTitle className="text-xl font-bold text-slate-800">Gender & GBV Compliance</DialogTitle>
-            <p className="text-sm text-slate-500 mt-1">Monthly report on GBV instances, awareness training, and corrective actions.</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button variant="secondary" className="gap-2 bg-emerald-50 text-emerald-600 border border-emerald-200" onClick={() => handleSave(true)}><Save className="h-4 w-4" /> Save Draft</Button>
+      <DialogContent className="w-[92vw] sm:!max-w-[1100px] h-[90vh] max-h-[750px] rounded-2xl flex flex-col p-0 gap-0 overflow-hidden bg-white dark:bg-slate-950">
+        <DialogHeader className="px-6 py-4 border-b shrink-0 flex flex-row items-center justify-between">
+          <DialogTitle className="text-base font-bold flex items-center gap-2">
+            <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-[#0d9488] text-white">
+              <ClipboardList className="h-3.5 w-3.5" />
+            </span>
+            Gender & GBV Compliance
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="px-6 sm:px-8 py-4 border-b shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="max-w-3xl mx-auto">
+            <StepProgress current={step} steps={STEPS} />
           </div>
         </div>
 
         <div className="flex flex-1 overflow-hidden">
-          <div className="w-56 lg:w-64 shrink-0 bg-slate-100/50 border-r flex flex-col p-3 lg:p-4 gap-1.5 lg:gap-2 overflow-y-auto">
-            {STEPS.map((t, i) => (
-              <button key={i} onClick={() => setStep(i)} className={cn("flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors text-left", step === i ? "bg-[#0d9488] text-white" : "text-slate-600 hover:bg-slate-200/50")}>
-                <div className={cn("w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0", step === i ? "bg-white/20" : (step > i ? "bg-emerald-100 text-emerald-600" : "bg-slate-200 text-slate-500"))}>
-                  {step > i ? <CheckCircle2 className="h-4 w-4" /> : (i + 1)}
-                </div>{t}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex-1 min-w-0 overflow-y-auto bg-white p-4 sm:p-6 lg:p-8">
+          <div className="flex-1 min-w-0 overflow-y-auto bg-white p-4 sm:p-6 lg:p-8 px-7 sm:px-8 py-6">
             <div className="max-w-4xl mx-auto space-y-8">
               
               {step === 0 && (
@@ -246,12 +269,36 @@ export default function GenderFormDialog({ open, onOpenChange, onSaved }: { open
           </div>
         </div>
 
-        <div className="shrink-0 px-6 py-4 bg-slate-50 border-t flex items-center justify-between">
-          <Button variant="outline" onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0} className="gap-2"><ChevronLeft className="h-4 w-4" /> Previous</Button>
-          <div className="flex gap-1.5">{STEPS.map((_, i) => <div key={i} className={cn("h-1.5 rounded-full transition-all duration-300", step === i ? "w-8 bg-[#0d9488]" : "w-2 bg-slate-200")} />)}</div>
-          <Button onClick={step === STEPS.length - 1 ? () => handleSave(false) : () => setStep(s => Math.min(STEPS.length - 1, s + 1))} className={cn("gap-2 text-white", step === STEPS.length - 1 ? "bg-[#0d9488] hover:bg-[#0f766e]" : "bg-slate-800 hover:bg-slate-700")}>
-            {step === STEPS.length - 1 ? 'Submit' : 'Next Step'} <ChevronRight className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center justify-between px-6 py-4 border-t shrink-0 bg-white dark:bg-slate-950 rounded-b-2xl">
+          <div className="flex items-center gap-2">
+            <Button type="button" variant="ghost" size="sm" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            {step > 0 && (
+              <Button type="button" variant="outline" size="sm" onClick={() => setStep(s => Math.max(0, s - 1))} className="gap-1.5">
+                <ChevronLeft className="h-3.5 w-3.5" /> Back
+              </Button>
+            )}
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-xs text-muted-foreground font-medium">Step {step + 1} of {STEPS.length}</span>
+            <div className="flex gap-2">
+              {step === STEPS.length - 1 ? (
+                <>
+                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => handleSave(true)}>
+                    <Save className="h-3.5 w-3.5" /> Save Draft
+                  </Button>
+                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={() => handleSave(false)}>
+                    <Send className="h-3.5 w-3.5" /> Submit
+                  </Button>
+                </>
+              ) : (
+                <Button type="button" size="sm" onClick={() => setStep(s => Math.min(STEPS.length - 1, s + 1))} className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5">
+                  Next <ChevronRight className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
 
       </DialogContent>

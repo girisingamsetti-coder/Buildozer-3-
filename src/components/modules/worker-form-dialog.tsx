@@ -1228,7 +1228,7 @@ export default function WorkerFormDialog() {
       }}
     >
       <DialogContent
-        className="w-[96vw] max-w-3xl max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
+        className="w-[96vw] sm:!max-w-[1100px] max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
         showCloseButton
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}

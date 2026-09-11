@@ -23,6 +23,9 @@ import LabourLawFormDialog, {
 import GenderFormDialog, {
   loadGenderSubmissions, saveGenderSubmissions, type GenderSubmission,
 } from './gender-form-dialog'
+import OHSFormDialog, {
+  loadOHSSubmissions, saveOHSSubmissions, type OHSSubmission,
+} from './ohs-form-dialog'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -46,7 +49,7 @@ import { cn } from '@/lib/utils'
 
 // ==================== TYPES ====================
 
-type FormType = 'EHS' | 'OHS' | 'EVM' | 'Road Safety' | 'Social' | 'Social Legacy'
+type FormType = 'OHS' | 'EVM' | 'Road Safety' | 'Social' | 'Social Legacy'
 type FormStatus = 'PMC' | 'PGMC' | 'CRDA' | 'Approved' | 'Rejected' | 'Pending'
 
 interface FormEntry {
@@ -59,7 +62,7 @@ interface FormEntry {
   remarks?: string
 }
 
-const FORM_TYPES: FormType[] = ['EHS', 'OHS', 'EVM', 'Road Safety', 'Social', 'Social Legacy']
+const FORM_TYPES: FormType[] = ['OHS', 'EVM', 'Road Safety', 'Social', 'Social Legacy']
 
 const STATUS_COLORS: Record<FormStatus, string> = {
   PMC: '#3b82f6',
@@ -92,7 +95,7 @@ function seedData(): FormEntry[] {
     'PMGSY Roads Package',
     'Town & Country Planning',
   ]
-  const counts: Record<FormType, number> = { EHS: 18, OHS: 14, EVM: 12, 'Road Safety': 10, Social: 16, 'Social Legacy': 8 }
+  const counts: Record<FormType, number> = { OHS: 14, EVM: 12, 'Road Safety': 10, Social: 16, 'Social Legacy': 8 }
   FORM_TYPES.forEach(type => {
     for (let i = 0; i < counts[type]; i++) {
       const d = new Date(2025, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1)
@@ -332,7 +335,7 @@ function AddFormDialog({
   onSave: (entry: FormEntry) => void
   editingEntry?: FormEntry | null
 }) {
-  const [formType, setFormType] = useState<FormType>(defaultType || 'EHS')
+  const [formType, setFormType] = useState<FormType>(defaultType || 'OHS')
   const [submittedBy, setSubmittedBy] = useState('')
   const [location, setLocation] = useState('')
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
@@ -348,7 +351,7 @@ function AddFormDialog({
       setStatus(editingEntry.status)
       setRemarks(editingEntry.remarks || '')
     } else if (open && !editingEntry) {
-      setFormType(defaultType || 'EHS')
+      setFormType(defaultType || 'OHS')
       setSubmittedBy('')
       setLocation('')
       setDate(new Date().toISOString().split('T')[0])
@@ -430,6 +433,9 @@ export default function EsFormsView() {
   const [statusFilter, setStatusFilter] = useState<string>('')
   const [addOpen, setAddOpen] = useState(false)
   const [addType, setAddType] = useState<FormType | null>(null)
+  const [ohsOpen, setOhsOpen] = useState(false)
+  const [ohsSubmissions, setOhsSubmissions] = useState<OHSSubmission[]>(() => loadOHSSubmissions())
+  const refreshOHS = () => setOhsSubmissions(loadOHSSubmissions())
   const [rsOpen, setRsOpen] = useState(false)
   const [rsSubmissions, setRsSubmissions] = useState<RoadSafetySubmission[]>(() => loadRoadSafetySubmissions())
   const [evmOpen, setEvmOpen] = useState(false)
@@ -526,6 +532,7 @@ export default function EsFormsView() {
                   onClick={() => {
                     if (type === 'Road Safety') { setRsOpen(true) }
                     else if (type === 'EVM') { setEvmOpen(true) }
+                    else if (type === 'OHS') { setOhsOpen(true) }
                     else { setAddType(type); setAddOpen(true) }
                   }}
                   className="cursor-pointer gap-2"
@@ -540,7 +547,7 @@ export default function EsFormsView() {
       </div>
 
       {/* Stat Cards — responsive grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-3 shrink-0">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 shrink-0">
         {FORM_TYPES.map(type => (
           <StatCard key={type} formType={type} entries={forms.filter(f => f.formType === type)} />
         ))}
@@ -602,6 +609,81 @@ export default function EsFormsView() {
                               const updated = rsSubmissions.filter(r => r.id !== rs.id)
                               setRsSubmissions(updated)
                               saveRoadSafetySubmissions(updated)
+                              toast.success('Deleted')
+                            }}>
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* OHS Submissions Dashboard */}
+      {ohsSubmissions.length > 0 && (
+        <Card className="shrink-0">
+          <CardContent className="p-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <p className="text-sm font-bold text-[#0d9488]" >OHS Submissions</p>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setOhsOpen(true)}>
+                <Plus className="h-3 w-3" /> New Submission
+              </Button>
+            </div>
+            <div className="overflow-x-auto min-h-[400px]">
+              <table className="text-xs w-full">
+                <thead>
+                  <tr className="bg-muted/40 border-b">
+                    <th className="text-left px-4 py-2 font-semibold">Project</th>
+                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                    <th className="text-center px-3 py-2 font-semibold text-emerald-600">Compliant</th>
+                    <th className="text-center px-3 py-2 font-semibold text-red-500">Non-Compliant</th>
+                    <th className="text-center px-3 py-2 font-semibold text-amber-500">Pending</th>
+                    <th className="text-left px-4 py-2 font-semibold">Status</th>
+                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                    <th className="px-3 py-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ohsSubmissions.map(ohs => {
+                    const checks = [
+                      ohs.induction.status, ohs.wmsHira.status, ohs.ohsCommittee.status,
+                      ohs.safetyAudit.status, ohs.hira.status, ohs.ohsPolicy.status
+                    ]
+                    const yes = checks.filter(c => c === 'yes').length
+                    const no  = checks.filter(c => c === 'no').length
+                    const pending = checks.filter(c => c === null).length
+                    const statusConfig = {
+                      'Draft':                   { color: 'bg-slate-100 text-slate-600',   icon: Clock },
+                      'Submitted':               { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                      'Needs Corrective Action': { color: 'bg-red-100 text-red-600',       icon: AlertTriangle },
+                    }[ohs.status]
+                    const Icon = statusConfig?.icon || Clock
+                    return (
+                      <tr key={ohs.id} className="border-b hover:bg-muted/20">
+                        <td className="px-4 py-2 font-medium">{ohs.projectName}</td>
+                        <td className="px-4 py-2 text-muted-foreground">{ohs.reportingMonth}</td>
+                        <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
+                        <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
+                        <td className="px-3 py-2 text-center font-bold text-amber-500">{pending}</td>
+                        <td className="px-4 py-2">
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
+                            <Icon className="h-2.5 w-2.5" />{ohs.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2 text-muted-foreground">
+                          {ohs.submittedAt ? new Date(ohs.submittedAt).toLocaleDateString('en-IN') : '—'}
+                        </td>
+                        <td className="px-3 py-2">
+                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                            onClick={() => {
+                              const updated = ohsSubmissions.filter(r => r.id !== ohs.id)
+                              setOhsSubmissions(updated)
+                              saveOHSSubmissions(updated)
                               toast.success('Deleted')
                             }}>
                             <Trash2 className="h-3 w-3" />
@@ -958,6 +1040,9 @@ export default function EsFormsView() {
           onSave={handleSave} 
           editingEntry={editingEntry}
         />
+      )}
+      {ohsOpen && (
+        <OHSFormDialog open={ohsOpen} onOpenChange={setOhsOpen} onSaved={refreshOHS} />
       )}
       {rsOpen && (
         <RoadSafetyFormDialog open={rsOpen} onOpenChange={setRsOpen} onSaved={refreshRS} />

@@ -605,18 +605,22 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[96vw] max-w-5xl h-[85vh] max-h-[85vh] flex flex-col p-0 gap-0">
-        <DialogHeader className="px-5 pt-5 pb-3 border-b shrink-0">
+      <DialogContent className="w-[92vw] sm:!max-w-[1100px] h-[90vh] max-h-[750px] rounded-2xl flex flex-col p-0 gap-0 overflow-hidden bg-white dark:bg-slate-950">
+        <DialogHeader className="px-6 py-4 border-b shrink-0 flex flex-row items-center justify-between">
           <DialogTitle className="text-base font-bold flex items-center gap-2">
             <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-[#0d9488] text-white">
               <ClipboardList className="h-3.5 w-3.5" />
             </span>
             Road Safety Form
           </DialogTitle>
-          <StepProgress current={step} />
         </DialogHeader>
+        <div className="px-6 sm:px-8 py-4 border-b shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="max-w-md mx-auto">
+            <StepProgress current={step} />
+          </div>
+        </div>
 
-        <div className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-5 py-4">
+        <div className="flex-1 min-w-0 overflow-y-auto px-7 sm:px-8 py-6">
           {step === 0 && (
             <div className="space-y-6">
               {/* Project, Month & Year */}
@@ -638,20 +642,29 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
         </div>
 
         {/* Footer nav */}
-        <div className="flex items-center justify-between px-5 py-3 border-t shrink-0 bg-muted/20">
-          <Button type="button" variant="outline" size="sm" onClick={prev} disabled={step === 0} className="gap-1.5">
-            <ChevronLeft className="h-3.5 w-3.5" /> Previous
-          </Button>
-          <span className="text-xs text-muted-foreground">Step {step + 1} of {STEPS.length}</span>
-          {step < 1 ? (
-            <Button type="button" size="sm" onClick={next} className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5">
-              Next <ChevronRight className="h-3.5 w-3.5" />
+        <div className="flex items-center justify-between px-6 py-4 border-t shrink-0 bg-white dark:bg-slate-950 rounded-b-2xl">
+          <div className="flex items-center gap-2">
+            <Button type="button" variant="ghost" size="sm" onClick={() => onOpenChange(false)}>
+              Cancel
             </Button>
-          ) : (
-            <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft}>
-              <Save className="h-3.5 w-3.5" /> Save Draft
-            </Button>
-          )}
+            {step > 0 && (
+              <Button type="button" variant="outline" size="sm" onClick={prev} className="gap-1.5">
+                <ChevronLeft className="h-3.5 w-3.5" /> Back
+              </Button>
+            )}
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-xs text-muted-foreground font-medium">Step {step + 1} of {STEPS.length}</span>
+            {step < STEPS.length - 1 ? (
+              <Button type="button" size="sm" onClick={next} className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5">
+                Next <ChevronRight className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft}>
+                <Save className="h-3.5 w-3.5" /> Save Draft
+              </Button>
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
