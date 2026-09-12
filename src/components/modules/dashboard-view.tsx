@@ -714,17 +714,20 @@ export default function DashboardView() {
     { name: 'DVR', value: 2 },
   ]
 
-  const workforcePerCampData = (dash.workforcePerCamp ?? []).slice(0, 8).map(c => ({
-    name: c.name,
+  const workforcePerCampData = (dash.workforcePerCamp ?? []).slice(0, 27).map(c => ({
+    name: c.name.replace(/\s+Camp\s*-\s*/i, ' - '),
     value: c.workers,
-    subtitle: c.contractor,
+    subtitle: `${c.contractor}${c.site ? ` (${c.site})` : ''}`,
   }))
-  // For demo: if fewer than 27 camps, generate placeholder camps
+  // Fallback: if fewer than 27 camps exist, fill with fixed deterministic static values (never random)
+  const STATIC_DEMO_WORKFORCE = [
+    24, 22, 20, 19, 18, 17, 16, 15, 15, 14, 13, 12, 12, 11, 10, 10, 9, 8, 7,
+  ]
   while (workforcePerCampData.length < 27) {
     const i = workforcePerCampData.length + 1
     workforcePerCampData.push({
       name: `Camp ${i}`,
-      value: Math.floor(Math.random() * 60) + 10,
+      value: STATIC_DEMO_WORKFORCE[(i - 1) % STATIC_DEMO_WORKFORCE.length],
       subtitle: 'Demo Camp',
     })
   }

@@ -108,24 +108,32 @@ export function GlobalHeader() {
   return (
     <header className="flex items-center justify-between h-14 shrink-0 bg-[#2b3544] text-white select-none w-full shadow-md z-[60]">
       {/* Left Section: Logos & Title */}
-      <div className="flex items-center h-full px-4 gap-4 shrink-0">
-        {/* AP Logo Placeholder */}
-        <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center p-0.5 overflow-hidden border-2 border-emerald-600 shadow-sm shrink-0">
-          <div className="w-full h-full rounded-full border-2 border-emerald-500 border-dashed animate-[spin_10s_linear_infinite]" />
+      <div className="flex items-center h-full px-2 sm:px-4 gap-2 sm:gap-3 shrink-0">
+        {/* AP Govt Logo */}
+        <div className="flex items-center justify-center shrink-0">
+          <img
+            src="/ap-govt-logo.png"
+            alt="Government of Andhra Pradesh"
+            className="h-9 sm:h-10 w-auto object-contain drop-shadow-sm"
+          />
         </div>
 
-        <div className="h-8 w-px bg-slate-600 shrink-0" />
+        <div className="h-7 w-px bg-slate-600 shrink-0" />
 
         <div className="flex flex-col justify-center">
           <span className="text-sm font-bold tracking-wider leading-none text-white">AICCC</span>
-          <span className="text-[10px] text-slate-300 font-medium leading-none mt-1">Amaravati Integrated Command Control Center</span>
+          <span className="hidden md:inline text-[10px] text-slate-300 font-medium leading-none mt-1">Amaravati Integrated Command Control Center</span>
         </div>
 
-        <div className="h-8 w-px bg-slate-600 shrink-0 mx-2" />
+        <div className="h-7 w-px bg-slate-600 shrink-0 mx-1 sm:mx-2" />
 
         {/* Amaravati Logo */}
-        <div className="flex items-center justify-center">
-          <img src="/amaravati-logo.png" alt="Amaravati The People's Capital" className="h-10 w-auto object-contain" />
+        <div className="flex items-center justify-center shrink-0">
+          <img
+            src="/amaravati-logo.png"
+            alt="Amaravati The People's Capital"
+            className="h-8 sm:h-9 md:h-10 max-h-10 w-auto object-contain drop-shadow-sm"
+          />
         </div>
       </div>
 

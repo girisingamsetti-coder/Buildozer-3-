@@ -201,7 +201,7 @@ export async function GET() {
       }))
       .sort((a, b) => b.camps - a.camps)
 
-    // ─── Workforce per camp (top 8 by worker count) ───
+    // ─── Workforce per camp (top 27 by worker count) ───
     const workforcePerCamp = allLabourCamps
       .map(c => ({
         id: c.id,
@@ -212,7 +212,7 @@ export async function GET() {
         capacity: c.capacity ?? 0,
       }))
       .sort((a, b) => b.workers - a.workers)
-      .slice(0, 8)
+      .slice(0, 27)
 
     // ─── Compliance breakdown (overall, summed across facility + security + medInfra) ───
     const complianceCompliant = facilityCompliant + securityCompliant + medCompliant
