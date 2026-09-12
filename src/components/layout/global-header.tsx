@@ -16,7 +16,8 @@ import {
   FileBarChart,
   ChevronDown,
   LogOut,
-  Calendar
+  Calendar,
+  ShoppingCart
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -99,6 +100,7 @@ export function GlobalHeader() {
     { label: 'Bills', icon: FileText, active: false },
     { label: 'Physical Progress', icon: TrendingUp, active: false },
     { label: 'E&S', icon: Users, active: true },
+    { label: 'Procurement', icon: ShoppingCart, active: false },
     { label: 'Lands', icon: MapPin, active: false },
     { label: 'Grievances', icon: MessageSquareWarning, active: false },
     { label: 'Ground Observations', icon: Eye, active: false },
