@@ -24,6 +24,7 @@ import {
   Tent,
   FolderKanban,
   Search,
+  X,
 } from 'lucide-react'
 import {
   BarChart,
@@ -637,13 +638,15 @@ export default function DashboardView() {
   const [activeTab, setActiveTab] = useState<'photos' | 'new-entry' | 'medical' | 'training' | 'incident'>('new-entry')
   const [previewPhoto, setPreviewPhoto] = useState<ActivityItem | null>(null)
 
+  const [searchQuery, setSearchQuery] = useState('')
   const [dateRange, setDateRange] = useState<DateRange | undefined>()
   const [contractorFilter, setContractorFilter] = useState('all')
   const [campFilter, setCampFilter] = useState('all')
   const [projectFilter, setProjectFilter] = useState('all')
 
-  const hasActiveFilters = !!dateRange || contractorFilter !== 'all' || campFilter !== 'all' || projectFilter !== 'all'
+  const hasActiveFilters = !!searchQuery || !!dateRange || contractorFilter !== 'all' || campFilter !== 'all' || projectFilter !== 'all'
   const clearFilters = () => {
+    setSearchQuery('')
     setDateRange(undefined)
     setContractorFilter('all')
     setCampFilter('all')
@@ -733,7 +736,17 @@ export default function DashboardView() {
   }
 
   // Activity items
-  const activityItems = activityData?.items ?? []
+  const rawActivityItems = activityData?.items ?? []
+  const activityItems = searchQuery.trim()
+    ? rawActivityItems.filter(item => {
+        const q = searchQuery.toLowerCase()
+        return (
+          item.title?.toLowerCase().includes(q) ||
+          item.subtitle?.toLowerCase().includes(q) ||
+          item.location?.toLowerCase().includes(q)
+        )
+      })
+    : rawActivityItems
 
   // Tab config
   const tabs = [
@@ -752,7 +765,7 @@ export default function DashboardView() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className={cn("rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between", isMobile ? "w-full" : "w-1/2")}
+          className={cn("rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between", isMobile ? "w-full" : "shrink-0")}
         >
           <div>
             <h1 className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-100">{getGreeting()} 👋</h1>
@@ -777,6 +790,35 @@ export default function DashboardView() {
               </Button>
             </div>
           )}
+
+          {/* Search Bar */}
+          <div className={cn("relative flex items-center", isMobile ? "w-full col-span-2" : "w-40 lg:w-48")}>
+            <Search className="absolute left-3.5 h-3.5 w-3.5 text-teal-600 dark:text-teal-400 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={cn(
+                "w-full h-9 pl-9 pr-7 rounded-full text-xs font-medium",
+                "bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm",
+                "text-slate-700 dark:text-slate-200 placeholder:text-muted-foreground placeholder:font-normal",
+                "hover:bg-slate-50 dark:hover:bg-slate-800 transition-all",
+                "focus:outline-none focus:ring-1 focus:ring-teal-500/40 focus:border-teal-500/50"
+              )}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2.5 p-0.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                title="Clear search"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            )}
+          </div>
+
           <Popover>
             <PopoverTrigger asChild>
               <Button

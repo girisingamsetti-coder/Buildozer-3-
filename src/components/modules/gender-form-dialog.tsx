@@ -48,12 +48,24 @@ export function saveGenderSubmissions(data: GenderSubmission[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 }
 
+function emptyGbvDetail(): GbvDetail {
+  return { id: Date.now().toString() + Math.random(), date: '', time: '', location: '', nature: 'Physical', status: 'Reported to Police', doc: null }
+}
+
+function emptyTraining(): Training {
+  return { id: Date.now().toString() + Math.random(), topic: '', date: '', trainedBy: '', participants: '', doc: null }
+}
+
+function emptyGap(): Gap {
+  return { id: Date.now().toString() + Math.random(), gap: '', rec: '', responsible: '', targetDate: '', status: '' }
+}
+
 function initData(): Omit<GenderSubmission, 'id' | 'projectName' | 'reportingMonth' | 'projectNumber' | 'projectTitle' | 'manager' | 'customer' | 'boq' | 'boqDesc' | 'createdDate' | 'status' | 'submittedAt'> {
   return {
     gbvInstances: '',
-    gbvDetails: [],
-    trainings: [],
-    gaps: []
+    gbvDetails: [emptyGbvDetail()],
+    trainings: [emptyTraining()],
+    gaps: [emptyGap()]
   }
 }
 
@@ -180,13 +192,13 @@ export default function GenderFormDialog({ open, onOpenChange, onSaved }: { open
                     <h3 className="text-sm font-bold text-[#0d9488] mb-4 pb-2 border-b">A. GBV Details</h3>
                     <div className="mb-6 space-y-2">
                       <Label>Any Instances of Gender-Based Violence (GBV)?</Label>
-                      <Select value={data.gbvInstances} onValueChange={v => setData({...data, gbvInstances: v as any})}>
+                      <Select value={data.gbvInstances} onValueChange={v => setData({...data, gbvInstances: v as any, gbvDetails: v === 'Yes' && (!data.gbvDetails || data.gbvDetails.length === 0) ? [emptyGbvDetail()] : data.gbvDetails})}>
                         <SelectTrigger className="w-48"><SelectValue placeholder="Select Yes / No" /></SelectTrigger>
                         <SelectContent><SelectItem value="Yes">Yes</SelectItem><SelectItem value="No">No</SelectItem></SelectContent>
                       </Select>
                     </div>
                     {data.gbvInstances === 'Yes' && (
-                      <TableWrapper headers={['Date','Time','Location','Nature of Incident','Status of Incident','Upload','']} onAdd={() => setData(d => ({ ...d, gbvDetails: [...d.gbvDetails, { id: Date.now().toString(), date:'', time:'', location:'', nature:'', status:'', doc:null }] }))} addLabel="Add Incident">
+                      <TableWrapper headers={['Date','Time','Location','Nature of Incident','Status of Incident','Upload','']} onAdd={() => setData(d => ({ ...d, gbvDetails: [...d.gbvDetails, emptyGbvDetail()] }))} addLabel="Add New Incident">
                         {data.gbvDetails.map((g, i) => (
                           <tr key={g.id}>
                             <td className="p-1 border-b"><Input type="date" className="h-8 text-xs w-28" value={g.date} onChange={e => { const n=[...data.gbvDetails]; n[i].date=e.target.value; setData({...data, gbvDetails:n})}} /></td>
@@ -217,7 +229,7 @@ export default function GenderFormDialog({ open, onOpenChange, onSaved }: { open
               {step === 1 && (
                 <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <h3 className="text-sm font-bold text-[#0d9488] mb-4 pb-2 border-b">B. GBV Awareness Training</h3>
-                  <TableWrapper headers={['S.No','Topic','Date','Trained By','Participants','Upload','']} onAdd={() => setData(d => ({ ...d, trainings: [...d.trainings, { id: Date.now().toString(), topic:'', date:'', trainedBy:'', participants:'', doc:null }] }))} addLabel="Add Training">
+                  <TableWrapper headers={['S.No','Topic','Date','Trained By','Participants','Upload','']} onAdd={() => setData(d => ({ ...d, trainings: [...d.trainings, emptyTraining()] }))} addLabel="Add New Training">
                     {data.trainings.map((t, i) => (
                       <tr key={t.id}>
                         <td className="p-2 border-b text-center">{i+1}</td>
@@ -236,7 +248,7 @@ export default function GenderFormDialog({ open, onOpenChange, onSaved }: { open
               {step === 2 && (
                 <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <h3 className="text-sm font-bold text-[#0d9488] mb-4 pb-2 border-b">C. Key Gaps & Corrective Actions</h3>
-                  <TableWrapper headers={['Gap Identified','Recommendation','Responsible','Target Date','Status','']} onAdd={() => setData(d => ({ ...d, gaps: [...d.gaps, { id: Date.now().toString(), gap:'', rec:'', responsible:'', targetDate:'', status:'' }] }))}>
+                  <TableWrapper headers={['Gap Identified','Recommendation','Responsible','Target Date','Status','']} onAdd={() => setData(d => ({ ...d, gaps: [...d.gaps, emptyGap()] }))} addLabel="Add New Row">
                     {data.gaps.map((g, i) => (
                       <tr key={g.id}>
                         <td className="p-1 border-b"><Input className="h-8 text-xs w-32" value={g.gap} onChange={e => { const n=[...data.gaps]; n[i].gap=e.target.value; setData({...data, gaps:n})}} /></td>

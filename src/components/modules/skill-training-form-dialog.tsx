@@ -61,14 +61,22 @@ export function saveSkillTrainingSubmissions(data: SkillTrainingSubmission[]) {
 
 function emptySum(): SummaryRow { return { male: '', female: '', total: '' } }
 
+function emptyWorkerLog(): WorkerLog {
+  return { id: Date.now().toString() + Math.random(), name: '', soDo: '', gender: '', role: '', dob: '', aadhaar: '', address: '', village: '', mandal: '', district: '', doe: '', contact: '' }
+}
+
+function emptyVacancyLog(): VacancyLog {
+  return { id: Date.now().toString() + Math.random(), role: '', ageLimit: '', qualification: '', exp: '', vacancies: '', salary: '' }
+}
+
 function initData(): Omit<SkillTrainingSubmission, 'id' | 'projectName' | 'reportingMonth' | 'projectNumber' | 'projectTitle' | 'manager' | 'customer' | 'boq' | 'boqDesc' | 'createdDate' | 'status' | 'submittedAt'> {
   return {
     employment: { total: emptySum(), local: emptySum() },
     localTypes: { highlySkilled: emptySum(), skilled: emptySum(), semiSkilled: emptySum(), unskilled: emptySum() },
     skillSets: SKILL_SETS.map(s => ({ skillSet: s, male: '', female: '', total: '' })),
-    employedDetails: { records: [], doc: null },
-    trainedDetails: { records: [], doc: null },
-    vacancies: { staff: [], workers: [] }
+    employedDetails: { records: [emptyWorkerLog()], doc: null },
+    trainedDetails: { records: [emptyWorkerLog()], doc: null },
+    vacancies: { staff: [emptyVacancyLog()], workers: [emptyVacancyLog()] }
   }
 }
 
@@ -289,7 +297,7 @@ export default function SkillTrainingFormDialog({ open, onOpenChange, onSaved }:
                             </tbody>
                           </table>
                         </div>
-                        <Button variant="outline" size="sm" onClick={() => addWorker(key as any)} className="h-7 text-xs border-dashed"><Plus className="h-3 w-3 mr-1"/> Add Worker Record</Button>
+                        <Button variant="outline" size="sm" onClick={() => addWorker(key as any)} className="h-7 text-xs border-dashed"><Plus className="h-3 w-3 mr-1"/> Add New Worker Record</Button>
                       </div>
                     )
                   })}
@@ -322,7 +330,7 @@ export default function SkillTrainingFormDialog({ open, onOpenChange, onSaved }:
                           </tbody>
                         </table>
                       </div>
-                      <Button variant="outline" size="sm" onClick={() => addVac(key as any)} className="h-7 text-xs border-dashed"><Plus className="h-3 w-3 mr-1"/> Add Vacancy</Button>
+                      <Button variant="outline" size="sm" onClick={() => addVac(key as any)} className="h-7 text-xs border-dashed"><Plus className="h-3 w-3 mr-1"/> Add New Vacancy</Button>
                     </div>
                   ))}
                 </div>

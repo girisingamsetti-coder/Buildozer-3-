@@ -117,6 +117,9 @@ function emptyAirMon(): AirMonitor { return { locationName: '', gps: '', pm10: '
 function emptyNoiseMon(): NoiseMonitor { return { locationName: '', gps: '', leq: '', lmax: '', lmin: '', lday: '', lnight: '', photos: [], report: null, remarks: '' } }
 function emptySoilMon(): SoilMonitor { return { locationName: '', gps: '', ph: '', ec: '', oc: '', nitrogen: '', phosphorus: '', other: '', photos: [], report: null, remarks: '' } }
 function emptyObs(): ObsMetric { return { pmc: '', pgmc: '', other: '', otherSpec: '' } }
+function emptyEVMTrainingRecord(): TrainingRecord {
+  return { id: `tr-${Date.now()}-${Math.random()}`, date: '', topic: '', skilledM: '', skilledF: '', semiM: '', semiF: '', unskilledM: '', unskilledF: '', photos: [], reports: [], attendance: null, remarks: '' }
+}
 
 function initEVMData(): Omit<EVMSubmission, 'id' | 'projectName' | 'reportingMonth' | 'projectNumber' | 'projectTitle' | 'manager' | 'customer' | 'boq' | 'boqDesc' | 'createdDate' | 'status' | 'submittedAt'> {
   return {
@@ -158,7 +161,7 @@ function initEVMData(): Omit<EVMSubmission, 'id' | 'projectName' | 'reportingMon
     },
     trees: { identified: '', tocut: '', transplant: '', cumcut: '', cumtransplant: '', photos: [], reports: [], permits: [], remarks: '' },
     waste: WASTE_CATEGORIES.map(c => ({ type: c.type, unit: c.unit, status: null, remarksIfNo: '', qtyGen: '', qtyDisp: '', cumGen: '', cumDisp: '', disposalLoc: '', photos: [], mou: [], remarks: '' })),
-    training: [],
+    training: [emptyEVMTrainingRecord()],
     observations: { given: emptyObs(), complied: emptyObs(), letters: emptyObs(), ncs: emptyObs(), complianceFile: null },
   }
 }
@@ -830,7 +833,7 @@ function Step7({ waste, setWaste, training, setTraining }: { waste: WasteEntry[]
 
       <div className="border-t pt-4">
         <SectionHeading title="Section 8 — Environmental Awareness & Training" />
-        <Button type="button" size="sm" variant="outline" className="gap-1.5 mb-3" onClick={addTraining}><Plus className="h-3.5 w-3.5" />Add Training Record</Button>
+        <Button type="button" size="sm" variant="outline" className="gap-1.5 mb-3" onClick={addTraining}><Plus className="h-3.5 w-3.5" />Add New Training Record</Button>
         {training.length === 0 && <p className="text-xs text-muted-foreground">No training records added yet.</p>}
         {training.map((t, idx) => (
           <Card key={t.id} className="mb-3 border-slate-200">

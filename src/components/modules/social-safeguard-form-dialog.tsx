@@ -80,19 +80,31 @@ export function saveSocialSafeguardSubmissions(data: SocialSafeguardSubmission[]
 
 // ==================== INITIAL DATA ====================
 
+function emptyESStaff(): ESStaff { return { id: Date.now().toString() + Math.random(), position: '', name: '', dateOfAppointment: '', expectedJoiningDate: '' } }
+function emptyPMCVist(): PMCVist { return { id: Date.now().toString() + Math.random(), month: '', pmcName: '', envVisits: '', socVisits: '', ohsVisits: '', totalVisits: '' } }
+function emptyGRCEntry(): GRCEntry { return { id: Date.now().toString() + Math.random(), month: '', meetings: '', compReceived: '', compResolved: '', compPending: '', cumPending: '', doc: null } }
+function emptySubCommittee(): SubCommittee { return { id: Date.now().toString() + Math.random(), reportsIssued: '', details: '', obsIssued: '', obsClosed: '', reportsClosed: '', pendingObs: '', targetCloseDate: '' } }
+function emptyProgramEvent(): ProgramEvent { return { id: Date.now().toString() + Math.random(), date: '', details: '', participantType: '', male: '', female: '', total: '', photos: [], reports: [] } }
+function emptyTrainingEntry(): TrainingEntry { return { id: Date.now().toString() + Math.random(), date: '', topic: '', targetAudience: '', otherSpec: '', male: '', female: '', total: '', photos: [], reports: [] } }
+function emptyMeetingEntry(): MeetingEntry { return { id: Date.now().toString() + Math.random(), date: '', type: '', topic: '', male: '', female: '', total: '', photos: [], reports: [] } }
+function emptyCampDetail(): CampDetail { return { id: Date.now().toString() + Math.random(), camp: '', location: '', male: '', female: '', total: '', policeDetails: '' } }
+function emptyMedicalActivity(): MedicalActivity { return { id: Date.now().toString() + Math.random(), activity: '', type: '', male: '', female: '', children: '', total: '', reports: [], photos: [] } }
+function emptyHostProfile(): HostProfile { return { id: Date.now().toString() + Math.random(), village: '', population: '', vulnerable: '', elderly: '', disabled: '', womenHeaded: '' } }
+function emptyHealthSurvey(): HealthSurvey { return { id: Date.now().toString() + Math.random(), village: '', date: '', families: '' } }
+
 function initData(): Omit<SocialSafeguardSubmission, 'id' | 'projectName' | 'reportingMonth' | 'projectNumber' | 'projectTitle' | 'manager' | 'customer' | 'boq' | 'boqDesc' | 'createdDate' | 'status' | 'submittedAt'> {
   return {
-    staff: [],
-    inspections: { visits: [], plan: '', reports: '', compliance: '', gen: '', obsRaised: '', obsClosed: '', obsPending: '', cumTotals: '' },
-    grc: [],
-    subCommittee: [],
-    programs: [],
-    trainings: [],
-    meetings: [],
-    labourInflux: { campDetails: [], migrantWorkers: [], newWorkers: [] },
-    medical: [],
-    hostCommunity: { isApplicable: false, profiles: [] },
-    healthSurveys: []
+    staff: [emptyESStaff()],
+    inspections: { visits: [emptyPMCVist()], plan: '', reports: '', compliance: '', gen: '', obsRaised: '', obsClosed: '', obsPending: '', cumTotals: '' },
+    grc: [emptyGRCEntry()],
+    subCommittee: [emptySubCommittee()],
+    programs: [emptyProgramEvent()],
+    trainings: [emptyTrainingEntry()],
+    meetings: [emptyMeetingEntry()],
+    labourInflux: { campDetails: [emptyCampDetail()], migrantWorkers: [emptyCampDetail()], newWorkers: [emptyCampDetail()] },
+    medical: [emptyMedicalActivity()],
+    hostCommunity: { isApplicable: false, profiles: [emptyHostProfile()] },
+    healthSurveys: [emptyHealthSurvey()]
   }
 }
 
@@ -136,7 +148,8 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   return <h3 className="text-sm font-bold text-[#0d9488] mb-4 pb-2 border-b">{children}</h3>
 }
 
-function TableWrapper({ headers, children, onAdd, addLabel = 'Add Row' }: { headers: string[], children: React.ReactNode, onAdd?: () => void, addLabel?: string }) {
+function TableWrapper({ headers, children, onAdd, addLabel = 'Add New Row' }: { headers: string[], children: React.ReactNode, onAdd?: () => void, addLabel?: string }) {
+  const displayLabel = addLabel.startsWith('Add New') ? addLabel : addLabel.replace(/^Add\s+/, 'Add New ')
   return (
     <div className="space-y-2 mb-6">
       <div className="border rounded-md overflow-x-auto">
@@ -151,7 +164,7 @@ function TableWrapper({ headers, children, onAdd, addLabel = 'Add Row' }: { head
       </div>
       {onAdd && (
         <Button type="button" variant="outline" size="sm" onClick={onAdd} className="h-7 text-xs gap-1 border-dashed">
-          <Plus className="h-3 w-3" /> {addLabel}
+          <Plus className="h-3 w-3" /> {displayLabel}
         </Button>
       )}
     </div>

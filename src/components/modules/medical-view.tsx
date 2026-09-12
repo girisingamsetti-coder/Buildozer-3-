@@ -11,6 +11,9 @@ import {
   AlertTriangle,
   Clock,
   ChevronRight,
+  ChevronLeft,
+  CheckCircle2,
+  Send,
   Building2,
   User,
   Trash2,
@@ -252,16 +255,65 @@ function SurgeryField({ index, control, remove, total }: {
   )
 }
 
-// ---------- add medical dialog ----------
-function AddMedicalDialog({ workerId, workerName, open, onOpenChange }: {
-  workerId: string
-  workerName: string
+// ==================== MEDICAL WIZARD STEP PROGRESS ====================
+const MEDICAL_STEPS = [
+  'Examination Details',
+  'Medical History',
+  'Meds & Surgeries',
+  'Review & Submit',
+]
+
+function MedicalStepProgress({ current }: { current: number }) {
+  return (
+    <div className="flex items-center gap-0">
+      {MEDICAL_STEPS.map((s, i) => (
+        <div key={s} className="flex items-center flex-1">
+          <div className="flex flex-col items-center gap-1 flex-1">
+            <div
+              className={cn(
+                'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all',
+                i < current
+                  ? 'bg-[#0d9488] border-[#0d9488] text-white'
+                  : i === current
+                  ? 'border-[#0d9488] text-[#0d9488] bg-white dark:bg-slate-900 shadow-sm'
+                  : 'border-slate-300 text-slate-400 bg-white dark:bg-slate-900'
+              )}
+            >
+              {i < current ? <CheckCircle2 className="h-4 w-4" /> : i + 1}
+            </div>
+            <span
+              className={cn(
+                'text-[10px] text-center leading-tight hidden sm:block',
+                i === current ? 'text-[#0d9488] font-semibold' : 'text-muted-foreground'
+              )}
+            >
+              {s}
+            </span>
+          </div>
+          {i < MEDICAL_STEPS.length - 1 && (
+            <div
+              className={cn(
+                'h-0.5 flex-1 mx-1 mb-4',
+                i < current ? 'bg-[#0d9488]' : 'bg-slate-200 dark:bg-slate-800'
+              )}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ---------- add medical dialog wizard ----------
+function AddMedicalDialog({ worker, open, onOpenChange }: {
+  worker: Worker
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
   const queryClient = useQueryClient()
+  const [step, setStep] = useState(0)
 
-  const { register, handleSubmit, control, reset, setValue, watch, formState: { errors } } = useForm<MedicalFormValues>({
+  const { register, handleSubmit, control, reset, setValue, watch, trigger, formState: { errors } } = useForm<MedicalFormValues>({
     defaultValues: {
       examinationDate: format(new Date(), 'yyyy-MM-dd'),
       examinationType: 'PreEmployment',
@@ -283,8 +335,30 @@ function AddMedicalDialog({ workerId, workerName, open, onOpenChange }: {
   const { fields: surgFields, append: appendSurg, remove: removeSurg } = useFieldArray({ control, name: 'surgeries' })
 
   const [formPhotos, setFormPhotos] = useState<string[]>([])
-
   const selectedChronic = useWatch({ control, name: 'chronicDiseases' }) || []
+  const formValues = watch()
+
+  useEffect(() => {
+    if (open) {
+      setStep(0)
+      reset({
+        examinationDate: format(new Date(), 'yyyy-MM-dd'),
+        examinationType: 'PreEmployment',
+        examiningDoctor: '',
+        examiningFacility: '',
+        result: 'Pending',
+        previousHealthIssues: '',
+        chronicDiseases: [],
+        chronicDiseaseNotes: '',
+        medications: [{ drug: '', dosage: '', frequency: '' }],
+        surgeries: [{ procedure: '', date: '', notes: '' }],
+        nextCheckupDate: '',
+        checkupFrequencyMonths: '12',
+        remarks: '',
+      })
+      setFormPhotos([])
+    }
+  }, [open, reset])
 
   const mutation = useMutation({
     mutationFn: async (data: MedicalFormValues) => {
@@ -292,7 +366,7 @@ function AddMedicalDialog({ workerId, workerName, open, onOpenChange }: {
       const surgeries = data.surgeries.filter(s => s.procedure.trim())
       const chronicNotes = data.chronicDiseases.includes('Other') ? data.chronicDiseaseNotes : null
 
-      return fetch(`/api/workers/${workerId}/medical`, {
+      const res = await fetch(`/api/workers/${worker.id}/medical`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -311,11 +385,14 @@ function AddMedicalDialog({ workerId, workerName, open, onOpenChange }: {
           remarks: data.remarks || null,
           photos: formPhotos.length > 0 ? JSON.stringify(formPhotos) : null,
         }),
-      }).then(r => r.json())
+      })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error || 'Failed to add medical record')
+      return json
     },
     onSuccess: () => {
       toast.success('Medical record added successfully')
-      queryClient.invalidateQueries({ queryKey: ['worker-medical', workerId] })
+      queryClient.invalidateQueries({ queryKey: ['worker-medical', worker.id] })
       reset()
       setFormPhotos([])
       onOpenChange(false)
@@ -336,176 +413,434 @@ function AddMedicalDialog({ workerId, workerName, open, onOpenChange }: {
     }
   }
 
+  const next = async () => {
+    if (step === 0) {
+      const valid = await trigger('examinationDate')
+      if (!valid) {
+        toast.error('Please enter the examination date')
+        return
+      }
+    }
+    setStep((s) => Math.min(s + 1, MEDICAL_STEPS.length - 1))
+  }
+
+  const prev = () => setStep((s) => Math.max(s - 1, 0))
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Stethoscope className="h-5 w-5 text-[#0d9488]" />
-            Add Medical Record — {workerName}
+      <DialogContent className="w-[92vw] sm:!max-w-[1050px] h-[90vh] max-h-[750px] rounded-2xl flex flex-col p-0 gap-0 overflow-hidden bg-white dark:bg-slate-950">
+        <DialogHeader className="px-6 py-4 border-b shrink-0 flex flex-row items-center justify-between">
+          <DialogTitle className="text-base font-bold flex items-center gap-2">
+            <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-[#0d9488] text-white">
+              <Stethoscope className="h-3.5 w-3.5" />
+            </span>
+            Add Medical Record — {worker.fullName}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Basic Info */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label>Examination Date *</Label>
-              <Input type="date" {...register('examinationDate', { required: true })} className="mt-1" />
-              {errors.examinationDate && <p className="text-xs text-destructive mt-1">Required</p>}
-            </div>
-            <div>
-              <Label>Type</Label>
-              <Select defaultValue="PreEmployment" onValueChange={(v) => setValue('examinationType', v)}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="PreEmployment">Pre-Employment</SelectItem>
-                  <SelectItem value="Periodic">Periodic</SelectItem>
-                  <SelectItem value="Special">Special</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label>Examining Doctor</Label>
-              <Input placeholder="Dr. ..." {...register('examiningDoctor')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Facility</Label>
-              <Input placeholder="Hospital / Clinic name" {...register('examiningFacility')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Result</Label>
-              <Select defaultValue="Pending" onValueChange={(v) => setValue('result', v)}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Fit">Fit</SelectItem>
-                  <SelectItem value="Unfit">Unfit</SelectItem>
-                  <SelectItem value="Conditional">Conditional</SelectItem>
-                  <SelectItem value="Pending">Pending</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+
+        {/* Stepper progress bar */}
+        <div className="px-6 sm:px-8 py-3.5 border-b shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="max-w-xl mx-auto">
+            <MedicalStepProgress current={step} />
           </div>
+        </div>
 
-          <Separator />
+        {/* Wizard content */}
+        <div className="flex-1 min-w-0 overflow-y-auto px-6 sm:px-8 py-6">
+          {/* STEP 0: Examination Details */}
+          {step === 0 && (
+            <div className="space-y-6">
+              {/* Worker auto-filled card */}
+              <Card className="bg-[#0d9488]/5 border-[#0d9488]/20">
+                <CardContent className="p-4">
+                  <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-3">
+                    Worker Information (Auto-filled)
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                    <div>
+                      <p className="text-muted-foreground flex items-center gap-1">
+                        <User className="h-3 w-3" /> Full Name
+                      </p>
+                      <p className="font-semibold text-slate-800 dark:text-slate-100">{worker.fullName}</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground flex items-center gap-1">
+                        <FileText className="h-3 w-3" /> Employee ID
+                      </p>
+                      <p className="font-semibold text-slate-800 dark:text-slate-100">{worker.employeeNumber}</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground flex items-center gap-1">
+                        <Building2 className="h-3 w-3" /> Designation
+                      </p>
+                      <p className="font-semibold text-slate-800 dark:text-slate-100">{worker.designation?.name || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground flex items-center gap-1">
+                        <Building2 className="h-3 w-3" /> Contractor / Site
+                      </p>
+                      <p className="font-semibold text-slate-800 dark:text-slate-100">
+                        {worker.site?.name || worker.contractor?.name || '—'}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-          {/* Health Details */}
-          <div>
-            <Label>Previous Health Issues</Label>
-            <Textarea placeholder="Any previous health conditions..." {...register('previousHealthIssues')} className="mt-1" />
-          </div>
+              {/* Examination Form */}
+              <div>
+                <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-3">
+                  Examination Information
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Examination Date *</Label>
+                    <Input
+                      type="date"
+                      {...register('examinationDate', { required: true })}
+                      className="h-9 text-sm"
+                    />
+                    {errors.examinationDate && <p className="text-xs text-destructive">Examination date is required</p>}
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Examination Type</Label>
+                    <Select
+                      value={formValues.examinationType}
+                      onValueChange={(v) => setValue('examinationType', v)}
+                    >
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="PreEmployment">Pre-Employment</SelectItem>
+                        <SelectItem value="Periodic">Periodic</SelectItem>
+                        <SelectItem value="Special">Special</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Examining Doctor</Label>
+                    <Input
+                      placeholder="e.g. Dr. A. Sharma, MBBS"
+                      {...register('examiningDoctor')}
+                      className="h-9 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Facility / Clinic</Label>
+                    <Input
+                      placeholder="e.g. Amaravati Health Center / City Clinic"
+                      {...register('examiningFacility')}
+                      className="h-9 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Fitness Result</Label>
+                    <Select
+                      value={formValues.result}
+                      onValueChange={(v) => setValue('result', v)}
+                    >
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Fit">Fit</SelectItem>
+                        <SelectItem value="Unfit">Unfit</SelectItem>
+                        <SelectItem value="Conditional">Conditional</SelectItem>
+                        <SelectItem value="Pending">Pending</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
-          <div>
-            <Label className="mb-2 block">Chronic Diseases</Label>
-            <div className="flex flex-wrap gap-3">
-              {CHRONIC_OPTIONS.map((option) => (
-                <label key={option} className="flex items-center gap-2 cursor-pointer">
-                  <Checkbox
-                    checked={selectedChronic.includes(option)}
-                    onCheckedChange={() => toggleChronic(option)}
+          {/* STEP 1: Medical History */}
+          {step === 1 && (
+            <div className="space-y-6">
+              <div>
+                <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-2">
+                  Previous Health Conditions
+                </p>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Document any previous major illnesses, hospitalizations, or occupational health concerns.
+                </p>
+                <Textarea
+                  placeholder="Describe previous health issues, injuries, or past medical events (optional)..."
+                  {...register('previousHealthIssues')}
+                  className="min-h-[100px] text-sm"
+                />
+              </div>
+
+              <div className="border-t pt-5">
+                <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-2">
+                  Chronic Diseases & Conditions
+                </p>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Select any diagnosed chronic conditions for the worker.
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {CHRONIC_OPTIONS.map((option) => (
+                    <label
+                      key={option}
+                      className={cn(
+                        'flex items-center gap-2.5 p-3 rounded-lg border cursor-pointer transition-all',
+                        selectedChronic.includes(option)
+                          ? 'border-[#0d9488] bg-[#0d9488]/5 text-[#0d9488] font-semibold'
+                          : 'border-slate-200 hover:border-slate-300 dark:border-slate-800'
+                      )}
+                    >
+                      <Checkbox
+                        checked={selectedChronic.includes(option)}
+                        onCheckedChange={() => toggleChronic(option)}
+                      />
+                      <span className="text-sm">{option}</span>
+                    </label>
+                  ))}
+                </div>
+                {selectedChronic.includes('Other') && (
+                  <div className="mt-3 space-y-1.5">
+                    <Label className="text-xs font-semibold">Other Chronic Condition Details</Label>
+                    <Input
+                      placeholder="Specify other chronic illness or medical condition..."
+                      {...register('chronicDiseaseNotes')}
+                      className="h-9 text-sm"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 2: Medications & Surgeries */}
+          {step === 2 && (
+            <div className="space-y-6">
+              {/* Current Medications */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider">
+                      Current Medications
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      List all active prescriptions, dosages, and administration frequencies.
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-7 text-xs gap-1"
+                    onClick={() => appendMed({ drug: '', dosage: '', frequency: '' })}
+                  >
+                    <Plus className="h-3.5 w-3.5" /> Add Medication
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {medFields.map((field, index) => (
+                    <MedicationField
+                      key={field.id}
+                      index={index}
+                      control={control}
+                      remove={removeMed}
+                      total={medFields.length}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Past Surgeries */}
+              <div className="border-t pt-5">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider">
+                      Past Surgeries / Procedures
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Record any surgical procedures, approximate dates, and relevant clinical notes.
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-7 text-xs gap-1"
+                    onClick={() => appendSurg({ procedure: '', date: '', notes: '' })}
+                  >
+                    <Plus className="h-3.5 w-3.5" /> Add Surgery
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {surgFields.map((field, index) => (
+                    <SurgeryField
+                      key={field.id}
+                      index={index}
+                      control={control}
+                      remove={removeSurg}
+                      total={surgFields.length}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3: Review & Submit */}
+          {step === 3 && (
+            <div className="space-y-6">
+              {/* Follow-up & Evidence */}
+              <div>
+                <p className="text-xs font-bold text-[#0d9488] uppercase tracking-wider mb-3">
+                  Follow-up Schedule & Documentation
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Next Checkup Date</Label>
+                    <Input
+                      type="date"
+                      {...register('nextCheckupDate')}
+                      className="h-9 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Checkup Frequency</Label>
+                    <Select
+                      value={formValues.checkupFrequencyMonths}
+                      onValueChange={(v) => setValue('checkupFrequencyMonths', v)}
+                    >
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="3">Every 3 Months</SelectItem>
+                        <SelectItem value="6">Every 6 Months</SelectItem>
+                        <SelectItem value="12">Every 12 Months (Annual)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="mt-4 space-y-1.5">
+                  <Label className="text-xs font-semibold">Doctor's Remarks / Observations</Label>
+                  <Textarea
+                    placeholder="Doctor notes, fitness recommendations, or site restrictions..."
+                    {...register('remarks')}
+                    className="min-h-[80px] text-sm"
                   />
-                  <span className="text-sm">{option}</span>
-                </label>
-              ))}
+                </div>
+
+                <div className="mt-4">
+                  <PhotoUploader
+                    photos={formPhotos}
+                    onPhotosChange={setFormPhotos}
+                    maxPhotos={3}
+                    label="Medical Examination Certificate / Reports"
+                  />
+                </div>
+              </div>
+
+              {/* Review Summary Card */}
+              <div className="border-t pt-5">
+                <Card className="bg-[#0d9488]/5 border-[#0d9488]/20">
+                  <CardContent className="p-4 space-y-3 text-xs">
+                    <p className="font-bold text-[#0d9488] uppercase tracking-wider">Record Summary Review</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div>
+                        <p className="text-muted-foreground">Worker</p>
+                        <p className="font-semibold text-slate-800 dark:text-slate-100">{worker.fullName}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Exam Date & Type</p>
+                        <p className="font-semibold text-slate-800 dark:text-slate-100">
+                          {formValues.examinationDate ? format(parseISO(formValues.examinationDate), 'dd MMM yyyy') : '—'}{' '}
+                          ({typeBadgeLabel(formValues.examinationType)})
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Doctor & Facility</p>
+                        <p className="font-semibold text-slate-800 dark:text-slate-100 truncate">
+                          {formValues.examiningDoctor || 'Not specified'}{' '}
+                          {formValues.examiningFacility ? `· ${formValues.examiningFacility}` : ''}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Fitness Result</p>
+                        <span className={cn('inline-block px-2 py-0.5 rounded text-[11px] font-bold mt-0.5', resultBadgeClass(formValues.result))}>
+                          {formValues.result}
+                        </span>
+                      </div>
+                    </div>
+
+                    <Separator className="bg-[#0d9488]/20" />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div>
+                        <p className="text-muted-foreground font-medium mb-0.5">Chronic Diseases</p>
+                        <p className="text-slate-700 dark:text-slate-300">
+                          {selectedChronic.length > 0 ? selectedChronic.join(', ') : 'None reported'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground font-medium mb-0.5">Medications</p>
+                        <p className="text-slate-700 dark:text-slate-300">
+                          {medFields.filter((m) => m.drug?.trim()).length > 0
+                            ? `${medFields.filter((m) => m.drug?.trim()).length} recorded`
+                            : 'None recorded'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground font-medium mb-0.5">Surgeries / Procedures</p>
+                        <p className="text-slate-700 dark:text-slate-300">
+                          {surgFields.filter((s) => s.procedure?.trim()).length > 0
+                            ? `${surgFields.filter((s) => s.procedure?.trim()).length} recorded`
+                            : 'None recorded'}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-            {selectedChronic.includes('Other') && (
-              <Input
-                placeholder="Specify other chronic conditions"
-                {...register('chronicDiseaseNotes')}
-                className="mt-2"
-              />
+          )}
+        </div>
+
+        {/* Footer nav */}
+        <div className="flex items-center justify-between px-6 py-4 border-t shrink-0 bg-white dark:bg-slate-950 rounded-b-2xl">
+          <div className="flex items-center gap-2">
+            <Button type="button" variant="ghost" size="sm" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            {step > 0 && (
+              <Button type="button" variant="outline" size="sm" onClick={prev} className="gap-1">
+                <ChevronLeft className="h-3.5 w-3.5" /> Previous
+              </Button>
             )}
           </div>
-
-          <Separator />
-
-          {/* Current Medications */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <Label>Current Medications</Label>
+          <div className="flex items-center gap-2">
+            {step < MEDICAL_STEPS.length - 1 ? (
               <Button
                 type="button"
-                variant="outline"
                 size="sm"
-                onClick={() => appendMed({ drug: '', dosage: '', frequency: '' })}
+                onClick={next}
+                className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1"
               >
-                <Plus className="h-3 w-3 mr-1" /> Add
+                Next <ChevronRight className="h-3.5 w-3.5" />
               </Button>
-            </div>
-            <div className="space-y-2">
-              {medFields.map((field, index) => (
-                <MedicationField key={field.id} index={index} control={control} remove={removeMed} total={medFields.length} />
-              ))}
-            </div>
-          </div>
-
-          <Separator />
-
-          {/* Past Surgeries */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <Label>Past Surgeries</Label>
+            ) : (
               <Button
                 type="button"
-                variant="outline"
                 size="sm"
-                onClick={() => appendSurg({ procedure: '', date: '', notes: '' })}
+                onClick={handleSubmit(onSubmit)}
+                disabled={mutation.isPending}
+                className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5"
               >
-                <Plus className="h-3 w-3 mr-1" /> Add
+                <Send className="h-3.5 w-3.5" />
+                {mutation.isPending ? 'Saving...' : 'Submit Medical Record'}
               </Button>
-            </div>
-            <div className="space-y-2">
-              {surgFields.map((field, index) => (
-                <SurgeryField key={field.id} index={index} control={control} remove={removeSurg} total={surgFields.length} />
-              ))}
-            </div>
+            )}
           </div>
-
-          <Separator />
-
-          {/* Next Checkup */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label>Next Checkup Date</Label>
-              <Input type="date" {...register('nextCheckupDate')} className="mt-1" />
-            </div>
-            <div>
-              <Label>Checkup Frequency</Label>
-              <Select defaultValue="12" onValueChange={(v) => setValue('checkupFrequencyMonths', v)}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="3">3 Months</SelectItem>
-                  <SelectItem value="6">6 Months</SelectItem>
-                  <SelectItem value="12">12 Months</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Remarks */}
-          <div>
-            <Label>Remarks</Label>
-            <Textarea placeholder="Additional remarks..." {...register('remarks')} className="mt-1" />
-          </div>
-
-          <PhotoUploader photos={formPhotos} onPhotosChange={setFormPhotos} maxPhotos={3} label="Examination Photos" />
-
-          <div className="flex justify-end gap-3 pt-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button
-              type="submit"
-              className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
-              disabled={mutation.isPending}
-            >
-              {mutation.isPending ? 'Saving...' : 'Add Record'}
-            </Button>
-          </div>
-        </form>
+        </div>
       </DialogContent>
     </Dialog>
   )
@@ -574,8 +909,22 @@ export default function MedicalView() {
     })
   }, [medicalRecords, resultFilter, typeFilter])
 
+  // Auto-select first available worker by default
+  useEffect(() => {
+    if (workers.length > 0) {
+      setSelectedWorkerId((current) => {
+        if (current && workers.some((w) => w.id === current)) {
+          return current
+        }
+        return workers[0].id
+      })
+    } else {
+      setSelectedWorkerId(null)
+    }
+  }, [workers])
+
   const handleSelectWorker = useCallback((id: string) => {
-    setSelectedWorkerId((prev) => (prev === id ? null : id))
+    setSelectedWorkerId(id)
   }, [])
 
   // ---------- export columns ----------
@@ -924,8 +1273,7 @@ export default function MedicalView() {
       {/* Add Medical Dialog */}
       {selectedWorker && (
         <AddMedicalDialog
-          workerId={selectedWorker.id}
-          workerName={selectedWorker.fullName}
+          worker={selectedWorker}
           open={dialogOpen}
           onOpenChange={setDialogOpen}
         />

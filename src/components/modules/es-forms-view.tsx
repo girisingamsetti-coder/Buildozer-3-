@@ -33,7 +33,6 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
-  DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent
 } from '@/components/ui/dropdown-menu'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
@@ -385,7 +384,7 @@ function AddFormDialog({
               <Label className="text-xs font-semibold">Form Type</Label>
               <Select value={formType} onValueChange={v => setFormType(v as FormType)}>
                 <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                <SelectContent>{FORM_TYPES.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                <SelectContent>{FORM_TYPES.filter(t => editingEntry ? true : t !== 'Social Legacy').map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">
@@ -433,6 +432,8 @@ export default function EsFormsView() {
   const [statusFilter, setStatusFilter] = useState<string>('')
   const [addOpen, setAddOpen] = useState(false)
   const [addType, setAddType] = useState<FormType | null>(null)
+  const [addMenuOpen, setAddMenuOpen] = useState(false)
+  const [socialHovered, setSocialHovered] = useState(false)
   const [ohsOpen, setOhsOpen] = useState(false)
   const [ohsSubmissions, setOhsSubmissions] = useState<OHSSubmission[]>(() => loadOHSSubmissions())
   const refreshOHS = () => setOhsSubmissions(loadOHSSubmissions())
@@ -494,13 +495,17 @@ export default function EsFormsView() {
 
   return (
     <div className="flex flex-col gap-4 h-full min-w-0 overflow-y-auto pb-6 pr-2">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
-        <div className="hidden sm:block">
-          <h1 className="text-2xl font-bold tracking-tight">E&S Forms</h1>
-          <p className="text-sm text-muted-foreground mt-1">Track and manage E&S form submissions across all categories.</p>
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-md py-2.5 border-b border-border/40 flex flex-row items-center justify-between gap-3 shrink-0">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground truncate">E&S Forms</h1>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 line-clamp-1 sm:line-clamp-none">Track and manage E&S form submissions across all categories.</p>
         </div>
-        <DropdownMenu>
+        <div className="shrink-0">
+          <DropdownMenu open={addMenuOpen} onOpenChange={(open) => {
+            setAddMenuOpen(open)
+            if (!open) setSocialHovered(false)
+          }}>
           <DropdownMenuTrigger asChild>
             <Button size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5">
               <Plus className="h-4 w-4" />
@@ -508,42 +513,115 @@ export default function EsFormsView() {
               <ChevronDown className="h-3.5 w-3.5" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            {FORM_TYPES.map(type => {
-              if (type === 'Social') {
-                return (
-                  <DropdownMenuSub key={type}>
-                    <DropdownMenuSubTrigger className="gap-2">
-                      <FileText className="h-3.5 w-3.5 text-[#0d9488]" />
-                      {type}
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuSubContent className="w-72">
-                      <DropdownMenuItem onClick={() => setSsOpen(true)}>Social Safeguard Compliance for MPR</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setStOpen(true)}>Skill Training & Employment</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setLlOpen(true)}>Labour Law Compliance</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setGenOpen(true)}>Gender</DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuSub>
-                )
-              }
-              return (
-                <DropdownMenuItem
-                  key={type}
-                  onClick={() => {
-                    if (type === 'Road Safety') { setRsOpen(true) }
-                    else if (type === 'EVM') { setEvmOpen(true) }
-                    else if (type === 'OHS') { setOhsOpen(true) }
-                    else { setAddType(type); setAddOpen(true) }
-                  }}
-                  className="cursor-pointer gap-2"
-                >
-                  <FileText className="h-3.5 w-3.5 text-[#0d9488]" />
-                  {type}
-                </DropdownMenuItem>
-              )
-            })}
+          <DropdownMenuContent align="end" className="w-72 sm:w-80 p-1.5 shadow-xl border-slate-200 dark:border-slate-800">
+            {/* OHS */}
+            <DropdownMenuItem
+              onClick={() => { setOhsOpen(true); setAddMenuOpen(false) }}
+              onMouseEnter={() => setSocialHovered(false)}
+              className="cursor-pointer gap-2.5 py-2 font-medium"
+            >
+              <FileText className="h-4 w-4 text-[#0d9488]" />
+              OHS
+            </DropdownMenuItem>
+
+            {/* EVM */}
+            <DropdownMenuItem
+              onClick={() => { setEvmOpen(true); setAddMenuOpen(false) }}
+              onMouseEnter={() => setSocialHovered(false)}
+              className="cursor-pointer gap-2.5 py-2 font-medium"
+            >
+              <FileText className="h-4 w-4 text-[#0d9488]" />
+              EVM
+            </DropdownMenuItem>
+
+            {/* Road Safety */}
+            <DropdownMenuItem
+              onClick={() => { setRsOpen(true); setAddMenuOpen(false) }}
+              onMouseEnter={() => setSocialHovered(false)}
+              className="cursor-pointer gap-2.5 py-2 font-medium"
+            >
+              <FileText className="h-4 w-4 text-[#0d9488]" />
+              Road Safety
+            </DropdownMenuItem>
+
+            {/* Social with hover-revealed sub forms panel at the bottom */}
+            <div
+              className="flex flex-col"
+              onMouseEnter={() => setSocialHovered(true)}
+              onMouseLeave={() => setSocialHovered(false)}
+            >
+              <div
+                onClick={() => setSocialHovered(prev => !prev)}
+                className={cn(
+                  "flex cursor-pointer items-center justify-between gap-2.5 rounded-sm px-2 py-2 text-sm select-none transition-colors font-medium",
+                  socialHovered ? "bg-[#0d9488]/10 text-[#0d9488]" : "hover:bg-accent hover:text-accent-foreground text-foreground"
+                )}
+              >
+                <div className="flex items-center gap-2.5">
+                  <FileText className="h-4 w-4 text-[#0d9488]" />
+                  <span>Social</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    "h-3.5 w-3.5 text-muted-foreground transition-transform duration-200",
+                    socialHovered && "rotate-180 text-[#0d9488]"
+                  )}
+                />
+              </div>
+
+              {/* Sub forms panel directly at the bottom of the Social button */}
+              {socialHovered && (
+                <div className="mt-1 flex flex-col gap-0.5 pl-2 py-1.5 border-l-2 border-[#0d9488] ml-4 bg-muted/40 rounded-r-md animate-in fade-in-0 slide-in-from-top-1 duration-150">
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setSsOpen(true)
+                      setAddMenuOpen(false)
+                      setSocialHovered(false)
+                    }}
+                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                    Social Safeguard Compliance for MPR
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setStOpen(true)
+                      setAddMenuOpen(false)
+                      setSocialHovered(false)
+                    }}
+                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                    Skill Training & Employment
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setLlOpen(true)
+                      setAddMenuOpen(false)
+                      setSocialHovered(false)
+                    }}
+                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                    Labour Law Compliance
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setGenOpen(true)
+                      setAddMenuOpen(false)
+                      setSocialHovered(false)
+                    }}
+                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                    Gender
+                  </DropdownMenuItem>
+                </div>
+              )}
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
+        </div>
       </div>
 
       {/* Stat Cards — responsive grid */}
@@ -982,7 +1060,7 @@ export default function EsFormsView() {
                 <TableHead className="text-xs font-bold text-foreground">Date</TableHead>
                 <TableHead className="text-xs font-bold text-foreground">Status</TableHead>
                 <TableHead className="text-xs font-bold text-foreground">Remarks</TableHead>
-                <TableHead className="text-xs w-14"></TableHead>
+                <TableHead className="text-xs font-bold text-foreground text-right w-20 pr-4">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -1009,7 +1087,7 @@ export default function EsFormsView() {
                     </span>
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground max-w-[120px] truncate">{entry.remarks || '—'}</TableCell>
-                  <TableCell>
+                  <TableCell className="pr-4">
                     <div className="flex items-center justify-end gap-1">
                       <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-blue-500 hover:text-blue-600 hover:bg-blue-50"
                         onClick={() => { setEditingEntry(entry); setAddType(entry.formType); setAddOpen(true); }}>

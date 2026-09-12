@@ -68,14 +68,36 @@ export function saveLabourLawSubmissions(data: LabourLawSubmission[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 }
 
+function emptySubCont(): SubCont {
+  return { id: Date.now().toString() + Math.random(), nameAddress: '', nature: '', location: '', from: '', to: '', maxWorkers: '' }
+}
+function emptyEmpData(): EmpData {
+  return { id: Date.now().toString() + Math.random(), empCode: '', name: '', surname: '', gender: 'Male', fatherSpouse: '', dob: '', nationality: 'Indian', edu: '', doj: '', designation: '', category: '', address: '', empType: 'Regular', mobile: '', uan: '', pan: '', esic: '', lwf: '', aadhaar: '', bankAcc: '', ifsc: '', presentAddr: '', permAddr: '', serviceBook: '', exitDate: '', exitReason: '', mark: '', sign: '', remarks: '' }
+}
+function emptyWageRec(): WageRec {
+  return { id: Date.now().toString() + Math.random(), name: '', wageRate: '', days: '', otHours: '', basic: '', specialBasic: '', da: '', payOt: '', hra: '', others: '', total: '', pf: '', esic: '', society: '', incomeTax: '', insurance: '', otherRecov: '', totalRecov: '', net: '', empShare: '', pfWelfare: '', receipt: '', payDate: '', remarks: '' }
+}
+function emptyAttend(): Attend {
+  return { id: Date.now().toString() + Math.random(), date: '', daily: '', records: '' }
+}
+function emptyOvertime(): Overtime {
+  return { id: Date.now().toString() + Math.random(), name: '', fatherHusband: '', gender: 'Male', desig: '', datesOt: '', totalOt: '', normalRate: '', otRate: '', otEarnings: '', datePaid: '', remarks: '' }
+}
+function emptyRecovery(): Recovery {
+  return { id: Date.now().toString() + Math.random(), name: '', recType: '', particulars: '', damageDate: '', amount: '', showCause: '', explHeard: '', instalments: '', firstMonth: '', lastMonth: '', dateComplete: '', remarks: '' }
+}
+function emptyGap(): Gap {
+  return { id: Date.now().toString() + Math.random(), gap: '', rec: '', responsible: '', targetDate: '', status: '' }
+}
+
 function initData(): Omit<LabourLawSubmission, 'id' | 'projectName' | 'reportingMonth' | 'projectNumber' | 'projectTitle' | 'manager' | 'customer' | 'boq' | 'boqDesc' | 'createdDate' | 'status' | 'submittedAt'> {
   return {
     registrations: ACTS.map(a => ({ act: a, licenseNo: '', startDate: '', expiryDate: '', status: '', doc: null })),
     facilities: FACILITIES.map(f => ({ req: f, status: '', doc: null })),
-    subContractors: { records: [], doc: null },
-    employees: { records: [], doc: null },
-    wages: { records: [], doc: null },
-    attendance: [],
+    subContractors: { records: [emptySubCont()], doc: null },
+    employees: { records: [emptyEmpData()], doc: null },
+    wages: { records: [emptyWageRec()], doc: null },
+    attendance: [emptyAttend()],
     profile: {
       gender: [{ row: 'Male', a:'',b:'',c:'',d:'',e:'' },{ row: 'Female', a:'',b:'',c:'',d:'',e:'' },{ row: 'Total', a:'',b:'',c:'',d:'',e:'' }],
       skill: [{ row: 'Highly Skilled', a:'',b:'',c:'',d:'',e:'' },{ row: 'Skilled', a:'',b:'',c:'',d:'',e:'' },{ row: 'Semi-Skilled', a:'',b:'',c:'',d:'',e:'' },{ row: 'Unskilled', a:'',b:'',c:'',d:'',e:'' },{ row: 'Total', a:'',b:'',c:'',d:'',e:'' }],
@@ -83,10 +105,10 @@ function initData(): Omit<LabourLawSubmission, 'id' | 'projectName' | 'reporting
       age: [{ row: '14-18', a:'',b:'',c:'',d:'',e:'' },{ row: '18-25', a:'',b:'',c:'',d:'',e:'' },{ row: '25-50', a:'',b:'',c:'',d:'',e:'' },{ row: 'Above 50', a:'',b:'',c:'',d:'',e:'' },{ row: 'Total', a:'',b:'',c:'',d:'',e:'' }],
       source: [{ row: 'Main Contractor', a:'',b:'',c:'',d:'',e:'' },{ row: 'Sub-contractor', a:'',b:'',c:'',d:'',e:'' },{ row: 'Independent', a:'',b:'',c:'',d:'',e:'' },{ row: 'Other', a:'',b:'',c:'',d:'',e:'' },{ row: 'Total', a:'',b:'',c:'',d:'',e:'' }]
     },
-    overtime: { records: [], doc: null },
-    recovery: { records: [], doc: null },
+    overtime: { records: [emptyOvertime()], doc: null },
+    recovery: { records: [emptyRecovery()], doc: null },
     wageSlips: [],
-    gaps: []
+    gaps: [emptyGap()]
   }
 }
 
@@ -118,11 +140,12 @@ function FileUploader({ files, onAdd, onRemove, multiple = true }: { files: UFil
   )
 }
 
-function TableWrapper({ headers, children, onAdd, addLabel = 'Add Row' }: { headers: string[], children: React.ReactNode, onAdd?: () => void, addLabel?: string }) {
+function TableWrapper({ headers, children, onAdd, addLabel = 'Add New Row' }: { headers: string[], children: React.ReactNode, onAdd?: () => void, addLabel?: string }) {
+  const displayLabel = addLabel.startsWith('Add New') ? addLabel : addLabel.replace(/^Add\s+/, 'Add New ')
   return (
     <div className="space-y-2 mb-6">
       <div className="border rounded-md overflow-x-auto"><table className="w-full text-xs min-w-[650px]"><thead className="bg-muted/40"><tr>{headers.map((h, i) => <th key={i} className="p-2 text-left font-semibold border-b whitespace-nowrap">{h}</th>)}</tr></thead><tbody>{children}</tbody></table></div>
-      {onAdd && <Button type="button" variant="outline" size="sm" onClick={onAdd} className="h-7 text-xs gap-1 border-dashed"><Plus className="h-3 w-3" /> {addLabel}</Button>}
+      {onAdd && <Button type="button" variant="outline" size="sm" onClick={onAdd} className="h-7 text-xs gap-1 border-dashed"><Plus className="h-3 w-3" /> {displayLabel}</Button>}
     </div>
   )
 }

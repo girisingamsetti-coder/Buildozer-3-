@@ -190,9 +190,25 @@ export function saveOHSSubmissions(data: OHSSubmission[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 }
 
+function emptyTBTRecord(): TBTRecord {
+  return { id: Date.now().toString() + Math.random(), status: null, date: '', topic: '', documents: [], remarks: '' }
+}
+function emptyTrainingRecord(): TrainingRecord {
+  return { id: Date.now().toString() + Math.random(), date: '', topic: '', frequency: '', type: '', otherType: '', participants: '', attendanceSheet: null, relevantDocument: null, remarks: '' }
+}
+function emptyInspectionRecord(): InspectionRecord {
+  return { id: Date.now().toString() + Math.random(), date: '', type: '', inspector: '', report: null, remarks: '' }
+}
+function emptySOPSubmission(): SOPSubmission {
+  return { id: Date.now().toString() + Math.random(), name: '', file: null, remarks: '', otherName: '' }
+}
+function emptyIncidentRecord(): IncidentRecord {
+  return { id: Date.now().toString() + Math.random(), type: '', otherType: '', description: '', rca: '', capa: '', report: null }
+}
+
 const initialData = (): Omit<OHSSubmission, 'id' | 'projectName' | 'reportingMonth' | 'projectNumber' | 'projectTitle' | 'manager' | 'customer' | 'boq' | 'boqDesc' | 'createdDate' | 'status' | 'submittedBy'> => ({
   induction: { status: null, date: '', participants: '', document: null, remarks: '' },
-  tbtRecords: [],
+  tbtRecords: [emptyTBTRecord()],
   wmsHira: { status: null, document: null, remarks: '' },
   fireSafety: { status: null, photos: [], remarks: '' },
   drinkingWater: { status: null, photo: null, remarks: '' },
@@ -202,21 +218,21 @@ const initialData = (): Omit<OHSSubmission, 'id' | 'projectName' | 'reportingMon
   mpr: { status: null, document: null, remarks: '' },
   recognition: { status: null, document: null, remarks: '' },
   rewards: { staff: '', workers: '', total: '', remarks: '' },
-  trainings: [],
-  inspections: [],
+  trainings: [emptyTrainingRecord()],
+  inspections: [emptyInspectionRecord()],
   safetyAudit: { status: null, document: null, remarks: '', complianceDocument: null, complianceRemarks: '' },
   internalAudit: { status: null, document: null, remarks: '', complianceDocument: null, complianceRemarks: '' },
   msasAudit: { status: null, document: null, remarks: '', complianceDocument: null, complianceRemarks: '' },
   electricalAudit: { status: null, document: null, remarks: '', complianceDocument: null, complianceRemarks: '' },
   hira: { status: null, document: null, remarks: '' },
-  sops: [],
+  sops: [emptySOPSubmission()],
   ohsPolicy: { status: null, document: null, remarks: '' },
   ohsPlan: { status: null, document: null, remarks: '' },
   erp: { status: null, document: null, remarks: '' },
   liftingTools: { status: null, document: null, remarks: '' },
   heatStress: { status: null, document: null, remarks: '' },
   monsoon: { status: null, document: null, remarks: '' },
-  incidents: [],
+  incidents: [emptyIncidentRecord()],
 })
 
 // ==================== UPLOAD HELPER ====================
@@ -490,7 +506,7 @@ export default function OHSFormDialog({ open, onOpenChange, onSaved, defaultProj
               <div className="pt-4 border-t">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-slate-800">2. Daily Tool Box Talks</h3>
-                  <Button size="sm" onClick={() => setData({...data, tbtRecords: [...data.tbtRecords, { id: Date.now().toString(), status: null, date: '', topic: '', documents: [], remarks: '' }]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add TBT</Button>
+                  <Button size="sm" onClick={() => setData({...data, tbtRecords: [...data.tbtRecords, emptyTBTRecord()]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add New TBT</Button>
                 </div>
                 {data.tbtRecords.map((tbt, i) => (
                   <Card key={tbt.id} className="mb-4">
@@ -597,7 +613,7 @@ export default function OHSFormDialog({ open, onOpenChange, onSaved, defaultProj
             <div className="space-y-6 max-w-4xl mx-auto">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-slate-800">Training Records</h3>
-                <Button size="sm" onClick={() => setData({...data, trainings: [...data.trainings, { id: Date.now().toString(), date: '', topic: '', frequency: '', type: '', otherType: '', participants: '', attendanceSheet: null, relevantDocument: null, remarks: '' }]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add Training</Button>
+                <Button size="sm" onClick={() => setData({...data, trainings: [...data.trainings, emptyTrainingRecord()]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add New Training</Button>
               </div>
               {data.trainings.map((tr, i) => (
                 <Card key={tr.id} className="mb-4">
@@ -633,7 +649,7 @@ export default function OHSFormDialog({ open, onOpenChange, onSaved, defaultProj
             <div className="space-y-6 max-w-4xl mx-auto">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-slate-800">OHS Inspections – according to frequency</h3>
-                <Button size="sm" onClick={() => setData({...data, inspections: [...data.inspections, { id: Date.now().toString(), date: '', type: '', inspector: '', report: null, remarks: '' }]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add Inspection</Button>
+                <Button size="sm" onClick={() => setData({...data, inspections: [...data.inspections, emptyInspectionRecord()]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add New Inspection</Button>
               </div>
               {data.inspections.map((ins, i) => (
                 <Card key={ins.id} className="mb-4">
@@ -691,7 +707,7 @@ export default function OHSFormDialog({ open, onOpenChange, onSaved, defaultProj
               <div className="pt-4 border-t">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-slate-800">2. SOP Submission List</h3>
-                  <Button size="sm" onClick={() => setData({...data, sops: [...data.sops, { id: Date.now().toString(), name: '', file: null, remarks: '' }]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add SOP</Button>
+                  <Button size="sm" onClick={() => setData({...data, sops: [...data.sops, emptySOPSubmission()]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add New SOP</Button>
                 </div>
                 {data.sops.map((sop, i) => (
                   <Card key={sop.id} className="mb-4">
@@ -760,7 +776,7 @@ export default function OHSFormDialog({ open, onOpenChange, onSaved, defaultProj
             <div className="space-y-6 max-w-4xl mx-auto">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-slate-800">Near Miss / Incident Reports</h3>
-                <Button size="sm" onClick={() => setData({...data, incidents: [...data.incidents, { id: Date.now().toString(), type: '', otherType: '', description: '', rca: '', capa: '', report: null }]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add Incident</Button>
+                <Button size="sm" onClick={() => setData({...data, incidents: [...data.incidents, emptyIncidentRecord()]})} className="h-8 gap-1"><Plus className="h-3.5 w-3.5"/> Add New Incident</Button>
               </div>
               {data.incidents.map((inc, i) => (
                 <Card key={inc.id} className="mb-4">
