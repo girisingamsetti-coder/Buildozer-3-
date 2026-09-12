@@ -52,6 +52,7 @@ import { useAuthStore, roleLabels, rolePermissions, type UserRole } from '@/stor
 import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
+import { SystemInfoDemoView } from './system-info-demo-view'
 
 
 // ==================== TYPES ====================
@@ -1277,9 +1278,9 @@ export default function SettingsView() {
             <span className="sm:hidden">Audit</span>
           </TabsTrigger>
           <TabsTrigger value="about" className="text-sm gap-1.5">
-            <Info className="h-4 w-4" />
-            <span className="hidden sm:inline">About</span>
-            <span className="sm:hidden">About</span>
+            <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+            <span className="hidden sm:inline">System Information & Demo</span>
+            <span className="sm:hidden">System Info</span>
           </TabsTrigger>
         </TabsList>
 
@@ -1300,89 +1301,7 @@ export default function SettingsView() {
         </TabsContent>
 
         <TabsContent value="about">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Profile Card */}
-            <motion.div {...fadeInUp}>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Your Profile</CardTitle>
-                  <CardDescription>Your account information</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
-                        <Users className="h-7 w-7" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold">{userName || 'Demo User'}</h3>
-                        <p className="text-sm text-muted-foreground">{roleLabels[role] || role}</p>
-                      </div>
-                    </div>
-                    <Separator />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-3">
-                        <Shield className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-muted-foreground">Role</p>
-                          <p className="font-medium">{roleLabels[role] || role}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Globe className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-muted-foreground">Contractor</p>
-                          <p className="font-medium">{contractorName || 'N/A'}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* System Info Card */}
-            <motion.div {...fadeInUp} transition={{ duration: 0.35, delay: 0.1 }}>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">System Information</CardTitle>
-                  <CardDescription>Application and environment details</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center gap-3">
-                      <Info className="h-4 w-4 text-muted-foreground" />
-                      <div>
-                        <p className="text-muted-foreground">App Version</p>
-                        <p className="font-medium">RMS v0.3.0</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Database className="h-4 w-4 text-muted-foreground" />
-                      <div>
-                        <p className="text-muted-foreground">Database</p>
-                        <p className="font-medium">SQLite (connected)</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Globe className="h-4 w-4 text-muted-foreground" />
-                      <div>
-                        <p className="text-muted-foreground">Framework</p>
-                        <p className="font-medium">Next.js 16 + TypeScript</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Shield className="h-4 w-4 text-muted-foreground" />
-                      <div>
-                        <p className="text-muted-foreground">ORM</p>
-                        <p className="font-medium">Prisma 6</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+          <SystemInfoDemoView />
         </TabsContent>
       </Tabs>
     </div>
