@@ -63,6 +63,7 @@ const pageComponents: Record<string, React.LazyExoticComponent<any>> = {
   medical: MedicalView,
   training: TrainingView,
   attendance: WorkforceView,
+  payroll: WorkforceView,
   incidents: IncidentListView,
   'incident-detail': IncidentDetailView,
   'incident-form': IncidentFormView,

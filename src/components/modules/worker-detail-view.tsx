@@ -227,6 +227,15 @@ export default function WorkerDetailView() {
     enabled: !!workerId,
   })
 
+  const { data: payrollHistory } = useQuery<{ data: { salaryHistory: any[]; epfHistory: any[] } }>({
+    queryKey: ['worker-payroll', workerId],
+    queryFn: () => fetch(`/api/workers/${workerId}/payroll`).then((r) => r.json()),
+    enabled: !!workerId,
+  })
+
+  const salaryHistory = payrollHistory?.data?.salaryHistory ?? []
+  const epfHistory = payrollHistory?.data?.epfHistory ?? []
+
   const attendanceRecords = attendanceData?.data ?? []
   // Filter last 7 days
   const last7Attendance = attendanceRecords.filter((a) => {
@@ -681,17 +690,131 @@ export default function WorkerDetailView() {
           </Card>
         </TabsContent>
 
-        {/* ====== Wages Tab ====== */}
-        <TabsContent value="wages">
+        {/* ====== Wages & Payroll Tab ====== */}
+        <TabsContent value="wages" className="space-y-4">
+          {/* Salary History */}
           <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">Wage Records</CardTitle>
+            <CardHeader className="pb-3 flex flex-row items-center justify-between">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Wallet className="h-4 w-4 text-[#0d9488]" />
+                Salary Payment History
+              </CardTitle>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs h-7"
+                onClick={() => setPage('payroll')}
+              >
+                Open in Payroll Module
+              </Button>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8 text-muted-foreground">
-                <Wallet className="h-8 w-8 mx-auto mb-2 opacity-40" />
-                <p className="text-sm">Wage records are managed via the Payroll module</p>
-              </div>
+              {salaryHistory.length === 0 ? (
+                <div className="text-center py-6 text-muted-foreground text-xs">
+                  <p>No external salary payment records logged for this worker.</p>
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  {salaryHistory.map((s: any) => (
+                    <div
+                      key={s.id}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg border gap-2 text-xs"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-sm text-foreground">{s.period}</span>
+                          <Badge
+                            className={
+                              s.paymentStatus === 'Paid'
+                                ? 'bg-emerald-100 text-emerald-800 text-[10px]'
+                                : 'bg-muted text-muted-foreground text-[10px]'
+                            }
+                          >
+                            {s.paymentStatus}
+                          </Badge>
+                          {s.verificationStatus === 'Verified' && (
+                            <Badge variant="outline" className="text-teal-700 text-[10px] border-teal-300">Verified</Badge>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                          {s.paymentMode || 'Bank Transfer'} &middot; Ref: <span className="font-mono">{s.externalReference || '—'}</span>
+                          {s.paymentDate && ` &middot; Disbursed: ${new Date(s.paymentDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}`}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-4 text-right font-mono">
+                        <div>
+                          <span className="text-muted-foreground block text-[10px]">Gross:</span>
+                          <span>₹{s.grossSalary?.toLocaleString('en-IN')}</span>
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground block text-[10px]">Net Paid:</span>
+                          <span className="font-bold text-emerald-600 dark:text-emerald-400">₹{s.netSalary?.toLocaleString('en-IN')}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* EPF Statutory History */}
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Shield className="h-4 w-4 text-teal-600" />
+                EPF Statutory Contribution & Deposit History
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {epfHistory.length === 0 ? (
+                <div className="text-center py-6 text-muted-foreground text-xs">
+                  <p>No EPF contribution records logged for this worker.</p>
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  {epfHistory.map((e: any) => (
+                    <div
+                      key={e.id}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg border gap-2 text-xs"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-sm text-foreground">{e.period}</span>
+                          <Badge variant="outline" className="text-[10px]">ECR {e.ecrStatus}</Badge>
+                          <Badge
+                            className={
+                              e.timelinessStatus === 'On Time'
+                                ? 'bg-emerald-100 text-emerald-800 text-[10px]'
+                                : e.timelinessStatus === 'Late'
+                                ? 'bg-amber-100 text-amber-800 text-[10px]'
+                                : 'bg-muted text-muted-foreground text-[10px]'
+                            }
+                          >
+                            {e.timelinessStatus}
+                          </Badge>
+                        </div>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                          ECR: <span className="font-mono">{e.ecrReference || '—'}</span> &middot; Challan: <span className="font-mono">{e.challanNumber || '—'}</span>
+                          {e.depositDate && ` &middot; Deposit: ${new Date(e.depositDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}`}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-4 text-right font-mono">
+                        <div>
+                          <span className="text-muted-foreground block text-[10px]">EPF Wage:</span>
+                          <span>₹{e.epfWage?.toLocaleString('en-IN')}</span>
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground block text-[10px]">Total EPF:</span>
+                          <span className="font-bold text-teal-700 dark:text-teal-300">₹{e.totalContribution?.toLocaleString('en-IN')}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

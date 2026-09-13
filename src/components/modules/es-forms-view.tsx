@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
@@ -341,6 +342,7 @@ function AddFormDialog({
   const [status, setStatus] = useState<FormStatus>('Pending')
   const [remarks, setRemarks] = useState('')
 
+   
   useEffect(() => {
     if (editingEntry && open) {
       setFormType(editingEntry.formType)

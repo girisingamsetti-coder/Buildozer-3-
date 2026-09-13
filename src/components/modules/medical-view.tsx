@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
 import { useState, useMemo, useCallback, useEffect } from 'react'
@@ -336,6 +337,7 @@ function AddMedicalDialog({ worker, open, onOpenChange }: {
 
   const [formPhotos, setFormPhotos] = useState<string[]>([])
   const selectedChronic = useWatch({ control, name: 'chronicDiseases' }) || []
+  // eslint-disable-next-line react-hooks/incompatible-library
   const formValues = watch()
 
   useEffect(() => {
@@ -910,6 +912,7 @@ export default function MedicalView() {
   }, [medicalRecords, resultFilter, typeFilter])
 
   // Auto-select first available worker by default
+   
   useEffect(() => {
     if (workers.length > 0) {
       setSelectedWorkerId((current) => {

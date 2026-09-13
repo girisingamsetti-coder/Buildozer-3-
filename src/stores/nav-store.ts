@@ -10,6 +10,7 @@ export type PageId =
   | 'medical'
   | 'training'
   | 'attendance'
+  | 'payroll'
   | 'incidents'
   | 'incident-detail'
   | 'incident-form'
@@ -57,6 +58,7 @@ export const pageTitles: Record<PageId, string> = {
   medical: 'Medical Records',
   training: 'Training & Certification',
   attendance: 'Attendance',
+  payroll: 'Payroll',
   incidents: 'Incident Register',
   'incident-detail': 'Incident Details',
   'incident-form': 'Log Incident',

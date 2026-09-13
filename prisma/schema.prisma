@@ -92,6 +92,8 @@ model Worker {
   trainingRecords     TrainingRecord[]
   drivenVehicles      Vehicle[]          @relation("VehicleDriver")
   wageRecords         WageRecord[]
+  salaryPayments      SalaryPaymentRecord[]
+  epfRecords          EPFRecord[]
   contractor          Contractor?        @relation(fields: [contractorId], references: [id])
   designation         Designation?       @relation(fields: [designationId], references: [id])
   labourCamp          LabourCamp?        @relation(fields: [labourCampId], references: [id])
@@ -520,3 +522,127 @@ model Notification {
   priority   String   @default("Medium")
   createdAt  DateTime @default(now())
 }
+
+model SalaryPaymentRecord {
+  id                  String    @id @default(cuid())
+  workerId            String
+  period              String    // e.g. "2026-09"
+  payableDays         Int       @default(0)
+  grossSalary         Float     @default(0)
+  deductions          Float     @default(0)
+  netSalary           Float     @default(0)
+  paymentStatus       String    @default("Not Recorded") // "Paid", "Not Recorded", "Partially Paid", "Failed / Returned", "On Hold", "Disputed", "Unknown"
+  paymentDate         DateTime?
+  paymentMode         String?   // "Bank Transfer", "NEFT/RTGS", "Cheque", "Cash", "UPI", "Other"
+  externalReference   String?   // UTR / Cheque / Transaction reference
+  paymentSource       String?   @default("Contractor") // "Employer", "Contractor", "External Payroll System", "Bank", "Manual Record", "Other"
+  bankName            String?
+  accountLast4        String?   // Masked: only last 4 digits displayed
+  proofDocumentName   String?
+  proofDocumentUrl    String?
+  verificationStatus  String    @default("Pending Verification") // "Pending Verification", "Verified", "Rejected", "Verification Not Required"
+  verifiedBy          String?
+  verifiedAt          DateTime?
+  verificationRemarks String?
+  remarks             String?
+  createdBy           String?
+  updatedBy           String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  worker              Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
+
+  @@unique([workerId, period])
+  @@index([period])
+  @@index([paymentStatus])
+  @@index([verificationStatus])
+}
+
+model EPFRecord {
+  id                   String    @id @default(cuid())
+  workerId             String
+  period               String    // e.g. "2026-09"
+  uan                  String?
+  epfApplicable        Boolean   @default(true)
+  epfWage              Float     @default(0)
+  employeeContribution Float     @default(0) // 12%
+  employerContribution Float     @default(0) // 3.67%
+  epsContribution      Float     @default(0) // 8.33%
+  edliContribution     Float     @default(0) // 0.5%
+  totalContribution    Float     @default(0)
+  ecrStatus            String    @default("Pending") // "Filed", "Pending", "Corrected", "Rejected", "Not Applicable"
+  ecrReference         String?
+  ecrFilingDate        DateTime?
+  challanNumber        String?
+  challanDate          DateTime?
+  depositDate          DateTime?
+  dueDate              DateTime?
+  externalReference    String?   // UTR / Payment reference
+  timelinessStatus     String    @default("Pending") // "On Time", "Late", "Pending", "Overdue", "Not Applicable"
+  daysDifference       Int?      @default(0)
+  proofDocumentName    String?
+  proofDocumentUrl     String?
+  verificationStatus   String    @default("Pending Verification") // "Pending Verification", "Verified", "Rejected", "Verification Not Required"
+  verifiedBy           String?
+  verifiedAt           DateTime?
+  verificationRemarks  String?
+  remarks              String?
+  createdBy            String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  worker               Worker    @relation(fields: [workerId], references: [id], onDelete: Cascade)
+
+  @@unique([workerId, period])
+  @@index([period])
+  @@index([timelinessStatus])
+}
+
+model ECRRecord {
+  id                  String    @id @default(cuid())
+  period              String    // e.g. "2026-09"
+  contractorId        String?
+  contractorName      String?
+  workerCount         Int       @default(0)
+  ecrReference        String
+  filingDate          DateTime?
+  totalAmount         Float     @default(0)
+  challanNumber       String?
+  challanDate         DateTime?
+  depositDate         DateTime?
+  status              String    @default("Filed") // "Filed", "Pending", "Corrected", "Rejected", "Not Applicable"
+  proofDocumentUrl    String?
+  proofDocumentName   String?
+  verificationStatus  String    @default("Verified")
+  remarks             String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([period])
+}
+
+model PaymentDocument {
+  id            String    @id @default(cuid())
+  workerId      String?
+  workerName    String?
+  employeeNumber String?
+  contractorId  String?
+  contractorName String?
+  siteId        String?
+  siteName      String?
+  period        String    // e.g. "2026-09"
+  category      String    // "Salary" | "EPF"
+  documentType  String    // e.g. "Salary Register", "Bank Statement", "ECR", "Challan", "EPF Deposit Proof", etc.
+  fileName      String
+  fileUrl       String
+  fileSize      String?
+  status        String    @default("Uploaded") // "Uploaded", "Pending Verification", "Verified", "Rejected"
+  verifiedBy    String?
+  verifiedAt    DateTime?
+  uploadedBy    String?
+  remarks       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([period])
+  @@index([category])
+}
+
