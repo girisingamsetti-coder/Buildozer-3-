@@ -194,7 +194,7 @@ export default function PayrollImportDialog({
         setPhase('preview')
         validateMutation.mutate(mapped)
       } catch {
-        toast.error('Failed to parse file. Please upload a valid .xlsx or .csv file')
+        toast.error('Failed to parse file. Please upload a valid .xlsx or .xls file')
       }
     }
     reader.readAsBinaryString(file)
@@ -223,12 +223,12 @@ export default function PayrollImportDialog({
             <div className="border-2 border-dashed rounded-xl p-8 text-center space-y-3 hover:border-[#0d9488]/60 transition-colors">
               <Upload className="h-10 w-10 text-muted-foreground mx-auto" />
               <div>
-                <p className="text-sm font-medium">Select or drag your payroll Excel / CSV file</p>
-                <p className="text-xs text-muted-foreground mt-1">Supports .xlsx, .xls, .csv</p>
+                <p className="text-sm font-medium">Select or drag your payroll Excel file</p>
+                <p className="text-xs text-muted-foreground mt-1">Supports .xlsx, .xls</p>
               </div>
               <label className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0d9488] hover:bg-[#0f766e] text-white text-xs font-medium cursor-pointer transition-colors">
                 <span>Choose File</span>
-                <input type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={handleFile} />
+                <input type="file" accept=".xlsx,.xls" className="hidden" onChange={handleFile} />
               </label>
             </div>
 

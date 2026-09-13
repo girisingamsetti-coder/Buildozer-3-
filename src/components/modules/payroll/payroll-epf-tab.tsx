@@ -380,8 +380,14 @@ export default function PayrollEPFTab({ period }: PayrollEPFTabProps) {
             </Select>
 
             {(search || contractorId !== 'all' || siteId !== 'all' || ecrStatus !== 'all' || timelinessStatus !== 'all') && (
-              <Button variant="ghost" size="sm" onClick={handleClearFilters} className="h-8 text-xs text-muted-foreground hover:text-foreground">
-                <X className="h-3 w-3 mr-1" /> Clear
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 px-4 rounded-full text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20"
+                onClick={handleClearFilters}
+              >
+                <X className="h-3.5 w-3.5 mr-1" />
+                Clear Filters
               </Button>
             )}
           </div>

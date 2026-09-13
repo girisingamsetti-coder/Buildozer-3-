@@ -17,10 +17,10 @@ export function SortableHeader({ column, sortKey, sortDir, onToggle, children, c
   const isActive = sortKey === column
   return (
     <TableHead
-      className={`cursor-pointer select-none hover:bg-muted/50 transition-colors ${className ?? ''}`}
+      className={`cursor-pointer select-none hover:bg-muted/50 transition-colors py-0 ${className ?? ''}`}
       onClick={() => onToggle(column)}
     >
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 h-full">
         <span>{children}</span>
         {isActive ? (
           sortDir === 'asc' ? <ArrowUp className="h-3.5 w-3.5 text-teal-600" /> : <ArrowDown className="h-3.5 w-3.5 text-teal-600" />

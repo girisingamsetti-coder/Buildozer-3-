@@ -20,6 +20,9 @@ import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import { StatusBadge } from '@/components/shared/status-badge'
 import PhotoUploader from '@/components/shared/photo-uploader'
 import { format, isPast, parseISO } from 'date-fns'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { IncidentPartBForm } from './incident-part-b-form'
+import { IncidentPartCForm } from './incident-part-c-form'
 
 // ---------- types ----------
 interface IncidentWorker {
@@ -66,6 +69,11 @@ interface IncidentDetail {
   site: { id: string; name: string } | null
   workers: IncidentWorker[]
   followUps: FollowUp[]
+  partBStatus: string
+  partCStatus: string
+  partB?: any
+  partC?: any
+  annexures?: any[]
 }
 
 const typeLabels: Record<string, string> = {
@@ -212,6 +220,26 @@ export default function IncidentDetailView() {
         </div>
       </div>
 
+      <Tabs defaultValue="overview" className="w-full">
+        <TabsList className="grid w-full sm:w-auto grid-cols-4 h-auto mb-6">
+          <TabsTrigger value="overview" className="py-2">Overview</TabsTrigger>
+          <TabsTrigger value="partB" className="py-2">
+            Part B
+            {incident.partBStatus === 'Submitted' && <CheckCircle2 className="h-3.5 w-3.5 ml-1.5 text-emerald-600" />}
+          </TabsTrigger>
+          <TabsTrigger value="partC" className="py-2">
+            Part C
+            {incident.partCStatus === 'Submitted' && <CheckCircle2 className="h-3.5 w-3.5 ml-1.5 text-emerald-600" />}
+          </TabsTrigger>
+          <TabsTrigger value="annexures" className="py-2">
+            Annexures
+            {incident.annexures && incident.annexures.length > 0 && (
+              <Badge variant="secondary" className="ml-1.5 h-5 px-1.5 text-[10px]">{incident.annexures.length}</Badge>
+            )}
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-6">
       {/* ====== Incident Info ====== */}
       <Card>
         <CardHeader className="pb-3"><CardTitle className="text-base flex items-center gap-2"><FileText className="h-4 w-4 text-teal-600" /> Incident Information</CardTitle></CardHeader>
@@ -405,6 +433,8 @@ export default function IncidentDetailView() {
                 <SelectTrigger className="w-full sm:w-56"><SelectValue placeholder="Change status to..." /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Open">Open</SelectItem>
+                  <SelectItem value="Investigation Pending">Investigation Pending</SelectItem>
+                  <SelectItem value="Investigation In Progress">Investigation In Progress</SelectItem>
                   <SelectItem value="UnderInvestigation">Under Investigation</SelectItem>
                   <SelectItem value="Closed">Closed</SelectItem>
                 </SelectContent>
@@ -416,6 +446,32 @@ export default function IncidentDetailView() {
           </CardContent>
         </Card>
       )}
+      </TabsContent>
+
+      <TabsContent value="partB">
+        <IncidentPartBForm 
+          incidentId={id} 
+          initialData={incident.partB || {}} 
+          status={incident.partBStatus} 
+        />
+      </TabsContent>
+
+      <TabsContent value="partC">
+        <IncidentPartCForm 
+          incidentId={id} 
+          initialData={incident.partC || {}} 
+          status={incident.partCStatus} 
+        />
+      </TabsContent>
+
+      <TabsContent value="annexures">
+        <Card>
+          <CardContent className="pt-6 text-center text-muted-foreground">
+            <p>Annexures list and upload will go here</p>
+          </CardContent>
+        </Card>
+      </TabsContent>
+      </Tabs>
     </div>
   )
 }

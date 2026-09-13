@@ -798,9 +798,7 @@ export function SystemInfoDemoView() {
                     <Badge variant="outline" className="text-xs gap-1 py-1">
                       <FileSpreadsheet className="h-3 w-3 text-emerald-600" /> Excel (SheetJS XLSX)
                     </Badge>
-                    <Badge variant="outline" className="text-xs gap-1 py-1">
-                      <FileText className="h-3 w-3 text-blue-600" /> CSV Native Exporter
-                    </Badge>
+
                     <Badge variant="outline" className="text-xs gap-1 py-1">
                       <PrinterIcon className="h-3 w-3 text-purple-600" /> Print-Ready Formats
                     </Badge>

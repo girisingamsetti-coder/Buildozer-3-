@@ -46,6 +46,8 @@ interface NavState {
   setMobileView: (device: string | false) => void
   toggleMobileView: () => void
   goBack: () => void
+  dashboardMode: 'd1' | 'd2'
+  setDashboardMode: (mode: 'd1' | 'd2') => void
 }
 
 export const pageTitles: Record<PageId, string> = {
@@ -80,6 +82,8 @@ export const useNavStore = create<NavState>((set, get) => ({
   sidebarOpen: true,
   sidebarCollapsed: false,
   mobileView: false,
+  dashboardMode: 'd2',
+  setDashboardMode: (mode) => set({ dashboardMode: mode }),
   workerFormDialogOpen: false,
   workerFormEditId: null,
   openWorkerForm: (editId = null) =>

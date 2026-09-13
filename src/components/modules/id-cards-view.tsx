@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { IdCard, Search, Eye, Users, UserCog, Building2, MapPin } from 'lucide-react'
+import { IdCard, Search, Eye, Users, UserCog, Building2, MapPin, X } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -149,6 +149,20 @@ function WorkersTab() {
             ))}
           </SelectContent>
         </Select>
+        {(search || contractorFilter !== 'all' || siteFilter !== 'all') && (
+          <Button
+            variant="outline"
+            className="h-9 px-4 rounded-full text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20 shrink-0"
+            onClick={() => {
+              setSearch('')
+              setContractorFilter('all')
+              setSiteFilter('all')
+            }}
+          >
+            <X className="h-3.5 w-3.5 mr-1" />
+            Clear Filters
+          </Button>
+        )}
         <TableExportButton
           rows={workers}
           columns={workerIdCardExportColumns}

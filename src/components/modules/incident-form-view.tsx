@@ -16,6 +16,8 @@ import {
 } from '@/components/ui/select'
 import { useNavStore } from '@/stores/nav-store'
 import PhotoUploader from '@/components/shared/photo-uploader'
+import { IncidentPartBForm } from './incident-part-b-form'
+import { IncidentPartCForm } from './incident-part-c-form'
 
 // ---------- types ----------
 interface WorkerOption {
@@ -59,6 +61,10 @@ export default function IncidentFormView() {
   const [employerNotifiedAt, setEmployerNotifiedAt] = useState('')
   const [compensationStatus, setCompensationStatus] = useState('')
   const [familyNotified, setFamilyNotified] = useState(false)
+
+  // Part B and C data state
+  const [partBData, setPartBData] = useState<any>(null)
+  const [partCData, setPartCData] = useState<any>(null)
 
   // Worker search
   const [workerSearch, setWorkerSearch] = useState('')
@@ -157,6 +163,8 @@ export default function IncidentFormView() {
       body.compensationStatus = compensationStatus || null
       body.familyNotified = familyNotified
     }
+    body.partB = partBData
+    body.partC = partCData
     createMutation.mutate(body)
   }
 
@@ -366,8 +374,19 @@ export default function IncidentFormView() {
         </CardContent>
       </Card>
 
+      {/* Part B and C */}
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold tracking-tight">Part B: Investigation</h2>
+        <IncidentPartBForm hideActions onDataChange={setPartBData} />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold tracking-tight">Part C: Root Cause Analysis</h2>
+        <IncidentPartCForm hideActions onDataChange={setPartCData} />
+      </div>
+
       {/* Submit */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 pt-4 border-t">
         <Button
           className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
           disabled={createMutation.isPending}

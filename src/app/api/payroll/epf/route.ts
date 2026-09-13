@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import {
   paginatedResponse,
@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
     const timelyDeposits = allPeriodRecords.filter(r => r.timelinessStatus === 'On Time').length
     const lateDeposits = allPeriodRecords.filter(r => r.timelinessStatus === 'Late').length
 
-    return successResponse({
+    return NextResponse.json({
       data,
       total,
       page,

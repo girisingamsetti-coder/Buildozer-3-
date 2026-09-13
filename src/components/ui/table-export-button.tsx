@@ -6,14 +6,7 @@ import { Download, FileSpreadsheet, FileText, Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
+
 import { toast } from "sonner"
 
 /**
@@ -104,7 +97,7 @@ export function TableExportButton<T>({
   hideLabelOnMobile = true,
   label = "Export",
 }: TableExportButtonProps<T>) {
-  const [busy, setBusy] = React.useState<"xlsx" | "csv" | null>(null)
+  const [busy, setBusy] = React.useState<"xlsx" | null>(null)
 
   const hasData = Array.isArray(rows) && rows.length > 0
   const isDisabled = disabled || !hasData || busy !== null
@@ -154,100 +147,32 @@ export function TableExportButton<T>({
     }
   }, [rows, columns, filename, sheetName, hasData])
 
-  const handleExportCsv = React.useCallback(() => {
-    if (!hasData) {
-      toast.error("No data to export")
-      return
-    }
-    setBusy("csv")
-    try {
-      const data = rows.map((row, idx) => buildExportRow(row, idx, columns))
-      const headers = columns.map((c) => c.header)
-      const keys = columns.map((c) => c.key)
 
-      const escapeCell = (val: unknown): string => {
-        if (val === null || val === undefined) return ""
-        const s = String(val)
-        if (/[",\n\r]/.test(s)) {
-          return `"${s.replace(/"/g, '""')}"`
-        }
-        return s
-      }
-
-      const csvLines: string[] = []
-      csvLines.push(headers.map(escapeCell).join(","))
-      data.forEach((d) => {
-        csvLines.push(keys.map((k) => escapeCell(d[k])).join(","))
-      })
-      const csvContent = "\uFEFF" + csvLines.join("\r\n")
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
-      const url = URL.createObjectURL(blob)
-      const stamp = new Date().toISOString().slice(0, 10)
-      const link = document.createElement("a")
-      link.href = url
-      link.download = `${filename}_${stamp}.csv`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      setTimeout(() => URL.revokeObjectURL(url), 1000)
-      toast.success(`Exported ${data.length} row${data.length === 1 ? "" : "s"} to CSV`)
-    } catch (err) {
-      console.error("Export csv error:", err)
-      toast.error("Failed to export CSV file")
-    } finally {
-      setBusy(null)
-    }
-  }, [rows, columns, filename, hasData])
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          type="button"
-          variant={variant}
-          size={size}
-          disabled={isDisabled}
-          className={cn(
-            "bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100",
-            className,
-          )}
-          title={hasData ? `Export ${rows.length} row${rows.length === 1 ? "" : "s"}` : "No data to export"}
-        >
-          {busy ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Download className="h-4 w-4" />
-          )}
-          {hideLabelOnMobile ? (
-            <span className="hidden sm:inline ml-2">{label}</span>
-          ) : (
-            <span className="ml-2">{label}</span>
-          )}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-52">
-        <DropdownMenuLabel className="text-xs text-muted-foreground">
-          Export {rows.length} row{rows.length === 1 ? "" : "s"}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={handleExportXlsx}
-          disabled={!hasData}
-          className="cursor-pointer"
-        >
-          <FileSpreadsheet className="h-4 w-4 mr-2 text-emerald-600" />
-          Excel (.xlsx)
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={handleExportCsv}
-          disabled={!hasData}
-          className="cursor-pointer"
-        >
-          <FileText className="h-4 w-4 mr-2 text-sky-600" />
-          CSV (.csv)
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button
+      type="button"
+      variant={variant}
+      size={size}
+      disabled={isDisabled}
+      onClick={handleExportXlsx}
+      className={cn(
+        "bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100",
+        className,
+      )}
+      title={hasData ? `Export ${rows.length} row${rows.length === 1 ? "" : "s"}` : "No data to export"}
+    >
+      {busy ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        <Download className="h-4 w-4" />
+      )}
+      {hideLabelOnMobile ? (
+        <span className="hidden sm:inline ml-2">{label}</span>
+      ) : (
+        <span className="ml-2">{label}</span>
+      )}
+    </Button>
   )
 }
 

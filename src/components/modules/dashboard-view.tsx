@@ -630,6 +630,7 @@ function DashboardSkeleton() {
 
 export default function DashboardView() {
   const setPage = useNavStore(s => s.setPage)
+  const dashboardMode = useNavStore(s => s.dashboardMode)
   const openWorkerForm = useNavStore(s => s.openWorkerForm)
   const openIncidentForm = useNavStore(s => s.openIncidentForm)
   const mobileViewConfig = useNavStore(s => s.mobileView)
@@ -643,14 +644,16 @@ export default function DashboardView() {
   const [contractorFilter, setContractorFilter] = useState('all')
   const [campFilter, setCampFilter] = useState('all')
   const [projectFilter, setProjectFilter] = useState('all')
+  const [fundingSourceFilter, setFundingSourceFilter] = useState('all')
 
-  const hasActiveFilters = !!searchQuery || !!dateRange || contractorFilter !== 'all' || campFilter !== 'all' || projectFilter !== 'all'
+  const hasActiveFilters = !!searchQuery || !!dateRange || contractorFilter !== 'all' || campFilter !== 'all' || projectFilter !== 'all' || fundingSourceFilter !== 'all'
   const clearFilters = () => {
     setSearchQuery('')
     setDateRange(undefined)
     setContractorFilter('all')
     setCampFilter('all')
     setProjectFilter('all')
+    setFundingSourceFilter('all')
   }
 
   const { data: dash, isLoading } = useQuery<DashboardData>({
@@ -781,11 +784,12 @@ export default function DashboardView() {
           {hasActiveFilters && (
             <div className={cn(isMobile ? "col-span-2 flex justify-end" : "")}>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
-                className="h-9 px-3 text-xs font-medium rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/40 transition-colors"
+                className="h-9 px-4 rounded-full text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20"
                 onClick={clearFilters}
               >
+                <X className="h-3.5 w-3.5 mr-1" />
                 Clear Filters
               </Button>
             </div>
@@ -919,6 +923,20 @@ export default function DashboardView() {
               <SelectItem value="zone9" className="text-xs cursor-pointer">Zone 9</SelectItem>
             </SelectContent>
           </Select>
+          <Select value={fundingSourceFilter} onValueChange={setFundingSourceFilter}>
+            <SelectTrigger className={cn("px-4 h-9 rounded-full text-xs font-medium bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all", isMobile ? "w-full" : "w-auto")}>
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                <Building2 className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                <SelectValue placeholder="Funding Source" />
+              </div>
+            </SelectTrigger>
+            <SelectContent className="rounded-xl shadow-lg border-slate-200 dark:border-slate-800">
+              <SelectItem value="all" className="text-xs cursor-pointer">All Sources</SelectItem>
+              <SelectItem value="govt" className="text-xs cursor-pointer">Government</SelectItem>
+              <SelectItem value="private" className="text-xs cursor-pointer">Private</SelectItem>
+              <SelectItem value="wbg" className="text-xs cursor-pointer">World Bank Group</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
@@ -932,19 +950,19 @@ export default function DashboardView() {
         }}
       >
         {/* Row 1: 5 KPI cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.05 }}
-          className={cn("min-h-0", isMobile ? "flex flex-col gap-2" : "grid")}
-          style={isMobile ? {} : { gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', gridColumn: '1', gridRow: '1' }}
-        >
-          <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Male vs. Female" segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
-          <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
-          <StatCard title="Age Distribution" icon={Activity} iconBg="bg-purple-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Workforce by age band" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
-          <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-emerald-500" iconColor="text-white" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="tests" subtitle="Fitness outcome" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }].filter(s => s.value > 0)} />
-          <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(trainingTotal)} unit="certificates" subtitle="Certificate validity" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring Soon', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
-        </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className={cn("min-h-0", isMobile ? "flex flex-col gap-2" : "grid")}
+              style={isMobile ? {} : { gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', gridColumn: '1', gridRow: '1' }}
+            >
+              <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Male vs. Female" segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
+              <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
+              <StatCard title="Age Distribution" icon={Activity} iconBg="bg-purple-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Workforce by age band" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
+              <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-emerald-500" iconColor="text-white" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="tests" subtitle="Fitness outcome" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }].filter(s => s.value > 0)} />
+              <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(trainingTotal)} unit="certificates" subtitle="Certificate validity" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring Soon', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
+            </motion.div>
 
         {/* Row 2: 4 Donut chart cards */}
         <motion.div

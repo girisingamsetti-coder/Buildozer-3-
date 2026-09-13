@@ -91,7 +91,7 @@ function getInitials(name: string): string {
 }
 
 export function SidebarNav() {
-  const { activePage, setPage, sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed, mobileView, toggleMobileView } = useNavStore()
+  const { activePage, setPage, sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed, mobileView, toggleMobileView, dashboardMode, setDashboardMode } = useNavStore()
   const { logout, login, userName, role } = useAuthStore()
   const permissions = rolePermissions[role] ?? rolePermissions.SAFETY_OFFICER
   const { theme, setTheme } = useTheme()
@@ -234,6 +234,7 @@ export function SidebarNav() {
 
               return btn
             })}
+
           </nav>
         </ScrollArea>
 
@@ -359,8 +360,8 @@ export function SidebarNav() {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       {demoUsers.map((u) => (
-                        <DropdownMenuItem 
-                          key={u.role} 
+                        <DropdownMenuItem
+                          key={u.role}
                           onClick={() => { login(u.name, u.role); setSidebarOpen(false); }}
                           className="cursor-pointer flex flex-col items-start gap-0.5 py-2"
                         >

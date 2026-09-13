@@ -37,6 +37,8 @@ import {
 } from '@/components/ui/select'
 import { useNavStore } from '@/stores/nav-store'
 import PhotoUploader from '@/components/shared/photo-uploader'
+import { IncidentPartBForm } from './incident-part-b-form'
+import { IncidentPartCForm } from './incident-part-c-form'
 
 // ---------- types ----------
 interface WorkerOption {
@@ -152,6 +154,10 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
   const [employerNotifiedAt, setEmployerNotifiedAt] = useState('')
   const [compensationStatus, setCompensationStatus] = useState('')
   const [familyNotified, setFamilyNotified] = useState(false)
+
+  // Part B and C data state
+  const [partBData, setPartBData] = useState<any>(null)
+  const [partCData, setPartCData] = useState<any>(null)
 
   // Worker search
   const [workerSearch, setWorkerSearch] = useState('')
@@ -320,88 +326,14 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
         </DialogDescription>
       </DialogHeader>
 
-      {/* Stepper (sticky, desktop) */}
-      <div className="hidden sm:flex shrink-0 items-center justify-between px-5 py-3 border-b bg-muted/30">
-        {STEPS.map((step, idx) => {
-          const Icon = step.icon
-          const isComplete = idx < currentStep
-          const isActive = idx === currentStep
-          return (
-            <div key={step.id} className="flex items-center flex-1 last:flex-none">
-              <button
-                type="button"
-                onClick={() => goToStep(idx)}
-                className="flex items-center gap-2 group/step"
-              >
-                <span
-                  className={`flex items-center justify-center h-8 w-8 rounded-full border-2 transition-all ${
-                    isComplete
-                      ? 'bg-[#0d9488] border-[#0d9488] text-white'
-                      : isActive
-                      ? 'border-[#0d9488] text-[#0d9488] ring-2 ring-[#0d9488]/30'
-                      : 'border-muted-foreground/30 text-muted-foreground/50 group-hover/step:border-muted-foreground/60'
-                  }`}
-                >
-                  {isComplete ? <Check className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
-                </span>
-                <div className="text-left">
-                  <p
-                    className={`text-xs font-medium leading-tight ${
-                      isActive ? 'text-foreground' : 'text-muted-foreground'
-                    }`}
-                  >
-                    {step.title}
-                  </p>
-                </div>
-              </button>
-              {idx < STEPS.length - 1 && (
-                <div
-                  className={`flex-1 h-px mx-2 ${
-                    idx < currentStep ? 'bg-[#0d9488]' : 'bg-muted-foreground/20'
-                  }`}
-                />
-              )}
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Stepper (compact, mobile) */}
-      <div className="sm:hidden shrink-0 px-4 py-3 border-b bg-muted/30">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <span className="flex items-center justify-center h-7 w-7 rounded-full bg-[#0d9488] text-white text-xs font-semibold">
-              {currentStep + 1}
-            </span>
-            <p className="text-sm font-medium">{STEPS[currentStep].title}</p>
-          </div>
-          <span className="text-xs text-muted-foreground">
-            Step {currentStep + 1} of {STEPS.length}
-          </span>
-        </div>
-        <div className="h-1.5 rounded-full bg-muted-foreground/20 overflow-hidden">
-          <div
-            className="h-full bg-[#0d9488] transition-all duration-300"
-            style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
-          />
-        </div>
-      </div>
+      {/* Stepper removed */}
 
       {/* Step content (scrollable) */}
       <div className="flex-1 min-h-0 min-w-0 overflow-y-auto px-4 sm:px-5 py-4">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={currentStep}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2 }}
-          >
+        <div className="space-y-8">
             {/* STEP 1: Incident Details */}
-            {currentStep === 0 && (
               <div className="space-y-4">
+                <h2 className="text-lg font-semibold border-b pb-2">1. Incident Details</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label>Incident Type</Label>
@@ -443,11 +375,10 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
                   <Textarea className="mt-1" rows={2} value={immediateAction} onChange={(e) => setImmediateAction(e.target.value)} placeholder="What immediate actions were taken?" />
                 </div>
               </div>
-            )}
 
             {/* STEP 2: Severity & Assignment */}
-            {currentStep === 1 && (
               <div className="space-y-4">
+                <h2 className="text-lg font-semibold border-b pb-2 mt-4">2. Severity & Assignment</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <Label>Severity</Label>
@@ -505,11 +436,10 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
                   </div>
                 </div>
               </div>
-            )}
 
             {/* STEP 3: Workers Involved */}
-            {currentStep === 2 && (
               <div className="space-y-4">
+                <h2 className="text-lg font-semibold border-b pb-2 mt-4">3. Workers Involved</h2>
                 <div className="relative" ref={dropdownRef}>
                   <Label>Search worker by name or employee number</Label>
                   <div className="relative mt-1">
@@ -571,11 +501,10 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
                   </div>
                 )}
               </div>
-            )}
 
             {/* STEP 4: Photos & Additional (death-specific) */}
-            {currentStep === 3 && (
               <div className="space-y-5">
+                <h2 className="text-lg font-semibold border-b pb-2 mt-4">4. Photos & Additional</h2>
                 {isDeath && (
                   <div className="space-y-4 p-4 rounded-lg border-2 border-red-200 bg-red-50/40">
                     <p className="text-sm font-semibold text-red-700 flex items-center gap-2">
@@ -631,43 +560,35 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
                   Review the incident details. The incident will be logged and you will be taken to the incident detail page.
                 </div>
               </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+
+            <div className="space-y-5">
+              <h2 className="text-lg font-semibold border-b pb-2 mt-4">5. Part B: Investigation</h2>
+              <IncidentPartBForm hideActions onDataChange={setPartBData} />
+            </div>
+
+            <div className="space-y-5">
+              <h2 className="text-lg font-semibold border-b pb-2 mt-4">6. Part C: Root Cause</h2>
+              <IncidentPartCForm hideActions onDataChange={setPartCData} />
+            </div>
+
+        </div>
       </div>
 
       {/* Footer (sticky) */}
-      <div className="shrink-0 border-t bg-background/95 backdrop-blur px-5 py-3 flex items-center justify-between gap-2">
-        <Button
-          variant="outline"
-          onClick={goPrev}
-          disabled={currentStep === 0}
-          className="gap-1"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span className="hidden sm:inline">Back</span>
-        </Button>
-        <span className="text-xs text-muted-foreground">
-          Step {currentStep + 1} of {STEPS.length}
-        </span>
-        {currentStep < STEPS.length - 1 ? (
+      <div className="shrink-0 border-t bg-background/95 backdrop-blur px-5 py-3 flex items-center justify-end gap-2">
           <Button
-            className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1"
-            onClick={goNext}
-            disabled={validating}
+            variant="outline"
+            onClick={onClose}
           >
-            <span className="hidden sm:inline">Next</span>
-            <ArrowRight className="h-4 w-4" />
+            Cancel
           </Button>
-        ) : (
           <Button
             className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1"
             onClick={handleFinalSubmit}
             disabled={createMutation.isPending}
           >
-            {createMutation.isPending ? 'Saving...' : 'Log Incident'}
+            {createMutation.isPending ? 'Saving...' : 'Log Incident & Save Forms'}
           </Button>
-        )}
       </div>
     </>
   )

@@ -38,6 +38,8 @@ interface Incident {
   _count: { followUps: number }
   contractor: { id: string; name: string } | null
   site: { id: string; name: string } | null
+  partBStatus: string
+  partCStatus: string
 }
 
 interface IncidentsResponse {
@@ -354,7 +356,9 @@ export default function IncidentListView() {
                         <TableHead>Location</TableHead>
                         <SortableHeader column="severity" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-24">Severity</SortableHeader>
                         <SortableHeader column="status" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} className="w-36">Status</SortableHeader>
-                        <TableHead className="w-20">Workers</TableHead>
+                        <TableHead className="w-24">Part B</TableHead>
+                        <TableHead className="w-24">Part C</TableHead>
+                        <TableHead className="w-20 text-center">Workers</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -387,6 +391,16 @@ export default function IncidentListView() {
                           <TableCell>
                             <StatusBadge status={inc.status} />
                           </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={inc.partBStatus === 'Submitted' ? 'border-emerald-200 text-emerald-700 bg-emerald-50' : inc.partBStatus === 'Draft' ? 'border-amber-200 text-amber-700 bg-amber-50' : 'border-slate-200 text-slate-500 bg-slate-50'}>
+                              {inc.partBStatus || 'Not Started'}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={inc.partCStatus === 'Submitted' ? 'border-emerald-200 text-emerald-700 bg-emerald-50' : inc.partCStatus === 'Draft' ? 'border-amber-200 text-amber-700 bg-amber-50' : 'border-slate-200 text-slate-500 bg-slate-50'}>
+                              {inc.partCStatus || 'Not Started'}
+                            </Badge>
+                          </TableCell>
                           <TableCell className="text-center font-medium">
                             {inc.workers?.length ?? 0}
                           </TableCell>
@@ -416,6 +430,10 @@ export default function IncidentListView() {
                             {typeLabels[inc.incidentType] || inc.incidentType}
                           </Badge>
                           <StatusBadge status={inc.status} />
+                          <div className="flex items-center gap-1 mt-1">
+                            <span className="text-[10px] text-muted-foreground">Part B: {inc.partBStatus || 'Not Started'}</span>
+                            <span className="text-[10px] text-muted-foreground">• Part C: {inc.partCStatus || 'Not Started'}</span>
+                          </div>
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted-foreground">

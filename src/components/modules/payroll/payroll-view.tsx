@@ -109,86 +109,38 @@ export default function PayrollView() {
         </div>
       </div>
 
-      {/* ====== Section 6: Period Selector ====== */}
-      <div className="flex items-center gap-3">
-        <Card className="flex-1 sm:max-w-md">
-          <CardContent className="p-2 flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handlePrevMonth}
-              title="Previous Month"
-              className="h-8 w-8"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-
-            <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-              <PopoverTrigger asChild>
-                <button className="flex items-center gap-2 font-semibold text-sm hover:text-[#0d9488] transition-colors py-1 px-3 rounded-md hover:bg-muted/50">
-                  <CalendarDays className="h-4 w-4 text-[#0d9488]" />
-                  <span>{monthDisplay}</span>
-                </button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="center">
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={(d) => {
-                    if (d) {
-                      setSelectedDate(startOfMonth(d))
-                      setDatePickerOpen(false)
-                    }
-                  }}
-                />
-              </PopoverContent>
-            </Popover>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleNextMonth}
-              title="Next Month"
-              className="h-8 w-8"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* ====== Section 4: Secondary Internal Navigation Tabs ====== */}
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
         className="flex-1 flex flex-col gap-4"
       >
-        <TabsList className="shrink-0 self-start bg-muted/70 p-1 flex flex-wrap h-auto gap-1">
-          <TabsTrigger value="overview" className="gap-1.5 text-xs">
+        <TabsList className="shrink-0 w-full bg-muted/70 p-1 flex flex-wrap h-auto gap-1">
+          <TabsTrigger value="overview" className="flex-1 min-w-[120px] gap-1.5 text-xs data-[state=inactive]:text-black data-[state=inactive]:shadow-sm">
             <LayoutDashboard className="h-3.5 w-3.5" />
             Overview
           </TabsTrigger>
-          <TabsTrigger value="salary" className="gap-1.5 text-xs">
+          <TabsTrigger value="salary" className="flex-1 min-w-[120px] gap-1.5 text-xs data-[state=inactive]:text-black data-[state=inactive]:shadow-sm">
             <Receipt className="h-3.5 w-3.5" />
             Salary Payments
           </TabsTrigger>
-          <TabsTrigger value="epf" className="gap-1.5 text-xs">
+          <TabsTrigger value="epf" className="flex-1 min-w-[120px] gap-1.5 text-xs data-[state=inactive]:text-black data-[state=inactive]:shadow-sm">
             <Landmark className="h-3.5 w-3.5" />
             EPF
           </TabsTrigger>
-          <TabsTrigger value="compliance" className="gap-1.5 text-xs">
+          <TabsTrigger value="compliance" className="flex-1 min-w-[120px] gap-1.5 text-xs data-[state=inactive]:text-black data-[state=inactive]:shadow-sm">
             <ShieldCheck className="h-3.5 w-3.5" />
             Compliance
           </TabsTrigger>
-          <TabsTrigger value="exceptions" className="gap-1.5 text-xs">
+          <TabsTrigger value="exceptions" className="flex-1 min-w-[120px] gap-1.5 text-xs data-[state=inactive]:text-black data-[state=inactive]:shadow-sm">
             <AlertTriangle className="h-3.5 w-3.5" />
             Exceptions
           </TabsTrigger>
-          <TabsTrigger value="documents" className="gap-1.5 text-xs">
+          <TabsTrigger value="documents" className="flex-1 min-w-[120px] gap-1.5 text-xs data-[state=inactive]:text-black data-[state=inactive]:shadow-sm">
             <FileText className="h-3.5 w-3.5" />
             Documents
           </TabsTrigger>
-          <TabsTrigger value="reports" className="gap-1.5 text-xs">
+          <TabsTrigger value="reports" className="flex-1 min-w-[120px] gap-1.5 text-xs data-[state=inactive]:text-black data-[state=inactive]:shadow-sm">
             <FileBarChart className="h-3.5 w-3.5" />
             Reports
           </TabsTrigger>

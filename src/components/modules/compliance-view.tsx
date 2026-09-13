@@ -43,6 +43,13 @@ interface ComplianceItem {
   usageDetails: string | null
   compliancePct?: number | null
   details?: string | null
+  site?: {
+    name: string
+    code: string
+    contractor?: {
+      name: string
+    } | null
+  } | null
 }
 
 interface SiteInfo {
@@ -165,10 +172,13 @@ export default function ComplianceView() {
     currentStatus: string
     currentInspector: string
     currentRemarks: string
-  }>({ open: false, type: '', itemId: '', itemName: '', currentStatus: '', currentInspector: '', currentRemarks: '' })
+    siteName?: string
+    contractorName?: string
+  }>({ open: false, type: '', itemId: '', itemName: '', currentStatus: '', currentInspector: '', currentRemarks: '', siteName: '', contractorName: '' })
   const [photoDialog, setPhotoDialog] = useState<{ open: boolean; photos: string[]; index: number }>({
     open: false, photos: [], index: 0,
   })
+  const [drilldownDialog, setDrilldownDialog] = useState<{ open: boolean; item: any | null }>({ open: false, item: null })
 
   // Fetch sites for selector
   const { data: sites, isLoading: sitesLoading } = useQuery<SiteInfo[]>({
@@ -207,6 +217,8 @@ export default function ComplianceView() {
       currentStatus: item.status,
       currentInspector: item.inspector || '',
       currentRemarks: item.remarks || '',
+      siteName: item.site?.name || 'All Sites',
+      contractorName: item.site?.contractor?.name || 'N/A',
     })
   }, [])
 
@@ -399,6 +411,7 @@ export default function ComplianceView() {
               isAggregated={isAggregated}
               onUpdate={handleOpenUpdate}
               onPhotoView={handleOpenPhoto}
+              onDrilldown={(item) => setDrilldownDialog({ open: true, item })}
             />
           </TabsContent>
 
@@ -437,6 +450,7 @@ export default function ComplianceView() {
               isAggregated={isAggregated}
               onUpdate={handleOpenUpdate}
               onPhotoView={handleOpenPhoto}
+              onDrilldown={(item) => setDrilldownDialog({ open: true, item })}
             />
           </TabsContent>
 
@@ -475,6 +489,7 @@ export default function ComplianceView() {
               isAggregated={isAggregated}
               onUpdate={handleOpenUpdate}
               onPhotoView={handleOpenPhoto}
+              onDrilldown={(item) => setDrilldownDialog({ open: true, item })}
             />
           </TabsContent>
         </Tabs>
@@ -496,6 +511,14 @@ export default function ComplianceView() {
           key={`${photoDialog.photos.length}-${photoDialog.index}`}
           dialogState={photoDialog}
           onClose={() => setPhotoDialog((d) => ({ ...d, open: false }))}
+        />
+      )}
+
+      {/* ====== Drilldown Dialog ====== */}
+      {drilldownDialog.open && drilldownDialog.item && (
+        <DrilldownDialog
+          item={drilldownDialog.item}
+          onClose={() => setDrilldownDialog({ open: false, item: null })}
         />
       )}
     </div>
@@ -542,7 +565,7 @@ function CategorySummary({ items, label, total, action }: { items: ComplianceIte
 // ===================== ITEM GRID =====================
 
 function ItemGrid({
-  items, type, canEdit, isAggregated, onUpdate, onPhotoView,
+  items, type, canEdit, isAggregated, onUpdate, onPhotoView, onDrilldown,
 }: {
   items: ComplianceItem[]
   type: string
@@ -550,6 +573,7 @@ function ItemGrid({
   isAggregated?: boolean
   onUpdate: (item: ComplianceItem, type: string) => void
   onPhotoView: (photos: string[], index: number) => void
+  onDrilldown: (item: ComplianceItem) => void
 }) {
   if (items.length === 0) {
     return (
@@ -572,6 +596,7 @@ function ItemGrid({
           isAggregated={isAggregated}
           onUpdate={() => onUpdate(item, type)}
           onPhotoView={(idx) => onPhotoView(parseJSON<string[]>(item.photos, []), idx)}
+          onDrilldown={() => onDrilldown(item)}
         />
       ))}
     </div>
@@ -581,7 +606,7 @@ function ItemGrid({
 // ===================== CHECKLIST CARD =====================
 
 function ChecklistCard({
-  item, type, canEdit, isAggregated, onUpdate, onPhotoView,
+  item, type, canEdit, isAggregated, onUpdate, onPhotoView, onDrilldown,
 }: {
   item: ComplianceItem
   type: string
@@ -589,6 +614,7 @@ function ChecklistCard({
   isAggregated?: boolean
   onUpdate: () => void
   onPhotoView: (index: number) => void
+  onDrilldown?: () => void
 }) {
   const photos = parseJSON<string[]>(item.photos, [])
   const avail = statusToAvailability(item.status)
@@ -628,7 +654,10 @@ function ChecklistCard({
   }, [photos, photoMutation])
 
   return (
-    <Card className={`border-l-4 transition-all duration-200 hover:shadow-md overflow-hidden ${cardBorderColor(avail.variant)}`}>
+    <Card 
+      className={`border-l-4 transition-all duration-200 hover:shadow-md overflow-hidden ${cardBorderColor(avail.variant)} ${isAggregated ? 'cursor-pointer hover:border-l-8' : ''}`}
+      onClick={isAggregated ? onDrilldown : undefined}
+    >
       <CardHeader className="p-4 pb-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-2 flex-wrap min-w-0">
@@ -654,18 +683,31 @@ function ChecklistCard({
 
         {/* Details */}
         {!isAggregated && (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
-          <div className="flex items-center gap-1.5 text-muted-foreground">
-            <CalendarDays className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">
-              {item.lastInspectionDate
-                ? format(parseISO(item.lastInspectionDate), 'dd MMM yyyy')
-                : 'Not inspected'}
-            </span>
+        <div className="space-y-2">
+          <div className="bg-muted/40 p-2.5 rounded-md text-xs space-y-1.5">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Project/Site:</span>
+              <span className="font-medium">{item.site?.name || 'All Sites'}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Contractor:</span>
+              <span className="font-medium">{item.site?.contractor?.name || 'N/A'}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 text-muted-foreground">
-            <User className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">{item.inspector || 'Not assigned'}</span>
+          
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <CalendarDays className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">
+                {item.lastInspectionDate
+                  ? format(parseISO(item.lastInspectionDate), 'dd MMM yyyy')
+                  : 'Not inspected'}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <User className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">{item.inspector || 'Not assigned'}</span>
+            </div>
           </div>
         </div>
         )}
@@ -765,6 +807,8 @@ function UpdateStatusDialog({
     currentStatus: string
     currentInspector: string
     currentRemarks: string
+    siteName?: string
+    contractorName?: string
   }
   onClose: () => void
   queryClient: ReturnType<typeof useQueryClient>
@@ -825,6 +869,21 @@ function UpdateStatusDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 pt-2">
+          {/* Details */}
+          <div className="bg-muted/50 p-3 rounded-md text-sm space-y-1">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Facility/Item:</span>
+              <span className="font-medium text-foreground">{dialogState.itemName}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Project/Site:</span>
+              <span className="font-medium text-foreground">{dialogState.siteName}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Contractor:</span>
+              <span className="font-medium text-foreground">{dialogState.contractorName}</span>
+            </div>
+          </div>
           {/* Status */}
           <div className="space-y-1.5">
             <Label className="text-sm">Availability Status *</Label>
@@ -992,6 +1051,89 @@ function PhotoViewerDialog({
             <span className="text-xs text-white bg-black/50 rounded-full px-2 py-0.5">
               {currentIdx + 1} / {dialogState.photos.length}
             </span>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+// ===================== DRILLDOWN DIALOG =====================
+
+function DrilldownDialog({ item, onClose }: { item: any, onClose: () => void }) {
+  const siteDetails: any[] = item.siteDetails || []
+
+  return (
+    <Dialog open={true} onOpenChange={(open) => { if (!open) onClose() }}>
+      <DialogContent className="max-w-[80vw] sm:max-w-[80vw] w-[80vw] max-h-[85vh] overflow-y-auto flex flex-col">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            Detailed View: {item.item}
+          </DialogTitle>
+          <DialogDescription>
+            Compliance status breakdown by location and contractor
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="mt-4 border rounded-md overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
+                <tr>
+                  <th className="px-4 py-3 font-medium">Project / Site</th>
+                  <th className="px-4 py-3 font-medium">Contractor</th>
+                  <th className="px-4 py-3 font-medium">Availability Status</th>
+                  <th className="px-4 py-3 font-medium">Compliance %</th>
+                  <th className="px-4 py-3 font-medium hidden sm:table-cell">Inspection Date</th>
+                  <th className="px-4 py-3 font-medium hidden md:table-cell">Inspector</th>
+                  <th className="px-4 py-3 font-medium">Remarks</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {siteDetails.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                      No site details available for this item.
+                    </td>
+                  </tr>
+                ) : (
+                  siteDetails.map((detail, idx) => {
+                    const avail = statusToAvailability(detail.status)
+                    const AvailIcon = avail.icon
+                    return (
+                      <tr key={idx} className="hover:bg-muted/30">
+                        <td className="px-4 py-3 font-medium text-foreground max-w-[150px] truncate" title={detail.site?.name || 'N/A'}>
+                          {detail.site?.name || 'N/A'}
+                        </td>
+                        <td className="px-4 py-3 text-muted-foreground max-w-[150px] truncate" title={detail.site?.contractor?.name || 'N/A'}>
+                          {detail.site?.contractor?.name || 'N/A'}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${availBadgeClasses(avail.variant)}`}>
+                            <AvailIcon className="h-3 w-3 shrink-0" />
+                            {avail.label}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 font-medium">
+                          {detail.compliancePct !== undefined && detail.compliancePct !== null 
+                            ? <span className={getScoreColor(detail.compliancePct)}>{detail.compliancePct}%</span> 
+                            : <span className="text-muted-foreground">—</span>}
+                        </td>
+                        <td className="px-4 py-3 text-muted-foreground hidden sm:table-cell whitespace-nowrap">
+                          {detail.lastInspectionDate ? format(parseISO(detail.lastInspectionDate), 'dd MMM yyyy') : '—'}
+                        </td>
+                        <td className="px-4 py-3 text-muted-foreground hidden md:table-cell truncate max-w-[120px]">
+                          {detail.inspector || '—'}
+                        </td>
+                        <td className="px-4 py-3 text-muted-foreground text-xs max-w-[200px] truncate" title={detail.remarks || ''}>
+                          {detail.remarks || '—'}
+                        </td>
+                      </tr>
+                    )
+                  })
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </DialogContent>

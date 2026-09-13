@@ -310,12 +310,12 @@ export default function PayrollReportsTab({ period }: PayrollReportsTabProps) {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* Left Column: Report Catalog Selector */}
         <Card className="lg:col-span-1 p-2 space-y-1 max-h-[75vh] overflow-y-auto">
-          <div className="px-2 py-1.5 font-bold text-xs uppercase tracking-wider text-[#0d9488]">
+          <div className="px-2 py-1.5 font-bold text-base uppercase tracking-wider text-[#0d9488]">
             Report Catalog
           </div>
 
           <div className="space-y-1">
-            <span className="text-[11px] font-semibold text-muted-foreground px-2 pt-2 block uppercase">Salary Reports</span>
+            <span className="text-sm font-bold text-muted-foreground px-2 pt-2 block uppercase">Salary Reports</span>
             {REPORT_CATALOG.filter(r => r.category === 'Salary').map(r => (
               <button
                 key={r.key}
@@ -328,7 +328,7 @@ export default function PayrollReportsTab({ period }: PayrollReportsTabProps) {
               </button>
             ))}
 
-            <span className="text-[11px] font-semibold text-muted-foreground px-2 pt-3 block uppercase">EPF Reports</span>
+            <span className="text-sm font-bold text-muted-foreground px-2 pt-3 block uppercase">EPF Reports</span>
             {REPORT_CATALOG.filter(r => r.category === 'EPF').map(r => (
               <button
                 key={r.key}
@@ -344,7 +344,7 @@ export default function PayrollReportsTab({ period }: PayrollReportsTabProps) {
               </button>
             ))}
 
-            <span className="text-[11px] font-semibold text-muted-foreground px-2 pt-3 block uppercase">Management Reports</span>
+            <span className="text-sm font-bold text-muted-foreground px-2 pt-3 block uppercase">Management Reports</span>
             {REPORT_CATALOG.filter(r => r.category === 'Management').map(r => (
               <button
                 key={r.key}

@@ -25,17 +25,26 @@ export default function WorkforceView() {
         onValueChange={handleTabChange}
         className="flex-1 min-h-0 flex flex-col gap-3"
       >
-        <TabsList className="shrink-0 self-start">
-          <TabsTrigger value="register" className="gap-1.5">
-            <Users className="h-3.5 w-3.5" />
+        <TabsList className="shrink-0 w-full flex justify-between gap-2 bg-transparent p-0 h-auto">
+          <TabsTrigger 
+            value="register" 
+            className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all"
+          >
+            <Users className="h-4 w-4 text-blue-500" />
             Register
           </TabsTrigger>
-          <TabsTrigger value="attendance" className="gap-1.5">
-            <CalendarCheck className="h-3.5 w-3.5" />
+          <TabsTrigger 
+            value="attendance" 
+            className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all"
+          >
+            <CalendarCheck className="h-4 w-4 text-emerald-500" />
             Attendance
           </TabsTrigger>
-          <TabsTrigger value="payroll" className="gap-1.5">
-            <ReceiptText className="h-3.5 w-3.5" />
+          <TabsTrigger 
+            value="payroll" 
+            className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all"
+          >
+            <ReceiptText className="h-4 w-4 text-amber-500" />
             Payroll
           </TabsTrigger>
         </TabsList>

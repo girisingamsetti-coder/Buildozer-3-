@@ -15,6 +15,9 @@ export async function GET(
         site: true,
         workers: { include: { worker: { select: { id: true, fullName: true, employeeNumber: true } } } },
         followUps: { orderBy: { createdAt: 'desc' } },
+        partB: true,
+        partC: true,
+        annexures: { orderBy: { uploadedAt: 'desc' } },
       },
     })
 
@@ -70,6 +73,9 @@ export async function PUT(
         site: true,
         workers: { include: { worker: { select: { id: true, fullName: true, employeeNumber: true } } } },
         followUps: { orderBy: { createdAt: 'desc' } },
+        partB: true,
+        partC: true,
+        annexures: { orderBy: { uploadedAt: 'desc' } },
       },
     })
 

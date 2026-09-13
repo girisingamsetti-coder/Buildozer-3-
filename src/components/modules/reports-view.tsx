@@ -21,6 +21,7 @@ import {
   ChevronRight,
   Filter,
   ShieldAlert,
+  Receipt
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -46,6 +47,7 @@ import { useNavStore } from '@/stores/nav-store'
 import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
+import PayrollReportsTab from './payroll/payroll-reports-tab'
 
 // ---------- types ----------
 type ReportCategory =
@@ -58,6 +60,7 @@ type ReportCategory =
   | 'legal'
   | 'compliance'
   | 'police_intimation'
+  | 'payroll'
 
 interface CategoryConfig {
   id: ReportCategory
@@ -150,6 +153,15 @@ const CATEGORIES: CategoryConfig[] = [
     color: 'text-amber-600',
     bgColor: 'bg-amber-50',
     borderColor: 'border-amber-200',
+  },
+  {
+    id: 'payroll',
+    label: 'Payroll',
+    description: 'Salary and EPF statutory reports',
+    icon: Receipt,
+    color: 'text-indigo-600',
+    bgColor: 'bg-indigo-50',
+    borderColor: 'border-indigo-200',
   },
 ]
 
@@ -458,95 +470,28 @@ export default function ReportsView() {
   const flatRows = isPoliceIntimation
     ? rows
     : rows.map((row: Record<string, unknown>) => {
-        const flat: Record<string, unknown> = { ...row }
-        for (const col of columns) {
-          const field = COL_MAP[col] ?? col.toLowerCase()
-          if (field.includes('.')) {
-            const parts = field.split('.')
-            let current: unknown = row
-            for (const part of parts) {
-              if (current && typeof current === 'object' && part in current) {
-                current = (current as Record<string, unknown>)[part]
-              } else {
-                current = null
-                break
-              }
+      const flat: Record<string, unknown> = { ...row }
+      for (const col of columns) {
+        const field = COL_MAP[col] ?? col.toLowerCase()
+        if (field.includes('.')) {
+          const parts = field.split('.')
+          let current: unknown = row
+          for (const part of parts) {
+            if (current && typeof current === 'object' && part in current) {
+              current = (current as Record<string, unknown>)[part]
+            } else {
+              current = null
+              break
             }
-            flat[col] = current
           }
+          flat[col] = current
         }
-        return flat
-      })
+      }
+      return flat
+    })
   const { sorted, sortKey, sortDir, toggleSort } = useSort(flatRows)
 
-  // CSV Export
-  const handleExportCSV = useCallback(async () => {
-    setGenerating(true)
-    try {
-      if (isPoliceIntimation) {
-        // Direct CSV from police data
-        if (rows.length === 0) return
-        const headers = policeColumns
-        const csvRows = rows.map((row) =>
-          headers.map((h) => `"${String(row[h] ?? '').replace(/"/g, '""')}"`).join(',')
-        )
-        const csv = [headers.join(','), ...csvRows].join('\n')
-        const blob = new Blob([csv], { type: 'text/csv' })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `police_intimation_${new Date().toISOString().slice(0, 10)}.csv`
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
-        return
-      }
-      const exportParams = new URLSearchParams(queryParams)
-      exportParams.set('format', 'csv')
-      exportParams.set('limit', '500')
-      exportParams.set('page', '1')
 
-      const response = await fetch(`/api/reports?${exportParams.toString()}`)
-      if (!response.ok) throw new Error('Export failed')
-
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `report_${selectedCategory}_${new Date().toISOString().slice(0, 10)}.csv`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-    } catch {
-      // Fallback: generate CSV from current data
-      if (columns.length > 0 && rows.length > 0) {
-        const csvRows: string[] = []
-        csvRows.push(columns.map((c) => `"${c}"`).join(','))
-        for (const row of rows) {
-          const values = columns.map((col) => {
-            const val = getColumnValue(row, col)
-            const str = val === null || val === undefined ? '' : formatValue(val, col)
-            return `"${str.replace(/"/g, '""')}"`
-          })
-          csvRows.push(values.join(','))
-        }
-        const csvContent = csvRows.join('\n')
-        const blob = new Blob([csvContent], { type: 'text/csv' })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `report_${selectedCategory}_${new Date().toISOString().slice(0, 10)}.csv`
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
-      }
-    } finally {
-      setGenerating(false)
-    }
-  }, [queryParams, selectedCategory, columns, rows, isPoliceIntimation, policeColumns])
 
   // Reset all filters
   const resetFilters = () => {
@@ -901,6 +846,33 @@ export default function ReportsView() {
   // ---------- report results view ----------
   const currentCat = CATEGORIES.find((c) => c.id === selectedCategory)
 
+  if (selectedCategory === 'payroll') {
+    const defaultPeriod = new Date().toISOString().slice(0, 7) // Current YYYY-MM
+    return (
+      <div className="flex flex-col gap-6 h-full min-w-0 overflow-hidden">
+        <div className="flex items-center gap-3">
+          <Button variant="outline" size="icon" className="shrink-0" onClick={handleBack}>
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">Back</span>
+          </Button>
+          <div className="flex items-center gap-2">
+            {currentCat && (
+              <>
+                <div className={`w-8 h-8 rounded-lg ${currentCat.bgColor} flex items-center justify-center`}>
+                  <currentCat.icon className={`h-4 w-4 ${currentCat.color}`} />
+                </div>
+                <h1 className="text-2xl font-bold tracking-tight">{currentCat.label} Report</h1>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto min-h-0 -mx-1 px-1 pb-4">
+          <PayrollReportsTab period={defaultPeriod} />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6 h-full min-w-0 overflow-hidden">
       {/* Header */}
@@ -923,76 +895,63 @@ export default function ReportsView() {
 
       {/* Filter Panel */}
       {!isPoliceIntimation && (
-      <Card className="py-0">
-        <CardContent className="px-3 py-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <Select value={siteId} onValueChange={(v) => { setSiteId(v); setPageNum(1) }}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Site" />
-              </SelectTrigger>
-              <SelectContent>
-                {sites?.map((s) => (
-                  <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select value={contractorId} onValueChange={(v) => { setContractorId(v); setPageNum(1) }}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Contractor" />
-              </SelectTrigger>
-              <SelectContent>
-                {contractors?.map((c) => (
-                  <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Input
-              type="date"
-              placeholder="From date"
-              value={dateFrom}
-              onChange={(e) => { setDateFrom(e.target.value); setPageNum(1) }}
-            />
-            <Input
-              type="date"
-              placeholder="To date"
-              value={dateTo}
-              onChange={(e) => { setDateTo(e.target.value); setPageNum(1) }}
-            />
-          </div>
-          {selectedCategory && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-3 pt-3 border-t">
-              {renderSpecificFilters()}
+        <Card className="py-0">
+          <CardContent className="px-3 py-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <Select value={siteId} onValueChange={(v) => { setSiteId(v); setPageNum(1) }}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Site" />
+                </SelectTrigger>
+                <SelectContent>
+                  {sites?.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={contractorId} onValueChange={(v) => { setContractorId(v); setPageNum(1) }}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Contractor" />
+                </SelectTrigger>
+                <SelectContent>
+                  {contractors?.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Input
+                type="date"
+                placeholder="From date"
+                value={dateFrom}
+                onChange={(e) => { setDateFrom(e.target.value); setPageNum(1) }}
+              />
+              <Input
+                type="date"
+                placeholder="To date"
+                value={dateTo}
+                onChange={(e) => { setDateTo(e.target.value); setPageNum(1) }}
+              />
             </div>
-          )}
-          <div className="flex items-center gap-2 mt-3 pt-3 border-t">
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2"
-              onClick={handleExportCSV}
-              disabled={generating}
-            >
-              {generating ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Download className="h-4 w-4" />
-              )}
-              Export CSV
-            </Button>
-            {hasFilters && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
-                onClick={(e) => { e.stopPropagation(); resetFilters() }}
-              >
-                <X className="h-3.5 w-3.5 mr-1" />
-                Clear All
-              </Button>
+            {selectedCategory && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-3 pt-3 border-t">
+                {renderSpecificFilters()}
+              </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
+            <div className="flex items-center gap-2 mt-3 pt-3 border-t">
+
+              {hasFilters && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 px-4 rounded-full text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20"
+                  onClick={(e) => { e.stopPropagation(); resetFilters() }}
+                >
+                  <X className="h-3.5 w-3.5 mr-1" />
+                  Clear Filters
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Results */}
@@ -1035,20 +994,7 @@ export default function ReportsView() {
                     variant="outline"
                     size="sm"
                   />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                    onClick={handleExportCSV}
-                    disabled={generating}
-                  >
-                    {generating ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Download className="h-4 w-4" />
-                    )}
-                    Export CSV
-                  </Button>
+
                 </div>
               </div>
 

@@ -11,14 +11,14 @@ export async function GET(req: NextRequest) {
     if (!siteId) {
       // Return aggregated compliance data across ALL sites
       const [facilities, securityItems, medInfraItems] = await Promise.all([
-        db.siteFacility.findMany({ orderBy: { item: 'asc' } }),
-        db.siteSecurityItem.findMany({ orderBy: { item: 'asc' } }),
-        db.medInfraItem.findMany({ orderBy: { item: 'asc' } }),
+        db.siteFacility.findMany({ orderBy: { item: 'asc' }, include: { site: { include: { contractor: true } } } }),
+        db.siteSecurityItem.findMany({ orderBy: { item: 'asc' }, include: { site: { include: { contractor: true } } } }),
+        db.medInfraItem.findMany({ orderBy: { item: 'asc' }, include: { site: { include: { contractor: true } } } }),
       ])
 
       // Aggregate: group by item name, compute majority status
-      const aggregate = <T extends { item: string; status: string; siteId: string; lastInspectionDate?: Date | null; inspector?: string | null }>(items: T[]) => {
-        const map = new Map<string, { item: string; compliant: number; nonCompliant: number; pending: number; total: number; lastInspectionDate: Date | null; inspector: string | null }>()
+      const aggregate = <T extends { item: string; status: string; siteId: string; lastInspectionDate?: Date | null; inspector?: string | null; site?: any }>(items: T[]) => {
+        const map = new Map<string, { item: string; compliant: number; nonCompliant: number; pending: number; total: number; lastInspectionDate: Date | null; inspector: string | null; siteDetails: any[] }>()
         for (const i of items) {
           const existing = map.get(i.item)
           if (existing) {
@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
             else if (i.status === 'NonCompliant') existing.nonCompliant++
             else existing.pending++
             existing.total++
+            existing.siteDetails.push(i)
           } else {
             map.set(i.item, {
               item: i.item,
@@ -35,6 +36,7 @@ export async function GET(req: NextRequest) {
               total: 1,
               lastInspectionDate: i.lastInspectionDate ?? null,
               inspector: i.inspector ?? null,
+              siteDetails: [i],
             })
           }
         }
@@ -59,6 +61,7 @@ export async function GET(req: NextRequest) {
             compliantSites: v.compliant,
             nonCompliantSites: v.nonCompliant,
             pendingSites: v.pending,
+            siteDetails: v.siteDetails,
           } as any
         })
       }
@@ -80,14 +83,17 @@ export async function GET(req: NextRequest) {
     const facilities = await db.siteFacility.findMany({
       where: { siteId },
       orderBy: { item: 'asc' },
+      include: { site: { include: { contractor: true } } },
     })
     const securityItems = await db.siteSecurityItem.findMany({
       where: { siteId },
       orderBy: { item: 'asc' },
+      include: { site: { include: { contractor: true } } },
     })
     const medInfraItems = await db.medInfraItem.findMany({
       where: { siteId },
       orderBy: { item: 'asc' },
+      include: { site: { include: { contractor: true } } },
     })
 
     return NextResponse.json({ facilities, securityItems, medInfraItems, aggregated: false })

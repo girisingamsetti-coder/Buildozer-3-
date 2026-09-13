@@ -468,39 +468,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid category' }, { status: 400 })
     }
 
-    // CSV export
-    if (format === 'csv') {
-      const csvRows: string[] = []
-      csvRows.push(columns.map(c => `"${c}"`).join(','))
 
-      for (const row of data as Record<string, unknown>[]) {
-        const values = columns.map((col, idx) => {
-          let value = ''
-          // Try to extract the value based on column name
-          if (idx === 0 && category === 'compliance') {
-            value = String((row as Record<string, unknown>).category ?? '')
-          } else {
-            value = extractValue(row, col, category)
-          }
-          // Escape for CSV
-          if (value.includes(',') || value.includes('"') || value.includes('\n')) {
-            return `"${value.replace(/"/g, '""')}"`
-          }
-          return value
-        })
-        csvRows.push(values.join(','))
-      }
-
-      const csvContent = csvRows.join('\n')
-      const filename = `report_${category}_${new Date().toISOString().slice(0, 10)}.csv`
-
-      return new NextResponse(csvContent, {
-        headers: {
-          'Content-Type': 'text/csv; charset=utf-8',
-          'Content-Disposition': `attachment; filename="${filename}"`,
-        },
-      })
-    }
 
     return NextResponse.json({ data, total, page, limit, columns })
   } catch (error) {

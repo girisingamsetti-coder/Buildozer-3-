@@ -275,16 +275,16 @@ export default function WorkerListView() {
   }
 
   return (
-    <div className="flex flex-col gap-4 sm:gap-6 h-full min-w-0 overflow-hidden">
+    <div className="flex flex-col gap-2 sm:gap-3 h-full min-w-0 overflow-hidden">
       {/* ====== Page Header ====== */}
       <div className="shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="hidden sm:block">
-          <h1 className="text-2xl font-bold tracking-tight">Workforce Register</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            {isLoading
-              ? 'Loading workers...'
-              : `${total} worker${total !== 1 ? 's' : ''} registered`}
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            Workforce Register
+            {!isLoading && (
+              <span className="text-xl font-medium text-muted-foreground">({total})</span>
+            )}
+          </h1>
         </div>
         <div className="flex items-center gap-2">
           <TableExportButton
@@ -319,8 +319,8 @@ export default function WorkerListView() {
 
       {/* ====== Filter Bar ====== */}
       <Card className="shrink-0 py-0">
-        <CardContent className="px-3 py-2">
-          <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3">
+        <CardContent className="px-2 py-1.5">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2">
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -373,10 +373,11 @@ export default function WorkerListView() {
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+                className="h-9 px-4 rounded-full text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20"
                 onClick={(e) => { e.stopPropagation(); clearFilters() }}
               >
-                Clear <X className="h-3.5 w-3.5 ml-1" />
+                <X className="h-3.5 w-3.5 mr-1" />
+                Clear Filters
               </Button>
             )}
           </div>
@@ -385,7 +386,7 @@ export default function WorkerListView() {
 
       {/* ====== Table (Desktop) / Cards (Mobile) ====== */}
       <div className="flex-1 min-h-0 flex flex-col">
-        <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+        <Card className="flex-1 min-h-0 flex flex-col overflow-hidden py-0 border-none shadow-none bg-transparent sm:bg-card sm:border-solid sm:shadow-sm sm:border">
           <CardContent className="flex-1 min-h-0 flex flex-col p-0">
             {isLoading ? (
               <div className="p-4">
@@ -400,9 +401,9 @@ export default function WorkerListView() {
             ) : (
               <>
                 {/* Desktop Table */}
-                <div className="hidden md:block flex-1 min-h-0 overflow-auto">
-                  <Table>
-                    <TableHeader className="sticky top-0 z-10 bg-background">
+                <div className="hidden md:block flex-1 min-h-0">
+                  <Table containerClassName="h-full overflow-auto border-b">
+                    <TableHeader className="sticky top-0 z-20 bg-background shadow-sm shadow-slate-200">
                       <TableRow>
                         <TableHead className="w-12">S.No</TableHead>
                         <TableHead className="w-12"></TableHead>

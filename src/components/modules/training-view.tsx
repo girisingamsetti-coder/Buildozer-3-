@@ -880,10 +880,11 @@ export default function TrainingView() {
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+                className="h-9 px-4 rounded-full text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20"
                 onClick={(e) => { e.stopPropagation(); clearFilters() }}
               >
-                Clear <X className="h-3.5 w-3.5 ml-1" />
+                <X className="h-3.5 w-3.5 mr-1" />
+                Clear Filters
               </Button>
             )}
           </div>

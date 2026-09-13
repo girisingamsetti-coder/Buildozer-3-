@@ -269,6 +269,12 @@ model Incident {
   photos             String?
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
+  partBStatus        String             @default("Not Started")
+  partCStatus        String             @default("Not Started")
+  partB              IncidentPartB?
+  partC              IncidentPartC?
+  annexures          IncidentAnnexure[]
+  
   contractor         Contractor?        @relation(fields: [contractorId], references: [id])
   site               Site?              @relation(fields: [siteId], references: [id])
   followUps          IncidentFollowUp[]
@@ -297,6 +303,124 @@ model IncidentFollowUp {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   incident          Incident  @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+}
+
+model IncidentPartB {
+  id                      String    @id @default(cuid())
+  incidentId              String    @unique
+  incident                Incident  @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  
+  // B1
+  dateOfIncident          DateTime?
+  timeOfIncident          String?
+  dateReportedToPIU       DateTime?
+  dateReportedToWB        DateTime?
+  reportedToPIUBy         String?
+  reportedToWBBy          String?
+  notificationType        String?
+  mainContractor          String?
+  subContractor           String?
+  
+  // B2
+  incidentTypes           String?   // JSON array of selected types
+  otherIncidentType       String?
+  
+  // B3
+  descriptionWhat         String?
+  descriptionConditions   String?
+  factsContested          String?
+  conflictingVersionsDesc String?
+  isOngoing               String?
+  authoritiesInformed     Boolean?
+  authorityDetails        String?
+  
+  // B4 Containment Actions
+  containmentActions      String?   // JSON array
+  worksSuspended          Boolean?
+  suspensionContractor    String?
+  suspensionDocument      String?
+  
+  // B5
+  supportProvided         String?
+  
+  submittedAt             DateTime?
+  submittedBy             String?
+}
+
+model IncidentPartC {
+  id                        String    @id @default(cuid())
+  incidentId                String    @unique
+  incident                  Incident  @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  
+  // C1.I
+  locationSite              String?
+  chainage                  String?
+  nearbyLandmark            String?
+  latitude                  String?
+  longitude                 String?
+  mandalArea                String?
+  projectLocation           String?
+  contractor                String?
+  
+  // C1.II
+  whoWasInvolvedDesc        String?
+  workersInvolved           Int?
+  peopleAffected            Int?
+  householdsAffected        Int?
+  publicAffected            Int?
+  
+  // C1.III
+  whatHappenedDesc          String?
+  ppeAdequate               String?
+  ppeDetails                String?
+  
+  // C1.IV
+  expectedProcedures        String?
+  proceduresFollowed        String?
+  proceduresFollowedDesc    String?
+  
+  // C1.V
+  workOrganizationInfluence String?
+  workOrganizationDetails   String?
+  
+  // C1.VI
+  trainingAdequate          String?
+  trainingDetails           String?
+  
+  // C1.VII
+  underlyingCausesDesc      String?
+  underlyingCauseCategories String?   // JSON array
+  
+  // C2 Corrective actions
+  correctiveActions         String?   // JSON array
+  
+  // C3a
+  immediateCauses           String?   // JSON array
+  otherImmediateCause       String?
+  affectedPersons           String?   // JSON array
+  
+  // C3b
+  compensationTypes         String?   // JSON array
+  otherCompensationType     String?
+  compensationRecords       String?   // JSON array
+  
+  // C4
+  supplementaryNarrative    String?
+  
+  submittedAt               DateTime?
+  submittedBy               String?
+}
+
+model IncidentAnnexure {
+  id         String   @id @default(cuid())
+  incidentId String
+  incident   Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  type       String
+  otherType  String?
+  fileName   String
+  fileUrl    String
+  uploadedAt DateTime @default(now())
+  uploadedBy String?
 }
 
 model Grievance {

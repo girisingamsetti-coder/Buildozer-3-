@@ -100,11 +100,17 @@ export async function POST(req: NextRequest) {
             injuryDesc: w.injuryDesc || null,
           })),
         },
+        partBStatus: body.partB ? 'Submitted' : 'Not Started',
+        partCStatus: body.partC ? 'Submitted' : 'Not Started',
+        ...(body.partB && { partB: { create: body.partB } }),
+        ...(body.partC && { partC: { create: body.partC } }),
       },
       include: {
         contractor: true,
         site: true,
         workers: { include: { worker: { select: { id: true, fullName: true, employeeNumber: true } } } },
+        partB: true,
+        partC: true,
       },
     })
 
