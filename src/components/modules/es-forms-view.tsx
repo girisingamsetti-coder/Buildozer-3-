@@ -141,8 +141,8 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
     return projectForms.filter(f => mapped[f.status] === sub).length
   }
 
-  const HEADER_BG = 'bg-[#3b5998]'
-  const HEADER_TEXT = 'text-white text-[10px] font-semibold'
+  const HEADER_BG = 'bg-teal-50 dark:bg-teal-950/40'
+  const HEADER_TEXT = 'text-teal-900 dark:text-teal-100 text-xs font-semibold'
 
   return (
     <Card className="shrink-0">
@@ -154,7 +154,7 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
               <tr>
                 <th
                   rowSpan={2}
-                  className={`${HEADER_BG} ${HEADER_TEXT} sticky left-0 z-20 px-3 py-2 text-left border border-blue-400/40 min-w-[140px] align-middle`}
+                  className={`${HEADER_BG} ${HEADER_TEXT} sticky left-0 z-20 px-3 py-2 text-left border border-slate-200 dark:border-slate-700 min-w-[140px] align-middle`}
                 >
                   Project
                 </th>
@@ -162,7 +162,7 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
                   <th
                     key={type}
                     colSpan={SUB_COLS.length}
-                    className={`${HEADER_BG} ${HEADER_TEXT} px-2 py-2 text-center border border-blue-400/40 whitespace-nowrap`}
+                    className={`${HEADER_BG} ${HEADER_TEXT} px-2 py-2 text-center border border-slate-200 dark:border-slate-700 whitespace-nowrap`}
                   >
                     {type}
                   </th>
@@ -174,7 +174,7 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
                   SUB_COLS.map(sub => (
                     <th
                       key={`${type}-${sub}`}
-                      className={`${HEADER_BG} ${HEADER_TEXT} px-2 py-1.5 text-center border border-blue-400/40 whitespace-nowrap`}
+                      className={`${HEADER_BG} ${HEADER_TEXT} px-2 py-1.5 text-center border border-slate-200 dark:border-slate-700 whitespace-nowrap`}
                     >
                       {sub}
                     </th>
@@ -219,8 +219,8 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
                 </tr>
               ))}
               {/* Totals row */}
-              <tr className="bg-blue-50 dark:bg-blue-950/30 font-semibold">
-                <td className="sticky left-0 z-10 px-3 py-2 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-blue-50 dark:bg-blue-950/30 whitespace-nowrap">
+              <tr className="bg-teal-50/50 dark:bg-teal-950/20 font-semibold">
+                <td className="sticky left-0 z-10 px-3 py-2 text-teal-900 dark:text-teal-100 border border-slate-200 dark:border-slate-700 bg-teal-50/50 dark:bg-teal-950/20 whitespace-nowrap">
                   Total
                 </td>
                 {FORM_TYPES.map(type =>

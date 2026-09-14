@@ -136,7 +136,7 @@ function IncidentPartAForm({ onClose }: { onClose: () => void }) {
 
   const handleFinalSubmit = () => {
     if (!date || !description || selectedTypes.length === 0) {
-      toast.error('Date, Description, and at least one Incident Type are required')
+      toast.error('Failed to Create')
       return
     }
 
@@ -184,7 +184,7 @@ function IncidentPartAForm({ onClose }: { onClose: () => void }) {
           <div className="space-y-4">
             <h3 className="font-semibold text-base border-b pb-2">A1. Basic Incident Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2"><Label>Date of Incident <span className="text-red-500">*</span></Label><Input type="date" value={date} onChange={e => setDate(e.target.value)} /></div>
+              <div className="space-y-2"><Label>Date of Incident</Label><Input type="date" value={date} onChange={e => setDate(e.target.value)} /></div>
               <div className="space-y-2"><Label>Time</Label><Input type="time" value={time} onChange={e => setTime(e.target.value)} /></div>
               <div className="space-y-2"><Label>Reported By</Label><Input value={reportedBy} onChange={e => setReportedBy(e.target.value)} /></div>
               <div className="space-y-2"><Label>Date/Time Reported</Label><Input type="datetime-local" value={dateTimeReported} onChange={e => setDateTimeReported(e.target.value)} /></div>
@@ -206,7 +206,7 @@ function IncidentPartAForm({ onClose }: { onClose: () => void }) {
             </div>
             <div className="pt-2 space-y-4">
               <div className="space-y-2"><Label>Brief Incident Title</Label><Input value={briefIncidentTitle} onChange={e => setBriefIncidentTitle(e.target.value)} placeholder="Short title for quick identification" /></div>
-              <div className="space-y-2"><Label>Brief Initial Description <span className="text-red-500">*</span></Label><Textarea value={description} onChange={e => setDescription(e.target.value)} rows={3} placeholder="What is the incident? (Will be carried over to Part B)" /></div>
+              <div className="space-y-2"><Label>Brief Initial Description</Label><Textarea value={description} onChange={e => setDescription(e.target.value)} rows={3} placeholder="What is the incident? (Will be carried over to Part B)" /></div>
             </div>
           </div>
 

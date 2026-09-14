@@ -234,17 +234,19 @@ export default function IncidentDetailView() {
       </div>
 
       <Tabs defaultValue="overview" className="w-full flex-1 flex flex-col min-h-0 overflow-hidden">
-        <TabsList className="flex w-full overflow-x-auto justify-start shrink-0 h-auto mb-6 p-1">
-          <TabsTrigger value="overview" className="py-2">Overview</TabsTrigger>
-          <TabsTrigger value="partB" className="py-2">
+        <TabsList className="flex w-full overflow-x-auto justify-start shrink-0 h-auto mb-6 bg-transparent p-0 gap-2">
+          <TabsTrigger value="overview" className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm data-[state=inactive]:shadow-[0_3px_0_0_#cbd5e1] !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="partB" className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm data-[state=inactive]:shadow-[0_3px_0_0_#cbd5e1] !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all">
             Part B
             {incident.partBStatus === 'Submitted' && <CheckCircle2 className="h-3.5 w-3.5 ml-1.5 text-emerald-600" />}
           </TabsTrigger>
-          <TabsTrigger value="partC" className="py-2">
+          <TabsTrigger value="partC" className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm data-[state=inactive]:shadow-[0_3px_0_0_#cbd5e1] !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all">
             Part C
             {incident.partCStatus === 'Submitted' && <CheckCircle2 className="h-3.5 w-3.5 ml-1.5 text-emerald-600" />}
           </TabsTrigger>
-          <TabsTrigger value="annexures" className="py-2">
+          <TabsTrigger value="annexures" className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm data-[state=inactive]:shadow-[0_3px_0_0_#cbd5e1] !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all">
             Annexures
             {incident.annexures && incident.annexures.length > 0 && (
               <Badge variant="secondary" className="ml-1.5 h-5 px-1.5 text-[10px]">{incident.annexures.length}</Badge>
