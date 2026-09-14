@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { successResponse, errorResponse, handleApiError } from '@/lib/api-utils'
 
+export const dynamic = 'force-dynamic'
+
+
 // GET /api/workers/[id]/payroll
 export async function GET(
   req: NextRequest,

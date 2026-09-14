@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
+
 const VALID_STATUSES = ['Present', 'Absent', 'HalfDay', 'Leave', 'Holiday']
 
 // GET /api/attendance?date=2025-01-15&contractorId=xxx

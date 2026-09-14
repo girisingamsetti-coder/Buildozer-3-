@@ -9,6 +9,9 @@ import {
 } from '@/lib/api-utils'
 import { DEFAULT_GRIEVANCE_SLA_DAYS } from '@/lib/constants'
 
+export const dynamic = 'force-dynamic'
+
+
 // GET /api/grievances
 export async function GET(req: NextRequest) {
   try {

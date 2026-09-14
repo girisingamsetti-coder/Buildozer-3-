@@ -1,6 +1,9 @@
 import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import {
+
+export const dynamic = 'force-dynamic'
+
   paginatedResponse,
   successResponse,
   errorResponse,

@@ -4,6 +4,9 @@ import { successResponse, handleApiError } from '@/lib/api-utils'
 import { ensurePayrollDataForPeriod } from '@/lib/payroll-seed'
 import { ExceptionSeverity } from '@/types/payroll'
 
+export const dynamic = 'force-dynamic'
+
+
 // GET /api/payroll/exceptions?period=2026-09&category=all&severity=all
 export async function GET(req: NextRequest) {
   try {

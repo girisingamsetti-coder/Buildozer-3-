@@ -3,6 +3,9 @@ import { db } from '@/lib/db'
 import { ensurePayrollDataForPeriod } from '@/lib/payroll-seed'
 import { successResponse, handleApiError } from '@/lib/api-utils'
 
+export const dynamic = 'force-dynamic'
+
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)

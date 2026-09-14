@@ -9,6 +9,9 @@ import {
 } from '@/lib/api-utils'
 import { ensurePayrollDataForPeriod } from '@/lib/payroll-seed'
 
+export const dynamic = 'force-dynamic'
+
+
 // GET /api/payroll/salary
 export async function GET(req: NextRequest) {
   try {

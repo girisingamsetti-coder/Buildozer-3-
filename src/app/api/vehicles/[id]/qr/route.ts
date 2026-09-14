@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import QRCode from 'qrcode'
 import { db } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
+
 interface QRData {
   qrDataUrl: string
   generatedAt: string
