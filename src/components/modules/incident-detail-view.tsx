@@ -120,7 +120,7 @@ export default function IncidentDetailView() {
   const [followUpPerson, setFollowUpPerson] = useState('')
   const [followUpDue, setFollowUpDue] = useState('')
   const [newStatus, setNewStatus] = useState('')
-  const { data, isLoading } = useQuery<{ data: IncidentDetail }>({ queryKey: ['incident', id], queryFn: () => fetch(`/api/incidents/${id}`).then((r) => r.json()), enabled: !!id })
+  const { data, isLoading } = useQuery<{ data: IncidentDetail }>({ queryKey: ['incident', id], queryFn: () => fetch(`/api/incidents/${id}?t=${Date.now()}`).then((r) => r.json()), enabled: !!id })
   const incident = data?.data
 
   // Compute photos from server data
