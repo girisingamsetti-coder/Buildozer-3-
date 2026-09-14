@@ -141,8 +141,8 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
     return projectForms.filter(f => mapped[f.status] === sub).length
   }
 
-  const HEADER_BG = 'bg-teal-50 dark:bg-teal-950/40'
-  const HEADER_TEXT = 'text-teal-900 dark:text-teal-100 text-xs font-semibold'
+  const HEADER_BG = 'bg-sidebar dark:bg-sidebar/80'
+  const HEADER_TEXT = 'text-sidebar-foreground text-xs font-semibold'
 
   return (
     <Card className="shrink-0">
@@ -219,8 +219,8 @@ function ProjectSummaryTable({ forms }: { forms: FormEntry[] }) {
                 </tr>
               ))}
               {/* Totals row */}
-              <tr className="bg-teal-50/50 dark:bg-teal-950/20 font-semibold">
-                <td className="sticky left-0 z-10 px-3 py-2 text-teal-900 dark:text-teal-100 border border-slate-200 dark:border-slate-700 bg-teal-50/50 dark:bg-teal-950/20 whitespace-nowrap">
+              <tr className="bg-sidebar dark:bg-sidebar/80 font-semibold">
+                <td className="sticky left-0 z-10 px-3 py-2 text-sidebar-foreground border border-slate-200 dark:border-slate-700 bg-sidebar dark:bg-sidebar/80 whitespace-nowrap">
                   Total
                 </td>
                 {FORM_TYPES.map(type =>
