@@ -249,6 +249,15 @@ model Incident {
   incidentType       String
   date               DateTime
   time               String?
+  reportedBy         String?
+  dateTimeReported   DateTime?
+  project            String?
+  packageContract    String?
+  briefIncidentTitle String?
+  isAnyoneInjured    Boolean?           @default(false)
+  isOngoing          Boolean?           @default(false)
+  immediateActionRequired Boolean?      @default(false)
+  authoritiesContacted Boolean?         @default(false)
   locationOnSite     String?
   description        String
   rootCause          String?
@@ -269,6 +278,7 @@ model Incident {
   photos             String?
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
+  partAStatus        String             @default("Logged")
   partBStatus        String             @default("Not Started")
   partCStatus        String             @default("Not Started")
   partB              IncidentPartB?
@@ -768,5 +778,26 @@ model PaymentDocument {
 
   @@index([period])
   @@index([category])
+}
+
+model ESFormSubmission {
+  id             String    @id @default(cuid())
+  formType       String    // "Gender", "LabourLaw", "OHS", "SocialSafeguard", "SkillTraining", "RoadSafety", "EVM"
+  projectNumber  String?
+  projectName    String?
+  reportingMonth String?
+  projectTitle   String?
+  manager        String?
+  customer       String?
+  boq            String?
+  boqDesc        String?
+  status         String    @default("Draft")
+  formData       String?   @db.Text // JSON stringified payload of the specific form's unique fields
+  submittedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([formType])
+  @@index([reportingMonth])
 }
 

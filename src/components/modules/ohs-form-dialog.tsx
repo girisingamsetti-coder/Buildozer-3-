@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   CheckCircle2, XCircle, AlertTriangle, ChevronRight, ChevronLeft,
   Upload, X, FileText, Eye, Trash2, Save, Send, ClipboardList,
@@ -175,20 +176,7 @@ export interface OHSSubmission {
 
 const STORAGE_KEY = 'ohs-submissions-v2'
 
-export function loadOHSSubmissions(): OHSSubmission[] {
-  if (typeof window === 'undefined') return []
-  try {
-    const data = localStorage.getItem(STORAGE_KEY)
-    return data ? JSON.parse(data) : []
-  } catch (e) {
-    return []
-  }
-}
-
-export function saveOHSSubmissions(data: OHSSubmission[]) {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-}
+// Removed localStorage functions
 
 function emptyTBTRecord(): TBTRecord {
   return { id: Date.now().toString() + Math.random(), status: null, date: '', topic: '', documents: [], remarks: '' }
@@ -431,19 +419,35 @@ export default function OHSFormDialog({ open, onOpenChange, onSaved, defaultProj
     }
   }
 
+  const queryClient = useQueryClient()
+
+  const saveMutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await fetch('/api/es-forms/OHS', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (!res.ok) throw new Error('Failed to save report')
+      return res.json()
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['es-forms', 'OHS'] })
+      toast.success(variables.status === 'Draft' ? 'Saved as draft' : 'Successfully Submitted OHS Form')
+      onSaved()
+      onOpenChange(false)
+    },
+    onError: () => toast.error('Failed to save report')
+  })
+
   const handleSaveDraft = () => {
-    const submissions = loadOHSSubmissions()
-    saveOHSSubmissions([buildSubmission('Draft'), ...submissions])
-    toast.success('Saved as draft')
-    onSaved(); onOpenChange(false)
+    if (!projectName) { toast.error('Please select a project first.'); return }
+    saveMutation.mutate(buildSubmission('Draft'))
   }
 
   const handleSubmit = () => {
     if (!projectName) { toast.error('Please select a project first.'); return }
-    const submissions = loadOHSSubmissions()
-    saveOHSSubmissions([buildSubmission('Submitted'), ...submissions])
-    toast.success('Successfully Submitted OHS Form')
-    onSaved(); onOpenChange(false)
+    saveMutation.mutate(buildSubmission('Submitted'))
   }
 
   return (
@@ -835,11 +839,11 @@ export default function OHSFormDialog({ open, onOpenChange, onSaved, defaultProj
             <div className="flex gap-2">
               {step === STEPS.length - 1 ? (
                 <>
-                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft}>
-                    <Save className="h-3.5 w-3.5" /> Save Draft
+                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft} disabled={saveMutation.isPending}>
+                    <Save className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Saving...' : 'Save Draft'}
                   </Button>
-                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={handleSubmit}>
-                    <Send className="h-3.5 w-3.5" /> Submit
+                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={handleSubmit} disabled={saveMutation.isPending}>
+                    <Send className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Submitting...' : 'Submit'}
                   </Button>
                 </>
               ) : (

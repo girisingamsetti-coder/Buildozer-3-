@@ -6,27 +6,14 @@ import { toast } from 'sonner'
 import {
   Plus, Search, X, FileText, ChevronDown, Trash2, Calendar, CheckCircle2, XCircle, Clock, AlertTriangle, Pencil,
 } from 'lucide-react'
-import RoadSafetyFormDialog, {
-  loadRoadSafetySubmissions, saveRoadSafetySubmissions, type RoadSafetySubmission,
-} from './road-safety-form-dialog'
-import EVMFormDialog, {
-  loadEVMSubmissions, saveEVMSubmissions, type EVMSubmission,
-} from './evm-form-dialog'
-import SocialSafeguardFormDialog, {
-  loadSocialSafeguardSubmissions, saveSocialSafeguardSubmissions, type SocialSafeguardSubmission,
-} from './social-safeguard-form-dialog'
-import SkillTrainingFormDialog, {
-  loadSkillTrainingSubmissions, saveSkillTrainingSubmissions, type SkillTrainingSubmission,
-} from './skill-training-form-dialog'
-import LabourLawFormDialog, {
-  loadLabourLawSubmissions, saveLabourLawSubmissions, type LabourLawSubmission,
-} from './labour-law-form-dialog'
-import GenderFormDialog, {
-  loadGenderSubmissions, saveGenderSubmissions, type GenderSubmission,
-} from './gender-form-dialog'
-import OHSFormDialog, {
-  loadOHSSubmissions, saveOHSSubmissions, type OHSSubmission,
-} from './ohs-form-dialog'
+import RoadSafetyFormDialog, { type RoadSafetySubmission } from './road-safety-form-dialog'
+import EVMFormDialog, { type EVMSubmission } from './evm-form-dialog'
+import SocialSafeguardFormDialog, { type SocialSafeguardSubmission } from './social-safeguard-form-dialog'
+import SkillTrainingFormDialog, { type SkillTrainingSubmission } from './skill-training-form-dialog'
+import LabourLawFormDialog, { type LabourLawSubmission } from './labour-law-form-dialog'
+import GenderFormDialog, { type GenderSubmission } from './gender-form-dialog'
+import OHSFormDialog, { type OHSSubmission } from './ohs-form-dialog'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -427,6 +414,26 @@ function AddFormDialog({
 
 // ==================== MAIN VIEW ====================
 
+const fetchSubmissions = async (formType: string) => {
+  const res = await fetch(`/api/es-forms/${formType}`)
+  if (!res.ok) throw new Error('Failed to fetch')
+  const json = await res.json()
+  return (json.data || []).map((dbItem: any) => ({
+    id: dbItem.id,
+    projectName: dbItem.projectName,
+    reportingMonth: dbItem.reportingMonth,
+    projectNumber: dbItem.projectNumber,
+    projectTitle: dbItem.projectTitle,
+    manager: dbItem.manager,
+    customer: dbItem.customer,
+    boq: dbItem.boq,
+    boqDesc: dbItem.boqDesc,
+    status: dbItem.status,
+    submittedAt: dbItem.submittedAt,
+    ...JSON.parse(dbItem.formData || '{}')
+  }))
+}
+
 export default function EsFormsView() {
   const [forms, setForms] = useState<FormEntry[]>(() => loadForms())
   const [search, setSearch] = useState('')
@@ -436,31 +443,42 @@ export default function EsFormsView() {
   const [addType, setAddType] = useState<FormType | null>(null)
   const [addMenuOpen, setAddMenuOpen] = useState(false)
   const [socialHovered, setSocialHovered] = useState(false)
+  const queryClient = useQueryClient()
+
   const [ohsOpen, setOhsOpen] = useState(false)
-  const [ohsSubmissions, setOhsSubmissions] = useState<OHSSubmission[]>(() => loadOHSSubmissions())
-  const refreshOHS = () => setOhsSubmissions(loadOHSSubmissions())
+  const { data: ohsSubmissions = [], refetch: refreshOHS } = useQuery<OHSSubmission[]>({ queryKey: ['es-forms', 'OHS'], queryFn: () => fetchSubmissions('OHS') })
+
   const [rsOpen, setRsOpen] = useState(false)
-  const [rsSubmissions, setRsSubmissions] = useState<RoadSafetySubmission[]>(() => loadRoadSafetySubmissions())
+  const { data: rsSubmissions = [], refetch: refreshRS } = useQuery<RoadSafetySubmission[]>({ queryKey: ['es-forms', 'RoadSafety'], queryFn: () => fetchSubmissions('RoadSafety') })
+
   const [evmOpen, setEvmOpen] = useState(false)
-  const [evmSubmissions, setEvmSubmissions] = useState<EVMSubmission[]>(() => loadEVMSubmissions())
+  const { data: evmSubmissions = [], refetch: refreshEVM } = useQuery<EVMSubmission[]>({ queryKey: ['es-forms', 'EVM'], queryFn: () => fetchSubmissions('EVM') })
 
   const [ssOpen, setSsOpen] = useState(false)
-  const [ssSubmissions, setSsSubmissions] = useState<SocialSafeguardSubmission[]>(() => loadSocialSafeguardSubmissions())
+  const { data: ssSubmissions = [], refetch: refreshSS } = useQuery<SocialSafeguardSubmission[]>({ queryKey: ['es-forms', 'SocialSafeguard'], queryFn: () => fetchSubmissions('SocialSafeguard') })
+
   const [stOpen, setStOpen] = useState(false)
-  const [stSubmissions, setStSubmissions] = useState<SkillTrainingSubmission[]>(() => loadSkillTrainingSubmissions())
+  const { data: stSubmissions = [], refetch: refreshST } = useQuery<SkillTrainingSubmission[]>({ queryKey: ['es-forms', 'SkillTraining'], queryFn: () => fetchSubmissions('SkillTraining') })
+
   const [llOpen, setLlOpen] = useState(false)
-  const [llSubmissions, setLlSubmissions] = useState<LabourLawSubmission[]>(() => loadLabourLawSubmissions())
+  const { data: llSubmissions = [], refetch: refreshLL } = useQuery<LabourLawSubmission[]>({ queryKey: ['es-forms', 'LabourLaw'], queryFn: () => fetchSubmissions('LabourLaw') })
+
   const [genOpen, setGenOpen] = useState(false)
-  const [genSubmissions, setGenSubmissions] = useState<GenderSubmission[]>(() => loadGenderSubmissions())
+  const { data: genSubmissions = [], refetch: refreshGen } = useQuery<GenderSubmission[]>({ queryKey: ['es-forms', 'Gender'], queryFn: () => fetchSubmissions('Gender') })
 
   const [editingEntry, setEditingEntry] = useState<FormEntry | null>(null)
 
-  const refreshRS = () => setRsSubmissions(loadRoadSafetySubmissions())
-  const refreshEVM = () => setEvmSubmissions(loadEVMSubmissions())
-  const refreshSS = () => setSsSubmissions(loadSocialSafeguardSubmissions())
-  const refreshST = () => setStSubmissions(loadSkillTrainingSubmissions())
-  const refreshLL = () => setLlSubmissions(loadLabourLawSubmissions())
-  const refreshGen = () => setGenSubmissions(loadGenderSubmissions())
+  const deleteMutation = useMutation({
+    mutationFn: async ({ formType, id }: { formType: string, id: string }) => {
+      const res = await fetch(`/api/es-forms/${formType}?id=${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed to delete')
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['es-forms', variables.formType] })
+      toast.success('Deleted')
+    },
+    onError: () => toast.error('Failed to delete record')
+  })
 
   const handleSave = (entry: FormEntry) => {
     const isEdit = forms.some(f => f.id === entry.id)
@@ -685,12 +703,7 @@ export default function EsFormsView() {
                         </td>
                         <td className="px-3 py-2">
                           <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                            onClick={() => {
-                              const updated = rsSubmissions.filter(r => r.id !== rs.id)
-                              setRsSubmissions(updated)
-                              saveRoadSafetySubmissions(updated)
-                              toast.success('Deleted')
-                            }}>
+                            onClick={() => deleteMutation.mutate({ formType: 'RoadSafety', id: rs.id })}>
                             <Trash2 className="h-3 w-3" />
                           </Button>
                         </td>
@@ -760,12 +773,7 @@ export default function EsFormsView() {
                         </td>
                         <td className="px-3 py-2">
                           <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                            onClick={() => {
-                              const updated = ohsSubmissions.filter(r => r.id !== ohs.id)
-                              setOhsSubmissions(updated)
-                              saveOHSSubmissions(updated)
-                              toast.success('Deleted')
-                            }}>
+                            onClick={() => deleteMutation.mutate({ formType: 'OHS', id: ohs.id })}>
                             <Trash2 className="h-3 w-3" />
                           </Button>
                         </td>
@@ -827,12 +835,7 @@ export default function EsFormsView() {
                         </td>
                         <td className="px-3 py-2">
                           <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                            onClick={() => {
-                              const updated = evmSubmissions.filter(r => r.id !== ev.id)
-                              setEvmSubmissions(updated)
-                              saveEVMSubmissions(updated)
-                              toast.success('Deleted')
-                            }}>
+                            onClick={() => deleteMutation.mutate({ formType: 'EVM', id: ev.id })}>
                             <Trash2 className="h-3 w-3" />
                           </Button>
                         </td>
@@ -879,7 +882,7 @@ export default function EsFormsView() {
                       </td>
                       <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
                       <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=ssSubmissions.filter(r=>r.id!==sub.id); setSsSubmissions(u); saveSocialSafeguardSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SocialSafeguard', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
                       </td>
                     </tr>
                   ))}
@@ -922,7 +925,7 @@ export default function EsFormsView() {
                       </td>
                       <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
                       <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=stSubmissions.filter(r=>r.id!==sub.id); setStSubmissions(u); saveSkillTrainingSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SkillTraining', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
                       </td>
                     </tr>
                   ))}
@@ -965,7 +968,7 @@ export default function EsFormsView() {
                       </td>
                       <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
                       <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=llSubmissions.filter(r=>r.id!==sub.id); setLlSubmissions(u); saveLabourLawSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'LabourLaw', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
                       </td>
                     </tr>
                   ))}
@@ -1016,7 +1019,7 @@ export default function EsFormsView() {
                       </td>
                       <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
                       <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => { const u=genSubmissions.filter(r=>r.id!==sub.id); setGenSubmissions(u); saveGenderSubmissions(u); toast.success('Deleted') }}><Trash2 className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'Gender', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
                       </td>
                     </tr>
                   ))}

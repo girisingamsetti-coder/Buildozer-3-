@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import { toast } from 'sonner'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   CheckCircle2, ChevronRight, ChevronLeft, Upload, X, Save, Send, ClipboardList, Plus, Trash2
 } from 'lucide-react'
@@ -50,14 +51,7 @@ export interface SkillTrainingSubmission {
   submittedAt?: string
 }
 
-export function loadSkillTrainingSubmissions(): SkillTrainingSubmission[] {
-  if (typeof window === 'undefined') return []
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
-}
-export function saveSkillTrainingSubmissions(data: SkillTrainingSubmission[]) {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-}
+// Removed localStorage functions
 
 function emptySum(): SummaryRow { return { male: '', female: '', total: '' } }
 
@@ -145,17 +139,37 @@ export default function SkillTrainingFormDialog({ open, onOpenChange, onSaved }:
   const [data, setData] = useState(initData())
   const project = AMARAVATI_PROJECTS.find(p => p.id === selectedProjectId)
 
+  const queryClient = useQueryClient()
+
+  const saveMutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await fetch('/api/es-forms/SkillTraining', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (!res.ok) throw new Error('Failed to save report')
+      return res.json()
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['es-forms', 'SkillTraining'] })
+      toast.success(variables.status === 'Draft' ? 'Draft Saved' : 'Successfully Submitted')
+      onSaved()
+      onOpenChange(false)
+    },
+    onError: () => toast.error('Failed to save report')
+  })
+
   const handleSave = (isDraft: boolean) => {
     if (!project) { toast.error('Select a project first'); return }
-    const sub: SkillTrainingSubmission = {
-      id: `sk-${Date.now()}`, projectName: project.name, reportingMonth: `${reportMonth} ${reportYear}`,
-      projectNumber: project.id, projectTitle: project.name, manager: project.manager, customer: project.customer,
-      boq: 'BOQ-4599-22', boqDesc: 'Standard Phase 1 Construction', createdDate: new Date().toISOString().split('T')[0],
-      ...data, status: isDraft ? 'Draft' : 'Submitted', submittedAt: isDraft ? undefined : new Date().toISOString()
+    const payload = {
+      projectNumber: project.id, projectName: project.name, reportingMonth: `${reportMonth} ${reportYear}`,
+      projectTitle: project.name, manager: project.manager, customer: project.customer,
+      boq: 'BOQ-4599-22', boqDesc: 'Standard Phase 1 Construction',
+      status: isDraft ? 'Draft' : 'Submitted', submittedAt: isDraft ? undefined : new Date().toISOString(),
+      ...data
     }
-    const all = loadSkillTrainingSubmissions(); all.unshift(sub); saveSkillTrainingSubmissions(all)
-    toast.success(isDraft ? 'Draft Saved' : 'Successfully Submitted')
-    onSaved(); onOpenChange(false)
+    saveMutation.mutate(payload)
   }
 
   const renderSumRow = (obj: any, key: string, label: string) => (
@@ -369,11 +383,11 @@ export default function SkillTrainingFormDialog({ open, onOpenChange, onSaved }:
             <div className="flex gap-2">
               {step === STEPS.length - 1 ? (
                 <>
-                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => handleSave(true)}>
-                    <Save className="h-3.5 w-3.5" /> Save Draft
+                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => handleSave(true)} disabled={saveMutation.isPending}>
+                    <Save className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Saving...' : 'Save Draft'}
                   </Button>
-                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={() => handleSave(false)}>
-                    <Send className="h-3.5 w-3.5" /> Submit
+                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={() => handleSave(false)} disabled={saveMutation.isPending}>
+                    <Send className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Submitting...' : 'Submit'}
                   </Button>
                 </>
               ) : (

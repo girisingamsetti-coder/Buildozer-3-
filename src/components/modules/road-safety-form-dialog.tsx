@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   CheckCircle2, XCircle, AlertTriangle, ChevronRight, ChevronLeft,
   Upload, X, FileText, Eye, Trash2, Save, Send, ClipboardList,
@@ -99,15 +100,7 @@ export interface RoadSafetySubmission {
 
 const RS_STORAGE_KEY = 'road-safety-submissions'
 
-export function loadRoadSafetySubmissions(): RoadSafetySubmission[] {
-  if (typeof window === 'undefined') return []
-  try { return JSON.parse(localStorage.getItem(RS_STORAGE_KEY) || '[]') } catch { return [] }
-}
-
-export function saveRoadSafetySubmissions(data: RoadSafetySubmission[]) {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(RS_STORAGE_KEY, JSON.stringify(data))
-}
+// Removed localStorage functions
 
 // ==================== HELPERS ====================
 
@@ -424,12 +417,13 @@ function Step3({
 // ==================== STEP 4: REVIEW & SUBMIT ====================
 
 function Step4({
-  projectName, month, year, checklist, conducted, auditFile, auditRemarks, onSaveDraft, onSubmit,
+  projectName, month, year, checklist, conducted, auditFile, auditRemarks, onSaveDraft, onSubmit, isPending
 }: {
   projectName: string; month: string; year: string
   checklist: ChecklistEntry[]
   conducted: boolean | null; auditFile: UploadedFile | null; auditRemarks: string
   onSaveDraft: () => void; onSubmit: () => void
+  isPending: boolean
 }) {
   const proj = AMARAVATI_PROJECTS.find(p => p.name === projectName)
   const yesCount = checklist.filter(c => c.answer === 'yes').length
@@ -513,16 +507,17 @@ function Step4({
 
       {/* Actions */}
       <div className="flex gap-2 pt-1">
-        <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={onSaveDraft}>
-          <Save className="h-3.5 w-3.5" /> Save as Draft
+        <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={onSaveDraft} disabled={isPending}>
+          <Save className="h-3.5 w-3.5" /> {isPending ? 'Saving...' : 'Save as Draft'}
         </Button>
         <Button
           type="button"
           size="sm"
           className="flex-1 bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5"
           onClick={onSubmit}
+          disabled={isPending}
         >
-          <Send className="h-3.5 w-3.5" /> Submit Form
+          <Send className="h-3.5 w-3.5" /> {isPending ? 'Submitting...' : 'Submit Form'}
         </Button>
       </div>
     </div>
@@ -575,11 +570,29 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
     }
   }
 
+  const queryClient = useQueryClient()
+
+  const saveMutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await fetch('/api/es-forms/RoadSafety', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (!res.ok) throw new Error('Failed to save report')
+      return res.json()
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['es-forms', 'RoadSafety'] })
+      toast.success(variables.status === 'Draft' ? 'Saved as draft' : 'Successfully Submitted')
+      onSaved()
+      onOpenChange(false)
+    },
+    onError: () => toast.error('Failed to save report')
+  })
+
   const handleSaveDraft = () => {
-    const submissions = loadRoadSafetySubmissions()
-    saveRoadSafetySubmissions([buildSubmission('Draft'), ...submissions])
-    toast.success('Saved as draft')
-    onSaved(); onOpenChange(false)
+    saveMutation.mutate(buildSubmission('Draft'))
   }
 
   const handleSubmit = () => {
@@ -592,10 +605,7 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
       toast.error('Failed to Create')
       return
     }
-    const submissions = loadRoadSafetySubmissions()
-    saveRoadSafetySubmissions([buildSubmission('Submitted'), ...submissions])
-    toast.success('Successfully Submitted')
-    onSaved(); onOpenChange(false)
+    saveMutation.mutate(buildSubmission('Submitted'))
   }
 
   const next = () => setStep(s => Math.min(s + 1, 1))
@@ -638,7 +648,7 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
               </div>
             </div>
           )}
-          {step === 1 && <Step4 projectName={projectName} month={month} year={year} checklist={checklist} conducted={conducted} auditFile={auditFile} auditRemarks={auditRemarks} onSaveDraft={handleSaveDraft} onSubmit={handleSubmit} />}
+          {step === 1 && <Step4 projectName={projectName} month={month} year={year} checklist={checklist} conducted={conducted} auditFile={auditFile} auditRemarks={auditRemarks} onSaveDraft={handleSaveDraft} onSubmit={handleSubmit} isPending={saveMutation.isPending} />}
         </div>
 
         {/* Footer nav */}
@@ -660,8 +670,8 @@ export default function RoadSafetyFormDialog({ open, onOpenChange, onSaved, defa
                 Next <ChevronRight className="h-4 w-4" />
               </Button>
             ) : (
-              <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft}>
-                <Save className="h-3.5 w-3.5" /> Save Draft
+              <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft} disabled={saveMutation.isPending}>
+                <Save className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Saving...' : 'Save Draft'}
               </Button>
             )}
           </div>

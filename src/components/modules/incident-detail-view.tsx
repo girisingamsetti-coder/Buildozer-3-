@@ -58,6 +58,15 @@ interface IncidentDetail {
   hospitalReferred: string | null
   severity: string
   status: string
+  project: string | null
+  packageContract: string | null
+  reportedBy: string | null
+  dateTimeReported: string | null
+  briefIncidentTitle: string | null
+  isAnyoneInjured: boolean
+  isOngoing: boolean
+  immediateActionRequired: boolean
+  authoritiesContacted: boolean
   isDeath: boolean
   policeFIRReference: string | null
   employerNotifiedAt: string | null
@@ -186,6 +195,10 @@ export default function IncidentDetailView() {
     { label: 'Date', value: format(new Date(incident.date), 'dd MMM yyyy'), icon: Calendar },
     { label: 'Time', value: incident.time || '—', icon: Clock },
     { label: 'Location', value: incident.locationOnSite || '—', icon: MapPin },
+    { label: 'Project', value: incident.project || '—', icon: FileText },
+    { label: 'Package/Contract', value: incident.packageContract || '—', icon: FileText },
+    { label: 'Reported By', value: incident.reportedBy || '—', icon: User },
+    { label: 'Date/Time Reported', value: incident.dateTimeReported ? format(new Date(incident.dateTimeReported), 'dd MMM yyyy HH:mm') : '—', icon: Clock },
   ]
 
   const deathChecklist = [
@@ -197,9 +210,9 @@ export default function IncidentDetailView() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="h-full flex flex-col min-h-0 gap-6 overflow-hidden pb-4">
       {/* ====== Header ====== */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 shrink-0">
         <Button variant="ghost" size="sm" onClick={goBack} className="w-fit">
           <ArrowLeft className="h-4 w-4 mr-1" /> Back
         </Button>
@@ -220,8 +233,8 @@ export default function IncidentDetailView() {
         </div>
       </div>
 
-      <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full sm:w-auto grid-cols-4 h-auto mb-6">
+      <Tabs defaultValue="overview" className="w-full flex-1 flex flex-col min-h-0 overflow-hidden">
+        <TabsList className="flex w-full overflow-x-auto justify-start shrink-0 h-auto mb-6 p-1">
           <TabsTrigger value="overview" className="py-2">Overview</TabsTrigger>
           <TabsTrigger value="partB" className="py-2">
             Part B
@@ -239,7 +252,7 @@ export default function IncidentDetailView() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-6">
+        <TabsContent value="overview" className="flex-1 overflow-y-auto space-y-6 pr-2 pb-6 min-h-0">
       {/* ====== Incident Info ====== */}
       <Card>
         <CardHeader className="pb-3"><CardTitle className="text-base flex items-center gap-2"><FileText className="h-4 w-4 text-teal-600" /> Incident Information</CardTitle></CardHeader>
@@ -259,10 +272,41 @@ export default function IncidentDetailView() {
           ))}
           <Separator className="sm:col-span-2" />
           <div className="sm:col-span-2 space-y-3">
+            {incident.briefIncidentTitle && <div><p className="text-xs text-muted-foreground mb-1">Brief Title</p><p className="text-sm font-medium">{incident.briefIncidentTitle}</p></div>}
             <div><p className="text-xs text-muted-foreground mb-1">Description</p><p className="text-sm whitespace-pre-wrap">{incident.description}</p></div>
-            {incident.rootCause && <div><p className="text-xs text-muted-foreground mb-1">Root Cause</p><p className="text-sm whitespace-pre-wrap">{incident.rootCause}</p></div>}
-            {incident.immediateAction && <div><p className="text-xs text-muted-foreground mb-1">Immediate Action</p><p className="text-sm whitespace-pre-wrap">{incident.immediateAction}</p></div>}
           </div>
+          
+          <Separator className="sm:col-span-2" />
+          <div className="sm:col-span-2">
+            <h4 className="text-sm font-semibold mb-3">Initial Situation</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex items-center gap-2">
+                <div className={`p-1 rounded-full ${incident.isAnyoneInjured ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                  {incident.isAnyoneInjured ? <AlertTriangle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+                </div>
+                <p className="text-sm">Is anyone injured? <span className="font-semibold">{incident.isAnyoneInjured ? 'Yes' : 'No'}</span></p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={`p-1 rounded-full ${incident.isOngoing ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                  {incident.isOngoing ? <AlertTriangle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+                </div>
+                <p className="text-sm">Is incident ongoing? <span className="font-semibold">{incident.isOngoing ? 'Yes' : 'No'}</span></p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={`p-1 rounded-full ${incident.immediateActionRequired ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                  {incident.immediateActionRequired ? <AlertTriangle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+                </div>
+                <p className="text-sm">Immediate action required? <span className="font-semibold">{incident.immediateActionRequired ? 'Yes' : 'No'}</span></p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={`p-1 rounded-full ${incident.authoritiesContacted ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-700'}`}>
+                  <ShieldCheck className="h-4 w-4" />
+                </div>
+                <p className="text-sm">Authorities contacted? <span className="font-semibold">{incident.authoritiesContacted ? 'Yes' : 'No'}</span></p>
+              </div>
+            </div>
+          </div>
+
           <div><p className="text-xs text-muted-foreground">First Responder</p><p className="text-sm font-medium mt-0.5">{incident.firstResponder || '—'}</p></div>
           <div><p className="text-xs text-muted-foreground">Hospital Referred</p><p className="text-sm font-medium mt-0.5">{incident.hospitalReferred || '—'}</p></div>
           {(incident.contractor || incident.site) && (
@@ -448,7 +492,7 @@ export default function IncidentDetailView() {
       )}
       </TabsContent>
 
-      <TabsContent value="partB">
+      <TabsContent value="partB" className="flex-1 overflow-y-auto pr-2 pb-6 min-h-0">
         <IncidentPartBForm 
           incidentId={id} 
           initialData={incident.partB || {}} 
@@ -456,7 +500,7 @@ export default function IncidentDetailView() {
         />
       </TabsContent>
 
-      <TabsContent value="partC">
+      <TabsContent value="partC" className="flex-1 overflow-y-auto pr-2 pb-6 min-h-0">
         <IncidentPartCForm 
           incidentId={id} 
           initialData={incident.partC || {}} 
@@ -464,7 +508,7 @@ export default function IncidentDetailView() {
         />
       </TabsContent>
 
-      <TabsContent value="annexures">
+      <TabsContent value="annexures" className="flex-1 overflow-y-auto pr-2 pb-6 min-h-0">
         <Card>
           <CardContent className="pt-6 text-center text-muted-foreground">
             <p>Annexures list and upload will go here</p>

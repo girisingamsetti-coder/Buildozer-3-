@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { toast } from 'sonner'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   CheckCircle2, ChevronRight, ChevronLeft, Upload, X, FileText,
   Save, Send, ClipboardList, Plus, Trash2, Users, AlertTriangle,
@@ -69,14 +70,7 @@ export interface SocialSafeguardSubmission {
 
 // ==================== STORAGE ====================
 
-export function loadSocialSafeguardSubmissions(): SocialSafeguardSubmission[] {
-  if (typeof window === 'undefined') return []
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
-}
-export function saveSocialSafeguardSubmissions(data: SocialSafeguardSubmission[]) {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-}
+// Removed localStorage functions
 
 // ==================== INITIAL DATA ====================
 
@@ -220,29 +214,37 @@ export default function SocialSafeguardFormDialog({
   const handleNext = () => setStep(s => Math.min(STEPS.length - 1, s + 1))
   const handlePrev = () => setStep(s => Math.max(0, s - 1))
 
+  const queryClient = useQueryClient()
+
+  const saveMutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await fetch('/api/es-forms/SocialSafeguard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (!res.ok) throw new Error('Failed to save report')
+      return res.json()
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['es-forms', 'SocialSafeguard'] })
+      toast.success(variables.status === 'Draft' ? 'Draft Saved' : 'Successfully Submitted')
+      onSaved()
+      onOpenChange(false)
+    },
+    onError: () => toast.error('Failed to save report')
+  })
+
   const handleSave = (isDraft: boolean) => {
     if (!project) { toast.error('Select a project first'); return }
-    const submission: SocialSafeguardSubmission = {
-      id: `ss-${Date.now()}`,
-      projectName: project.name,
-      reportingMonth: `${reportMonth} ${reportYear}`,
-      projectNumber: project.id,
-      projectTitle: project.name,
-      manager: project.manager,
-      customer: project.customer,
-      boq: 'BOQ-4599-22',
-      boqDesc: 'Standard Phase 1 Construction',
-      createdDate: new Date().toISOString().split('T')[0],
-      ...data,
-      status: isDraft ? 'Draft' : 'Submitted',
-      submittedAt: isDraft ? undefined : new Date().toISOString()
+    const payload = {
+      projectNumber: project.id, projectName: project.name, reportingMonth: `${reportMonth} ${reportYear}`,
+      projectTitle: project.name, manager: project.manager, customer: project.customer,
+      boq: 'BOQ-4599-22', boqDesc: 'Standard Phase 1 Construction',
+      status: isDraft ? 'Draft' : 'Submitted', submittedAt: isDraft ? undefined : new Date().toISOString(),
+      ...data
     }
-    const all = loadSocialSafeguardSubmissions()
-    all.unshift(submission)
-    saveSocialSafeguardSubmissions(all)
-    toast.success(isDraft ? 'Draft Saved' : 'Successfully Submitted')
-    onSaved()
-    onOpenChange(false)
+    saveMutation.mutate(payload)
   }
 
   // Row operations
@@ -563,9 +565,9 @@ export default function SocialSafeguardFormDialog({
                       Make sure all fields and evidence uploads are correct.
                     </p>
                     <div className="mt-8 flex gap-4">
-                      <Button variant="outline" className="px-8" onClick={() => setStep(0)}>Review Form</Button>
-                      <Button className="px-8 bg-[#0d9488] hover:bg-[#0f766e]" onClick={() => handleSave(false)}>
-                        <Send className="h-4 w-4 mr-2" /> Submit Report
+                      <Button type="button" variant="outline" className="px-8" onClick={() => setStep(0)}>Review Form</Button>
+                      <Button type="button" className="px-8 bg-[#0d9488] hover:bg-[#0f766e]" onClick={() => handleSave(false)} disabled={saveMutation.isPending}>
+                        <Send className="h-4 w-4 mr-2" /> {saveMutation.isPending ? 'Submitting...' : 'Submit Report'}
                       </Button>
                     </div>
                   </div>
@@ -592,11 +594,11 @@ export default function SocialSafeguardFormDialog({
             <div className="flex gap-2">
               {step === STEPS.length - 1 ? (
                 <>
-                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => handleSave(true)}>
-                    <Save className="h-3.5 w-3.5" /> Save Draft
+                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => handleSave(true)} disabled={saveMutation.isPending}>
+                    <Save className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Saving...' : 'Save Draft'}
                   </Button>
-                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={() => handleSave(false)}>
-                    <Send className="h-3.5 w-3.5" /> Submit
+                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={() => handleSave(false)} disabled={saveMutation.isPending}>
+                    <Send className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Submitting...' : 'Submit'}
                   </Button>
                 </>
               ) : (

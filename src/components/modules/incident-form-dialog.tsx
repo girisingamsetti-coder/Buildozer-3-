@@ -1,21 +1,9 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { motion, AnimatePresence } from 'framer-motion'
-import {
-  ArrowLeft,
-  ArrowRight,
-  X,
-  Search as SearchIcon,
-  AlertTriangle,
-  ShieldAlert,
-  Users,
-  Camera,
-  Check,
-  FileText,
-} from 'lucide-react'
+import { AlertTriangle, Info } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -27,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
   Select,
@@ -36,16 +25,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useNavStore } from '@/stores/nav-store'
-import PhotoUploader from '@/components/shared/photo-uploader'
-import { IncidentPartBForm } from './incident-part-b-form'
-import { IncidentPartCForm } from './incident-part-c-form'
-
-// ---------- types ----------
-interface WorkerOption {
-  id: string
-  fullName: string
-  employeeNumber: string
-}
 
 interface ContractorOption {
   id: string
@@ -57,48 +36,21 @@ interface SiteOption {
   name: string
 }
 
-interface WorkerEntry {
-  workerId: string
-  workerName: string
-  injuryDesc: string
-}
-
-// ---------- wizard step definitions ----------
-interface StepDef {
-  id: number
-  title: string
-  description: string
-  icon: typeof FileText
-}
-
-const STEPS: StepDef[] = [
-  {
-    id: 0,
-    title: 'Incident Details',
-    description: 'What happened, when, and where',
-    icon: AlertTriangle,
-  },
-  {
-    id: 1,
-    title: 'Severity & Assignment',
-    description: 'Severity, contractor, site, response',
-    icon: ShieldAlert,
-  },
-  {
-    id: 2,
-    title: 'Workers Involved',
-    description: 'Search and add affected workers',
-    icon: Users,
-  },
-  {
-    id: 3,
-    title: 'Photos & Additional',
-    description: 'Photo evidence, death-case fields',
-    icon: Camera,
-  },
+const INCIDENT_TYPES = [
+  'Fatality',
+  'Lost Time Injury',
+  'Displacement Without Due Process',
+  'Child Labor',
+  'Acts of Violence/Protest',
+  'Disease Outbreaks',
+  'Forced Labor',
+  'Unexpected Impacts on heritage resources',
+  'Unexpected impacts on biodiversity resources',
+  'Environmental pollution incident',
+  'Dam failure',
+  'Other',
 ]
 
-// ---------- outer dialog (controls open state) ----------
 export default function IncidentFormDialog() {
   const open = useNavStore((s) => s.incidentFormDialogOpen)
   const closeIncidentForm = useNavStore((s) => s.closeIncidentForm)
@@ -111,69 +63,43 @@ export default function IncidentFormDialog() {
       }}
     >
       <DialogContent
-        className="w-[96vw] sm:!max-w-[1100px] max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
+        className="w-[96vw] sm:!max-w-[800px] max-h-[90vh] h-[85vh] flex flex-col p-0 gap-0 overflow-hidden"
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
       >
-        {/* Only mount the inner wizard when open, with a fresh key each open
-            so all form state resets cleanly (avoids setState-in-effect) */}
-        {open && <IncidentFormWizard key="incident-wizard" onClose={closeIncidentForm} />}
+        {open && <IncidentPartAForm onClose={closeIncidentForm} />}
       </DialogContent>
     </Dialog>
   )
 }
 
-// ---------- inner wizard (fresh mount each open) ----------
-function IncidentFormWizard({ onClose }: { onClose: () => void }) {
+function IncidentPartAForm({ onClose }: { onClose: () => void }) {
   const setPage = useNavStore((s) => s.setPage)
   const queryClient = useQueryClient()
 
-  // Wizard state
-  const [currentStep, setCurrentStep] = useState(0)
-  const [direction, setDirection] = useState<1 | -1>(1)
-  const [validating, setValidating] = useState(false)
-
-  // Form state (mirrors incident-form-view.tsx)
-  const [incidentType, setIncidentType] = useState('')
+  // Basic Information
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
+  const [reportedBy, setReportedBy] = useState('')
+  const [dateTimeReported, setDateTimeReported] = useState('')
+  const [project, setProject] = useState('')
+  const [packageContract, setPackageContract] = useState('')
   const [locationOnSite, setLocationOnSite] = useState('')
-  const [description, setDescription] = useState('')
-  const [rootCause, setRootCause] = useState('')
-  const [immediateAction, setImmediateAction] = useState('')
-  const [firstResponder, setFirstResponder] = useState('')
-  const [hospitalReferred, setHospitalReferred] = useState('')
-  const [severity, setSeverity] = useState('Medium')
   const [contractorId, setContractorId] = useState('')
-  const [siteId, setSiteId] = useState('')
-  const [workers, setWorkers] = useState<WorkerEntry[]>([])
-  const [photos, setPhotos] = useState<string[]>([])
+  const [siteId, setSiteId] = useState('') // Just in case it's needed for DB relation
+  const [subcontractor, setSubcontractor] = useState('')
+  const [briefIncidentTitle, setBriefIncidentTitle] = useState('')
+  const [description, setDescription] = useState('')
 
-  // Death-specific
-  const [policeFIRReference, setPoliceFIRReference] = useState('')
-  const [employerNotifiedAt, setEmployerNotifiedAt] = useState('')
-  const [compensationStatus, setCompensationStatus] = useState('')
-  const [familyNotified, setFamilyNotified] = useState(false)
+  // Type classification (multiselect fallback to CSV for incidentType string)
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
 
-  // Part B and C data state
-  const [partBData, setPartBData] = useState<any>(null)
-  const [partCData, setPartCData] = useState<any>(null)
+  // Initial Situation
+  const [isAnyoneInjured, setIsAnyoneInjured] = useState(false)
+  const [isOngoing, setIsOngoing] = useState(false)
+  const [immediateActionRequired, setImmediateActionRequired] = useState(false)
+  const [authoritiesContacted, setAuthoritiesContacted] = useState(false)
 
-  // Worker search
-  const [workerSearch, setWorkerSearch] = useState('')
-  const [showWorkerDropdown, setShowWorkerDropdown] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  const isDeath = incidentType === 'Death'
-
-  // Fetch options
-  const { data: workersList } = useQuery<WorkerOption[]>({
-    queryKey: ['workers-select'],
-    queryFn: () =>
-      fetch('/api/workers?limit=100')
-        .then((r) => r.json())
-        .then((d: { data: WorkerOption[] }) => d.data),
-  })
   const { data: contractors } = useQuery<ContractorOption[]>({
     queryKey: ['contractors'],
     queryFn: () => fetch('/api/contractors').then((r) => r.json()),
@@ -182,40 +108,6 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
     queryKey: ['sites'],
     queryFn: () => fetch('/api/sites').then((r) => r.json()),
   })
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setShowWorkerDropdown(false)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  const filteredWorkers = (workersList || []).filter(
-    (w) =>
-      !workers.some((ew) => ew.workerId === w.id) &&
-      (w.fullName.toLowerCase().includes(workerSearch.toLowerCase()) ||
-        w.employeeNumber.toLowerCase().includes(workerSearch.toLowerCase()))
-  )
-
-  const addWorker = (w: WorkerOption) => {
-    setWorkers([...workers, { workerId: w.id, workerName: w.fullName, injuryDesc: '' }])
-    setWorkerSearch('')
-    setShowWorkerDropdown(false)
-  }
-
-  const removeWorker = (idx: number) => {
-    setWorkers(workers.filter((_, i) => i !== idx))
-  }
-
-  const updateInjuryDesc = (idx: number, desc: string) => {
-    const updated = [...workers]
-    updated[idx] = { ...updated[idx], injuryDesc: desc }
-    setWorkers(updated)
-  }
 
   const createMutation = useMutation({
     mutationFn: (body: Record<string, unknown>) =>
@@ -236,359 +128,193 @@ function IncidentFormWizard({ onClose }: { onClose: () => void }) {
     onError: () => toast.error('Failed to log incident'),
   })
 
-  // ---------- step validation ----------
-  const validateStep = (step: number): boolean => {
-    return true
-  }
-
-  const goNext = () => {
-    setValidating(true)
-    if (!validateStep(currentStep)) {
-      setValidating(false)
-      return
-    }
-    setDirection(1)
-    setCurrentStep((s) => Math.min(s + 1, STEPS.length - 1))
-    setValidating(false)
-  }
-
-  const goPrev = () => {
-    setDirection(-1)
-    setCurrentStep((s) => Math.max(s - 1, 0))
-  }
-
-  const goToStep = (target: number) => {
-    if (target === currentStep) return
-    if (target < currentStep) {
-      setDirection(-1)
-      setCurrentStep(target)
-      return
-    }
-    // Forward: validate all intermediate steps
-    for (let i = currentStep; i < target; i++) {
-      if (!validateStep(i)) return
-    }
-    setDirection(1)
-    setCurrentStep(target)
+  const toggleType = (type: string) => {
+    setSelectedTypes(prev =>
+      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+    )
   }
 
   const handleFinalSubmit = () => {
-    if (!incidentType || !date || !description || !locationOnSite) {
-      toast.error('Failed to Create')
+    if (!date || !description || selectedTypes.length === 0) {
+      toast.error('Date, Description, and at least one Incident Type are required')
       return
     }
+
     const body: Record<string, unknown> = {
-      incidentType,
       date,
       time: time || null,
-      locationOnSite,
-      description,
-      rootCause: rootCause || null,
-      immediateAction: immediateAction || null,
-      firstResponder: firstResponder || null,
-      hospitalReferred: hospitalReferred || null,
-      severity,
+      reportedBy: reportedBy || null,
+      dateTimeReported: dateTimeReported || null,
+      project: project || null,
+      packageContract: packageContract || null,
+      locationOnSite: locationOnSite || null,
       contractorId: contractorId || null,
       siteId: siteId || null,
-      photoPaths: photos.length > 0 ? JSON.stringify(photos) : null,
-      isDeath,
-      workers: workers.map((w) => ({
-        workerId: w.workerId || null,
-        workerName: w.workerName || null,
-        injuryDesc: w.injuryDesc || null,
-      })),
-    }
-    if (isDeath) {
-      body.policeFIRReference = policeFIRReference || null
-      body.employerNotifiedAt = employerNotifiedAt || null
-      body.compensationStatus = compensationStatus || null
-      body.familyNotified = familyNotified
+      description,
+      briefIncidentTitle: briefIncidentTitle || null,
+      incidentType: selectedTypes.join(', '), // primary field fallback
+      isAnyoneInjured,
+      isOngoing,
+      immediateActionRequired,
+      authoritiesContacted,
+      partB: {
+        // Carry forward to Part B
+        incidentTypes: JSON.stringify(selectedTypes),
+        subContractor: subcontractor || null,
+      }
     }
     createMutation.mutate(body)
   }
 
-  const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 40 : -40, opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir: number) => ({ x: dir > 0 ? -40 : 40, opacity: 0 }),
-  }
-
   return (
     <>
-      {/* Header (sticky) */}
-      <DialogHeader className="px-5 py-4 border-b shrink-0">
-        <DialogTitle className="text-base font-semibold flex items-center gap-2">
-          <AlertTriangle className="h-4 w-4 text-red-500" />
-          Log New Incident
+      <DialogHeader className="px-5 py-4 border-b shrink-0 bg-muted/20">
+        <DialogTitle className="text-lg font-semibold flex items-center gap-2">
+          <AlertTriangle className="h-5 w-5 text-amber-500" />
+          Part A — Initial Incident Log
         </DialogTitle>
-        <DialogDescription className="text-xs">
-          Complete each step. Click Next to continue, or jump to any step from the stepper.
+        <DialogDescription className="text-sm">
+          Quickly record that an incident has occurred. This basic information will be carried forward to Part B (Initial Incident Report).
         </DialogDescription>
       </DialogHeader>
 
-      {/* Stepper removed */}
-
-      {/* Step content (scrollable) */}
-      <div className="flex-1 min-h-0 min-w-0 overflow-y-auto px-4 sm:px-5 py-4">
+      <div className="flex-1 min-h-0 min-w-0 overflow-y-auto px-5 py-6">
         <div className="space-y-8">
-            {/* STEP 1: Incident Details */}
-              <div className="space-y-4">
-                <h2 className="text-lg font-semibold border-b pb-2">1. Incident Details</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label>Incident Type</Label>
-                    <Select value={incidentType} onValueChange={setIncidentType}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="FireInjury">Fire Injury</SelectItem>
-                        <SelectItem value="MinorInjury">Minor Injury</SelectItem>
-                        <SelectItem value="MajorFatalInjury">Major/Fatal Injury</SelectItem>
-                        <SelectItem value="Death">Death</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label>Date</Label>
-                    <Input type="date" className="mt-1" value={date} onChange={(e) => setDate(e.target.value)} />
-                  </div>
-                  <div>
-                    <Label>Time (HH:mm)</Label>
-                    <Input className="mt-1" placeholder="e.g. 14:30" value={time} onChange={(e) => setTime(e.target.value)} />
-                  </div>
-                  <div>
-                    <Label>Location on Site</Label>
-                    <Input className="mt-1" value={locationOnSite} onChange={(e) => setLocationOnSite(e.target.value)} placeholder="e.g. Block A, Floor 3" />
-                  </div>
-                </div>
-                <div>
-                  <Label>Description</Label>
-                  <Textarea className="mt-1" rows={3} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Describe the incident in detail..." />
-                </div>
-                <div>
-                  <Label>Root Cause</Label>
-                  <Textarea className="mt-1" rows={2} value={rootCause} onChange={(e) => setRootCause(e.target.value)} placeholder="What caused the incident?" />
-                </div>
-                <div>
-                  <Label>Immediate Action Taken</Label>
-                  <Textarea className="mt-1" rows={2} value={immediateAction} onChange={(e) => setImmediateAction(e.target.value)} placeholder="What immediate actions were taken?" />
-                </div>
-              </div>
-
-            {/* STEP 2: Severity & Assignment */}
-              <div className="space-y-4">
-                <h2 className="text-lg font-semibold border-b pb-2 mt-4">2. Severity & Assignment</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <Label>Severity</Label>
-                    <Select value={severity} onValueChange={setSeverity}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Low">Low</SelectItem>
-                        <SelectItem value="Medium">Medium</SelectItem>
-                        <SelectItem value="High">High</SelectItem>
-                        <SelectItem value="Critical">Critical</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label>Contractor</Label>
-                    <Select value={contractorId} onValueChange={setContractorId}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {contractors?.map((c) => (
-                          <SelectItem key={c.id} value={c.id}>
-                            {c.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label>Site</Label>
-                    <Select value={siteId} onValueChange={setSiteId}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {sites?.map((s) => (
-                          <SelectItem key={s.id} value={s.id}>
-                            {s.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label>First Responder</Label>
-                    <Input className="mt-1" value={firstResponder} onChange={(e) => setFirstResponder(e.target.value)} />
-                  </div>
-                  <div>
-                    <Label>Hospital Referred</Label>
-                    <Input className="mt-1" value={hospitalReferred} onChange={(e) => setHospitalReferred(e.target.value)} />
-                  </div>
-                </div>
-              </div>
-
-            {/* STEP 3: Workers Involved */}
-              <div className="space-y-4">
-                <h2 className="text-lg font-semibold border-b pb-2 mt-4">3. Workers Involved</h2>
-                <div className="relative" ref={dropdownRef}>
-                  <Label>Search worker by name or employee number</Label>
-                  <div className="relative mt-1">
-                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      className="pl-9"
-                      placeholder="Search worker..."
-                      value={workerSearch}
-                      onChange={(e) => {
-                        setWorkerSearch(e.target.value)
-                        setShowWorkerDropdown(true)
-                      }}
-                      onFocus={() => setShowWorkerDropdown(true)}
-                    />
-                  </div>
-                  {showWorkerDropdown && filteredWorkers.length > 0 && (
-                    <div className="absolute z-50 mt-1 w-full max-h-48 overflow-y-auto rounded-md border bg-popover p-1 shadow-md">
-                      {filteredWorkers.slice(0, 10).map((w) => (
-                        <button
-                          key={w.id}
-                          type="button"
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent transition-colors"
-                          onClick={() => addWorker(w)}
-                        >
-                          <span className="font-medium">{w.fullName}</span>
-                          <span className="text-muted-foreground ml-2">{w.employeeNumber}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {workers.length === 0 ? (
-                  <p className="text-sm text-muted-foreground py-4 text-center border border-dashed rounded-lg">
-                    No workers added yet. Search and click to add.
-                  </p>
-                ) : (
-                  <div className="space-y-3">
-                    {workers.map((w, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 rounded-lg border bg-muted/30">
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium">{w.workerName}</p>
-                          <Input
-                            className="mt-2"
-                            placeholder="Injury description..."
-                            value={w.injuryDesc}
-                            onChange={(e) => updateInjuryDesc(idx, e.target.value)}
-                          />
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="shrink-0 text-red-500 hover:text-red-700"
-                          onClick={() => removeWorker(idx)}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
+          
+          <div className="space-y-4">
+            <h3 className="font-semibold text-base border-b pb-2">A1. Basic Incident Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2"><Label>Date of Incident <span className="text-red-500">*</span></Label><Input type="date" value={date} onChange={e => setDate(e.target.value)} /></div>
+              <div className="space-y-2"><Label>Time</Label><Input type="time" value={time} onChange={e => setTime(e.target.value)} /></div>
+              <div className="space-y-2"><Label>Reported By</Label><Input value={reportedBy} onChange={e => setReportedBy(e.target.value)} /></div>
+              <div className="space-y-2"><Label>Date/Time Reported</Label><Input type="datetime-local" value={dateTimeReported} onChange={e => setDateTimeReported(e.target.value)} /></div>
+              <div className="space-y-2"><Label>Project</Label><Input value={project} onChange={e => setProject(e.target.value)} /></div>
+              <div className="space-y-2"><Label>Package/Contract</Label><Input value={packageContract} onChange={e => setPackageContract(e.target.value)} /></div>
+              <div className="space-y-2"><Label>Location/Site</Label><Input value={locationOnSite} onChange={e => setLocationOnSite(e.target.value)} /></div>
+              <div className="space-y-2">
+                <Label>Full Name of Main Contractor</Label>
+                <Select value={contractorId} onValueChange={setContractorId}>
+                  <SelectTrigger><SelectValue placeholder="Select Contractor" /></SelectTrigger>
+                  <SelectContent>
+                    {contractors?.map((c) => (
+                      <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
                     ))}
-                  </div>
-                )}
+                  </SelectContent>
+                </Select>
               </div>
+              <div className="space-y-2"><Label>Full Name of Subcontractor</Label><Input value={subcontractor} onChange={e => setSubcontractor(e.target.value)} /></div>
+            </div>
+            <div className="pt-2 space-y-4">
+              <div className="space-y-2"><Label>Brief Incident Title</Label><Input value={briefIncidentTitle} onChange={e => setBriefIncidentTitle(e.target.value)} placeholder="Short title for quick identification" /></div>
+              <div className="space-y-2"><Label>Brief Initial Description <span className="text-red-500">*</span></Label><Textarea value={description} onChange={e => setDescription(e.target.value)} rows={3} placeholder="What is the incident? (Will be carried over to Part B)" /></div>
+            </div>
+          </div>
 
-            {/* STEP 4: Photos & Additional (death-specific) */}
-              <div className="space-y-5">
-                <h2 className="text-lg font-semibold border-b pb-2 mt-4">4. Photos & Additional</h2>
-                {isDeath && (
-                  <div className="space-y-4 p-4 rounded-lg border-2 border-red-200 bg-red-50/40">
-                    <p className="text-sm font-semibold text-red-700 flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4" />
-                      Death Case — Additional Required Fields
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Police FIR Reference</Label>
-                        <Input className="mt-1" value={policeFIRReference} onChange={(e) => setPoliceFIRReference(e.target.value)} />
-                      </div>
-                      <div>
-                        <Label>Employer Notified At</Label>
-                        <Input type="datetime-local" className="mt-1" value={employerNotifiedAt} onChange={(e) => setEmployerNotifiedAt(e.target.value)} />
-                      </div>
-                      <div>
-                        <Label>Compensation Status</Label>
-                        <Select value={compensationStatus} onValueChange={setCompensationStatus}>
-                          <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="NotApplicable">Not Applicable</SelectItem>
-                            <SelectItem value="Initiated">Initiated</SelectItem>
-                            <SelectItem value="InProgress">In Progress</SelectItem>
-                            <SelectItem value="Completed">Completed</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex items-center gap-2 pt-6">
-                        <Checkbox
-                          checked={familyNotified}
-                          onCheckedChange={(v) => setFamilyNotified(!!v)}
-                          id="family-notified"
-                        />
-                        <Label htmlFor="family-notified" className="cursor-pointer">
-                          Family Notified
-                        </Label>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div>
-                  <PhotoUploader
-                    photos={photos}
-                    onPhotosChange={setPhotos}
-                    maxPhotos={5}
-                    label="Incident Photos"
+          <div className="space-y-4">
+            <h3 className="font-semibold text-base border-b pb-2">A2. Initial Incident Classification</h3>
+            <p className="text-sm text-muted-foreground">Please check all that apply (this will carry forward to Part B).</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+              {INCIDENT_TYPES.map(type => (
+                <div key={type} className="flex items-start gap-2">
+                  <Checkbox 
+                    id={`type-${type}`} 
+                    checked={selectedTypes.includes(type)} 
+                    onCheckedChange={() => toggleType(type)} 
                   />
+                  <Label htmlFor={`type-${type}`} className="font-normal cursor-pointer leading-tight pt-0.5">{type}</Label>
                 </div>
-                <div className="p-3 rounded-lg bg-muted/40 text-xs text-muted-foreground">
-                  <p className="font-medium text-foreground mb-1">Ready to submit?</p>
-                  Review the incident details. The incident will be logged and you will be taken to the incident detail page.
-                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="font-semibold text-base border-b pb-2">A3. Initial Situation</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+              <div className="space-y-2">
+                <Label>Is anyone injured?</Label>
+                <RadioGroup
+                  value={isAnyoneInjured ? 'yes' : 'no'}
+                  onValueChange={(v) => setIsAnyoneInjured(v === 'yes')}
+                  className="flex items-center gap-4"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="inj-yes" />
+                    <Label htmlFor="inj-yes" className="cursor-pointer font-normal">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="inj-no" />
+                    <Label htmlFor="inj-no" className="cursor-pointer font-normal">No</Label>
+                  </div>
+                </RadioGroup>
               </div>
-
-            <div className="space-y-5">
-              <h2 className="text-lg font-semibold border-b pb-2 mt-4">5. Part B: Investigation</h2>
-              <IncidentPartBForm hideActions onDataChange={setPartBData} />
+              <div className="space-y-2">
+                <Label>Is the incident ongoing?</Label>
+                <RadioGroup
+                  value={isOngoing ? 'yes' : 'no'}
+                  onValueChange={(v) => setIsOngoing(v === 'yes')}
+                  className="flex items-center gap-4"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="ong-yes" />
+                    <Label htmlFor="ong-yes" className="cursor-pointer font-normal">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="ong-no" />
+                    <Label htmlFor="ong-no" className="cursor-pointer font-normal">No</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+              <div className="space-y-2">
+                <Label>Is immediate action required?</Label>
+                <RadioGroup
+                  value={immediateActionRequired ? 'yes' : 'no'}
+                  onValueChange={(v) => setImmediateActionRequired(v === 'yes')}
+                  className="flex items-center gap-4"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="imm-yes" />
+                    <Label htmlFor="imm-yes" className="cursor-pointer font-normal">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="imm-no" />
+                    <Label htmlFor="imm-no" className="cursor-pointer font-normal">No</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+              <div className="space-y-2">
+                <Label>Have emergency services/authorities been contacted?</Label>
+                <RadioGroup
+                  value={authoritiesContacted ? 'yes' : 'no'}
+                  onValueChange={(v) => setAuthoritiesContacted(v === 'yes')}
+                  className="flex items-center gap-4"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="auth-yes" />
+                    <Label htmlFor="auth-yes" className="cursor-pointer font-normal">Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="auth-no" />
+                    <Label htmlFor="auth-no" className="cursor-pointer font-normal">No</Label>
+                  </div>
+                </RadioGroup>
+              </div>
             </div>
-
-            <div className="space-y-5">
-              <h2 className="text-lg font-semibold border-b pb-2 mt-4">6. Part C: Root Cause</h2>
-              <IncidentPartCForm hideActions onDataChange={setPartCData} />
-            </div>
+          </div>
 
         </div>
       </div>
 
-      {/* Footer (sticky) */}
-      <div className="shrink-0 border-t bg-background/95 backdrop-blur px-5 py-3 flex items-center justify-end gap-2">
-          <Button
-            variant="outline"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1"
-            onClick={handleFinalSubmit}
-            disabled={createMutation.isPending}
-          >
-            {createMutation.isPending ? 'Saving...' : 'Log Incident & Save Forms'}
-          </Button>
+      <div className="shrink-0 border-t bg-background/95 backdrop-blur px-5 py-4 flex items-center justify-end gap-3">
+        <Button variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          className="bg-primary hover:bg-primary/90 text-primary-foreground gap-1"
+          onClick={handleFinalSubmit}
+          disabled={createMutation.isPending}
+        >
+          {createMutation.isPending ? 'Logging...' : 'Log Incident (Part A)'}
+        </Button>
       </div>
     </>
   )

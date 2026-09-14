@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import { toast } from 'sonner'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   CheckCircle2, ChevronRight, ChevronLeft, Upload, X, FileText,
   Save, Send, ClipboardList, Plus, Trash2, Info, AlertTriangle,
@@ -99,14 +100,7 @@ export interface EVMSubmission {
 
 // ==================== STORAGE ====================
 
-export function loadEVMSubmissions(): EVMSubmission[] {
-  if (typeof window === 'undefined') return []
-  try { return JSON.parse(localStorage.getItem(EVM_STORAGE_KEY) || '[]') } catch { return [] }
-}
-export function saveEVMSubmissions(data: EVMSubmission[]) {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(EVM_STORAGE_KEY, JSON.stringify(data))
-}
+// Removed localStorage functions
 
 // ==================== HELPERS ====================
 
@@ -984,19 +978,36 @@ export default function EVMFormDialog({ open, onOpenChange, onSaved }: Props) {
     }
   }
 
+  const queryClient = useQueryClient()
+
+  const saveMutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await fetch('/api/es-forms/EVM', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (!res.ok) throw new Error('Failed to save report')
+      return res.json()
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['es-forms', 'EVM'] })
+      toast.success(variables.status === 'Draft' ? 'Saved as Draft' : 'Successfully Submitted')
+      onSaved()
+      onOpenChange(false)
+    },
+    onError: () => toast.error('Failed to save report')
+  })
+
   const handleSaveDraft = () => {
-    const subs = loadEVMSubmissions()
-    saveEVMSubmissions([buildSubmission('Draft'), ...subs])
-    toast.success('Saved as Draft'); onSaved(); onOpenChange(false)
+    saveMutation.mutate(buildSubmission('Draft'))
   }
 
   const handleSubmit = () => {
     const hasData = !!projectName || d.training.length > 0 || d.waste.some(w => w.qtyGen)
       || Object.values(d.statutory.ec).some(e => e.status)
     if (!hasData) { toast.error('Failed to Create'); return }
-    const subs = loadEVMSubmissions()
-    saveEVMSubmissions([buildSubmission('Submitted'), ...subs])
-    toast.success('Successfully Submitted'); onSaved(); onOpenChange(false)
+    saveMutation.mutate(buildSubmission('Submitted'))
   }
 
   const next = () => setStep(s => Math.min(s + 1, 7))
@@ -1046,11 +1057,11 @@ export default function EVMFormDialog({ open, onOpenChange, onSaved }: Props) {
             <div className="flex gap-2">
               {step === 7 ? (
                 <>
-                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft}>
-                    <Save className="h-3.5 w-3.5" /> Save Draft
+                  <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={handleSaveDraft} disabled={saveMutation.isPending}>
+                    <Save className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Saving...' : 'Save Draft'}
                   </Button>
-                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={handleSubmit}>
-                    <Send className="h-3.5 w-3.5" /> Submit
+                  <Button type="button" size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5" onClick={handleSubmit} disabled={saveMutation.isPending}>
+                    <Send className="h-3.5 w-3.5" /> {saveMutation.isPending ? 'Submitting...' : 'Submit'}
                   </Button>
                 </>
               ) : (
