@@ -1,15 +1,14 @@
 import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import {
-
-export const dynamic = 'force-dynamic'
-
   paginatedResponse,
   successResponse,
   errorResponse,
   handleApiError,
   parsePagination,
 } from '@/lib/api-utils'
+
+export const dynamic = 'force-dynamic'
 
 // GET /api/vehicles
 export async function GET(req: NextRequest) {
