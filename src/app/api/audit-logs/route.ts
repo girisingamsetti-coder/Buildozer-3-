@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/audit-logs — fetch audit logs with optional filters
 export async function GET(request: NextRequest) {
   try {

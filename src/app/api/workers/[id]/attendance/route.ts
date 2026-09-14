@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/workers/[id]/attendance?month=2025-06
 export async function GET(
   req: NextRequest,

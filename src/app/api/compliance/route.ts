@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/compliance?siteId=xxx — fetch compliance data for a specific site
 // GET /api/compliance — fetch aggregated compliance data across all sites
 export async function GET(req: NextRequest) {

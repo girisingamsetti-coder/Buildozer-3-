@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { successResponse, handleApiError } from '@/lib/api-utils'
-
-export const dynamic = 'force-dynamic'
-
 import {
   OPEN_GRIEVANCE_STATUSES,
   OPEN_INCIDENT_STATUSES,

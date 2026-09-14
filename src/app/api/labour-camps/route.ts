@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/labour-camps?siteId=xxx&all=true
 //   - By default only active camps are returned.
 //   - Pass all=true to include inactive camps as well (used by the

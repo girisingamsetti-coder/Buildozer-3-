@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/dashboard/recent-activity?type=photos|new-entry|medical|training|incident|all
 // Returns a unified ActivityItem[] array used by the dashboard's "Recent Activity" panel.
 export async function GET(req: NextRequest) {

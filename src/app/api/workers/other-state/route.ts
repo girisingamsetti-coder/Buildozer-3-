@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/workers/other-state
 // Returns workers whose nativeState is not null AND not 'Andhra Pradesh'
 export async function GET() {

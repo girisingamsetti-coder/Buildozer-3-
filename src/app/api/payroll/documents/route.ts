@@ -3,9 +3,6 @@ import { db } from '@/lib/db'
 import { successResponse, errorResponse, handleApiError } from '@/lib/api-utils'
 import { ensurePayrollDataForPeriod } from '@/lib/payroll-seed'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/payroll/documents?period=2026-09&category=all
 export async function GET(req: NextRequest) {
   try {

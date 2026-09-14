@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
-
-
 // GET /api/dashboard/attendance-trend
 // Returns last 7 days attendance data
 export async function GET() {

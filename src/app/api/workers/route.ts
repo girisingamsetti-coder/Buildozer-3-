@@ -9,9 +9,6 @@ import {
 } from '@/lib/api-utils'
 import { AGE_RANGE, AADHAAR_REGEX } from '@/lib/constants'
 
-export const dynamic = 'force-dynamic'
-
-
 function calculateAge(dob: Date): number {
   const today = new Date()
   let age = today.getFullYear() - dob.getFullYear()
