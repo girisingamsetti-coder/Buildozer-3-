@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useQuery } from '@tanstack/react-query'
 import {
   Search,
@@ -72,6 +73,9 @@ export default function PayrollEPFTab({ period }: PayrollEPFTabProps) {
 
   const [recordModalOpen, setRecordModalOpen] = useState(false)
   const [editTargetRecord, setEditTargetRecord] = useState<EPFRecordItem | null>(null)
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   // Fetch filter dropdown options
   const { data: contractors = [] } = useQuery<any[]>({
@@ -175,22 +179,18 @@ export default function PayrollEPFTab({ period }: PayrollEPFTabProps) {
   return (
     <div className="space-y-5">
       {/* Title & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 className="text-lg font-bold tracking-tight">EPF Contribution & Deposit Tracking</h2>
-          <p className="text-xs text-muted-foreground">
-            Track EPF contribution records, ECR filing, challan and deposit status for {period}.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <TableExportButton
-            rows={records}
-            columns={exportColumns}
-            filename={`epf_records_${period}`}
-            variant="outline"
-            size="sm"
-          />
+      {mounted && document.getElementById('payroll-tab-actions-left') && createPortal(
+        <TableExportButton
+          rows={records}
+          columns={exportColumns}
+          filename={`epf_records_${period}`}
+          variant="outline"
+          size="sm"
+        />,
+        document.getElementById('payroll-tab-actions-left')!
+      )}
+      {mounted && document.getElementById('payroll-tab-actions-right') && createPortal(
+        <>
           {canEdit && (
             <Button
               size="sm"
@@ -204,8 +204,9 @@ export default function PayrollEPFTab({ period }: PayrollEPFTabProps) {
               Record EPF Deposit
             </Button>
           )}
-        </div>
-      </div>
+        </>,
+        document.getElementById('payroll-tab-actions-right')!
+      )}
 
       {/* EPF KPI Cards (Section 18) */}
       {kpis && (

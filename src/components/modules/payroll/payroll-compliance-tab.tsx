@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useQuery } from '@tanstack/react-query'
 import {
   ShieldCheck,
@@ -41,6 +42,9 @@ interface PayrollComplianceTabProps {
 export default function PayrollComplianceTab({ period }: PayrollComplianceTabProps) {
   const [activeSubTab, setActiveSubTab] = useState<'contractor' | 'site' | 'worker'>('contractor')
   const [workerSearch, setWorkerSearch] = useState('')
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   const { data: resp, isLoading } = useQuery<{
     data: {
@@ -129,15 +133,8 @@ export default function PayrollComplianceTab({ period }: PayrollComplianceTabPro
 
   return (
     <div className="space-y-4">
-      {/* Header & Sub-Tabs */}
+      {/* Sub-Tabs */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 className="text-lg font-bold tracking-tight">Consolidated Statutory Compliance</h2>
-          <p className="text-xs text-muted-foreground">
-            Contractor, Site, and Worker-level statutory tracking for {period}.
-          </p>
-        </div>
-
         <Tabs value={activeSubTab} onValueChange={(v: any) => setActiveSubTab(v)} className="shrink-0">
           <TabsList className="h-8 p-1">
             <TabsTrigger value="contractor" className="text-xs gap-1.5 h-6">
@@ -156,15 +153,16 @@ export default function PayrollComplianceTab({ period }: PayrollComplianceTabPro
       {/* 1. Contractor Compliance Tab (Section 26) */}
       {activeSubTab === 'contractor' && (
         <div className="space-y-4">
-          <div className="flex justify-end">
+          {mounted && document.getElementById('payroll-tab-actions-left') && createPortal(
             <TableExportButton
               rows={contractorCompliance}
               columns={contractorExportCols}
               filename={`contractor_compliance_${period}`}
               variant="outline"
               size="sm"
-            />
-          </div>
+            />,
+            document.getElementById('payroll-tab-actions-left')!
+          )}
 
           <Card>
             <div className="overflow-x-auto">
@@ -210,15 +208,16 @@ export default function PayrollComplianceTab({ period }: PayrollComplianceTabPro
       {/* 2. Site-wise Compliance Tab (Section 27) */}
       {activeSubTab === 'site' && (
         <div className="space-y-4">
-          <div className="flex justify-end">
+          {mounted && document.getElementById('payroll-tab-actions-left') && createPortal(
             <TableExportButton
               rows={siteCompliance}
               columns={siteExportCols}
               filename={`site_compliance_${period}`}
               variant="outline"
               size="sm"
-            />
-          </div>
+            />,
+            document.getElementById('payroll-tab-actions-left')!
+          )}
 
           <Card>
             <div className="overflow-x-auto">
@@ -260,6 +259,16 @@ export default function PayrollComplianceTab({ period }: PayrollComplianceTabPro
       {/* 3. Worker-Level Compliance Matrix (Section 25) */}
       {activeSubTab === 'worker' && (
         <div className="space-y-4">
+          {mounted && document.getElementById('payroll-tab-actions-left') && createPortal(
+            <TableExportButton
+              rows={filteredWorkers}
+              columns={workerExportCols}
+              filename={`worker_compliance_matrix_${period}`}
+              variant="outline"
+              size="sm"
+            />,
+            document.getElementById('payroll-tab-actions-left')!
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
@@ -270,13 +279,6 @@ export default function PayrollComplianceTab({ period }: PayrollComplianceTabPro
                 className="pl-8 h-8 text-xs"
               />
             </div>
-            <TableExportButton
-              rows={filteredWorkers}
-              columns={workerExportCols}
-              filename={`worker_compliance_matrix_${period}`}
-              variant="outline"
-              size="sm"
-            />
           </div>
 
           <Card>

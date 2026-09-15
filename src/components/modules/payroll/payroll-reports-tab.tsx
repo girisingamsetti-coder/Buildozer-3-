@@ -299,13 +299,6 @@ export default function PayrollReportsTab({ period }: PayrollReportsTabProps) {
 
   return (
     <div className="space-y-4">
-      {/* Title */}
-      <div>
-        <h2 className="text-lg font-bold tracking-tight">Statutory & Management Reports</h2>
-        <p className="text-xs text-muted-foreground">
-          Generate, preview, and export audit-ready salary registers, EPFO filing statements, and compliance reports for {period}.
-        </p>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* Left Column: Report Catalog Selector */}

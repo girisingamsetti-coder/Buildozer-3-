@@ -89,14 +89,6 @@ export default function PayrollExceptionsTab({
 
   return (
     <div className="space-y-5">
-      {/* Title */}
-      <div>
-        <h2 className="text-lg font-bold tracking-tight">Compliance & Payment Exceptions</h2>
-        <p className="text-xs text-muted-foreground">
-          Identified statutory irregularities, missing payment proofs, overdue deposits, and unverified records for {period}.
-        </p>
-      </div>
-
       {/* Severity Counters */}
       {counts && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

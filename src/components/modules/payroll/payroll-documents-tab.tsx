@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   FileText,
@@ -83,6 +84,9 @@ export default function PayrollDocumentsTab({ period }: PayrollDocumentsTabProps
   const [docType, setDocType] = useState<string>('all')
   const [status, setStatus] = useState<string>('all')
   const [search, setSearch] = useState<string>('')
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false)
   const [newCat, setNewCat] = useState<'Salary' | 'EPF'>('Salary')
@@ -200,15 +204,7 @@ export default function PayrollDocumentsTab({ period }: PayrollDocumentsTabProps
 
   return (
     <div className="space-y-4">
-      {/* Title & Upload Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 className="text-lg font-bold tracking-tight">Statutory & Payment Documents</h2>
-          <p className="text-xs text-muted-foreground">
-            Central repository of wage registers, bank disbursement statements, ECR filing proofs, and TRRN challans for {period}.
-          </p>
-        </div>
-
+      {mounted && document.getElementById('payroll-tab-actions-right') && createPortal(
         <Button
           size="sm"
           className="bg-[#0d9488] hover:bg-[#0f766e] text-white"
@@ -216,8 +212,9 @@ export default function PayrollDocumentsTab({ period }: PayrollDocumentsTabProps
         >
           <Plus className="h-3.5 w-3.5 mr-1.5" />
           Upload Document
-        </Button>
-      </div>
+        </Button>,
+        document.getElementById('payroll-tab-actions-right')!
+      )}
 
       {/* Filter Bar */}
       <Card className="py-0">

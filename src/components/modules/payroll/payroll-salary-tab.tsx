@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Search,
@@ -67,6 +68,9 @@ export default function PayrollSalaryTab({ period }: PayrollSalaryTabProps) {
   const [paymentStatus, setPaymentStatus] = useState('all')
   const [paymentMode, setPaymentMode] = useState('all')
   const [verificationStatus, setVerificationStatus] = useState('all')
+  
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   const [recordModalOpen, setRecordModalOpen] = useState(false)
   const [editTargetRecord, setEditTargetRecord] = useState<SalaryPaymentItem | null>(null)
@@ -200,23 +204,18 @@ export default function PayrollSalaryTab({ period }: PayrollSalaryTabProps) {
 
   return (
     <div className="space-y-4">
-      {/* Top Action Bar & Summary */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 className="text-lg font-bold tracking-tight">Salary Payment Register</h2>
-          <p className="text-xs text-muted-foreground">
-            {isLoading ? 'Loading records...' : `${total} worker payment records for ${period}`}
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <TableExportButton
-            rows={records}
-            columns={exportColumns}
-            filename={`salary_payments_${period}`}
-            variant="outline"
-            size="sm"
-          />
+      {mounted && document.getElementById('payroll-tab-actions-left') && createPortal(
+        <TableExportButton
+          rows={records}
+          columns={exportColumns}
+          filename={`salary_payments_${period}`}
+          variant="outline"
+          size="sm"
+        />,
+        document.getElementById('payroll-tab-actions-left')!
+      )}
+      {mounted && document.getElementById('payroll-tab-actions-right') && createPortal(
+        <>
           {canEdit && (
             <>
               <Button
@@ -243,8 +242,9 @@ export default function PayrollSalaryTab({ period }: PayrollSalaryTabProps) {
               </Button>
             </>
           )}
-        </div>
-      </div>
+        </>,
+        document.getElementById('payroll-tab-actions-right')!
+      )}
 
       {/* Filter Bar */}
       <Card className="py-0">

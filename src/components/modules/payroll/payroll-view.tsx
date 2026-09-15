@@ -76,12 +76,16 @@ export default function PayrollView() {
           </p>
         </div>
 
-        {/* Action buttons on right side strictly adhering to Section 5 & 47 */}
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={handleGlobalExport}>
-            <Download className="h-4 w-4 mr-1.5" />
-            <span>Export</span>
-          </Button>
+          {activeTab === 'overview' && (
+            <Button variant="outline" size="sm" onClick={handleGlobalExport}>
+              <Download className="h-4 w-4 mr-1.5" />
+              <span>Export</span>
+            </Button>
+          )}
+
+          {/* Portal target for left-side tab actions (like Export) */}
+          <div id="payroll-tab-actions-left" className="flex items-center gap-2" />
 
           {canEdit && (
             <>
@@ -106,6 +110,8 @@ export default function PayrollView() {
               </Button>
             </>
           )}
+          {/* Portal target for right-side tab actions (like Record Payment) */}
+          <div id="payroll-tab-actions-right" className="flex items-center gap-2" />
         </div>
       </div>
 
