@@ -125,6 +125,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -262,7 +263,7 @@
 }
 
 /* Ensure the content wrapper doesn't clip wide tables — let them scroll */
-.mobile-frame main > div {
+.mobile-frame main>div {
   max-width: 100%;
   min-width: 0;
 }
@@ -309,6 +310,7 @@
 .mobile-frame span[class~="lg:hidden"] {
   display: inline !important;
 }
+
 .mobile-frame span[class~="sm:inline"],
 .mobile-frame span[class~="md:inline"],
 .mobile-frame span[class~="lg:inline"] {
@@ -354,4 +356,3 @@
   font-size: 0.6875rem !important;
   line-height: 1rem !important;
 }
-
