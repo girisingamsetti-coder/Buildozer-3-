@@ -56,7 +56,7 @@ interface Notification {
 }
 
 export function GlobalHeader() {
-  const { setPage } = useNavStore()
+  const { setPage, activePage } = useNavStore()
   const { logout, login, userName, role } = useAuthStore()
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [notifOpen, setNotifOpen] = useState(false)
@@ -99,8 +99,8 @@ export function GlobalHeader() {
     { label: 'Works', icon: LayoutGrid, active: false },
     { label: 'Bills', icon: FileText, active: false },
     { label: 'Physical Progress', icon: TrendingUp, active: false },
-    { label: 'E&S', icon: Users, active: true },
-    { label: 'Procurement', icon: ShoppingCart, active: false },
+    { label: 'E&S', id: 'dashboard', icon: Users, active: activePage !== 'procurement' },
+    { label: 'Procurement', id: 'procurement', icon: ShoppingCart, active: activePage === 'procurement' },
     { label: 'Lands', icon: MapPin, active: false },
     { label: 'Grievances', icon: MessageSquareWarning, active: false },
     { label: 'Ground Observations', icon: Eye, active: false },
@@ -144,6 +144,7 @@ export function GlobalHeader() {
         {navItems.map((item, idx) => (
           <button
             key={idx}
+            onClick={() => { if (item.id) setPage(item.id as any) }}
             className={cn(
               "flex items-center gap-1.5 px-3 py-1.5 h-10 rounded-md whitespace-nowrap transition-colors",
               item.active

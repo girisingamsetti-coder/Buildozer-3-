@@ -36,6 +36,7 @@ const SettingsView = lazy(() => import('@/components/modules/settings-view'))
 const ReportsView = lazy(() => import('@/components/modules/reports-view'))
 const EsFormsView = lazy(() => import('@/components/modules/es-forms-view'))
 const MoreView = lazy(() => import('@/components/modules/more-view'))
+const ProcurementView = lazy(() => import('@/app/procurement/page'))
 
 function LoadingFallback() {
   return (
@@ -77,6 +78,7 @@ const pageComponents: Record<string, React.LazyExoticComponent<any>> = {
   reports: ReportsView,
   'es-forms': EsFormsView,
   more: MoreView,
+  procurement: ProcurementView,
 }
 
 const deviceDimensions: Record<string, { width: string, height: string }> = {

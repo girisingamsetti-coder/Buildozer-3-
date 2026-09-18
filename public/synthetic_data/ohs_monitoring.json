@@ -1,0 +1,5162 @@
+{
+  "form_type": "OHS Monitoring",
+  "category": "OHS",
+  "records": [
+    {
+      "id": "OHS-001",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52041,
+        "longitude": 80.52549,
+        "formatted": "16.52041°N, 80.52549°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-01",
+      "form_created_date": "2025-06-06",
+      "submission_lag_months": 5,
+      "rag_status": "Green",
+      "compliance_score_pct": 98,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-01-28",
+        "contractor_target": "2025-01-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-01-29",
+        "pmc_target": "2025-01-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-01-30",
+        "pgmc_target": "2025-01-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-01-31",
+        "apcrda_target": "2025-01-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 126,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 25,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 39,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 4,
+        "best_safety_performer": "K. Tirupathi Rao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 5,
+        "attendees_count": 70,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-01-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Due for Re-test",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-002",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.50918,
+        "longitude": 80.52226,
+        "formatted": "16.50918°N, 80.52226°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-02",
+      "form_created_date": "2025-10-17",
+      "submission_lag_months": 8,
+      "rag_status": "Red",
+      "compliance_score_pct": 53,
+      "is_incomplete_flag": false,
+      "edge_case_type": "expired_license",
+      "submission_cycle": {
+        "contractor_submission": "2025-02-22",
+        "contractor_target": "2025-02-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-02-25",
+        "pmc_target": "2025-02-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-02-29",
+        "pgmc_target": "2025-02-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-02-31",
+        "apcrda_target": "2025-02-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 87,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 46,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "B. Satyanarayana"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 81,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 12,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-02-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-003",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.50405,
+        "longitude": 80.51547,
+        "formatted": "16.50405°N, 80.51547°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-03",
+      "form_created_date": "2025-09-12",
+      "submission_lag_months": 6,
+      "rag_status": "Red",
+      "compliance_score_pct": 54,
+      "is_incomplete_flag": false,
+      "edge_case_type": "overdue",
+      "submission_cycle": {
+        "contractor_submission": "2025-03-28",
+        "contractor_target": "2025-03-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-03-27",
+        "pmc_target": "2025-03-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-03-29",
+        "pgmc_target": "2025-03-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-03-31",
+        "apcrda_target": "2025-03-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 119,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 27,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 42,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 5,
+        "best_safety_performer": "P. Srilatha"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 88,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-25",
+          "is_overdue": true
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-03-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-004",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.50528,
+        "longitude": 80.49405,
+        "formatted": "16.50528°N, 80.49405°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-04",
+      "form_created_date": "2025-09-20",
+      "submission_lag_months": 5,
+      "rag_status": "Green",
+      "compliance_score_pct": 95,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-04-15",
+        "contractor_target": "2025-04-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-04-20",
+        "pmc_target": "2025-04-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-04-27",
+        "pgmc_target": "2025-04-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-04-30",
+        "apcrda_target": "2025-04-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 104,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 55,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 1,
+        "rewards_workers": 12,
+        "best_safety_performer": "V. Venu Madhav"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 5,
+        "attendees_count": 76,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-04-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-005",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.48743,
+        "longitude": 80.50923,
+        "formatted": "16.48743°N, 80.50923°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-05",
+      "form_created_date": "2025-12-21",
+      "submission_lag_months": 7,
+      "rag_status": "Amber",
+      "compliance_score_pct": 81,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-05-17",
+        "contractor_target": "2025-05-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-05-22",
+        "pmc_target": "2025-05-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-05-27",
+        "pgmc_target": "2025-05-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-05-30",
+        "apcrda_target": "2025-05-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 103,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 25,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 41,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 9,
+        "best_safety_performer": "V. Siva Prasad"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 61,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-05-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Pending Action",
+          "next_due_date": "2025-05-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-05-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-05-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-005-1",
+          "type": "Minor Injury",
+          "date": "2025-05-17",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-05-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-005-2",
+          "type": "Unsafe Condition",
+          "date": "2025-05-13",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-05-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-005-3",
+          "type": "Near Miss",
+          "date": "2025-05-07",
+          "description": "Loose scaffolding coupler fell from 3m during shuttering",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-05-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-006",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.5162,
+        "longitude": 80.49636,
+        "formatted": "16.51620°N, 80.49636°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": "Amaravati Development Corporation Ltd (ADCL)",
+      "manager": "-",
+      "reporting_month": "2025-06",
+      "form_created_date": "2025-11-01",
+      "submission_lag_months": 5,
+      "rag_status": "Red",
+      "compliance_score_pct": 58,
+      "is_incomplete_flag": false,
+      "edge_case_type": "exceedance",
+      "submission_cycle": {
+        "contractor_submission": "2025-06-17",
+        "contractor_target": "2025-06-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-06-22",
+        "pmc_target": "2025-06-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-06-26",
+        "pgmc_target": "2025-06-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-06-30",
+        "apcrda_target": "2025-06-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 116,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 25,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 55,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 11,
+        "best_safety_performer": "V. Venu Madhav"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 86,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-06-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-06-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-06-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-06-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-006-1",
+          "type": "Minor Injury",
+          "date": "2025-06-16",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-06-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-007",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52896,
+        "longitude": 80.52554,
+        "formatted": "16.52896°N, 80.52554°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-07",
+      "form_created_date": "2023-11-15",
+      "submission_lag_months": 8,
+      "rag_status": "Green",
+      "compliance_score_pct": 100,
+      "is_incomplete_flag": false,
+      "edge_case_type": "invalid_date",
+      "submission_cycle": {
+        "contractor_submission": "2025-07-20",
+        "contractor_target": "2025-07-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-07-22",
+        "pmc_target": "2025-07-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-07-26",
+        "pgmc_target": "2025-07-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-07-30",
+        "apcrda_target": "2025-07-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 124,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 25,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 47,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "P. Suresh Babu"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 94,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 15,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-07-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-07-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-07-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-07-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q4",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-008",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52164,
+        "longitude": 80.53254,
+        "formatted": "16.52164°N, 80.53254°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-08",
+      "form_created_date": "2025-12-10",
+      "submission_lag_months": 4,
+      "rag_status": "Red",
+      "compliance_score_pct": 54,
+      "is_incomplete_flag": false,
+      "edge_case_type": "overdue",
+      "submission_cycle": {
+        "contractor_submission": "2025-08-26",
+        "contractor_target": "2025-08-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-08-26",
+        "pmc_target": "2025-08-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-08-30",
+        "pgmc_target": "2025-08-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-08-31",
+        "apcrda_target": "2025-08-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 101,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 39,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 7,
+        "best_safety_performer": "Ch. Balaji"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 91,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 16,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-25",
+          "is_overdue": true
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-08-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-009",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.5063,
+        "longitude": 80.52564,
+        "formatted": "16.50630°N, 80.52564°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-09",
+      "form_created_date": "2026-04-16",
+      "submission_lag_months": 7,
+      "rag_status": "Green",
+      "compliance_score_pct": 93,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-09-18",
+        "contractor_target": "2025-09-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-09-21",
+        "pmc_target": "2025-09-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-09-27",
+        "pgmc_target": "2025-09-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-09-30",
+        "apcrda_target": "2025-09-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 73,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 39,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 1,
+        "rewards_workers": 12,
+        "best_safety_performer": "Ch. Balaji"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 75,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 12,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-09-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-09-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-09-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-09-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-010",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.4895,
+        "longitude": 80.51509,
+        "formatted": "16.48950°N, 80.51509°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-10",
+      "form_created_date": "2026-03-13",
+      "submission_lag_months": 5,
+      "rag_status": "Red",
+      "compliance_score_pct": 63,
+      "is_incomplete_flag": false,
+      "edge_case_type": "exceedance",
+      "submission_cycle": {
+        "contractor_submission": "2025-10-24",
+        "contractor_target": "2025-10-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-10-26",
+        "pmc_target": "2025-10-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-10-29",
+        "pgmc_target": "2025-10-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-10-31",
+        "apcrda_target": "2025-10-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 136,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 50,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 8,
+        "best_safety_performer": "V. Siva Prasad"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 59,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 12,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-10-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-10-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-10-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-10-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-010-1",
+          "type": "First Aid Case",
+          "date": "2025-10-19",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-10-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-010-2",
+          "type": "Minor Injury",
+          "date": "2025-10-21",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-10-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-011",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.51465,
+        "longitude": 80.50466,
+        "formatted": "16.51465°N, 80.50466°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-11",
+      "form_created_date": "2026-05-14",
+      "submission_lag_months": 6,
+      "rag_status": "Green",
+      "compliance_score_pct": 94,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-11-17",
+        "contractor_target": "2025-11-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-11-20",
+        "pmc_target": "2025-11-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-11-25",
+        "pgmc_target": "2025-11-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-11-30",
+        "apcrda_target": "2025-11-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 117,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 26,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Pending Revision",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 49,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 1,
+        "rewards_workers": 7,
+        "best_safety_performer": "S. Apparao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 56,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-11-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-11-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-11-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-11-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-012",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52184,
+        "longitude": 80.54291,
+        "formatted": "16.52184°N, 80.54291°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-12",
+      "form_created_date": "2026-04-23",
+      "submission_lag_months": 4,
+      "rag_status": "Green",
+      "compliance_score_pct": 93,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-12-15",
+        "contractor_target": "2025-12-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-12-21",
+        "pmc_target": "2025-12-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-12-27",
+        "pgmc_target": "2025-12-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-12-30",
+        "apcrda_target": "2025-12-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 114,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 41,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 8,
+        "best_safety_performer": "N. Ramakrishna"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 70,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 15,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-12-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-12-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-12-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-12-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q4",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-013",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52197,
+        "longitude": 80.50052,
+        "formatted": "16.52197°N, 80.50052°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-01",
+      "form_created_date": "2026-09-02",
+      "submission_lag_months": 8,
+      "rag_status": "Amber",
+      "compliance_score_pct": 80,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2026-01-15",
+        "contractor_target": "2026-01-20",
+        "contractor_on_time": true,
+        "pmc_review": "2026-01-20",
+        "pmc_target": "2026-01-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2026-01-27",
+        "pgmc_target": "2026-01-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2026-01-30",
+        "apcrda_target": "2026-01-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 118,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 55,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 10,
+        "best_safety_performer": "G. Subba Rao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 45,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 16,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-01-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-01-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-01-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-01-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-014",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52055,
+        "longitude": 80.49777,
+        "formatted": "16.52055°N, 80.49777°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-02",
+      "form_created_date": "2026-07-15",
+      "submission_lag_months": 5,
+      "rag_status": "Green",
+      "compliance_score_pct": 92,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2026-02-20",
+        "contractor_target": "2026-02-20",
+        "contractor_on_time": true,
+        "pmc_review": "2026-02-22",
+        "pmc_target": "2026-02-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2026-02-25",
+        "pgmc_target": "2026-02-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2026-02-30",
+        "apcrda_target": "2026-02-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 103,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 54,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 12,
+        "best_safety_performer": "P. Suresh Babu"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 61,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-02-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Pending Action",
+          "next_due_date": "2026-02-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-02-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-02-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-015",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52149,
+        "longitude": 80.53099,
+        "formatted": "16.52149°N, 80.53099°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-03",
+      "form_created_date": "2026-11-10",
+      "submission_lag_months": 8,
+      "rag_status": "Red",
+      "compliance_score_pct": 61,
+      "is_incomplete_flag": false,
+      "edge_case_type": "overdue",
+      "submission_cycle": {
+        "contractor_submission": "2026-03-25",
+        "contractor_target": "2026-03-20",
+        "contractor_on_time": false,
+        "pmc_review": "2026-03-29",
+        "pmc_target": "2026-03-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2026-03-30",
+        "pgmc_target": "2026-03-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2026-03-31",
+        "apcrda_target": "2026-03-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 96,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 38,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 1,
+        "rewards_workers": 9,
+        "best_safety_performer": "K. Durga Bhavani"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 69,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-03-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-03-25",
+          "is_overdue": true
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-03-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-03-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q4",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-016",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.5205,
+        "longitude": 80.53844,
+        "formatted": "16.52050°N, 80.53844°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-04",
+      "form_created_date": "2026-08-22",
+      "submission_lag_months": 4,
+      "rag_status": "Green",
+      "compliance_score_pct": 93,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2026-04-17",
+        "contractor_target": "2026-04-20",
+        "contractor_on_time": true,
+        "pmc_review": "2026-04-20",
+        "pmc_target": "2026-04-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2026-04-26",
+        "pgmc_target": "2026-04-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2026-04-30",
+        "apcrda_target": "2026-04-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 133,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 26,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 38,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "N. Ramakrishna"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 69,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-04-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-04-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": false,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-04-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-04-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-017",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.5232,
+        "longitude": 80.52611,
+        "formatted": "16.52320°N, 80.52611°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-01",
+      "form_created_date": "2025-08-05",
+      "submission_lag_months": 7,
+      "rag_status": "Green",
+      "compliance_score_pct": 91,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-01-15",
+        "contractor_target": "2025-01-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-01-22",
+        "pmc_target": "2025-01-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-01-26",
+        "pgmc_target": "2025-01-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-01-30",
+        "apcrda_target": "2025-01-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 100,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 26,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 40,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "P. Suresh Babu"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 5,
+        "attendees_count": 93,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-01-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-018",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52279,
+        "longitude": 80.49396,
+        "formatted": "16.52279°N, 80.49396°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-02",
+      "form_created_date": "2025-08-07",
+      "submission_lag_months": 6,
+      "rag_status": "Amber",
+      "compliance_score_pct": 87,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-02-17",
+        "contractor_target": "2025-02-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-02-21",
+        "pmc_target": "2025-02-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-02-26",
+        "pgmc_target": "2025-02-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-02-30",
+        "apcrda_target": "2025-02-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 102,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Pending Revision",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 49,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 1,
+        "rewards_workers": 8,
+        "best_safety_performer": "J. Nageswara Rao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 84,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 15,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-02-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-019",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.529,
+        "longitude": 80.5167,
+        "formatted": "16.52900°N, 80.51670°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": "APCRDA (Andhra Pradesh Capital Region Development Authority)",
+      "manager": "-",
+      "reporting_month": "2025-03",
+      "form_created_date": "2023-11-15",
+      "submission_lag_months": 4,
+      "rag_status": "Green",
+      "compliance_score_pct": 96,
+      "is_incomplete_flag": false,
+      "edge_case_type": "invalid_date",
+      "submission_cycle": {
+        "contractor_submission": "2025-03-17",
+        "contractor_target": "2025-03-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-03-21",
+        "pmc_target": "2025-03-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-03-26",
+        "pgmc_target": "2025-03-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-03-30",
+        "apcrda_target": "2025-03-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 97,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 26,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 48,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "V. Siva Prasad"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 50,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 16,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-03-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-019-1",
+          "type": "Minor Injury",
+          "date": "2025-03-13",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-03-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-020",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.48705,
+        "longitude": 80.53295,
+        "formatted": "16.48705°N, 80.53295°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-04",
+      "form_created_date": "2025-11-27",
+      "submission_lag_months": 7,
+      "rag_status": "Green",
+      "compliance_score_pct": 91,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-04-15",
+        "contractor_target": "2025-04-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-04-22",
+        "pmc_target": "2025-04-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-04-25",
+        "pgmc_target": "2025-04-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-04-30",
+        "apcrda_target": "2025-04-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 115,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 45,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 11,
+        "best_safety_performer": "Y. Ramesh Naidu"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 71,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 12,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-04-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q1",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-020-1",
+          "type": "Near Miss",
+          "date": "2025-04-11",
+          "description": "Loose scaffolding coupler fell from 3m during shuttering",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-04-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-020-2",
+          "type": "Unsafe Condition",
+          "date": "2025-04-15",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-04-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-020-3",
+          "type": "First Aid Case",
+          "date": "2025-04-22",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-04-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-021",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.50841,
+        "longitude": 80.53652,
+        "formatted": "16.50841°N, 80.53652°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-05",
+      "form_created_date": "2025-09-04",
+      "submission_lag_months": 4,
+      "rag_status": "Green",
+      "compliance_score_pct": 98,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-05-16",
+        "contractor_target": "2025-05-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-05-21",
+        "pmc_target": "2025-05-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-05-27",
+        "pgmc_target": "2025-05-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-05-30",
+        "apcrda_target": "2025-05-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 71,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Pending Revision",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 38,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 9,
+        "best_safety_performer": "P. Srilatha"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 5,
+        "attendees_count": 77,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-05-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Pending Action",
+          "next_due_date": "2025-05-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-05-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-05-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-022",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.49067,
+        "longitude": 80.50139,
+        "formatted": "16.49067°N, 80.50139°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-06",
+      "form_created_date": "2025-10-20",
+      "submission_lag_months": 4,
+      "rag_status": "Amber",
+      "compliance_score_pct": 86,
+      "is_incomplete_flag": true,
+      "edge_case_type": "over_20_blank",
+      "submission_cycle": {
+        "contractor_submission": "2025-06-16",
+        "contractor_target": "2025-06-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-06-21",
+        "pmc_target": "2025-06-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-06-25",
+        "pgmc_target": "2025-06-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-06-30",
+        "apcrda_target": "2025-06-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {},
+      "weekly_reporting": {},
+      "monthly_monitoring": {},
+      "promotional_motivational_programs": {},
+      "trainings": {},
+      "ohs_inspections": {},
+      "ohs_audits": [],
+      "hazard_id_sop": {},
+      "ohs_policies": {},
+      "incidents": []
+    },
+    {
+      "id": "OHS-023",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.53626,
+        "longitude": 80.53598,
+        "formatted": "16.53626°N, 80.53598°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-07",
+      "form_created_date": "2025-11-21",
+      "submission_lag_months": 4,
+      "rag_status": "Green",
+      "compliance_score_pct": 95,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-07-15",
+        "contractor_target": "2025-07-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-07-22",
+        "pmc_target": "2025-07-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-07-27",
+        "pgmc_target": "2025-07-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-07-30",
+        "apcrda_target": "2025-07-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 122,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 42,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 6,
+        "best_safety_performer": "V. Venu Madhav"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 61,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-07-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Pending Action",
+          "next_due_date": "2025-07-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-07-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-07-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-024",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.49443,
+        "longitude": 80.52188,
+        "formatted": "16.49443°N, 80.52188°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-08",
+      "form_created_date": "2023-11-15",
+      "submission_lag_months": 7,
+      "rag_status": "Green",
+      "compliance_score_pct": 96,
+      "is_incomplete_flag": false,
+      "edge_case_type": "invalid_date",
+      "submission_cycle": {
+        "contractor_submission": "2025-08-19",
+        "contractor_target": "2025-08-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-08-20",
+        "pmc_target": "2025-08-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-08-27",
+        "pgmc_target": "2025-08-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-08-30",
+        "apcrda_target": "2025-08-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 80,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 25,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 42,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "K. Durga Bhavani"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 92,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 15,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-08-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-025",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.50587,
+        "longitude": 80.53027,
+        "formatted": "16.50587°N, 80.53027°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-09",
+      "form_created_date": "2026-01-08",
+      "submission_lag_months": 4,
+      "rag_status": "Red",
+      "compliance_score_pct": 66,
+      "is_incomplete_flag": false,
+      "edge_case_type": "expired_license",
+      "submission_cycle": {
+        "contractor_submission": "2025-09-19",
+        "contractor_target": "2025-09-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-09-22",
+        "pmc_target": "2025-09-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-09-27",
+        "pgmc_target": "2025-09-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-09-30",
+        "apcrda_target": "2025-09-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 64,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 52,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 10,
+        "best_safety_performer": "J. Nageswara Rao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 94,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-09-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-09-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": false,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-09-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-09-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-026",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.53411,
+        "longitude": 80.50267,
+        "formatted": "16.53411°N, 80.50267°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-10",
+      "form_created_date": "2026-04-17",
+      "submission_lag_months": 6,
+      "rag_status": "Red",
+      "compliance_score_pct": 64,
+      "is_incomplete_flag": false,
+      "edge_case_type": "exceedance",
+      "submission_cycle": {
+        "contractor_submission": "2025-10-22",
+        "contractor_target": "2025-10-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-10-28",
+        "pmc_target": "2025-10-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-10-30",
+        "pgmc_target": "2025-10-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-10-31",
+        "apcrda_target": "2025-10-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 126,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 25,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 48,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 9,
+        "best_safety_performer": "M. Srinivasulu"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 76,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-10-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Pending Action",
+          "next_due_date": "2025-10-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": false,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-10-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-10-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-026-1",
+          "type": "Minor Injury",
+          "date": "2025-10-18",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-10-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-026-2",
+          "type": "First Aid Case",
+          "date": "2025-10-20",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-10-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-026-3",
+          "type": "Unsafe Condition",
+          "date": "2025-10-18",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-10-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-027",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.51753,
+        "longitude": 80.53198,
+        "formatted": "16.51753°N, 80.53198°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "A. Prasad",
+      "reporting_month": "2025-11",
+      "form_created_date": "2026-04-30",
+      "submission_lag_months": 6,
+      "rag_status": "Amber",
+      "compliance_score_pct": 80,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-11-24",
+        "contractor_target": "2025-11-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-11-24",
+        "pmc_target": "2025-11-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-11-30",
+        "pgmc_target": "2025-11-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-11-31",
+        "apcrda_target": "2025-11-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 83,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 27,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 49,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "G. Subba Rao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 87,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-11-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-11-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": false,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-11-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-11-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-028",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.5246,
+        "longitude": 80.52799,
+        "formatted": "16.52460°N, 80.52799°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-12",
+      "form_created_date": "2026-06-24",
+      "submission_lag_months": 6,
+      "rag_status": "Green",
+      "compliance_score_pct": 100,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-12-25",
+        "contractor_target": "2025-12-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-12-27",
+        "pmc_target": "2025-12-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-12-30",
+        "pgmc_target": "2025-12-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-12-31",
+        "apcrda_target": "2025-12-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 122,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 27,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Pending Revision",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 52,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "K. Venkateswara Rao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 58,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-12-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-12-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-12-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-12-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q4",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-029",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52098,
+        "longitude": 80.4955,
+        "formatted": "16.52098°N, 80.49550°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-01",
+      "form_created_date": "2026-06-01",
+      "submission_lag_months": 5,
+      "rag_status": "Amber",
+      "compliance_score_pct": 73,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2026-01-15",
+        "contractor_target": "2026-01-20",
+        "contractor_on_time": true,
+        "pmc_review": "2026-01-22",
+        "pmc_target": "2026-01-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2026-01-25",
+        "pgmc_target": "2026-01-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2026-01-30",
+        "apcrda_target": "2026-01-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 129,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 42,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "V. Venu Madhav"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 67,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 16,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-01-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-01-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": false,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-01-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-01-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-030",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.52908,
+        "longitude": 80.51348,
+        "formatted": "16.52908°N, 80.51348°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-02",
+      "form_created_date": "2026-06-17",
+      "submission_lag_months": 4,
+      "rag_status": "Green",
+      "compliance_score_pct": 97,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2026-02-15",
+        "contractor_target": "2026-02-20",
+        "contractor_on_time": true,
+        "pmc_review": "2026-02-20",
+        "pmc_target": "2026-02-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2026-02-27",
+        "pgmc_target": "2026-02-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2026-02-30",
+        "apcrda_target": "2026-02-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 132,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 26,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 40,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 4,
+        "best_safety_performer": "K. Venkateswara Rao"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 82,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 15,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-02-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-02-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": false,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-02-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-02-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-031",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.5277,
+        "longitude": 80.5206,
+        "formatted": "16.52770°N, 80.52060°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-03",
+      "form_created_date": "2026-09-20",
+      "submission_lag_months": 6,
+      "rag_status": "Green",
+      "compliance_score_pct": 100,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2026-03-19",
+        "contractor_target": "2026-03-20",
+        "contractor_on_time": true,
+        "pmc_review": "2026-03-20",
+        "pmc_target": "2026-03-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2026-03-26",
+        "pgmc_target": "2026-03-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2026-03-30",
+        "apcrda_target": "2026-03-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 137,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 42,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "V. Siva Prasad"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 92,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 15,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-03-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-03-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-03-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-03-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-031-1",
+          "type": "Unsafe Condition",
+          "date": "2026-03-06",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2026-03-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-032",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.51856,
+        "longitude": 80.53441,
+        "formatted": "16.51856°N, 80.53441°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2026-04",
+      "form_created_date": "2026-10-05",
+      "submission_lag_months": 6,
+      "rag_status": "Green",
+      "compliance_score_pct": 99,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2026-04-16",
+        "contractor_target": "2026-04-20",
+        "contractor_on_time": true,
+        "pmc_review": "2026-04-21",
+        "pmc_target": "2026-04-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2026-04-27",
+        "pgmc_target": "2026-04-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2026-04-30",
+        "apcrda_target": "2026-04-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 115,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 27,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 44,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "P. Srilatha"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 78,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 16,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-04-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-04-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2026-04-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2026-04-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-033",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.48804,
+        "longitude": 80.53002,
+        "formatted": "16.48804°N, 80.53002°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-01",
+      "form_created_date": "2025-08-05",
+      "submission_lag_months": 7,
+      "rag_status": "Green",
+      "compliance_score_pct": 100,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-01-19",
+        "contractor_target": "2025-01-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-01-22",
+        "pmc_target": "2025-01-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-01-26",
+        "pgmc_target": "2025-01-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-01-30",
+        "apcrda_target": "2025-01-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 113,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 28,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 39,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 3,
+        "rewards_workers": 11,
+        "best_safety_performer": "P. Srilatha"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 73,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 14,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Pending Action",
+          "next_due_date": "2025-01-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-01-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-01-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q2",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-033-1",
+          "type": "Near Miss",
+          "date": "2025-01-18",
+          "description": "Loose scaffolding coupler fell from 3m during shuttering",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-01-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-033-2",
+          "type": "Unsafe Condition",
+          "date": "2025-01-20",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-01-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-033-3",
+          "type": "Near Miss",
+          "date": "2025-01-06",
+          "description": "Loose scaffolding coupler fell from 3m during shuttering",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-01-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-034",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.53537,
+        "longitude": 80.50332,
+        "formatted": "16.53537°N, 80.50332°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "V. Siva Prasad",
+      "reporting_month": "2025-02",
+      "form_created_date": "2025-08-13",
+      "submission_lag_months": 6,
+      "rag_status": "Green",
+      "compliance_score_pct": 96,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-02-19",
+        "contractor_target": "2025-02-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-02-20",
+        "pmc_target": "2025-02-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-02-26",
+        "pgmc_target": "2025-02-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-02-30",
+        "apcrda_target": "2025-02-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 92,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 26,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 51,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 5,
+        "best_safety_performer": "V. Siva Prasad"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 90,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 12,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-02-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-02-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-035",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.51534,
+        "longitude": 80.50684,
+        "formatted": "16.51534°N, 80.50684°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": "APCRDA (Andhra Pradesh Capital Region Development Authority)",
+      "manager": "-",
+      "reporting_month": "2025-03",
+      "form_created_date": "2025-08-27",
+      "submission_lag_months": 5,
+      "rag_status": "Red",
+      "compliance_score_pct": 62,
+      "is_incomplete_flag": false,
+      "edge_case_type": "overdue",
+      "submission_cycle": {
+        "contractor_submission": "2025-03-28",
+        "contractor_target": "2025-03-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-03-25",
+        "pmc_target": "2025-03-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-03-30",
+        "pgmc_target": "2025-03-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-03-31",
+        "apcrda_target": "2025-03-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 120,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 26,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Pending Revision",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 46,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 6,
+        "best_safety_performer": "D. Padmavathi"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 4,
+        "attendees_count": 88,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 13,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-25",
+          "is_overdue": true
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": false,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-03-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-03-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q4",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-035-1",
+          "type": "Minor Injury",
+          "date": "2025-03-18",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Pending Closure",
+          "target_closure_date": "2025-03-20",
+          "is_overdue": true,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-035-2",
+          "type": "Near Miss",
+          "date": "2025-03-16",
+          "description": "Loose scaffolding coupler fell from 3m during shuttering",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Pending Closure",
+          "target_closure_date": "2025-03-20",
+          "is_overdue": true,
+          "report_attached": true
+        }
+      ]
+    },
+    {
+      "id": "OHS-036",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.51707,
+        "longitude": 80.49579,
+        "formatted": "16.51707°N, 80.49579°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "M. Veeraiah",
+      "reporting_month": "2025-04",
+      "form_created_date": "2025-09-26",
+      "submission_lag_months": 5,
+      "rag_status": "Green",
+      "compliance_score_pct": 99,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-04-19",
+        "contractor_target": "2025-04-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-04-22",
+        "pmc_target": "2025-04-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-04-26",
+        "pgmc_target": "2025-04-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-04-30",
+        "apcrda_target": "2025-04-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 123,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 24,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 46,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": true,
+        "rewards_staff": 2,
+        "rewards_workers": 4,
+        "best_safety_performer": "K. Durga Bhavani"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 3,
+        "attendees_count": 47,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 12,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-04-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-04-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q3",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": []
+    },
+    {
+      "id": "OHS-037",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.53198,
+        "longitude": 80.50089,
+        "formatted": "16.53198°N, 80.50089°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-05",
+      "form_created_date": "2025-12-25",
+      "submission_lag_months": 7,
+      "rag_status": "Amber",
+      "compliance_score_pct": 74,
+      "is_incomplete_flag": true,
+      "edge_case_type": "over_20_blank",
+      "submission_cycle": {
+        "contractor_submission": "2025-05-17",
+        "contractor_target": "2025-05-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-05-20",
+        "pmc_target": "2025-05-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-05-27",
+        "pgmc_target": "2025-05-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-05-30",
+        "apcrda_target": "2025-05-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {},
+      "weekly_reporting": {},
+      "monthly_monitoring": {},
+      "promotional_motivational_programs": {},
+      "trainings": {},
+      "ohs_inspections": {},
+      "ohs_audits": [],
+      "hazard_id_sop": {},
+      "ohs_policies": {},
+      "incidents": []
+    },
+    {
+      "id": "OHS-038",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.51019,
+        "longitude": 80.53809,
+        "formatted": "16.51019°N, 80.53809°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-06",
+      "form_created_date": "2025-12-23",
+      "submission_lag_months": 6,
+      "rag_status": "Amber",
+      "compliance_score_pct": 75,
+      "is_incomplete_flag": true,
+      "edge_case_type": "over_20_blank",
+      "submission_cycle": {
+        "contractor_submission": "2025-06-19",
+        "contractor_target": "2025-06-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-06-20",
+        "pmc_target": "2025-06-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-06-25",
+        "pgmc_target": "2025-06-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-06-30",
+        "apcrda_target": "2025-06-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {},
+      "weekly_reporting": {},
+      "monthly_monitoring": {},
+      "promotional_motivational_programs": {},
+      "trainings": {},
+      "ohs_inspections": {},
+      "ohs_audits": [],
+      "hazard_id_sop": {},
+      "ohs_policies": {},
+      "incidents": []
+    },
+    {
+      "id": "OHS-039",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.5349,
+        "longitude": 80.51703,
+        "formatted": "16.53490°N, 80.51703°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "-",
+      "reporting_month": "2025-07",
+      "form_created_date": "2026-03-08",
+      "submission_lag_months": 8,
+      "rag_status": "Amber",
+      "compliance_score_pct": 87,
+      "is_incomplete_flag": true,
+      "edge_case_type": "over_20_blank",
+      "submission_cycle": {
+        "contractor_submission": "2025-07-16",
+        "contractor_target": "2025-07-20",
+        "contractor_on_time": true,
+        "pmc_review": "2025-07-20",
+        "pmc_target": "2025-07-22",
+        "pmc_on_time": true,
+        "pgmc_review": "2025-07-26",
+        "pgmc_target": "2025-07-27",
+        "pgmc_on_time": true,
+        "apcrda_final": "2025-07-30",
+        "apcrda_target": "2025-07-30",
+        "apcrda_on_time": true
+      },
+      "daily_monitoring": {},
+      "weekly_reporting": {},
+      "monthly_monitoring": {},
+      "promotional_motivational_programs": {},
+      "trainings": {},
+      "ohs_inspections": {},
+      "ohs_audits": [],
+      "hazard_id_sop": {},
+      "ohs_policies": {},
+      "incidents": []
+    },
+    {
+      "id": "OHS-040",
+      "form_type": "OHS Monitoring",
+      "category": "OHS",
+      "project_no": "WIN/0032/24-25",
+      "project_title": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+      "project_location": "Rayapudi, Amaravati",
+      "gps_coordinates": {
+        "latitude": 16.51811,
+        "longitude": 80.52591,
+        "formatted": "16.51811°N, 80.52591°E"
+      },
+      "address_phone": "Lenin Center, Beside Apsara Theatre, Governorpet, Vijayawada, Andhra Pradesh; +91 9666600919",
+      "customer": null,
+      "manager": "S. Apparao",
+      "reporting_month": "2025-08",
+      "form_created_date": "2026-01-20",
+      "submission_lag_months": 5,
+      "rag_status": "Green",
+      "compliance_score_pct": 91,
+      "is_incomplete_flag": false,
+      "edge_case_type": "none",
+      "submission_cycle": {
+        "contractor_submission": "2025-08-27",
+        "contractor_target": "2025-08-20",
+        "contractor_on_time": false,
+        "pmc_review": "2025-08-24",
+        "pmc_target": "2025-08-22",
+        "pmc_on_time": false,
+        "pgmc_review": "2025-08-28",
+        "pgmc_target": "2025-08-27",
+        "pgmc_on_time": false,
+        "apcrda_final": "2025-08-31",
+        "apcrda_target": "2025-08-30",
+        "apcrda_on_time": false
+      },
+      "daily_monitoring": {
+        "ohs_induction_conducted": true,
+        "induction_count": 119,
+        "daily_toolbox_talks_conducted": true,
+        "toolbox_talks_count": 25,
+        "compliance_rate_pct": 98,
+        "remarks": "100% incoming workforce covered before site deployment"
+      },
+      "weekly_reporting": {
+        "wms_hira_approved": "Yes",
+        "fire_fighting_system_in_place": true,
+        "fire_extinguishers_tagged": 39,
+        "drinking_water_available_onsite": true,
+        "drinking_water_test_report_valid": true,
+        "geotagged_photos_uploaded": true
+      },
+      "monthly_monitoring": {
+        "ohs_committee_formed": true,
+        "monthly_meetings_held": true,
+        "worker_rep_participation": true,
+        "worker_reps_count": 6,
+        "mpr_prepared_per_cesmp": true
+      },
+      "promotional_motivational_programs": {
+        "manpower_recognized_this_month": false,
+        "rewards_staff": 0,
+        "rewards_workers": 0,
+        "best_safety_performer": "M. Srinivasulu"
+      },
+      "trainings": {
+        "type": "Working at Height & Scaffolding Safety",
+        "frequency": "Bi-weekly",
+        "sessions_held": 6,
+        "attendees_count": 68,
+        "attendance_sheet_attached": true
+      },
+      "ohs_inspections": {
+        "frequency": "Daily & Weekly Walkthroughs",
+        "total_inspections_conducted": 16,
+        "report_attached": true
+      },
+      "ohs_audits": [
+        {
+          "audit_type": "Safety & Security",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-28",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Internal OHS",
+          "frequency": "Half-Yearly (3rd Party)",
+          "conducted": false,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-25",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "MSAS",
+          "frequency": "Quarterly",
+          "conducted": true,
+          "compliance_report_status": "Approved",
+          "next_due_date": "2025-08-30",
+          "is_overdue": false
+        },
+        {
+          "audit_type": "Electrical Safety",
+          "frequency": "Monthly",
+          "conducted": true,
+          "compliance_report_status": "Submitted",
+          "next_due_date": "2025-08-22",
+          "is_overdue": false
+        }
+      ],
+      "hazard_id_sop": {
+        "hira_carried_out_quarterly": true,
+        "quarter": "Q4",
+        "sops_submitted": [
+          "SOP-CON-01: Deep Foundation & Shoring",
+          "SOP-CON-04: Tower Crane Erection & Lifting",
+          "SOP-CON-07: Confined Space Entry (STP/Sump)"
+        ],
+        "attachments_verified": true
+      },
+      "ohs_policies": {
+        "health_and_safety_policy_displayed": true,
+        "ohs_plan_approved": true,
+        "emergency_response_plan_approved": true,
+        "lifting_tools_third_party_inspected": "Yes",
+        "heat_stress_management_plan": true,
+        "monsoon_preparedness_plan": true
+      },
+      "incidents": [
+        {
+          "incident_id": "INC-OHS-040-1",
+          "type": "Near Miss",
+          "date": "2025-08-16",
+          "description": "Loose scaffolding coupler fell from 3m during shuttering",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-08-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-040-2",
+          "type": "Unsafe Condition",
+          "date": "2025-08-12",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-08-20",
+          "is_overdue": false,
+          "report_attached": true
+        },
+        {
+          "incident_id": "INC-OHS-040-3",
+          "type": "Minor Injury",
+          "date": "2025-08-13",
+          "description": "Hand scrape while tying reinforcement rebars",
+          "root_cause": "Inadequate pre-task inspection & non-standard tethering",
+          "capa_status": "Closed",
+          "target_closure_date": "2025-08-20",
+          "is_overdue": false,
+          "report_attached": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,670 @@
+<div class="proc-page">
+  <div class="proc-summary-grid" *ngIf="!summaryLoading; else summarySkeleton">
+    <div class="proc-summary-card" *ngFor="let card of summaryCards">
+      <div class="proc-summary-icon" [ngClass]="'tone-' + card.tone">
+        <i class="bi" [ngClass]="card.icon"></i>
+      </div>
+      <div class="proc-summary-text">
+        <span class="proc-summary-label">{{ card.label }} :</span>
+        <span class="proc-summary-value">{{ summaryValue(card.key) }}</span>
+      </div>
+    </div>
+  </div>
+  <ng-template #summarySkeleton>
+    <div class="proc-summary-grid">
+      <div class="proc-summary-card is-skeleton" *ngFor="let _ of summaryCards">
+        <div class="proc-summary-icon tone-blue"></div>
+        <div class="proc-summary-text">
+          <span class="proc-summary-label">&nbsp;</span>
+          <span class="proc-summary-value">&nbsp;</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="proc-metric-row">
+    <div class="proc-metric-grid" *ngIf="!summaryLoading; else metricSkeleton">
+      <div
+        class="proc-summary-card"
+        [class.is-overrun]="card.variant === 'overrun'"
+        *ngFor="let card of metricCards"
+      >
+        <div class="proc-summary-icon" [ngClass]="'tone-' + card.tone">
+          <i class="bi" [ngClass]="card.icon"></i>
+        </div>
+        <div class="proc-summary-text" *ngIf="card.variant === 'simple'">
+          <span class="proc-summary-label">{{ card.label }} :</span>
+          <span class="proc-summary-value">{{ summaryValue(card.key) }}</span>
+        </div>
+        <div class="proc-overrun-body" *ngIf="card.variant === 'overrun'">
+          <div class="proc-summary-text">
+            <span class="proc-summary-label">{{ card.label }} :</span>
+            <span class="proc-summary-value">{{ summaryValue(card.key) }}</span>
+          </div>
+          <div class="proc-overrun-meta">
+            <span>Executing {{ summary.executingCount }}</span>
+            <span class="proc-overrun-dot">·</span>
+            <span>Completed {{ summary.completedCount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #metricSkeleton>
+      <div class="proc-metric-grid">
+        <div
+          class="proc-summary-card is-skeleton"
+          *ngFor="let _ of metricCards"
+        >
+          <div class="proc-summary-icon tone-blue"></div>
+          <div class="proc-summary-text">
+            <span class="proc-summary-label">&nbsp;</span>
+            <span class="proc-summary-value">&nbsp;</span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <a
+      class="proc-tenders-link"
+      href="https://crda.ap.gov.in/APCRDAV2/Views/NotificationsView.aspx"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <i class="bi bi-box-arrow-up-right"></i>
+      Tenders
+    </a>
+  </div>
+
+  <div class="proc-charts" *ngIf="!summaryLoading && hasChartData">
+    <div class="proc-chart-card">
+      <div class="proc-chart-header">Agreement Status</div>
+      <div
+        echarts
+        class="proc-chart"
+        [options]="agreementChartOption"
+        [autoResize]="true"
+      ></div>
+    </div>
+    <div class="proc-chart-card">
+      <div class="proc-chart-header">Agreement Timeline</div>
+      <div
+        echarts
+        class="proc-chart"
+        [options]="agreementQuarterChartOption"
+        [autoResize]="true"
+      ></div>
+    </div>
+    <div class="proc-chart-card proc-chart-card-wide">
+      <div class="proc-chart-header">Contractor Distribution</div>
+      <div
+        echarts
+        class="proc-chart"
+        [options]="contractorPackagesChartOption"
+        [autoResize]="true"
+      ></div>
+    </div>
+    <div class="proc-chart-card proc-chart-card-wide">
+      <div class="proc-chart-header">Cost Distribution (₹ Cr)</div>
+      <div
+        echarts
+        class="proc-chart"
+        [options]="contractorCostChartOption"
+        [autoResize]="true"
+      ></div>
+    </div>
+  </div>
+
+  <div class="proc-filter-bar">
+    <div class="proc-search">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        [formControl]="searchControl"
+        placeholder="Search work number, project, contractor..."
+      />
+    </div>
+    <div class="proc-header-actions">
+      <button
+        type="button"
+        class="proc-btn proc-btn-primary"
+        (click)="openAddModal()"
+      >
+        <i class="bi bi-plus-lg"></i>
+        Add Record
+      </button>
+      <button
+        type="button"
+        class="proc-btn proc-btn-export"
+        (click)="exportToExcel()"
+        [disabled]="exporting || totalCount === 0"
+      >
+        <i class="bi bi-file-earmark-excel"></i>
+        {{ exporting ? "Exporting..." : "Export" }}
+      </button>
+    </div>
+  </div>
+
+  <div class="proc-table-card">
+    <div class="proc-table-scroll">
+      <div
+        class="proc-skel-table-wrap"
+        *ngIf="loading && rows.length === 0"
+        [style.--proc-skel-cols]="skeletonTableCols.length"
+      >
+        <div class="proc-skel-table">
+          <div class="proc-skel-table-head">
+            <div
+              class="proc-skel-base"
+              *ngFor="let _ of skeletonTableCols"
+            ></div>
+          </div>
+          <div class="proc-skel-table-body">
+            <div
+              class="proc-skel-table-row"
+              *ngFor="let _ of skeletonTableRows"
+            >
+              <div
+                class="proc-skel-base"
+                *ngFor="let __ of skeletonTableCols"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table class="proc-table" *ngIf="!loading || rows.length > 0">
+        <thead>
+          <tr>
+            <th class="col-sno">
+              <span class="th-label">S.No</span>
+            </th>
+            <th class="col-work">
+              <span class="th-label">Work Number</span>
+            </th>
+            <th class="col-name">
+              <span class="th-label">Project Name</span>
+            </th>
+            <th class="col-desc">
+              <span class="th-label">Project Description</span>
+            </th>
+            <th class="col-date">
+              <span class="th-label">Administrative</span>
+              <span class="th-hint">Sanction Date</span>
+            </th>
+            <th class="col-date">
+              <span class="th-label">Technical Year</span>
+              <span class="th-hint">Sanction Date</span>
+            </th>
+            <th class="col-num">
+              <span class="th-label">Estimated Cost INR</span>
+              <span class="th-hint">(Crores)</span>
+            </th>
+            <th class="col-num">
+              <span class="th-label">Estimated Cost USD</span>
+              <span class="th-hint">(Millions)</span>
+            </th>
+            <th class="col-num">
+              <span class="th-label">Estimated Cost ₹</span>
+              <span class="th-hint">(Crores)</span>
+            </th>
+            <th class="col-cat">
+              <span class="th-label">Procurement Category</span>
+              <span class="th-hint">(Goods/Works/NCS/CS)</span>
+            </th>
+            <th class="col-cat">
+              <span class="th-label">Procurement Method</span>
+              <span class="th-hint">(Open/Limited/Direct)</span>
+            </th>
+            <th class="col-cat">
+              <span class="th-label">Item Rate/Lumpsum</span>
+              <span class="th-hint">(EPC/DBO)</span>
+            </th>
+            <th class="col-month">
+              <span class="th-label">Planned Issuance of NIT</span>
+              <span class="th-hint">(month/year)</span>
+            </th>
+            <th class="col-month">
+              <span class="th-label">Technical Envelope Opening</span>
+              <span class="th-hint">(Tender/RFP)</span>
+            </th>
+            <th class="col-month">
+              <span class="th-label">Expected Date of Contract Award</span>
+              <span class="th-hint">[APP]</span>
+            </th>
+            <th class="col-date">
+              <span class="th-label">Tender Publish</span>
+              <span class="th-hint">Date</span>
+            </th>
+            <th class="col-date">
+              <span class="th-label">LOA Issue</span>
+            </th>
+            <th class="col-date">
+              <span class="th-label">Agreement Date</span>
+            </th>
+            <th class="col-name">
+              <span class="th-label">Contractor</span>
+            </th>
+            <th class="col-cycle">
+              <span class="th-label">Procurement Cycle Time</span>
+              <span class="th-hint">(NIT to Agreement) (Days)</span>
+            </th>
+            <th class="col-num">
+              <span class="th-label">Financial Quote</span>
+              <span class="th-hint">(+/-)</span>
+            </th>
+            <th class="col-num">
+              <span class="th-label">Avg. No. of Bidders</span>
+            </th>
+            <th class="col-actions">
+              <span class="th-label">Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows; let i = index">
+            <td class="col-sno">{{ i + 1 }}</td>
+            <td class="col-work" [title]="row.workNumber || ''">
+              {{ row.workNumber || "-" }}
+            </td>
+            <td class="col-name" [title]="row.projectName || ''">
+              {{ row.projectName || "-" }}
+            </td>
+            <td class="col-desc" [title]="row.projectDescription || ''">
+              {{ row.projectDescription || "-" }}
+            </td>
+            <td class="col-date">
+              {{ formatDate(row.adminSanctionDate) || "-" }}
+            </td>
+            <td class="col-date">
+              {{ formatDate(row.technicalSanctionDate) || "-" }}
+            </td>
+            <td class="col-num">
+              {{
+                row.estimatedCostInrCr != null
+                  ? (row.estimatedCostInrCr | number: "1.2-2")
+                  : "-"
+              }}
+            </td>
+            <td class="col-num">
+              {{
+                row.estimatedCostUsdMn != null
+                  ? (row.estimatedCostUsdMn | number: "1.2-2")
+                  : "-"
+              }}
+            </td>
+            <td class="col-num">
+              {{
+                row.estimatedCostInrCr != null
+                  ? (row.estimatedCostInrCr | number: "1.2-2")
+                  : "-"
+              }}
+            </td>
+            <td class="col-cat">{{ row.procurementCategory || "-" }}</td>
+            <td class="col-cat">{{ row.procurementMethod || "-" }}</td>
+            <td class="col-cat">{{ row.rateType || "-" }}</td>
+            <td class="col-month">
+              {{ formatMonthYear(row.nitPlannedMonth) || "-" }}
+            </td>
+            <td class="col-month">
+              {{ formatMonthYear(row.techEnvelopeOpeningMonth) || "-" }}
+            </td>
+            <td class="col-month">
+              {{ formatMonthYear(row.expectedAwardMonth) || "-" }}
+            </td>
+            <td class="col-date">
+              {{ formatDate(row.tenderPublishDate) || "-" }}
+            </td>
+            <td class="col-date">
+              {{ formatDate(row.loaIssueDate) || "-" }}
+            </td>
+            <td class="col-date">
+              {{ formatDate(row.agreementDate) || "-" }}
+            </td>
+            <td class="col-name" [title]="row.contractorName || ''">
+              {{ row.contractorName || "-" }}
+            </td>
+            <td class="col-cycle">{{ row.procurementCycleDays ?? "-" }}</td>
+            <td class="col-num">
+              {{
+                row.financialQuoteVariancePct != null
+                  ? (row.financialQuoteVariancePct | number: "1.2-2")
+                  : "-"
+              }}
+            </td>
+            <td class="col-num">
+              {{
+                row.avgBidderCount != null
+                  ? (row.avgBidderCount | number: "1.0-1")
+                  : "-"
+              }}
+            </td>
+            <td class="col-actions proc-actions-cell">
+              <button
+                type="button"
+                class="proc-icon-btn"
+                title="Edit"
+                (click)="openEditModal(row)"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                type="button"
+                class="proc-icon-btn danger"
+                title="Delete"
+                (click)="deleteRecord(row)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="!loading && rows.length === 0">
+            <td colspan="23" class="proc-empty">No procurement data found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="proc-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="proc-modal" (click)="$event.stopPropagation()">
+      <div class="proc-modal-header">
+        <div class="proc-modal-header-text">
+          <div class="proc-modal-badge">
+            <i
+              class="bi"
+              [ngClass]="editingId ? 'bi-pencil-square' : 'bi-plus-lg'"
+            ></i>
+          </div>
+          <div>
+            <h2>{{ editingId ? "Edit Record" : "Add Record" }}</h2>
+            <p>
+              {{
+                editingId
+                  ? "Update procurement package details"
+                  : "Create a new procurement package entry"
+              }}
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="proc-modal-close"
+          (click)="closeModal()"
+          [disabled]="saving"
+          aria-label="Close"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="proc-modal-body" [formGroup]="form">
+        <div class="proc-form-grid">
+          <div class="proc-field">
+            <label>Work Number</label>
+            <input
+              type="text"
+              formControlName="workNumber"
+              maxlength="30"
+              placeholder="e.g. WIN/0081/25-26"
+            />
+          </div>
+          <div class="proc-field">
+            <label>Project Name</label>
+            <div class="proc-project-wrap">
+              <div class="proc-project-input-wrap">
+                <input
+                  type="text"
+                  formControlName="projectName"
+                  maxlength="255"
+                  placeholder="Search or type a new project name"
+                  autocomplete="off"
+                  (focus)="onProjectFocus()"
+                  (input)="onProjectInput()"
+                  (blur)="onProjectBlur()"
+                />
+                <i class="bi bi-chevron-down"></i>
+              </div>
+              <div class="proc-project-dropdown" *ngIf="showProjectDropdown">
+                <button
+                  type="button"
+                  class="proc-project-option"
+                  *ngFor="let name of filteredProjectOptions"
+                  (mousedown)="selectProject($event, name)"
+                >
+                  {{ name }}
+                </button>
+                <button
+                  type="button"
+                  class="proc-project-option is-new"
+                  *ngIf="canUseNewProject"
+                  (mousedown)="selectProject($event, projectNameQuery)"
+                >
+                  <i class="bi bi-plus-circle"></i>
+                  Use “{{ projectNameQuery }}” as new project
+                </button>
+                <div
+                  class="proc-project-empty"
+                  *ngIf="!filteredProjectOptions.length && !canUseNewProject"
+                >
+                  Type a project name to add a new one
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="proc-field full">
+            <label>Project Description</label>
+            <textarea
+              formControlName="projectDescription"
+              maxlength="500"
+              placeholder="Brief project description"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="proc-field">
+            <label>Administrative Sanction Date</label>
+            <input
+              type="date"
+              formControlName="adminSanctionDate"
+              [attr.max]="maxDate"
+            />
+          </div>
+          <div class="proc-field">
+            <label>Technical Year Sanction Date</label>
+            <input
+              type="date"
+              formControlName="technicalSanctionDate"
+              [attr.max]="maxDate"
+            />
+          </div>
+          <div class="proc-field">
+            <label>Estimated Cost INR (Crores)</label>
+            <div class="proc-input-affix">
+              <span class="proc-affix">₹</span>
+              <input
+                type="number"
+                step="0.01"
+                formControlName="estimatedCostInrCr"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+          <div class="proc-field">
+            <label>Estimated Cost USD (Millions)</label>
+            <div class="proc-input-affix">
+              <span class="proc-affix">$</span>
+              <input
+                type="number"
+                step="0.01"
+                formControlName="estimatedCostUsdMn"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+          <div class="proc-field">
+            <label>Procurement Category (Goods/Works/NCS/CS)</label>
+            <select formControlName="procurementCategory">
+              <option value="">Select</option>
+              <option *ngFor="let item of categories" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </div>
+          <div class="proc-field">
+            <label>Procurement Method (Open/Limited/Direct)</label>
+            <select formControlName="procurementMethod">
+              <option value="">Select</option>
+              <option *ngFor="let item of methods" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </div>
+          <div class="proc-field">
+            <label>Item Rate/Lumpsum (EPC/DBO)</label>
+            <select formControlName="rateType">
+              <option value="">Select</option>
+              <option *ngFor="let item of rateTypes" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </div>
+          <div class="proc-field">
+            <label>Planned Issuance of NIT (month/year)</label>
+            <input type="month" formControlName="nitPlannedMonth" />
+          </div>
+          <div class="proc-field">
+            <label>Technical Envelope Opening (Tender/RFP)</label>
+            <input type="month" formControlName="techEnvelopeOpeningMonth" />
+          </div>
+          <div class="proc-field">
+            <label>Expected Date of Contract Award [APP]</label>
+            <input type="month" formControlName="expectedAwardMonth" />
+          </div>
+          <div class="proc-field">
+            <label>Tender Publish Date</label>
+            <input
+              type="date"
+              formControlName="tenderPublishDate"
+              [attr.max]="maxDate"
+            />
+          </div>
+          <div class="proc-field">
+            <label>LOA Issue</label>
+            <input
+              type="date"
+              formControlName="loaIssueDate"
+              [attr.max]="maxDate"
+            />
+          </div>
+          <div class="proc-field">
+            <label>Agreement Date</label>
+            <input
+              type="date"
+              formControlName="agreementDate"
+              [attr.max]="maxDate"
+            />
+          </div>
+          <div class="proc-field">
+            <label>Contractor</label>
+            <div class="proc-project-wrap">
+              <div class="proc-project-input-wrap">
+                <input
+                  type="text"
+                  formControlName="contractorName"
+                  maxlength="255"
+                  placeholder="Search or type a new contractor"
+                  autocomplete="off"
+                  (focus)="onContractorFocus()"
+                  (input)="onContractorInput()"
+                  (blur)="onContractorBlur()"
+                />
+                <i class="bi bi-chevron-down"></i>
+              </div>
+              <div class="proc-project-dropdown" *ngIf="showContractorDropdown">
+                <button
+                  type="button"
+                  class="proc-project-option"
+                  *ngFor="let name of filteredContractorOptions"
+                  (mousedown)="selectContractor($event, name)"
+                >
+                  {{ name }}
+                </button>
+                <button
+                  type="button"
+                  class="proc-project-option is-new"
+                  *ngIf="canUseNewContractor"
+                  (mousedown)="selectContractor($event, contractorNameQuery)"
+                >
+                  <i class="bi bi-plus-circle"></i>
+                  Use “{{ contractorNameQuery }}” as new contractor
+                </button>
+                <div
+                  class="proc-project-empty"
+                  *ngIf="
+                    !filteredContractorOptions.length && !canUseNewContractor
+                  "
+                >
+                  Type a contractor name to add a new one
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="proc-field">
+            <label>Procurement Cycle Time (NIT to Agreement) (Days)</label>
+            <input
+              type="number"
+              formControlName="procurementCycleDays"
+              placeholder="Days"
+            />
+          </div>
+          <div class="proc-field">
+            <label>Financial Quote (+/-)</label>
+            <input
+              type="number"
+              step="0.01"
+              formControlName="financialQuoteVariancePct"
+              placeholder="%"
+            />
+          </div>
+          <div class="proc-field">
+            <label>Avg. No. of Bidders</label>
+            <input
+              type="number"
+              step="0.1"
+              formControlName="avgBidderCount"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-modal-actions">
+        <button
+          type="button"
+          class="proc-btn proc-btn-ghost"
+          (click)="closeModal()"
+          [disabled]="saving"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="proc-btn proc-btn-primary"
+          (click)="saveRecord()"
+          [disabled]="saving"
+        >
+          <i
+            class="bi"
+            [ngClass]="
+              saving
+                ? 'bi-arrow-repeat spin'
+                : editingId
+                  ? 'bi-check2'
+                  : 'bi-plus-lg'
+            "
+          ></i>
+          {{ saving ? "Saving..." : editingId ? "Update" : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

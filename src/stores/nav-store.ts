@@ -24,6 +24,7 @@ export type PageId =
   | 'reports'
   | 'es-forms'
   | 'more'
+  | 'procurement'
 
 interface NavState {
   activePage: PageId
@@ -74,6 +75,7 @@ export const pageTitles: Record<PageId, string> = {
   reports: 'Reports',
   'es-forms': 'E&S Forms',
   more: 'More Options',
+  procurement: 'Procurement',
 }
 
 export const useNavStore = create<NavState>((set, get) => ({

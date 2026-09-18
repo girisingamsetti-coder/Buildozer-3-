@@ -33,6 +33,9 @@ import {
 } from '@/components/ui/table'
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { cn } from '@/lib/utils'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { LayoutDashboard } from 'lucide-react'
+import EsComplianceDashboard from './es-dashboard/es-compliance-dashboard'
 
 // ==================== TYPES ====================
 
@@ -329,7 +332,7 @@ function AddFormDialog({
   const [status, setStatus] = useState<FormStatus>('Pending')
   const [remarks, setRemarks] = useState('')
 
-   
+
   useEffect(() => {
     if (editingEntry && open) {
       setFormType(editingEntry.formType)
@@ -513,614 +516,636 @@ export default function EsFormsView() {
 
   const hasFilter = !!(search || typeFilter || statusFilter)
 
+  const addNewDropdown = (
+    <DropdownMenu open={addMenuOpen} onOpenChange={(open) => {
+      setAddMenuOpen(open)
+      if (!open) setSocialHovered(false)
+    }}>
+      <DropdownMenuTrigger asChild>
+        <Button size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5 h-8 text-xs font-semibold shadow-sm">
+          <Plus className="h-3.5 w-3.5" />
+          Add New Form
+          <ChevronDown className="h-3.5 w-3.5" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-72 sm:w-80 p-1.5 shadow-xl border-slate-200 dark:border-slate-800 z-50">
+        {/* OHS */}
+        <DropdownMenuItem
+          onClick={() => { setOhsOpen(true); setAddMenuOpen(false) }}
+          onMouseEnter={() => setSocialHovered(false)}
+          className="cursor-pointer gap-2.5 py-2 font-medium"
+        >
+          <FileText className="h-4 w-4 text-[#0d9488]" />
+          OHS Monitoring
+        </DropdownMenuItem>
+
+        {/* EVM */}
+        <DropdownMenuItem
+          onClick={() => { setEvmOpen(true); setAddMenuOpen(false) }}
+          onMouseEnter={() => setSocialHovered(false)}
+          className="cursor-pointer gap-2.5 py-2 font-medium"
+        >
+          <FileText className="h-4 w-4 text-[#0d9488]" />
+          EVM — Environmental Monitoring
+        </DropdownMenuItem>
+
+        {/* Road Safety */}
+        <DropdownMenuItem
+          onClick={() => { setRsOpen(true); setAddMenuOpen(false) }}
+          onMouseEnter={() => setSocialHovered(false)}
+          className="cursor-pointer gap-2.5 py-2 font-medium"
+        >
+          <FileText className="h-4 w-4 text-[#0d9488]" />
+          Road Safety Checklist
+        </DropdownMenuItem>
+
+        {/* Social */}
+        <div
+          className="flex flex-col"
+          onMouseEnter={() => setSocialHovered(true)}
+          onMouseLeave={() => setSocialHovered(false)}
+        >
+          <div
+            onClick={() => setSocialHovered(prev => !prev)}
+            className={cn(
+              "flex cursor-pointer items-center justify-between gap-2.5 rounded-sm px-2 py-2 text-sm select-none transition-colors font-medium",
+              socialHovered ? "bg-[#0d9488]/10 text-[#0d9488]" : "hover:bg-accent hover:text-accent-foreground text-foreground"
+            )}
+          >
+            <div className="flex items-center gap-2.5">
+              <FileText className="h-4 w-4 text-[#0d9488]" />
+              <span>Social Compliance (4 Sub-Forms)</span>
+            </div>
+            <ChevronDown
+              className={cn(
+                "h-3.5 w-3.5 text-muted-foreground transition-transform duration-200",
+                socialHovered && "rotate-180 text-[#0d9488]"
+              )}
+            />
+          </div>
+
+          {socialHovered && (
+            <div className="mt-1 flex flex-col gap-0.5 pl-2 py-1.5 border-l-2 border-[#0d9488] ml-4 bg-muted/40 rounded-r-md animate-in fade-in-0 slide-in-from-top-1 duration-150">
+              <DropdownMenuItem
+                onClick={() => {
+                  setSsOpen(true)
+                  setAddMenuOpen(false)
+                  setSocialHovered(false)
+                }}
+                className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                Social Safeguard Compliance for MPR
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setStOpen(true)
+                  setAddMenuOpen(false)
+                  setSocialHovered(false)
+                }}
+                className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                Skill Training & Employment
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setLlOpen(true)
+                  setAddMenuOpen(false)
+                  setSocialHovered(false)
+                }}
+                className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                Labour Law Compliance
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setGenOpen(true)
+                  setAddMenuOpen(false)
+                  setSocialHovered(false)
+                }}
+                className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
+                Gender
+              </DropdownMenuItem>
+            </div>
+          )}
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+
   return (
     <div className="flex flex-col gap-4 h-full min-w-0 overflow-y-auto pb-6 pr-2">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-md py-2.5 border-b border-border/40 flex flex-row items-center justify-between gap-3 shrink-0">
-        <div className="min-w-0">
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground truncate">E&S Forms</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 line-clamp-1 sm:line-clamp-none">Track and manage E&S form submissions across all categories.</p>
-        </div>
-        <div className="shrink-0">
-          <DropdownMenu open={addMenuOpen} onOpenChange={(open) => {
-            setAddMenuOpen(open)
-            if (!open) setSocialHovered(false)
-          }}>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" className="bg-[#0d9488] hover:bg-[#0f766e] text-white gap-1.5">
-              <Plus className="h-4 w-4" />
-              Add New
-              <ChevronDown className="h-3.5 w-3.5" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-72 sm:w-80 p-1.5 shadow-xl border-slate-200 dark:border-slate-800">
-            {/* OHS */}
-            <DropdownMenuItem
-              onClick={() => { setOhsOpen(true); setAddMenuOpen(false) }}
-              onMouseEnter={() => setSocialHovered(false)}
-              className="cursor-pointer gap-2.5 py-2 font-medium"
-            >
-              <FileText className="h-4 w-4 text-[#0d9488]" />
-              OHS
-            </DropdownMenuItem>
+      <Tabs defaultValue="dashboard" className="flex flex-col gap-4 flex-1 h-full min-h-0">
+        <TabsList className="w-full flex h-auto p-1 bg-muted/50 rounded-lg shrink-0">
+          <TabsTrigger value="dashboard" className="gap-2 py-2 px-4 rounded-md">
+            <LayoutDashboard className="h-4 w-4" />
+            Dashboard
+          </TabsTrigger>
+          <TabsTrigger value="report" className="gap-2 py-2 px-4 rounded-md">
+            <FileText className="h-4 w-4" />
+            Report
+          </TabsTrigger>
+        </TabsList>
 
-            {/* EVM */}
-            <DropdownMenuItem
-              onClick={() => { setEvmOpen(true); setAddMenuOpen(false) }}
-              onMouseEnter={() => setSocialHovered(false)}
-              className="cursor-pointer gap-2.5 py-2 font-medium"
-            >
-              <FileText className="h-4 w-4 text-[#0d9488]" />
-              EVM
-            </DropdownMenuItem>
+        <TabsContent value="dashboard" className="flex-1 mt-0 h-full min-h-0 overflow-y-auto pr-1">
+          <EsComplianceDashboard addNewButton={addNewDropdown} />
+        </TabsContent>
 
-            {/* Road Safety */}
-            <DropdownMenuItem
-              onClick={() => { setRsOpen(true); setAddMenuOpen(false) }}
-              onMouseEnter={() => setSocialHovered(false)}
-              className="cursor-pointer gap-2.5 py-2 font-medium"
-            >
-              <FileText className="h-4 w-4 text-[#0d9488]" />
-              Road Safety
-            </DropdownMenuItem>
-
-            {/* Social with hover-revealed sub forms panel at the bottom */}
-            <div
-              className="flex flex-col"
-              onMouseEnter={() => setSocialHovered(true)}
-              onMouseLeave={() => setSocialHovered(false)}
-            >
-              <div
-                onClick={() => setSocialHovered(prev => !prev)}
-                className={cn(
-                  "flex cursor-pointer items-center justify-between gap-2.5 rounded-sm px-2 py-2 text-sm select-none transition-colors font-medium",
-                  socialHovered ? "bg-[#0d9488]/10 text-[#0d9488]" : "hover:bg-accent hover:text-accent-foreground text-foreground"
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <FileText className="h-4 w-4 text-[#0d9488]" />
-                  <span>Social</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    "h-3.5 w-3.5 text-muted-foreground transition-transform duration-200",
-                    socialHovered && "rotate-180 text-[#0d9488]"
-                  )}
-                />
-              </div>
-
-              {/* Sub forms panel directly at the bottom of the Social button */}
-              {socialHovered && (
-                <div className="mt-1 flex flex-col gap-0.5 pl-2 py-1.5 border-l-2 border-[#0d9488] ml-4 bg-muted/40 rounded-r-md animate-in fade-in-0 slide-in-from-top-1 duration-150">
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setSsOpen(true)
-                      setAddMenuOpen(false)
-                      setSocialHovered(false)
-                    }}
-                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
-                    Social Safeguard Compliance for MPR
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setStOpen(true)
-                      setAddMenuOpen(false)
-                      setSocialHovered(false)
-                    }}
-                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
-                    Skill Training & Employment
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setLlOpen(true)
-                      setAddMenuOpen(false)
-                      setSocialHovered(false)
-                    }}
-                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
-                    Labour Law Compliance
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setGenOpen(true)
-                      setAddMenuOpen(false)
-                      setSocialHovered(false)
-                    }}
-                    className="cursor-pointer text-xs py-1.5 px-2 gap-2 text-foreground hover:text-[#0d9488] hover:bg-[#0d9488]/10 rounded font-normal"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] shrink-0" />
-                    Gender
-                  </DropdownMenuItem>
-                </div>
-              )}
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        </div>
-      </div>
-
-      {/* Stat Cards — responsive grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 shrink-0">
-        {FORM_TYPES.map(type => (
-          <StatCard key={type} formType={type} entries={forms.filter(f => f.formType === type)} />
-        ))}
-      </div>
-
-      {/* Project Summary Table */}
-      <ProjectSummaryTable forms={forms} />
-
-      {/* Road Safety Submissions Dashboard */}
-      {rsSubmissions.length > 0 && (
-        <Card className="shrink-0">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <p className="text-sm font-bold text-[#0d9488]" >Road Safety Submissions</p>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setRsOpen(true)}>
-                <Plus className="h-3 w-3" /> New Submission
-              </Button>
-            </div>
-            <div className="overflow-x-auto min-h-[400px]">
-              <table className="text-xs w-full">
-                <thead>
-                  <tr className="bg-muted/40 border-b">
-                    <th className="text-left px-4 py-2 font-semibold">Project</th>
-                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                    <th className="text-center px-3 py-2 font-semibold text-emerald-600">Yes</th>
-                    <th className="text-center px-3 py-2 font-semibold text-red-500">No</th>
-                    <th className="text-left px-4 py-2 font-semibold">Status</th>
-                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                    <th className="px-3 py-2 w-10"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rsSubmissions.map(rs => {
-                    const yes = rs.checklist.filter(c => c.answer === 'yes').length
-                    const no  = rs.checklist.filter(c => c.answer === 'no').length
-                    const statusConfig = {
-                      'Draft':                   { color: 'bg-slate-100 text-slate-600',   icon: Clock },
-                      'Submitted':               { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                      'Needs Corrective Action': { color: 'bg-red-100 text-red-600',       icon: AlertTriangle },
-                    }[rs.status]
-                    const Icon = statusConfig?.icon || Clock
-                    return (
-                      <tr key={rs.id} className="border-b hover:bg-muted/20">
-                        <td className="px-4 py-2 font-medium">{rs.projectName}</td>
-                        <td className="px-4 py-2 text-muted-foreground">{rs.reportingMonth}</td>
-                        <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
-                        <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
-                        <td className="px-4 py-2">
-                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
-                            <Icon className="h-2.5 w-2.5" />{rs.status}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2 text-muted-foreground">
-                          {rs.submittedAt ? new Date(rs.submittedAt).toLocaleDateString('en-IN') : '—'}
-                        </td>
-                        <td className="px-3 py-2">
-                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                            onClick={() => deleteMutation.mutate({ formType: 'RoadSafety', id: rs.id })}>
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* OHS Submissions Dashboard */}
-      {ohsSubmissions.length > 0 && (
-        <Card className="shrink-0">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <p className="text-sm font-bold text-[#0d9488]" >OHS Submissions</p>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setOhsOpen(true)}>
-                <Plus className="h-3 w-3" /> New Submission
-              </Button>
-            </div>
-            <div className="overflow-x-auto min-h-[400px]">
-              <table className="text-xs w-full">
-                <thead>
-                  <tr className="bg-muted/40 border-b">
-                    <th className="text-left px-4 py-2 font-semibold">Project</th>
-                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                    <th className="text-center px-3 py-2 font-semibold text-emerald-600">Compliant</th>
-                    <th className="text-center px-3 py-2 font-semibold text-red-500">Non-Compliant</th>
-                    <th className="text-center px-3 py-2 font-semibold text-amber-500">Pending</th>
-                    <th className="text-left px-4 py-2 font-semibold">Status</th>
-                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                    <th className="px-3 py-2 w-10"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {ohsSubmissions.map(ohs => {
-                    const checks = [
-                      ohs.induction.status, ohs.wmsHira.status, ohs.ohsCommittee.status,
-                      ohs.safetyAudit.status, ohs.hira.status, ohs.ohsPolicy.status
-                    ]
-                    const yes = checks.filter(c => c === 'yes').length
-                    const no  = checks.filter(c => c === 'no').length
-                    const pending = checks.filter(c => c === null).length
-                    const statusConfig = {
-                      'Draft':                   { color: 'bg-slate-100 text-slate-600',   icon: Clock },
-                      'Submitted':               { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                      'Needs Corrective Action': { color: 'bg-red-100 text-red-600',       icon: AlertTriangle },
-                    }[ohs.status]
-                    const Icon = statusConfig?.icon || Clock
-                    return (
-                      <tr key={ohs.id} className="border-b hover:bg-muted/20">
-                        <td className="px-4 py-2 font-medium">{ohs.projectName}</td>
-                        <td className="px-4 py-2 text-muted-foreground">{ohs.reportingMonth}</td>
-                        <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
-                        <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
-                        <td className="px-3 py-2 text-center font-bold text-amber-500">{pending}</td>
-                        <td className="px-4 py-2">
-                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
-                            <Icon className="h-2.5 w-2.5" />{ohs.status}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2 text-muted-foreground">
-                          {ohs.submittedAt ? new Date(ohs.submittedAt).toLocaleDateString('en-IN') : '—'}
-                        </td>
-                        <td className="px-3 py-2">
-                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                            onClick={() => deleteMutation.mutate({ formType: 'OHS', id: ohs.id })}>
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* EVM Submissions Dashboard */}
-      {evmSubmissions.length > 0 && (
-        <Card className="shrink-0">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <p className="text-sm font-bold text-[#0d9488]">EVM — Environmental Compliance Monitoring</p>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setEvmOpen(true)}>
-                <Plus className="h-3 w-3" /> New EVM Report
-              </Button>
-            </div>
-            <div className="overflow-x-auto min-h-[400px]">
-              <table className="text-xs w-full">
-                <thead>
-                  <tr className="bg-muted/40 border-b">
-                    <th className="text-left px-4 py-2 font-semibold">Project</th>
-                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                    <th className="text-left px-4 py-2 font-semibold">Status</th>
-                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                    <th className="px-3 py-2 w-10"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {evmSubmissions.map(ev => {
-                    const statusConfig = {
-                      'Draft':                    { color: 'bg-slate-100 text-slate-600',     icon: Clock },
-                      'Submitted':                { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                      'Pending PM Certification': { color: 'bg-blue-100 text-blue-700',       icon: Clock },
-                      'Pending PMC':              { color: 'bg-amber-100 text-amber-700',     icon: Clock },
-                      'Pending PgMC':             { color: 'bg-purple-100 text-purple-700',   icon: Clock },
-                      'Pending ESMU':             { color: 'bg-indigo-100 text-indigo-700',   icon: Clock },
-                      'Returned':                 { color: 'bg-orange-100 text-orange-700',   icon: AlertTriangle },
-                      'Approved':                 { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                    }[ev.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
-                    const Icon = statusConfig.icon
-                    return (
-                      <tr key={ev.id} className="border-b hover:bg-muted/20">
-                        <td className="px-4 py-2 font-medium">{ev.projectName || '—'}</td>
-                        <td className="px-4 py-2 text-muted-foreground">{ev.reportingMonth}</td>
-                        <td className="px-4 py-2">
-                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig.color}`}>
-                            <Icon className="h-2.5 w-2.5" />{ev.status}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2 text-muted-foreground">
-                          {ev.submittedAt ? new Date(ev.submittedAt).toLocaleDateString('en-IN') : '—'}
-                        </td>
-                        <td className="px-3 py-2">
-                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                            onClick={() => deleteMutation.mutate({ formType: 'EVM', id: ev.id })}>
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Social Modules Dashboards */}
-      {ssSubmissions.length > 0 && (
-        <Card className="shrink-0">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <p className="text-sm font-bold text-[#0d9488]">Social Safeguard Compliance for MPR</p>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setSsOpen(true)}>
-                <Plus className="h-3 w-3" /> New Report
-              </Button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="text-xs w-full">
-                <thead>
-                  <tr className="bg-muted/40 border-b">
-                    <th className="text-left px-4 py-2 font-semibold">Project</th>
-                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                    <th className="text-left px-4 py-2 font-semibold">Status</th>
-                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                    <th className="px-3 py-2 w-10"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {ssSubmissions.map(sub => (
-                    <tr key={sub.id} className="border-b hover:bg-muted/20">
-                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                      <td className="px-4 py-2">
-                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                      <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SocialSafeguard', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {stSubmissions.length > 0 && (
-        <Card className="shrink-0">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <p className="text-sm font-bold text-[#0d9488]">Skill Training & Employment</p>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setStOpen(true)}>
-                <Plus className="h-3 w-3" /> New Report
-              </Button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="text-xs w-full">
-                <thead>
-                  <tr className="bg-muted/40 border-b">
-                    <th className="text-left px-4 py-2 font-semibold">Project</th>
-                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                    <th className="text-left px-4 py-2 font-semibold">Status</th>
-                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                    <th className="px-3 py-2 w-10"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stSubmissions.map(sub => (
-                    <tr key={sub.id} className="border-b hover:bg-muted/20">
-                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                      <td className="px-4 py-2">
-                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                      <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SkillTraining', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {llSubmissions.length > 0 && (
-        <Card className="shrink-0">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <p className="text-sm font-bold text-[#0d9488]">Labour Law Compliance</p>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setLlOpen(true)}>
-                <Plus className="h-3 w-3" /> New Report
-              </Button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="text-xs w-full">
-                <thead>
-                  <tr className="bg-muted/40 border-b">
-                    <th className="text-left px-4 py-2 font-semibold">Project</th>
-                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                    <th className="text-left px-4 py-2 font-semibold">Status</th>
-                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                    <th className="px-3 py-2 w-10"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {llSubmissions.map(sub => (
-                    <tr key={sub.id} className="border-b hover:bg-muted/20">
-                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                      <td className="px-4 py-2">
-                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                      <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'LabourLaw', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {genSubmissions.length > 0 && (
-        <Card className="shrink-0">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <p className="text-sm font-bold text-[#0d9488]">Gender & GBV Compliance</p>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setGenOpen(true)}>
-                <Plus className="h-3 w-3" /> New Report
-              </Button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="text-xs w-full">
-                <thead>
-                  <tr className="bg-muted/40 border-b">
-                    <th className="text-left px-4 py-2 font-semibold">Project</th>
-                    <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                    <th className="text-center px-4 py-2 font-semibold">GBV Instances?</th>
-                    <th className="text-left px-4 py-2 font-semibold">Status</th>
-                    <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                    <th className="px-3 py-2 w-10"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {genSubmissions.map(sub => (
-                    <tr key={sub.id} className="border-b hover:bg-muted/20">
-                      <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                      <td className="px-4 py-2 text-center">
-                        {sub.gbvInstances === 'Yes' ? (
-                          <span className="text-red-600 font-bold">Yes</span>
-                        ) : sub.gbvInstances === 'No' ? (
-                          <span className="text-emerald-600 font-bold">No</span>
-                        ) : '—'}
-                      </td>
-                      <td className="px-4 py-2">
-                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                          {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                      <td className="px-3 py-2">
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'Gender', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Forms Summary Table */}
-      <Card className="flex flex-col mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
-          <p className="text-sm font-bold text-[#0d9488] shrink-0">Forms Summary</p>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-2 flex-1 justify-end">
-            <div className="relative w-full max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search by form type, person, location..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
-            </div>
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-full sm:w-36 h-8 text-xs"><SelectValue placeholder="Form Type" /></SelectTrigger>
-              <SelectContent>{FORM_TYPES.map(t => <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>)}</SelectContent>
-            </Select>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full sm:w-32 h-8 text-xs"><SelectValue placeholder="Status" /></SelectTrigger>
-              <SelectContent>{STATUS_OPTIONS.map(s => <SelectItem key={s} value={s} className="text-xs">{s}</SelectItem>)}</SelectContent>
-            </Select>
-            {hasFilter && (
-              <Button variant="outline" size="sm" className="h-8 bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 text-xs px-2"
-                onClick={() => { setSearch(''); setTypeFilter(''); setStatusFilter('') }}>
-                Clear <X className="h-3.5 w-3.5 ml-1" />
-              </Button>
-            )}
+        <TabsContent value="report" className="flex flex-col gap-4 mt-0 h-full min-h-0 overflow-y-auto pr-2 pb-6">
+          {/* Stat Cards — responsive grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 shrink-0">
+            {FORM_TYPES.map(type => (
+              <StatCard key={type} formType={type} entries={forms.filter(f => f.formType === type)} />
+            ))}
           </div>
-        </div>
-        <CardContent className="p-0">
-          <Table containerClassName="max-h-[min(650px,calc(100vh-250px))] overflow-auto">
-            <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
-              <TableRow>
-                <TableHead className="text-xs font-bold text-foreground">Form Type</TableHead>
-                <TableHead className="text-xs font-bold text-foreground">Submitted By</TableHead>
-                <TableHead className="text-xs font-bold text-foreground">Location</TableHead>
-                <TableHead className="text-xs font-bold text-foreground">Date</TableHead>
-                <TableHead className="text-xs font-bold text-foreground">Status</TableHead>
-                <TableHead className="text-xs font-bold text-foreground">Remarks</TableHead>
-                <TableHead className="text-xs font-bold text-foreground text-right w-20 pr-4">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filtered.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={7} className="text-center py-12 text-muted-foreground text-sm">No form submissions found.</TableCell>
-                </TableRow>
-              ) : filtered.map(entry => (
-                <TableRow key={entry.id} className="hover:bg-muted/40">
-                  <TableCell>
-                    <Badge variant="outline" className="text-xs font-semibold border-[#0d9488]/40 text-[#0d9488]">{entry.formType}</Badge>
-                  </TableCell>
-                  <TableCell className="text-sm">{entry.submittedBy}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{entry.location}</TableCell>
-                  <TableCell className="text-sm">
-                    <span className="flex items-center gap-1 text-muted-foreground">
-                      <Calendar className="h-3 w-3" />{entry.date}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold text-white"
-                      style={{ backgroundColor: STATUS_COLORS[entry.status] }}>
-                      {entry.status}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-xs text-muted-foreground max-w-[120px] truncate">{entry.remarks || '—'}</TableCell>
-                  <TableCell className="pr-4">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-blue-500 hover:text-blue-600 hover:bg-blue-50"
-                        onClick={() => { setEditingEntry(entry); setAddType(entry.formType); setAddOpen(true); }}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
-                        onClick={() => handleDelete(entry.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+
+          {/* Project Summary Table */}
+          <ProjectSummaryTable forms={forms} />
+
+          {/* Road Safety Submissions Dashboard */}
+          {rsSubmissions.length > 0 && (
+            <Card className="shrink-0">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <p className="text-sm font-bold text-[#0d9488]" >Road Safety Submissions</p>
+                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setRsOpen(true)}>
+                    <Plus className="h-3 w-3" /> New Submission
+                  </Button>
+                </div>
+                <div className="overflow-x-auto min-h-[400px]">
+                  <table className="text-xs w-full">
+                    <thead>
+                      <tr className="bg-muted/40 border-b">
+                        <th className="text-left px-4 py-2 font-semibold">Project</th>
+                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                        <th className="text-center px-3 py-2 font-semibold text-emerald-600">Yes</th>
+                        <th className="text-center px-3 py-2 font-semibold text-red-500">No</th>
+                        <th className="text-left px-4 py-2 font-semibold">Status</th>
+                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                        <th className="px-3 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rsSubmissions.map(rs => {
+                        const checklist = Array.isArray(rs.checklist) ? rs.checklist : []
+                        const yes = checklist.filter((c: any) => c?.answer === 'yes' || c?.status === 'Yes').length
+                        const no = checklist.filter((c: any) => c?.answer === 'no' || c?.status === 'No').length
+                        const statusConfig = {
+                          'Draft': { color: 'bg-slate-100 text-slate-600', icon: Clock },
+                          'Submitted': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                          'Needs Corrective Action': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
+                          'Approved': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                          'Rejected': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
+                          'Pending': { color: 'bg-amber-100 text-amber-700', icon: Clock },
+                        }[rs.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
+                        const Icon = statusConfig?.icon || Clock
+                        return (
+                          <tr key={rs.id} className="border-b hover:bg-muted/20">
+                            <td className="px-4 py-2 font-medium">{rs.projectName}</td>
+                            <td className="px-4 py-2 text-muted-foreground">{rs.reportingMonth}</td>
+                            <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
+                            <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
+                            <td className="px-4 py-2">
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
+                                <Icon className="h-2.5 w-2.5" />{rs.status}
+                              </span>
+                            </td>
+                            <td className="px-4 py-2 text-muted-foreground">
+                              {rs.submittedAt ? new Date(rs.submittedAt).toLocaleDateString('en-IN') : '—'}
+                            </td>
+                            <td className="px-3 py-2">
+                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                                onClick={() => deleteMutation.mutate({ formType: 'RoadSafety', id: rs.id })}>
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* OHS Submissions Dashboard */}
+          {ohsSubmissions.length > 0 && (
+            <Card className="shrink-0">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <p className="text-sm font-bold text-[#0d9488]" >OHS Submissions</p>
+                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setOhsOpen(true)}>
+                    <Plus className="h-3 w-3" /> New Submission
+                  </Button>
+                </div>
+                <div className="overflow-x-auto min-h-[400px]">
+                  <table className="text-xs w-full">
+                    <thead>
+                      <tr className="bg-muted/40 border-b">
+                        <th className="text-left px-4 py-2 font-semibold">Project</th>
+                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                        <th className="text-center px-3 py-2 font-semibold text-emerald-600">Compliant</th>
+                        <th className="text-center px-3 py-2 font-semibold text-red-500">Non-Compliant</th>
+                        <th className="text-center px-3 py-2 font-semibold text-amber-500">Pending</th>
+                        <th className="text-left px-4 py-2 font-semibold">Status</th>
+                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                        <th className="px-3 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ohsSubmissions.map(ohs => {
+                        const checks = [
+                          ohs.induction?.status || (ohs.daily_monitoring?.ohs_induction_conducted ? 'yes' : 'no'),
+                          ohs.wmsHira?.status || (ohs.weekly_reporting?.wms_hira_approval === 'Approved' ? 'yes' : 'no'),
+                          ohs.ohsCommittee?.status || (ohs.monthly_monitoring?.ohs_committee_formed ? 'yes' : 'no'),
+                          ohs.safetyAudit?.status || (ohs.ohs_audits ? 'yes' : 'no'),
+                          ohs.hira?.status || (ohs.hazard_id_sop?.hira_carried_out_quarterly ? 'yes' : 'no'),
+                          ohs.ohsPolicy?.status || (ohs.ohs_policies?.health_and_safety_policy_displayed ? 'yes' : 'no')
+                        ]
+                        const yes = checks.filter(c => c === 'yes' || c === 'Yes' || c === true).length
+                        const no = checks.filter(c => c === 'no' || c === 'No' || c === false).length
+                        const pending = checks.filter(c => !c || c === 'null').length
+                        const statusConfig = {
+                          'Draft': { color: 'bg-slate-100 text-slate-600', icon: Clock },
+                          'Submitted': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                          'Needs Corrective Action': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
+                          'Approved': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                          'Rejected': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
+                          'Pending': { color: 'bg-amber-100 text-amber-700', icon: Clock },
+                        }[ohs.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
+                        const Icon = statusConfig?.icon || Clock
+                        return (
+                          <tr key={ohs.id} className="border-b hover:bg-muted/20">
+                            <td className="px-4 py-2 font-medium">{ohs.projectName}</td>
+                            <td className="px-4 py-2 text-muted-foreground">{ohs.reportingMonth}</td>
+                            <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
+                            <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
+                            <td className="px-3 py-2 text-center font-bold text-amber-500">{pending}</td>
+                            <td className="px-4 py-2">
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
+                                <Icon className="h-2.5 w-2.5" />{ohs.status}
+                              </span>
+                            </td>
+                            <td className="px-4 py-2 text-muted-foreground">
+                              {ohs.submittedAt ? new Date(ohs.submittedAt).toLocaleDateString('en-IN') : '—'}
+                            </td>
+                            <td className="px-3 py-2">
+                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                                onClick={() => deleteMutation.mutate({ formType: 'OHS', id: ohs.id })}>
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* EVM Submissions Dashboard */}
+          {evmSubmissions.length > 0 && (
+            <Card className="shrink-0">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <p className="text-sm font-bold text-[#0d9488]">EVM — Environmental Compliance Monitoring</p>
+                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setEvmOpen(true)}>
+                    <Plus className="h-3 w-3" /> New EVM Report
+                  </Button>
+                </div>
+                <div className="overflow-x-auto min-h-[400px]">
+                  <table className="text-xs w-full">
+                    <thead>
+                      <tr className="bg-muted/40 border-b">
+                        <th className="text-left px-4 py-2 font-semibold">Project</th>
+                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                        <th className="text-left px-4 py-2 font-semibold">Status</th>
+                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                        <th className="px-3 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {evmSubmissions.map(ev => {
+                        const statusConfig = {
+                          'Draft': { color: 'bg-slate-100 text-slate-600', icon: Clock },
+                          'Submitted': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                          'Pending PM Certification': { color: 'bg-blue-100 text-blue-700', icon: Clock },
+                          'Pending PMC': { color: 'bg-amber-100 text-amber-700', icon: Clock },
+                          'Pending PgMC': { color: 'bg-purple-100 text-purple-700', icon: Clock },
+                          'Pending ESMU': { color: 'bg-indigo-100 text-indigo-700', icon: Clock },
+                          'Returned': { color: 'bg-orange-100 text-orange-700', icon: AlertTriangle },
+                          'Approved': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
+                        }[ev.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
+                        const Icon = statusConfig.icon
+                        return (
+                          <tr key={ev.id} className="border-b hover:bg-muted/20">
+                            <td className="px-4 py-2 font-medium">{ev.projectName || '—'}</td>
+                            <td className="px-4 py-2 text-muted-foreground">{ev.reportingMonth}</td>
+                            <td className="px-4 py-2">
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig.color}`}>
+                                <Icon className="h-2.5 w-2.5" />{ev.status}
+                              </span>
+                            </td>
+                            <td className="px-4 py-2 text-muted-foreground">
+                              {ev.submittedAt ? new Date(ev.submittedAt).toLocaleDateString('en-IN') : '—'}
+                            </td>
+                            <td className="px-3 py-2">
+                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                                onClick={() => deleteMutation.mutate({ formType: 'EVM', id: ev.id })}>
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Social Modules Dashboards */}
+          {ssSubmissions.length > 0 && (
+            <Card className="shrink-0">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <p className="text-sm font-bold text-[#0d9488]">Social Safeguard Compliance for MPR</p>
+                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setSsOpen(true)}>
+                    <Plus className="h-3 w-3" /> New Report
+                  </Button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="text-xs w-full">
+                    <thead>
+                      <tr className="bg-muted/40 border-b">
+                        <th className="text-left px-4 py-2 font-semibold">Project</th>
+                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                        <th className="text-left px-4 py-2 font-semibold">Status</th>
+                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                        <th className="px-3 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ssSubmissions.map(sub => (
+                        <tr key={sub.id} className="border-b hover:bg-muted/20">
+                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                          <td className="px-4 py-2">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                            </span>
+                          </td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                          <td className="px-3 py-2">
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SocialSafeguard', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {stSubmissions.length > 0 && (
+            <Card className="shrink-0">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <p className="text-sm font-bold text-[#0d9488]">Skill Training & Employment</p>
+                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setStOpen(true)}>
+                    <Plus className="h-3 w-3" /> New Report
+                  </Button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="text-xs w-full">
+                    <thead>
+                      <tr className="bg-muted/40 border-b">
+                        <th className="text-left px-4 py-2 font-semibold">Project</th>
+                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                        <th className="text-left px-4 py-2 font-semibold">Status</th>
+                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                        <th className="px-3 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {stSubmissions.map(sub => (
+                        <tr key={sub.id} className="border-b hover:bg-muted/20">
+                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                          <td className="px-4 py-2">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                            </span>
+                          </td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                          <td className="px-3 py-2">
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SkillTraining', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {llSubmissions.length > 0 && (
+            <Card className="shrink-0">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <p className="text-sm font-bold text-[#0d9488]">Labour Law Compliance</p>
+                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setLlOpen(true)}>
+                    <Plus className="h-3 w-3" /> New Report
+                  </Button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="text-xs w-full">
+                    <thead>
+                      <tr className="bg-muted/40 border-b">
+                        <th className="text-left px-4 py-2 font-semibold">Project</th>
+                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                        <th className="text-left px-4 py-2 font-semibold">Status</th>
+                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                        <th className="px-3 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {llSubmissions.map(sub => (
+                        <tr key={sub.id} className="border-b hover:bg-muted/20">
+                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                          <td className="px-4 py-2">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                            </span>
+                          </td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                          <td className="px-3 py-2">
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'LabourLaw', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {genSubmissions.length > 0 && (
+            <Card className="shrink-0">
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <p className="text-sm font-bold text-[#0d9488]">Gender & GBV Compliance</p>
+                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setGenOpen(true)}>
+                    <Plus className="h-3 w-3" /> New Report
+                  </Button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="text-xs w-full">
+                    <thead>
+                      <tr className="bg-muted/40 border-b">
+                        <th className="text-left px-4 py-2 font-semibold">Project</th>
+                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
+                        <th className="text-center px-4 py-2 font-semibold">GBV Instances?</th>
+                        <th className="text-left px-4 py-2 font-semibold">Status</th>
+                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
+                        <th className="px-3 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {genSubmissions.map(sub => (
+                        <tr key={sub.id} className="border-b hover:bg-muted/20">
+                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
+                          <td className="px-4 py-2 text-center">
+                            {sub.gbvInstances === 'Yes' ? (
+                              <span className="text-red-600 font-bold">Yes</span>
+                            ) : sub.gbvInstances === 'No' ? (
+                              <span className="text-emerald-600 font-bold">No</span>
+                            ) : '—'}
+                          </td>
+                          <td className="px-4 py-2">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
+                            </span>
+                          </td>
+                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
+                          <td className="px-3 py-2">
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'Gender', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Forms Summary Table */}
+          <Card className="flex flex-col mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
+              <p className="text-sm font-bold text-[#0d9488] shrink-0">Forms Summary</p>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-2 flex-1 justify-end">
+                <div className="relative w-full max-w-sm">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input placeholder="Search by form type, person, location..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
+                </div>
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                  <SelectTrigger className="w-full sm:w-36 h-8 text-xs"><SelectValue placeholder="Form Type" /></SelectTrigger>
+                  <SelectContent>{FORM_TYPES.map(t => <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>)}</SelectContent>
+                </Select>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full sm:w-32 h-8 text-xs"><SelectValue placeholder="Status" /></SelectTrigger>
+                  <SelectContent>{STATUS_OPTIONS.map(s => <SelectItem key={s} value={s} className="text-xs">{s}</SelectItem>)}</SelectContent>
+                </Select>
+                {hasFilter && (
+                  <Button variant="outline" size="sm" className="h-8 bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 text-xs px-2"
+                    onClick={() => { setSearch(''); setTypeFilter(''); setStatusFilter('') }}>
+                    Clear <X className="h-3.5 w-3.5 ml-1" />
+                  </Button>
+                )}
+              </div>
+            </div>
+            <CardContent className="p-0">
+              <Table containerClassName="max-h-[min(650px,calc(100vh-250px))] overflow-auto">
+                <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
+                  <TableRow>
+                    <TableHead className="text-xs font-bold text-foreground">Form Type</TableHead>
+                    <TableHead className="text-xs font-bold text-foreground">Submitted By</TableHead>
+                    <TableHead className="text-xs font-bold text-foreground">Location</TableHead>
+                    <TableHead className="text-xs font-bold text-foreground">Date</TableHead>
+                    <TableHead className="text-xs font-bold text-foreground">Status</TableHead>
+                    <TableHead className="text-xs font-bold text-foreground">Remarks</TableHead>
+                    <TableHead className="text-xs font-bold text-foreground text-right w-20 pr-4">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filtered.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center py-12 text-muted-foreground text-sm">No form submissions found.</TableCell>
+                    </TableRow>
+                  ) : filtered.map(entry => (
+                    <TableRow key={entry.id} className="hover:bg-muted/40">
+                      <TableCell>
+                        <Badge variant="outline" className="text-xs font-semibold border-[#0d9488]/40 text-[#0d9488]">{entry.formType}</Badge>
+                      </TableCell>
+                      <TableCell className="text-sm">{entry.submittedBy}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{entry.location}</TableCell>
+                      <TableCell className="text-sm">
+                        <span className="flex items-center gap-1 text-muted-foreground">
+                          <Calendar className="h-3 w-3" />{entry.date}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold text-white"
+                          style={{ backgroundColor: STATUS_COLORS[entry.status] }}>
+                          {entry.status}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground max-w-[120px] truncate">{entry.remarks || '—'}</TableCell>
+                      <TableCell className="pr-4">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-blue-500 hover:text-blue-600 hover:bg-blue-50"
+                            onClick={() => { setEditingEntry(entry); setAddType(entry.formType); setAddOpen(true); }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
+                            onClick={() => handleDelete(entry.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
       {addOpen && (
-        <AddFormDialog 
-          key={editingEntry ? editingEntry.id : String(addType)} 
-          open={addOpen} 
+        <AddFormDialog
+          key={editingEntry ? editingEntry.id : String(addType)}
+          open={addOpen}
           onOpenChange={(open) => {
             setAddOpen(open);
             if (!open) setEditingEntry(null);
-          }} 
-          defaultType={addType} 
-          onSave={handleSave} 
+          }}
+          defaultType={addType}
+          onSave={handleSave}
           editingEntry={editingEntry}
         />
       )}
