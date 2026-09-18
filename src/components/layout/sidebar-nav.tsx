@@ -61,8 +61,9 @@ const navItems: { id: PageId; label: string; icon: typeof LayoutDashboard }[] = 
   { id: 'dashboard', label: 'Overview', icon: LayoutDashboard },
   { id: 'locations', label: 'Locations', icon: MapPin },
   { id: 'workers', label: 'Workforce', icon: Users },
-  { id: 'vehicles', label: 'Machinery', icon: Truck },
   { id: 'es-forms', label: 'E&S Forms', icon: FileBarChart },
+  { id: 'es-forms-2', label: 'E&S Forms 2', icon: FileBarChart },
+  { id: 'v3', label: 'V3', icon: FileBarChart },
   { id: 'incidents', label: 'Incidents', icon: AlertTriangle },
   { id: 'training', label: 'Training', icon: GraduationCap },
   { id: 'medical', label: 'Medical', icon: HeartPulse },
@@ -92,7 +93,7 @@ function getInitials(name: string): string {
 }
 
 export function SidebarNav() {
-  const { activePage, setPage, sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed, mobileView, toggleMobileView, dashboardMode, setDashboardMode } = useNavStore()
+  const { activePage, setPage, sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed, mobileView, toggleMobileView, dashboardMode, setDashboardMode, hiddenModules } = useNavStore()
   const { logout, login, userName, role } = useAuthStore()
   const permissions = rolePermissions[role] ?? rolePermissions.SAFETY_OFFICER
   const { theme, setTheme } = useTheme()
@@ -126,7 +127,7 @@ export function SidebarNav() {
     fetchNotifications()
   }, [fetchNotifications])
 
-  const filteredItems = navItems.filter(item => permissions.modules.includes(item.id))
+  const filteredItems = navItems.filter(item => permissions.modules.includes(item.id) && !hiddenModules.includes(item.id))
   // When mobile view is forced, the sidebar always behaves as a mobile overlay
   // (never collapsed, always slide-in) regardless of screen size.
   const forceMobile = mobileView

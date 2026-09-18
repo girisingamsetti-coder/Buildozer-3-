@@ -35,6 +35,8 @@ const ComplianceView = lazy(() => import('@/components/modules/compliance-view')
 const SettingsView = lazy(() => import('@/components/modules/settings-view'))
 const ReportsView = lazy(() => import('@/components/modules/reports-view'))
 const EsFormsView = lazy(() => import('@/components/modules/es-forms-view'))
+const EsForms2View = lazy(() => import('@/components/modules/es-forms-2-view'))
+const V3View = lazy(() => import('@/components/modules/v3-view'))
 const MoreView = lazy(() => import('@/components/modules/more-view'))
 const ProcurementView = lazy(() => import('@/app/procurement/page'))
 
@@ -77,6 +79,8 @@ const pageComponents: Record<string, React.LazyExoticComponent<any>> = {
   settings: SettingsView,
   reports: ReportsView,
   'es-forms': EsFormsView,
+  'es-forms-2': EsForms2View,
+  'v3': V3View,
   more: MoreView,
   procurement: ProcurementView,
 }

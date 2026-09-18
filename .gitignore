@@ -54,3 +54,10 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# Large source data files (>100MB)
+public/e&s-forms.json
+
+# Scratch scripts
+refactor_v3.js
+scratch*.js

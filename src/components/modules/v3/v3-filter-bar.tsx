@@ -1,0 +1,145 @@
+'use client'
+
+import React from 'react'
+import { Search, Filter, Calendar, Building2, AlertTriangle, Download } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { DashboardFilterState } from './v3-types'
+
+interface V3FilterBarProps {
+  filters: DashboardFilterState
+  onFilterChange: (newFilters: Partial<DashboardFilterState>) => void
+  months: string[]
+  contractors: string[]
+  filteredCount: number
+  totalCount: number
+  onExport?: () => void
+}
+
+const MONTH_LABELS: Record<string, string> = {
+  '2026-02': 'February 2026',
+  '2026-03': 'March 2026',
+  '2026-04': 'April 2026',
+  '2026-05': 'May 2026',
+  '2026-06': 'June 2026',
+  '2026-07': 'July 2026',
+  '2026-08': 'August 2026',
+  '2026-09': 'September 2026',
+}
+
+export function V3FilterBar({
+  filters,
+  onFilterChange,
+  months,
+  contractors,
+  filteredCount,
+  totalCount,
+  onExport,
+}: V3FilterBarProps) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-card border rounded-xl shadow-xs">
+      <div className="flex flex-wrap items-center gap-2.5 flex-1 min-w-[300px]">
+        {/* Month Selector */}
+        <div className="flex items-center gap-1.5">
+          <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
+          <Select
+            value={filters.month}
+            onValueChange={(val) => onFilterChange({ month: val })}
+          >
+            <SelectTrigger className="w-[170px] h-9 text-xs font-medium bg-background">
+              <SelectValue placeholder="Select Month" />
+            </SelectTrigger>
+            <SelectContent>
+              {months.map((m) => (
+                <SelectItem key={m} value={m} className="text-xs">
+                  {MONTH_LABELS[m] || m}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Search by Name or ID */}
+        <div className="relative flex-1 min-w-[200px] max-w-[320px]">
+          <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Search project or ID (e.g. Zone - 9A)..."
+            value={filters.searchQuery}
+            onChange={(e) => onFilterChange({ searchQuery: e.target.value })}
+            className="pl-8 h-9 text-xs bg-background"
+          />
+        </div>
+
+        {/* Contractor Filter */}
+        <div className="flex items-center gap-1.5">
+          <Building2 className="w-4 h-4 text-muted-foreground shrink-0" />
+          <Select
+            value={filters.contractor}
+            onValueChange={(val) => onFilterChange({ contractor: val })}
+          >
+            <SelectTrigger className="w-[160px] h-9 text-xs font-medium bg-background">
+              <SelectValue placeholder="All Contractors" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ALL" className="text-xs">
+                All Contractors
+              </SelectItem>
+              {contractors.map((c) => (
+                <SelectItem key={c} value={c} className="text-xs">
+                  {c}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Status Filter */}
+        <div className="flex items-center gap-1.5">
+          <Filter className="w-4 h-4 text-muted-foreground shrink-0" />
+          <Select
+            value={filters.statusFilter}
+            onValueChange={(val: any) => onFilterChange({ statusFilter: val })}
+          >
+            <SelectTrigger className="w-[175px] h-9 text-xs font-medium bg-background">
+              <SelectValue placeholder="All Statuses" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ALL" className="text-xs">
+                All Compliance States
+              </SelectItem>
+              <SelectItem value="COMPLIANT" className="text-xs text-emerald-600 dark:text-emerald-400">
+                ● Compliant Only
+              </SelectItem>
+              <SelectItem value="ATTENTION" className="text-xs text-amber-600 dark:text-amber-400">
+                ▲ Attention / Issues Only
+              </SelectItem>
+              <SelectItem value="MISSING" className="text-xs text-rose-600 dark:text-rose-400">
+                ✕ Missing Submissions
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Right Controls: Count & Export */}
+      <div className="flex items-center gap-2 shrink-0">
+        <span className="text-xs text-muted-foreground font-medium bg-muted/60 px-2.5 py-1 rounded-md">
+          Showing <strong className="text-foreground">{filteredCount}</strong> of {totalCount} Projects
+        </span>
+
+        {onExport && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onExport}
+            className="h-9 gap-1.5 text-xs font-medium"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export Data
+          </Button>
+        )}
+      </div>
+    </div>
+  )
+}

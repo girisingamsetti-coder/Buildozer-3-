@@ -25,6 +25,8 @@ import {
   AlertTriangle,
   ArrowRight,
   FileText,
+  LayoutDashboard,
+  Menu,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
@@ -49,6 +51,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { useAuthStore, roleLabels, rolePermissions, type UserRole } from '@/stores/auth-store'
+import { useNavStore } from '@/stores/nav-store'
 import { useSort } from '@/hooks/use-sort'
 import { SortableHeader } from '@/components/shared/sortable-header'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
@@ -108,7 +111,7 @@ interface WorkflowConfig {
 const ALL_MODULES = [
   'dashboard', 'workers', 'medical', 'training', 'attendance',
   'incidents', 'grievance', 'vehicles', 'hazardous', 'legal',
-  'compliance', 'settings', 'reports',
+  'compliance', 'es-forms', 'es-forms-2', 'v3', 'settings', 'reports',
 ] as const
 
 const MODULE_LABELS: Record<string, string> = {
@@ -123,6 +126,9 @@ const MODULE_LABELS: Record<string, string> = {
   hazardous: 'Hazardous',
   legal: 'Legal',
   compliance: 'Compliance',
+  'es-forms': 'E&S Forms',
+  'es-forms-2': 'E&S Forms 2',
+  'v3': 'V3',
   settings: 'Settings',
   reports: 'Reports',
 }
@@ -1241,6 +1247,50 @@ function AuditLogTab() {
   )
 }
 
+// ==================== TAB 5: MENU CONFIGURATION ====================
+
+function MenuConfigurationTab() {
+  const { role: authRole } = useAuthStore()
+  const { hiddenModules, toggleModuleVisibility } = useNavStore()
+  const permissions = rolePermissions[authRole] ?? { modules: [] }
+  const allowedModules = permissions.modules
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <Menu className="h-4 w-4 text-teal-600" />
+            Sidebar Menu Visibility
+          </CardTitle>
+          <CardDescription>
+            Customize your sidebar by showing or hiding modules. This only affects your view.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {allowedModules.map((mod) => (
+              <div key={mod} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`hide-mod-${mod}`}
+                  checked={!hiddenModules.includes(mod)}
+                  onCheckedChange={() => toggleModuleVisibility(mod)}
+                />
+                <label
+                  htmlFor={`hide-mod-${mod}`}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {MODULE_LABELS[mod] || mod}
+                </label>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
 // ==================== MAIN SETTINGS VIEW ====================
 
 export default function SettingsView() {
@@ -1277,6 +1327,11 @@ export default function SettingsView() {
             <span className="hidden sm:inline">Audit Log</span>
             <span className="sm:hidden">Audit</span>
           </TabsTrigger>
+          <TabsTrigger value="menu" className="text-sm gap-1.5">
+            <LayoutDashboard className="h-4 w-4" />
+            <span className="hidden sm:inline">Menu Configuration</span>
+            <span className="sm:hidden">Menu</span>
+          </TabsTrigger>
           <TabsTrigger value="about" className="text-sm gap-1.5">
             <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
             <span className="hidden sm:inline">System Information & Demo</span>
@@ -1298,6 +1353,10 @@ export default function SettingsView() {
 
         <TabsContent value="audit">
           <AuditLogTab />
+        </TabsContent>
+
+        <TabsContent value="menu">
+          <MenuConfigurationTab />
         </TabsContent>
 
         <TabsContent value="about">

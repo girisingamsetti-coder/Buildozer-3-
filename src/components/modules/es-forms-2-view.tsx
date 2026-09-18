@@ -6,13 +6,13 @@ import { toast } from 'sonner'
 import {
   Plus, Search, X, FileText, ChevronDown, Trash2, Calendar, CheckCircle2, XCircle, Clock, AlertTriangle, Pencil,
 } from 'lucide-react'
-import RoadSafetyFormDialog, { type RoadSafetySubmission } from './road-safety-form-dialog'
-import EVMFormDialog, { type EVMSubmission } from './evm-form-dialog'
-import SocialSafeguardFormDialog, { type SocialSafeguardSubmission } from './social-safeguard-form-dialog'
-import SkillTrainingFormDialog, { type SkillTrainingSubmission } from './skill-training-form-dialog'
-import LabourLawFormDialog, { type LabourLawSubmission } from './labour-law-form-dialog'
-import GenderFormDialog, { type GenderSubmission } from './gender-form-dialog'
-import OHSFormDialog, { type OHSSubmission } from './ohs-form-dialog'
+import RoadSafetyFormDialog2, { type RoadSafetySubmission } from './road-safety-form-dialog-2'
+import EVMFormDialog2, { type EVMSubmission } from './evm-form-dialog-2'
+import SocialSafeguardFormDialog2, { type SocialSafeguardSubmission } from './social-safeguard-form-dialog-2'
+import SkillTrainingFormDialog2, { type SkillTrainingSubmission } from './skill-training-form-dialog-2'
+import LabourLawFormDialog2, { type LabourLawSubmission } from './labour-law-form-dialog-2'
+import GenderFormDialog2, { type GenderSubmission } from './gender-form-dialog-2'
+import OHSFormDialog2, { type OHSSubmission } from './ohs-form-dialog-2'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -35,7 +35,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { cn } from '@/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LayoutDashboard } from 'lucide-react'
-import EsComplianceDashboardNew from './es-dashboard/es-compliance-dashboard-new'
+import EsComplianceDashboard from './es-dashboard/es-compliance-dashboard'
 
 // ==================== TYPES ====================
 
@@ -67,7 +67,7 @@ const STATUS_OPTIONS: FormStatus[] = ['PMC', 'PGMC', 'CRDA', 'Approved', 'Reject
 
 // ==================== LOCAL STORAGE ====================
 
-const STORAGE_KEY = 'es-forms-data-v2'
+const STORAGE_KEY = 'es-forms-data-v2-duplicate'
 
 function seedData(): FormEntry[] {
   const forms: FormEntry[] = []
@@ -437,7 +437,7 @@ const fetchSubmissions = async (formType: string) => {
   }))
 }
 
-export default function EsFormsView() {
+export default function EsForms2View() {
   const [forms, setForms] = useState<FormEntry[]>(() => loadForms())
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<string>('')
@@ -652,7 +652,7 @@ export default function EsFormsView() {
         </TabsList>
 
         <TabsContent value="dashboard" className="flex-1 mt-0 h-full min-h-0 overflow-y-auto pr-1">
-          <EsComplianceDashboardNew addNewButton={addNewDropdown} />
+          <EsComplianceDashboard addNewButton={addNewDropdown} />
         </TabsContent>
 
         <TabsContent value="report" className="flex flex-col gap-4 mt-0 h-full min-h-0 overflow-y-auto pr-2 pb-6">
@@ -1150,25 +1150,25 @@ export default function EsFormsView() {
         />
       )}
       {ohsOpen && (
-        <OHSFormDialog open={ohsOpen} onOpenChange={setOhsOpen} onSaved={refreshOHS} />
+        <OHSFormDialog2 open={ohsOpen} onOpenChange={setOhsOpen} onSaved={refreshOHS} />
       )}
       {rsOpen && (
-        <RoadSafetyFormDialog open={rsOpen} onOpenChange={setRsOpen} onSaved={refreshRS} />
+        <RoadSafetyFormDialog2 open={rsOpen} onOpenChange={setRsOpen} onSaved={refreshRS} />
       )}
       {evmOpen && (
-        <EVMFormDialog open={evmOpen} onOpenChange={setEvmOpen} onSaved={refreshEVM} />
+        <EVMFormDialog2 open={evmOpen} onOpenChange={setEvmOpen} onSaved={refreshEVM} />
       )}
       {ssOpen && (
-        <SocialSafeguardFormDialog open={ssOpen} onOpenChange={setSsOpen} onSaved={refreshSS} />
+        <SocialSafeguardFormDialog2 open={ssOpen} onOpenChange={setSsOpen} onSaved={refreshSS} />
       )}
       {stOpen && (
-        <SkillTrainingFormDialog open={stOpen} onOpenChange={setStOpen} onSaved={refreshST} />
+        <SkillTrainingFormDialog2 open={stOpen} onOpenChange={setStOpen} onSaved={refreshST} />
       )}
       {llOpen && (
-        <LabourLawFormDialog open={llOpen} onOpenChange={setLlOpen} onSaved={refreshLL} />
+        <LabourLawFormDialog2 open={llOpen} onOpenChange={setLlOpen} onSaved={refreshLL} />
       )}
       {genOpen && (
-        <GenderFormDialog open={genOpen} onOpenChange={setGenOpen} onSaved={refreshGen} />
+        <GenderFormDialog2 open={genOpen} onOpenChange={setGenOpen} onSaved={refreshGen} />
       )}
     </div>
   )

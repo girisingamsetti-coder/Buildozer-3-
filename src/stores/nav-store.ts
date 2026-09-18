@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export type PageId =
   | 'dashboard'
@@ -25,6 +26,8 @@ export type PageId =
   | 'es-forms'
   | 'more'
   | 'procurement'
+  | 'es-forms-2'
+  | 'v3'
 
 interface NavState {
   activePage: PageId
@@ -49,6 +52,8 @@ interface NavState {
   goBack: () => void
   dashboardMode: 'd1' | 'd2'
   setDashboardMode: (mode: 'd1' | 'd2') => void
+  hiddenModules: string[]
+  toggleModuleVisibility: (moduleId: string) => void
 }
 
 export const pageTitles: Record<PageId, string> = {
@@ -76,51 +81,67 @@ export const pageTitles: Record<PageId, string> = {
   'es-forms': 'E&S Forms',
   more: 'More Options',
   procurement: 'Procurement',
+  'es-forms-2': 'E&S Forms 2',
+  'v3': 'V3',
 }
 
-export const useNavStore = create<NavState>((set, get) => ({
-  activePage: 'dashboard',
-  pageParams: {},
-  sidebarOpen: true,
-  sidebarCollapsed: false,
-  mobileView: false,
-  dashboardMode: 'd2',
-  setDashboardMode: (mode) => set({ dashboardMode: mode }),
-  workerFormDialogOpen: false,
-  workerFormEditId: null,
-  openWorkerForm: (editId = null) =>
-    set({ workerFormDialogOpen: true, workerFormEditId: editId }),
-  closeWorkerForm: () =>
-    set({ workerFormDialogOpen: false, workerFormEditId: null }),
-  incidentFormDialogOpen: false,
-  openIncidentForm: () => set({ incidentFormDialogOpen: true }),
-  closeIncidentForm: () => set({ incidentFormDialogOpen: false }),
-  setPage: (page, params = {}) => {
-    set({ activePage: page, pageParams: params })
-  },
-  setSidebarOpen: (open) => set({ sidebarOpen: open }),
-  setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
-  setMobileView: (device) => set({ mobileView: device }),
-  toggleMobileView: () => {
-    const current = get().mobileView
-    const next = current ? false : 'iphone-15-pro'
-    // When entering mobile view, close the sidebar overlay so the framed
-    // content is visible. The FAB remains available to re-open it.
-    set(next ? { mobileView: next, sidebarOpen: false } : { mobileView: false })
-  },
-  goBack: () => {
-    const current = get().activePage
-    const backMap: Partial<Record<PageId, PageId>> = {
-      'worker-detail': 'workers',
-      'worker-form': 'workers',
-      'worker-fitness': 'worker-detail',
-      'incident-detail': 'incidents',
-      'incident-form': 'incidents',
-      'vehicle-detail': 'vehicles',
+export const useNavStore = create<NavState>()(
+  persist(
+    (set, get) => ({
+      activePage: 'dashboard',
+      pageParams: {},
+      sidebarOpen: true,
+      sidebarCollapsed: true,
+      mobileView: false,
+      dashboardMode: 'd2',
+      setDashboardMode: (mode) => set({ dashboardMode: mode }),
+      hiddenModules: [],
+      toggleModuleVisibility: (moduleId) => set((state) => ({
+        hiddenModules: state.hiddenModules.includes(moduleId)
+          ? state.hiddenModules.filter((id) => id !== moduleId)
+          : [...state.hiddenModules, moduleId],
+      })),
+      workerFormDialogOpen: false,
+      workerFormEditId: null,
+      openWorkerForm: (editId = null) =>
+        set({ workerFormDialogOpen: true, workerFormEditId: editId }),
+      closeWorkerForm: () =>
+        set({ workerFormDialogOpen: false, workerFormEditId: null }),
+      incidentFormDialogOpen: false,
+      openIncidentForm: () => set({ incidentFormDialogOpen: true }),
+      closeIncidentForm: () => set({ incidentFormDialogOpen: false }),
+      setPage: (page, params = {}) => {
+        set({ activePage: page, pageParams: params })
+      },
+      setSidebarOpen: (open) => set({ sidebarOpen: open }),
+      setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
+      setMobileView: (device) => set({ mobileView: device }),
+      toggleMobileView: () => {
+        const current = get().mobileView
+        const next = current ? false : 'iphone-15-pro'
+        // When entering mobile view, close the sidebar overlay so the framed
+        // content is visible. The FAB remains available to re-open it.
+        set(next ? { mobileView: next, sidebarOpen: false } : { mobileView: false })
+      },
+      goBack: () => {
+        const current = get().activePage
+        const backMap: Partial<Record<PageId, PageId>> = {
+          'worker-detail': 'workers',
+          'worker-form': 'workers',
+          'worker-fitness': 'worker-detail',
+          'incident-detail': 'incidents',
+          'incident-form': 'incidents',
+          'vehicle-detail': 'vehicles',
+        }
+        const back = backMap[current]
+        if (back) {
+          set({ activePage: back, pageParams: {} })
+        }
+      },
+    }),
+    {
+      name: 'nav-store',
+      partialize: (state) => ({ hiddenModules: state.hiddenModules }),
     }
-    const back = backMap[current]
-    if (back) {
-      set({ activePage: back, pageParams: {} })
-    }
-  },
-}))
+  )
+)
