@@ -223,13 +223,6 @@ export default function V3View() {
         onExport={handleExport}
       />
 
-      {/* Executive KPI Strip */}
-      <V3KpiRow
-        projects={filteredProjects}
-        month={filters.month}
-        totalPortfolioCount={data.metadata.total_portfolio_projects}
-      />
-
       {/* 5 Main Tabs */}
       <Tabs
         value={activeTab}
@@ -259,8 +252,15 @@ export default function V3View() {
           </TabsTrigger>
         </TabsList>
 
-        {/* Tab 1: Overview */}
-        <TabsContent value="overview" className="m-0 focus-visible:outline-none">
+        {/* Tab 1: Overview - Stat cards appear only here */}
+        <TabsContent value="overview" className="m-0 flex flex-col gap-5 focus-visible:outline-none">
+          {/* Executive Overview Stat Cards */}
+          <V3KpiRow
+            projects={filteredProjects}
+            month={filters.month}
+            totalPortfolioCount={data.metadata.total_portfolio_projects}
+          />
+
           <OverviewTab
             projects={filteredProjects}
             month={filters.month}
