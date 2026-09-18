@@ -128,6 +128,15 @@ export default function V3View() {
     setFilters((prev) => ({ ...prev, ...updates }))
   }
 
+  const currentDomainAgg = useMemo(() => {
+    if (!data?.domain_aggregates) return undefined
+    return (
+      data.domain_aggregates[filters.month] ||
+      data.domain_aggregates[data.metadata.default_month] ||
+      Object.values(data.domain_aggregates)[0]
+    )
+  }, [data, filters.month])
+
   const handleOpenProject = (p: ProjectData) => {
     setSelectedProject(p)
     setDrawerOpen(true)
@@ -266,6 +275,7 @@ export default function V3View() {
             month={filters.month}
             attentionItems={data.attention_required}
             defaulterProjects={data.defaulter_projects}
+            domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
           />
         </TabsContent>
@@ -275,6 +285,7 @@ export default function V3View() {
           <EvmTab
             projects={filteredProjects}
             month={filters.month}
+            domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
           />
         </TabsContent>
@@ -284,6 +295,7 @@ export default function V3View() {
           <OhsTab
             projects={filteredProjects}
             month={filters.month}
+            domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
           />
         </TabsContent>
@@ -294,6 +306,7 @@ export default function V3View() {
             projects={filteredProjects}
             month={filters.month}
             officialItems={data.metadata.official_road_safety_items}
+            domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
           />
         </TabsContent>
@@ -303,6 +316,8 @@ export default function V3View() {
           <SocialTab
             projects={filteredProjects}
             month={filters.month}
+            domainAggregates={currentDomainAgg}
+            metadata={data.metadata}
             onSelectProject={handleOpenProject}
           />
         </TabsContent>
