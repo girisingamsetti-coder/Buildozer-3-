@@ -16,9 +16,17 @@ function traverse(obj, parentFormName, parentProjectName, parentContractor) {
        const status = obj.status || 'IN_PROGRESS';
        const reportingMonth = obj.reportingMonth || 'Unknown Month';
        
+       let kind = 'new-entry';
+       if (currentFormName) {
+         const lower = currentFormName.toLowerCase();
+         if (lower.includes('medical') || lower.includes('health')) kind = 'medical';
+         else if (lower.includes('training')) kind = 'training';
+         else if (lower.includes('incident')) kind = 'incident';
+       }
+       
        activities.push({
           id: `act-${activities.length + 1}`,
-          kind: 'entry',
+          kind: kind,
           title: currentFormName || 'Form Submission',
           subtitle: `Reporting Month: ${reportingMonth} • Status: ${status}`,
           location: currentProjectName || 'Unknown Project',

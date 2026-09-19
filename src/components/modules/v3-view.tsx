@@ -43,7 +43,7 @@ export default function V3View() {
   })
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState('evm')
 
   // Selected Project for Drawer Drilldown
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
@@ -189,20 +189,6 @@ export default function V3View() {
 
   return (
     <div className="flex flex-col gap-4 p-4 md:p-4 pb-12 md:pb-16 h-full overflow-y-auto bg-muted/10">
-      {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b shrink-0">
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleExport}
-            className="h-9 gap-1.5 text-xs font-medium"
-          >
-            <Download className="w-3.5 h-3.5" />
-            Export Monthly Summary
-          </Button>
-        </div>
-      </div>
 
       {/* Global Filter Bar */}
       <V3FilterBar
@@ -221,7 +207,7 @@ export default function V3View() {
         onValueChange={setActiveTab}
         className="flex flex-col gap-4 flex-1"
       >
-        <TabsList className="w-full sm:w-auto self-start grid grid-cols-5 h-10 p-1 bg-muted/60 border">
+        <TabsList className="w-full grid grid-cols-5 h-10 p-1 bg-muted/60 border">
           <TabsTrigger value="overview" className="text-xs font-semibold gap-1.5">
             <LayoutDashboard className="w-3.5 h-3.5" />
             Overview
@@ -240,7 +226,7 @@ export default function V3View() {
           </TabsTrigger>
           <TabsTrigger value="social" className="text-xs font-semibold gap-1.5">
             <Users className="w-3.5 h-3.5 text-indigo-500" />
-            Social & Labor
+            Social
           </TabsTrigger>
         </TabsList>
 

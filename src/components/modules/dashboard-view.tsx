@@ -730,8 +730,16 @@ export default function DashboardView() {
 
   // Activity items
   const rawActivityItems = activityData?.items ?? []
+  let filteredTabItems = rawActivityItems
+  
+  if (activeTab === 'new-entry') {
+    filteredTabItems = rawActivityItems.filter(item => item.kind === 'new-entry')
+  } else if (activeTab !== 'all') {
+    filteredTabItems = rawActivityItems.filter(item => item.kind === activeTab)
+  }
+
   const activityItems = searchQuery.trim()
-    ? rawActivityItems.filter(item => {
+    ? filteredTabItems.filter(item => {
         const q = searchQuery.toLowerCase()
         return (
           item.title?.toLowerCase().includes(q) ||
@@ -739,7 +747,7 @@ export default function DashboardView() {
           item.location?.toLowerCase().includes(q)
         )
       })
-    : rawActivityItems
+    : filteredTabItems
 
   // Tab config
   const tabs = [
