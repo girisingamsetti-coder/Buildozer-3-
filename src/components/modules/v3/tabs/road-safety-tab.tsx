@@ -69,11 +69,11 @@ export function RoadSafetyTab({
   const exceptionProjects = rsAgg?.exceptions || []
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       {/* Top Split: Checklist Mix Doughnut + Monthly Compliance Trend */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Visual A: Doughnut Chart: Checklist Response Mix */}
-        <Card className="border shadow-xs flex flex-col justify-between">
+        <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Car className="w-4 h-4 text-primary" />
@@ -83,7 +83,7 @@ export function RoadSafetyTab({
               Raw response distribution across 15 statutory IRC SP:55-2014 items
             </p>
           </CardHeader>
-          <CardContent className="p-5 flex flex-col gap-4">
+          <CardContent className="p-4 flex flex-col gap-4">
             <div className="flex items-center justify-center py-2">
               {/* SVG Ring Chart */}
               <div className="relative w-40 h-40 flex items-center justify-center">
@@ -159,7 +159,7 @@ export function RoadSafetyTab({
         </Card>
 
         {/* Visual C: Monthly Road Safety Compliance Trend (6 Months) */}
-        <Card className="lg:col-span-2 border shadow-xs flex flex-col justify-between">
+        <Card className="lg:col-span-2 border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -174,7 +174,7 @@ export function RoadSafetyTab({
               Target: ≥ 90%
             </Badge>
           </CardHeader>
-          <CardContent className="p-5 flex flex-col justify-between flex-1">
+          <CardContent className="p-4 flex flex-col justify-between flex-1">
             <div className="grid grid-cols-6 gap-2 h-44 items-end pb-3 pt-6 border-b">
               {trendData.map((t) => {
                 const heightPct = Math.max(10, Math.min(100, t.rate))
@@ -209,7 +209,7 @@ export function RoadSafetyTab({
       </div>
 
       {/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
-      <Card className="border shadow-xs">
+      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -262,7 +262,7 @@ export function RoadSafetyTab({
       </Card>
 
       {/* Visual D: Exception Table: Projects with "No" Responses */}
-      <Card className="border shadow-xs">
+      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -343,7 +343,7 @@ export function RoadSafetyTab({
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-muted-foreground text-xs">
+                    <td colSpan={6} className="p-5 text-center text-muted-foreground text-xs">
                       <CheckCircle2 className="w-7 h-7 text-emerald-500 mx-auto mb-2" />
                       All submitting projects verified compliant with zero "No" responses!
                     </td>

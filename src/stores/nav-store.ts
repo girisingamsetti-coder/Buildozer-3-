@@ -82,7 +82,7 @@ export const pageTitles: Record<PageId, string> = {
   more: 'More Options',
   procurement: 'Procurement',
   'es-forms-2': 'E&S Forms 2',
-  'v3': 'V3',
+  'v3': 'E&S',
 }
 
 export const useNavStore = create<NavState>()(

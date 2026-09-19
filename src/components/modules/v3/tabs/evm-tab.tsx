@@ -63,11 +63,11 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
   const wasteList = evmAgg?.waste || []
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       {/* Top Split: Visual A (Statutory Tracking Stacked Table) + Visual D (Water & Wastewater) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Visual A: Stacked Bar Table: Statutory Compliance Tracking */}
-        <Card className="lg:col-span-2 border shadow-xs">
+        <Card className="lg:col-span-2 border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -79,10 +79,10 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
               </p>
             </div>
             <div className="flex items-center gap-2 text-[10px]">
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-xs bg-emerald-500 inline-block" /> Yes</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-xs bg-rose-500 inline-block" /> No</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-xs bg-amber-500 inline-block" /> Applied</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-xs bg-slate-300 inline-block" /> NA</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-md bg-emerald-500 inline-block" /> Yes</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-md bg-rose-500 inline-block" /> No</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-md bg-amber-500 inline-block" /> Applied</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-md bg-slate-300 inline-block" /> NA</span>
             </div>
           </CardHeader>
           <CardContent className="p-0">
@@ -132,7 +132,7 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
         </Card>
 
         {/* Visual D: Bar Chart / Cards: Water & Wastewater */}
-        <Card className="border shadow-xs flex flex-col justify-between">
+        <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Droplets className="w-4 h-4 text-blue-500" />
@@ -182,7 +182,7 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
       </div>
 
       {/* Middle Split: Visual B (SVG Geographic Map) + Station Inspection Side-Panel */}
-      <Card className="border shadow-xs">
+      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -196,11 +196,11 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
           <div className="flex items-center gap-3 text-xs">
             <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" /> Air (Normal)</span>
             <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" /> Air (Exceedance)</span>
-            <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-blue-500 inline-block rounded-xs" /> Noise (dB)</span>
-            <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-amber-700 inline-block rounded-xs" /> Soil Point</span>
+            <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-blue-500 inline-block rounded-md" /> Noise (dB)</span>
+            <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-amber-700 inline-block rounded-md" /> Soil Point</span>
           </div>
         </CardHeader>
-        <CardContent className="p-4 flex flex-col lg:flex-row gap-5">
+        <CardContent className="p-4 flex flex-col lg:flex-row gap-3">
           {/* SVG Map Canvas */}
           <div className="flex-1 bg-slate-950/5 dark:bg-slate-900/40 rounded-xl border border-border/80 relative min-h-[360px] p-4 flex items-center justify-center overflow-hidden">
             {/* Background Map Contours (Amaravati River & Zone Grid) */}
@@ -375,7 +375,7 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
                 )}
               </div>
             ) : (
-              <div className="p-6 text-center text-muted-foreground text-xs my-auto flex flex-col items-center">
+              <div className="p-4 text-center text-muted-foreground text-xs my-auto flex flex-col items-center">
                 <Info className="w-8 h-8 text-muted-foreground/60 mb-2" />
                 <span className="font-medium text-foreground">Click a Station Node</span>
                 <span className="text-[11px] mt-1">Select any point on the SVG map to view real-time sensor parameters against standards.</span>
@@ -389,9 +389,9 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
       </Card>
 
       {/* Bottom Split: Visual C (Air Quality Latest Table) + Visual E (Waste Management 15 Types) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Visual C: Table: Air Quality Monitoring (Latest Results) with Red Bold ▲ Alerts */}
-        <Card className="border shadow-xs">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Wind className="w-4 h-4 text-primary" />
@@ -443,7 +443,7 @@ export function EvmTab({ projects, month, domainAggregates, onSelectProject }: E
         </Card>
 
         {/* Visual E: Horizontal Bar Chart: Waste Management (15 Types) */}
-        <Card className="border shadow-xs">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Trash2 className="w-4 h-4 text-primary" />

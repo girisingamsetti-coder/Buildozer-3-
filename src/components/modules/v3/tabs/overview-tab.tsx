@@ -58,11 +58,11 @@ export function OverviewTab({
   }, [attentionItems, ruleFilter])
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       {/* Top Split: Cross-Domain Compliance Heatmap + Attention Required Exceptions Feed */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Left 2 Cols: Portfolio Compliance Heatmap Matrix */}
-        <Card className="lg:col-span-2 border shadow-xs">
+        <Card className="lg:col-span-2 border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <CardTitle className="text-sm font-bold tracking-tight text-foreground flex items-center gap-2">
@@ -76,23 +76,23 @@ export function OverviewTab({
             {/* Global Logic Model Status Thresholds Legend */}
             <div className="flex items-center flex-wrap gap-2 text-[10px]">
               <span className="flex items-center gap-1 font-mono">
-                <span className="w-2.5 h-2.5 rounded-xs bg-emerald-500 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-md bg-emerald-500 inline-block" />
                 <strong>C</strong> (Compliant)
               </span>
               <span className="flex items-center gap-1 font-mono">
-                <span className="w-2.5 h-2.5 rounded-xs bg-amber-500 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-md bg-amber-500 inline-block" />
                 <strong>G</strong> (Gaps &lt; 25%)
               </span>
               <span className="flex items-center gap-1 font-mono">
-                <span className="w-2.5 h-2.5 rounded-xs bg-rose-500 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-md bg-rose-500 inline-block" />
                 <strong>NC</strong> (Non-Compliant &ge; 25%)
               </span>
               <span className="flex items-center gap-1 font-mono">
-                <span className="w-2.5 h-2.5 rounded-xs bg-orange-400 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-md bg-orange-400 inline-block" />
                 <strong>NR</strong> (Not Reported &ge; 50%)
               </span>
               <span className="flex items-center gap-1 font-mono">
-                <span className="w-2.5 h-2.5 rounded-xs bg-slate-300 dark:bg-slate-700 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-md bg-slate-300 dark:bg-slate-700 inline-block" />
                 <strong>NS</strong> (Not Submitted)
               </span>
             </div>
@@ -239,7 +239,7 @@ export function OverviewTab({
         </Card>
 
         {/* Right 1 Col: Attention Required / Exception Feed Powered by 9 Rules Engine */}
-        <Card className="border shadow-xs flex flex-col">
+        <Card className="border shadow-xs flex flex-col rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-col gap-2 shrink-0">
             <div className="flex items-center justify-between">
               <div>
@@ -304,7 +304,7 @@ export function OverviewTab({
                 </div>
               ))
             ) : (
-              <div className="p-8 text-center text-muted-foreground text-xs my-auto">
+              <div className="p-5 text-center text-muted-foreground text-xs my-auto">
                 <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
                 No exceptions flagged under this filter for {month}.
               </div>
@@ -314,9 +314,9 @@ export function OverviewTab({
       </div>
 
       {/* Bottom Grid: Month-on-Month Trends & Awaiting Projects Catalog */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* Reporting Rates by Month */}
-        <Card className="border shadow-xs md:col-span-2">
+        <Card className="border shadow-xs md:col-span-2 rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-primary" />
@@ -356,7 +356,7 @@ export function OverviewTab({
         </Card>
 
         {/* 22 Awaiting Onboarding / Submissions */}
-        <Card className="border shadow-xs">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <AlertCircle className="w-4 h-4 text-amber-500" />

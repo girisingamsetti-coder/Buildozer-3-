@@ -408,7 +408,7 @@ function RankedListCard({ title, icon: Icon, items, colorPool = CONTRACTOR_COLOR
         </div>
       </CardHeader>
       <CardContent className="p-0 flex-1 min-h-0">
-        <div className="h-full">
+        <div className="h-full overflow-y-auto no-scrollbar pb-2">
           <div className="space-y-1.5">
             {items.length === 0 ? (
               <p className="text-xs text-slate-400">No data available</p>
@@ -668,20 +668,18 @@ export default function DashboardView() {
 
   if (isLoading || !dash) return <DashboardSkeleton />
 
-  // Stat cards data
-  const maleCount = dash.genderBreakdown?.find(g => g.gender === 'Male')?.count ?? 0
-  const femaleCount = dash.genderBreakdown?.find(g => g.gender === 'Female')?.count ?? 0
-  const otherGender = dash.totalWorkers - maleCount - femaleCount
+  // Stat cards data from e&s-forms.json
+  const maleCount = 64731
+  const femaleCount = 2467
+  const totalWorkforceCount = maleCount + femaleCount
+  const otherGender = 0
+  dash.totalWorkers = totalWorkforceCount
 
-  const trainingTotal = dash.trainingStatusBreakdown?.reduce((s, t) => s + t.count, 0) ?? 0
-  const trainingValid = dash.trainingStatusBreakdown?.find(t => t.status === 'Valid')?.count ?? 0
-  const trainingExpiring = dash.trainingStatusBreakdown?.find(t => t.status === 'ExpiringSoon')?.count ?? 0
-  const trainingExpired = dash.trainingStatusBreakdown?.find(t => t.status === 'Expired')?.count ?? 0
+  const trainingsConducted = dash.trainingStatusBreakdown?.length ?? 0
+  const totalTrainees = dash.trainingStatusBreakdown?.reduce((s, t) => s + t.count, 0) ?? 0
 
-  const medFit = dash.medicalTestBreakdown?.find(m => m.status === 'Fit')?.count ?? 0
-  const medUnfit = dash.medicalTestBreakdown?.find(m => m.status === 'Unfit')?.count ?? 0
-  const medPending = dash.medicalTestBreakdown?.find(m => m.status === 'Pending')?.count ?? 0
-  const medConditional = dash.medicalTestBreakdown?.find(m => m.status === 'Conditional')?.count ?? 0
+  const medicalCampsCount = dash.medicalTestBreakdown?.length ?? 0
+  const medicalTotalCovered = dash.medicalTestBreakdown?.reduce((acc, curr) => acc + curr.count, 0) ?? 0
 
   // Donut data
   const vs = dash.vehicleStats || { total: 0, active: 0, equipmentStatus: { Fit: 0, NeedsRepair: 0, Grounded: 0 }, inspectionStatus: { Passed: 0, Failed: 0, Pending: 0 }, ownership: { Own: 0, Rented: 0 }, approvalStatus: { Approved: 0, Rejected: 0, Pending: 0 } }
@@ -706,19 +704,11 @@ export default function DashboardView() {
   ]
 
   // Camps data
-  const campsPerContractorData = [
-    { name: 'BSR', value: 7 },
-    { name: 'NCC', value: 11 },
-    { name: 'L&T', value: 5 },
-    { name: 'MEIL', value: 9 },
-    { name: 'RVR', value: 6 },
-    { name: 'AVR', value: 8 },
-    { name: 'GMR', value: 4 },
-    { name: 'SEC', value: 10 },
-    { name: 'JKC', value: 3 },
-    { name: 'SPC', value: 12 },
-    { name: 'DVR', value: 2 },
-  ]
+  const campsPerContractorData = (dash.campsPerContractor ?? []).map(c => ({
+    name: c.name,
+    value: c.camps,
+  }))
+
 
   const workforcePerCampData = (dash.workforcePerCamp ?? []).slice(0, 27).map(c => ({
     name: c.name.replace(/\s+Camp\s*-\s*/i, ' - '),
@@ -958,10 +948,38 @@ export default function DashboardView() {
               style={isMobile ? {} : { gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', gridColumn: '1', gridRow: '1' }}
             >
               <StatCard title="Total Workforce" icon={Users} iconBg="bg-teal-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Male vs. Female" segments={[{ label: 'Male', value: maleCount, color: DONUT_COLORS.male }, { label: 'Female', value: femaleCount, color: DONUT_COLORS.female }, ...(otherGender > 0 ? [{ label: 'Other', value: otherGender, color: '#94a3b8' }] : [])]} />
-              <StatCard title="Skill Mix" icon={Wrench} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(dash.skilledWorkers + dash.unskilledWorkers)} unit="workers" subtitle="Skilled vs Unskilled" segments={[{ label: 'Skilled', value: dash.skilledWorkers, color: DONUT_COLORS.skilled }, { label: 'Unskilled', value: dash.unskilledWorkers, color: DONUT_COLORS.unskilled }]} />
-              <StatCard title="Age Distribution" icon={Activity} iconBg="bg-purple-500" iconColor="text-white" bigNumber={String(dash.totalWorkers)} unit="workers" subtitle="Workforce by age band" segments={(dash.ageDistribution ?? []).map((a, i) => ({ label: a.bucket, value: a.count, color: [DONUT_COLORS.age1, DONUT_COLORS.age2, DONUT_COLORS.age3, DONUT_COLORS.age4][i] || '#94a3b8' }))} />
-              <StatCard title="Medical Tests" icon={HeartPulse} iconBg="bg-emerald-500" iconColor="text-white" bigNumber={String(medFit + medUnfit + medPending + medConditional)} unit="tests" subtitle="Fitness outcome" segments={[{ label: 'Fit', value: medFit, color: DONUT_COLORS.medicalFit }, { label: 'Unfit', value: medUnfit, color: DONUT_COLORS.medicalUnfit }, { label: 'Conditional', value: medConditional, color: DONUT_COLORS.medicalConditional }].filter(s => s.value > 0)} />
-              <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(trainingTotal)} unit="certificates" subtitle="Certificate validity" segments={[{ label: 'Valid', value: trainingValid, color: DONUT_COLORS.trainingValid }, { label: 'Expiring Soon', value: trainingExpiring, color: DONUT_COLORS.trainingExpiring }, { label: 'Expired', value: trainingExpired, color: DONUT_COLORS.trainingExpired }].filter(s => s.value > 0)} />
+              <StatCard 
+                title="Skill Mix" 
+                icon={Wrench} 
+                iconBg="bg-orange-500" 
+                iconColor="text-white" 
+                bigNumber={String(209 + 23334 + 6881 + 36774)} 
+                unit="workers" 
+                subtitle="Workforce by skill level" 
+                segments={[
+                  { label: 'Highly Skilled', value: 209, color: '#f59e0b' },
+                  { label: 'Skilled', value: 23334, color: '#3b82f6' },
+                  { label: 'Semi Skilled', value: 6881, color: '#8b5cf6' },
+                  { label: 'Unskilled', value: 36774, color: '#ec4899' }
+                ]} 
+              />
+              <StatCard 
+                title="Age Distribution" 
+                icon={Activity} 
+                iconBg="bg-purple-500" 
+                iconColor="text-white" 
+                bigNumber={String(20450 + 33161 + 13587)} 
+                unit="workers" 
+                subtitle="Workforce by age band" 
+                segments={[
+                  { label: '14-18', value: 0, color: '#f59e0b' },
+                  { label: '18-25', value: 20450, color: '#3b82f6' },
+                  { label: '25-50', value: 33161, color: '#8b5cf6' },
+                  { label: 'Above 50', value: 13587, color: '#ec4899' }
+                ]} 
+              />
+              <StatCard title="Medical" icon={HeartPulse} iconBg="bg-emerald-500" iconColor="text-white" bigNumber={String(medicalCampsCount)} unit="camps" subtitle="Total camps conducted" segments={[{ label: 'Male', value: dash.medicalGenderBreakdown?.male || 0, color: DONUT_COLORS.male }, { label: 'Female', value: dash.medicalGenderBreakdown?.female || 0, color: DONUT_COLORS.female }].filter(s => s.value > 0)} />
+              <StatCard title="Training Status" icon={GraduationCap} iconBg="bg-orange-500" iconColor="text-white" bigNumber={String(trainingsConducted)} unit="trainings" subtitle="Total trainings conducted" segments={[{ label: 'Male Trainees', value: dash.trainingGenderBreakdown?.male || 0, color: DONUT_COLORS.male }, { label: 'Female Trainees', value: dash.trainingGenderBreakdown?.female || 0, color: DONUT_COLORS.female }].filter(s => s.value > 0)} />
             </motion.div>
 
         {/* Row 2: 4 Donut chart cards */}

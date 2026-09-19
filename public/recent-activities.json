@@ -1,0 +1,605 @@
+{
+  "items": [
+    {
+      "id": "act-319",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N3A and N3B Road",
+      "timestamp": "2026-09-18T04:38:39.353Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-954",
+      "kind": "entry",
+      "title": "OHS -  MONITORING",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N5 Road",
+      "timestamp": "2026-09-17T09:05:47.523Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2297",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-17T03:14:10.948Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1598",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-17T03:13:27.651Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1947",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-17T03:08:12.928Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2633",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-17T03:07:12.287Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2732",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E11 Road",
+      "timestamp": "2026-09-16T13:22:11.446Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2632",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-16T12:53:29.373Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1789",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Water Treatment Plant (WTP)",
+      "timestamp": "2026-09-16T11:58:55.021Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2481",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Water Treatment Plant (WTP)",
+      "timestamp": "2026-09-16T11:58:23.688Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2152",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Water Treatment Plant (WTP)",
+      "timestamp": "2026-09-16T11:57:50.477Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2836",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Water Treatment Plant (WTP)",
+      "timestamp": "2026-09-16T11:56:17.810Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-147",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "GOs and Group D employees - External Infra",
+      "timestamp": "2026-09-16T11:53:58.622Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2288",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 5D",
+      "timestamp": "2026-09-16T11:50:16.904Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1938",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 5D",
+      "timestamp": "2026-09-16T11:48:31.324Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2624",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 5D",
+      "timestamp": "2026-09-16T11:45:36.509Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1589",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 5D",
+      "timestamp": "2026-09-16T11:44:48.956Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1163",
+      "kind": "entry",
+      "title": "Road Safety",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 12",
+      "timestamp": "2026-09-16T09:48:29.411Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2785",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E10 Road",
+      "timestamp": "2026-09-16T09:39:57.798Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-634",
+      "kind": "entry",
+      "title": "OHS -  MONITORING",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 12",
+      "timestamp": "2026-09-16T09:38:53.550Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2433",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E10 Road",
+      "timestamp": "2026-09-16T09:38:05.959Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1740",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E10 Road",
+      "timestamp": "2026-09-16T09:37:05.278Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2105",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E10 Road",
+      "timestamp": "2026-09-16T09:35:49.436Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2077",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N6 Utilities",
+      "timestamp": "2026-09-16T09:32:51.738Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2755",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N6 Utilities",
+      "timestamp": "2026-09-16T09:27:10.059Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2408",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N6 Utilities",
+      "timestamp": "2026-09-16T09:24:27.806Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1709",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N6 Utilities",
+      "timestamp": "2026-09-16T09:21:32.957Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2448",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N8 Road",
+      "timestamp": "2026-09-16T08:17:39.523Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2053",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E11 Road",
+      "timestamp": "2026-09-16T08:14:59.097Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1686",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E11 Road",
+      "timestamp": "2026-09-16T08:07:48.717Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1756",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N8 Road",
+      "timestamp": "2026-09-16T08:05:38.600Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2386",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E11 Road",
+      "timestamp": "2026-09-16T08:04:59.949Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2120",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N8 Road",
+      "timestamp": "2026-09-16T07:41:55.189Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2801",
+      "kind": "entry",
+      "title": "Social Safeguard Compliance for MPR",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N8 Road",
+      "timestamp": "2026-09-16T07:24:25.331Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-442",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "GOs and Group D employees - Housing",
+      "timestamp": "2026-09-16T06:35:15.805Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-165",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Tower 1 and 2 - Structure",
+      "timestamp": "2026-09-16T05:35:18.589Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1221",
+      "kind": "entry",
+      "title": "Road Safety",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Bungalows for Principal Secretaries & Secretaries",
+      "timestamp": "2026-09-16T05:01:13.696Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-725",
+      "kind": "entry",
+      "title": "OHS -  MONITORING",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Bungalows for Principal Secretaries & Secretaries",
+      "timestamp": "2026-09-16T04:09:58.979Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2296",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-16T04:04:55.670Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1392",
+      "kind": "entry",
+      "title": "Road Safety",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E2 Road",
+      "timestamp": "2026-09-16T04:00:11.877Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1597",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-16T03:59:09.395Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1946",
+      "kind": "entry",
+      "title": "Labour Law Compliance",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Zone - 10",
+      "timestamp": "2026-09-16T03:58:07.468Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-166",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "Tower 1 and 2 - Structure",
+      "timestamp": "2026-09-15T13:05:25.931Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-363",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "N7 Road",
+      "timestamp": "2026-09-15T10:14:55.345Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1391",
+      "kind": "entry",
+      "title": "Road Safety",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "E2 Road",
+      "timestamp": "2026-09-15T10:11:50.941Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-337",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "E2 Road",
+      "timestamp": "2026-09-15T09:55:23.152Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-164",
+      "kind": "entry",
+      "title": "Environmental Compliance Monitoring Form",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "Tower 1 and 2 - Structure",
+      "timestamp": "2026-09-15T07:28:36.273Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1106",
+      "kind": "entry",
+      "title": "OHS -  MONITORING",
+      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
+      "location": "GOs and Group D employees - Housing",
+      "timestamp": "2026-09-15T05:17:46.047Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-1667",
+      "kind": "entry",
+      "title": "Gender",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N11 Road",
+      "timestamp": "2026-09-15T04:21:42.228Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    },
+    {
+      "id": "act-2367",
+      "kind": "entry",
+      "title": "Skill Training and Employment",
+      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
+      "location": "N11 Road",
+      "timestamp": "2026-09-15T04:19:52.038Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Unknown Contractor"
+      }
+    }
+  ],
+  "count": 50
+}

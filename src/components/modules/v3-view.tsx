@@ -179,7 +179,7 @@ export default function V3View() {
 
   if (error || !data) {
     return (
-      <div className="p-8 text-center border rounded-xl bg-destructive/5 text-destructive max-w-lg mx-auto my-12">
+      <div className="p-5 text-center border rounded-xl bg-destructive/5 text-destructive max-w-lg mx-auto my-12">
         <AlertCircle className="w-10 h-10 mx-auto mb-2" />
         <h3 className="text-base font-semibold">Error Loading Compliance Data</h3>
         <p className="text-xs mt-1 text-muted-foreground">{error || 'Data could not be retrieved.'}</p>
@@ -188,26 +188,9 @@ export default function V3View() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 md:p-6 min-h-screen bg-muted/10">
+    <div className="flex flex-col gap-4 p-4 md:p-4 pb-12 md:pb-16 h-full overflow-y-auto bg-muted/10">
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b shrink-0">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <Badge className="bg-primary/15 text-primary border-primary/30 text-[11px] font-semibold">
-              APCRDA / ADCL E&S Monitoring System
-            </Badge>
-            <Badge variant="outline" className="text-[11px] text-muted-foreground">
-              94 Active Infrastructure Packages
-            </Badge>
-          </div>
-          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
-            Amaravati Environmental & Social Compliance Monitoring Dashboard
-          </h1>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Real-time compliance intelligence across Road Safety, OHS, Environment, and Social Safeguards
-          </p>
-        </div>
-
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
@@ -262,7 +245,7 @@ export default function V3View() {
         </TabsList>
 
         {/* Tab 1: Overview - Stat cards appear only here */}
-        <TabsContent value="overview" className="m-0 flex flex-col gap-5 focus-visible:outline-none">
+        <TabsContent value="overview" className="m-0 flex flex-col gap-3 focus-visible:outline-none">
           {/* Executive Overview Stat Cards */}
           <V3KpiRow
             projects={filteredProjects}

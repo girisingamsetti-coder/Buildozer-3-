@@ -81,11 +81,11 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       {/* Top Split: Visual A (Compliance by OHS Group) + Visual E (Policies & Plans Availability) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Visual A: Horizontal Bar Chart: Compliance by OHS Requirement Group */}
-        <Card className="border shadow-xs">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <HardHat className="w-4 h-4 text-primary" />
@@ -133,7 +133,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
         </Card>
 
         {/* Visual E: Horizontal Bar Chart: OHS Policies & Plans Availability */}
-        <Card className="border shadow-xs">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <FileCheck className="w-4 h-4 text-primary" />
@@ -183,9 +183,9 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
       </div>
 
       {/* Middle Split: Visual B (OHS Audits Table) + Visual C (Trainings per Frequency Table) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Visual B: Table: OHS Audits Conducted This Month */}
-        <Card className="border shadow-xs">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -242,7 +242,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
         </Card>
 
         {/* Visual C: Table: Trainings Conducted (per frequency) */}
-        <Card className="border shadow-xs">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -293,7 +293,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
       </div>
 
       {/* Visual D: Table: Near Miss / Incident Report */}
-      <Card className="border shadow-xs">
+      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">

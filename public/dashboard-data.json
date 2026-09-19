@@ -1,0 +1,1937 @@
+{
+  "vehicleStats": {
+    "total": 1240,
+    "active": 1120,
+    "equipmentStatus": {
+      "Fit": 850,
+      "NeedsRepair": 290,
+      "Grounded": 100
+    },
+    "inspectionStatus": {
+      "Passed": 920,
+      "Failed": 180,
+      "Pending": 140
+    },
+    "ownership": {
+      "Own": 450,
+      "Rented": 790
+    },
+    "approvalStatus": {
+      "Approved": 980,
+      "Rejected": 110,
+      "Pending": 150
+    }
+  },
+  "medicalTestBreakdown": [
+    {
+      "status": "2026-04-06T07:52:48.156Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-09T09:48:09.162Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-20T11:35:29.961Z",
+      "count": 0
+    },
+    {
+      "status": "2026-01-08T18:30:00.000Z",
+      "count": 810
+    },
+    {
+      "status": "2026-04-03T03:49:08.194Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-19T12:19:33.370Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-15T10:00:51.033Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-04T18:30:00.000Z",
+      "count": 2018
+    },
+    {
+      "status": "2026-04-03T08:33:05.272Z",
+      "count": 52
+    },
+    {
+      "status": "2026-02-22T18:30:00.000Z",
+      "count": 36
+    },
+    {
+      "status": "2026-04-03T09:09:51.303Z",
+      "count": 72
+    },
+    {
+      "status": "2026-04-18T18:30:00.000Z",
+      "count": 17
+    },
+    {
+      "status": "2026-05-14T18:30:00.000Z",
+      "count": 30
+    },
+    {
+      "status": "2026-06-19T09:55:31.125Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-27T18:30:00.000Z",
+      "count": 43
+    },
+    {
+      "status": "2026-06-16T18:30:00.000Z",
+      "count": 569
+    },
+    {
+      "status": "2026-07-09T18:30:00.000Z",
+      "count": 17
+    },
+    {
+      "status": "2026-03-25T11:04:06.240Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-03T12:51:53.818Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-05T05:59:01.494Z",
+      "count": 15
+    },
+    {
+      "status": "2026-07-28T18:30:00.000Z",
+      "count": 17
+    },
+    {
+      "status": "2026-08-03T12:51:08.255Z",
+      "count": 0
+    },
+    {
+      "status": "2026-01-07T18:30:00.000Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-07T07:50:56.122Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-16T05:32:42.967Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-15T10:38:06.114Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-22T12:07:24.688Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-31T12:03:20.218Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-06T18:30:00.000Z",
+      "count": 45
+    },
+    {
+      "status": "2026-04-04T18:30:00.000Z",
+      "count": 6
+    },
+    {
+      "status": "2026-05-06T07:17:21.795Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-05T18:30:00.000Z",
+      "count": 5
+    },
+    {
+      "status": "2026-06-13T11:00:08.587Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-09T18:30:00.000Z",
+      "count": 534
+    },
+    {
+      "status": "2026-04-01T10:22:54.441Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-13T12:27:02.263Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-14T07:55:59.150Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-15T05:52:55.624Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-05T05:01:03.593Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-01T16:10:35.368Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-15T12:24:41.826Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-29T18:30:00.000Z",
+      "count": 73
+    },
+    {
+      "status": "2026-05-18T18:30:00.000Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-16T09:59:15.911Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-10T18:30:00.000Z",
+      "count": 369
+    },
+    {
+      "status": "2026-07-08T18:30:00.000Z",
+      "count": 28
+    },
+    {
+      "status": "2026-08-01T03:51:42.487Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-11T18:30:00.000Z",
+      "count": 245
+    },
+    {
+      "status": "2026-09-05T09:10:26.549Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-07T17:20:21.793Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-09T11:58:57.987Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-12T14:16:17.672Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-12T14:16:17.673Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-14T03:16:30.696Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-25T03:26:07.902Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-18T06:33:10.844Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-12T18:30:00.000Z",
+      "count": 108
+    },
+    {
+      "status": "2026-05-13T18:30:00.000Z",
+      "count": 68
+    },
+    {
+      "status": "2026-07-10T05:08:24.432Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-15T18:30:00.000Z",
+      "count": 51
+    },
+    {
+      "status": "2026-06-11T07:35:48.439Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-12T10:58:12.840Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-01T08:42:09.314Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-07T18:30:00.000Z",
+      "count": 32
+    },
+    {
+      "status": "2026-04-03T04:51:01.531Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-11T05:41:17.357Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-14T13:42:34.908Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-05T11:35:00.372Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-09T12:22:29.328Z",
+      "count": 0
+    },
+    {
+      "status": "2026-01-21T18:30:00.000Z",
+      "count": 300
+    },
+    {
+      "status": "2026-04-10T03:42:09.737Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-09T07:13:09.607Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-01T08:37:06.063Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-18T18:30:00.000Z",
+      "count": 8
+    },
+    {
+      "status": "2026-04-01T05:09:43.654Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-14T09:54:06.184Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-22T07:35:16.915Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-15T06:53:20.347Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-03T18:30:00.000Z",
+      "count": 39
+    },
+    {
+      "status": "2026-08-04T10:10:49.400Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-16T12:52:23.941Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-21T08:29:54.014Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-04T07:23:58.142Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-13T03:35:56.890Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-20T18:30:00.000Z",
+      "count": 134
+    },
+    {
+      "status": "2026-03-24T13:12:45.552Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-27T14:27:48.554Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-17T18:30:00.000Z",
+      "count": 70
+    },
+    {
+      "status": "2026-04-05T02:56:47.453Z",
+      "count": 45
+    },
+    {
+      "status": "2026-04-14T18:30:00.000Z",
+      "count": 25
+    },
+    {
+      "status": "2026-01-11T18:30:00.000Z",
+      "count": 606
+    },
+    {
+      "status": "2026-06-18T08:36:52.604Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-26T18:30:00.000Z",
+      "count": 15
+    },
+    {
+      "status": "2026-03-27T05:35:52.882Z",
+      "count": 0
+    },
+    {
+      "status": "2026-01-29T18:30:00.000Z",
+      "count": 16
+    },
+    {
+      "status": "2026-03-28T05:42:09.386Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-12T09:09:49.456Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-28T07:08:05.115Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-29T04:50:51.521Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-08T07:22:25.668Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-30T05:19:50.321Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-23T10:04:56.244Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-05T12:38:58.493Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-05T12:14:38.886Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-14T11:07:25.898Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-22T10:13:29.450Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-28T03:34:32.632Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-30T18:30:00.000Z",
+      "count": 25
+    },
+    {
+      "status": "2026-03-25T04:09:15.777Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-06T18:30:00.000Z",
+      "count": 115
+    },
+    {
+      "status": "2026-04-01T10:51:42.860Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-08T07:07:11.292Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-05T13:21:29.649Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-03T11:02:37.221Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-13T04:37:50.696Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-21T04:35:26.543Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-14T03:37:22.771Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-17T04:35:24.812Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-24T05:36:44.077Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-05T09:21:40.400Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-05T08:26:28.606Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-25T06:01:24.544Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-20T05:46:29.674Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-20T05:45:04.322Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-20T05:49:10.850Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-07T03:31:37.436Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-30T05:24:21.482Z",
+      "count": 35
+    },
+    {
+      "status": "2026-07-22T07:13:04.235Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-22T05:26:45.257Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-22T05:26:45.258Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-29T18:30:00.000Z",
+      "count": 15
+    },
+    {
+      "status": "2026-04-01T12:35:54.225Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-01T12:52:52.945Z",
+      "count": 0
+    },
+    {
+      "status": "2025-12-31T18:30:00.000Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-23T06:35:06.450Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-04T20:09:20.861Z",
+      "count": 59
+    },
+    {
+      "status": "2026-04-28T03:05:55.300Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-28T06:48:02.820Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-03T01:29:03.721Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-03T12:37:48.440Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-01T05:53:48.691Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-01T10:57:44.051Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-04T06:14:49.063Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-26T04:05:59.919Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-24T03:30:30.109Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-24T09:29:21.189Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-10T18:30:00.000Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-01T12:49:50.809Z",
+      "count": 0
+    },
+    {
+      "status": "2025-01-13T18:30:00.000Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-04T07:03:45.214Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-07T07:45:37.958Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-27T08:20:40.307Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-27T13:46:52.827Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-03T03:59:17.264Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-08T03:51:12.310Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-12T05:39:00.365Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-05T18:30:00.000Z",
+      "count": 17
+    },
+    {
+      "status": "2026-07-06T18:30:00.000Z",
+      "count": 286
+    },
+    {
+      "status": "2026-06-29T06:30:11.735Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-14T09:25:49.557Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-04T11:32:13.627Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-04T11:40:00.221Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-31T05:25:43.959Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-31T05:15:25.588Z",
+      "count": 36
+    },
+    {
+      "status": "2026-04-04T03:32:04.351Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-29T05:45:49.766Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-29T11:39:10.331Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-15T18:30:00.000Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-04T15:45:38.938Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-04T16:32:59.068Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-07T06:43:16.369Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-28T07:08:40.583Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-03T13:25:09.326Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-04T05:26:59.070Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-01T08:48:11.563Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-25T04:42:35.574Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-16T05:11:17.384Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-16T06:07:59.414Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-20T07:59:29.412Z",
+      "count": 0
+    },
+    {
+      "status": "2026-09-07T04:49:49.657Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-09T13:40:46.524Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-01T18:30:00.000Z",
+      "count": 135
+    },
+    {
+      "status": "2026-02-25T18:30:00.000Z",
+      "count": 142
+    },
+    {
+      "status": "2026-04-08T07:24:25.235Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-19T08:52:12.294Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-09T18:30:00.000Z",
+      "count": 20
+    },
+    {
+      "status": "2026-08-03T06:46:01.909Z",
+      "count": 0
+    },
+    {
+      "status": "2025-01-08T18:30:00.000Z",
+      "count": 53
+    },
+    {
+      "status": "2026-08-22T03:50:57.464Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-05T18:30:00.000Z",
+      "count": 312
+    },
+    {
+      "status": "2026-09-10T08:32:56.158Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-01T07:27:48.320Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-24T04:35:13.642Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-13T05:31:05.663Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-05T04:58:40.164Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-23T06:42:50.478Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-27T15:01:43.666Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-28T10:23:11.795Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-28T11:24:16.937Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-22T12:13:11.393Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-27T04:40:48.418Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-27T05:34:46.154Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-27T06:33:33.005Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-12T18:30:00.000Z",
+      "count": 194
+    },
+    {
+      "status": "2026-04-03T06:05:47.370Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-13T18:30:00.000Z",
+      "count": 48
+    },
+    {
+      "status": "2026-04-07T12:48:49.246Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-06T12:18:17.363Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-03T12:13:06.289Z",
+      "count": 288
+    },
+    {
+      "status": "2026-05-25T07:32:21.057Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-11T05:50:53.513Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-15T09:09:38.470Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-10T04:02:01.108Z",
+      "count": 0
+    },
+    {
+      "status": "2026-01-30T18:30:00.000Z",
+      "count": 295
+    },
+    {
+      "status": "2026-06-17T11:29:25.628Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-17T11:29:25.629Z",
+      "count": 0
+    },
+    {
+      "status": "2026-05-30T13:47:19.937Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-08T08:50:38.345Z",
+      "count": 0
+    },
+    {
+      "status": "2026-07-14T17:16:01.116Z",
+      "count": 0
+    },
+    {
+      "status": "2026-08-09T06:41:51.528Z",
+      "count": 0
+    },
+    {
+      "status": "2026-03-30T18:30:00.000Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-13T13:56:50.996Z",
+      "count": 0
+    },
+    {
+      "status": "2026-04-21T18:30:00.000Z",
+      "count": 25
+    },
+    {
+      "status": "2026-06-19T10:44:11.929Z",
+      "count": 0
+    },
+    {
+      "status": "2026-06-28T18:30:00.000Z",
+      "count": 51
+    },
+    {
+      "status": "2026-02-12T07:36:23.142Z",
+      "count": 0
+    },
+    {
+      "status": "2025-12-04T18:30:00.000Z",
+      "count": 102
+    },
+    {
+      "status": "2026-02-12T08:57:52.157Z",
+      "count": 0
+    },
+    {
+      "status": "2026-01-01T18:30:00.000Z",
+      "count": 27
+    },
+    {
+      "status": "2026-02-11T11:33:39.972Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-13T09:57:20.445Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-12T13:21:05.448Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-12T06:22:58.739Z",
+      "count": 0
+    },
+    {
+      "status": "2026-02-13T07:00:23.061Z",
+      "count": 0
+    },
+    {
+      "status": "2025-11-26T18:30:00.000Z",
+      "count": 109
+    },
+    {
+      "status": "2025-12-24T18:30:00.000Z",
+      "count": 116
+    }
+  ],
+  "medicalGenderBreakdown": {
+    "male": 7746,
+    "female": 1177
+  },
+  "trainingStatusBreakdown": [
+    {
+      "status": "Waste Management (Segregation of Scrap Material)  ",
+      "count": 10
+    },
+    {
+      "status": "Water Management (Drinking & Row Water)",
+      "count": 10
+    },
+    {
+      "status": "Food Waste ",
+      "count": 10
+    },
+    {
+      "status": "Use of Nose mask",
+      "count": 12
+    },
+    {
+      "status": "Use Of color Code Dustbin (New Joined worker)",
+      "count": 14
+    },
+    {
+      "status": "Environment Management System (Newly Joined Staff)",
+      "count": 12
+    },
+    {
+      "status": "Handling and Storage Of C&D waste ",
+      "count": 17
+    },
+    {
+      "status": "Environment Awareness (Newly Joined Worker) ",
+      "count": 11
+    },
+    {
+      "status": "Dust Control and Precaution",
+      "count": 10
+    },
+    {
+      "status": "Use of Dustbins ",
+      "count": 8
+    },
+    {
+      "status": "Health and Hygiene",
+      "count": 12
+    },
+    {
+      "status": "Waste management ",
+      "count": 8
+    },
+    {
+      "status": "Bio-Medical waste handling To First aider  ",
+      "count": 1
+    },
+    {
+      "status": "High Noise Awareness ",
+      "count": 10
+    },
+    {
+      "status": ".Health and Hygiene Training Among the Housekeeping Staff ",
+      "count": 10
+    },
+    {
+      "status": "Site Environment Awareness (For newly Joined worker",
+      "count": 10
+    },
+    {
+      "status": "PPE`s (For newly Joined worker) ",
+      "count": 7
+    },
+    {
+      "status": " Avoid water Logging your working location  ",
+      "count": 13
+    },
+    {
+      "status": "Uses of water (Drinking Water Raw Water",
+      "count": 18
+    },
+    {
+      "status": "waste management",
+      "count": 40
+    },
+    {
+      "status": "pollution control",
+      "count": 35
+    },
+    {
+      "status": "environment  awareness.",
+      "count": 35
+    },
+    {
+      "status": "Pollution control measures at site.",
+      "count": 30
+    },
+    {
+      "status": "House Keeping & Plastic Waste",
+      "count": 8
+    },
+    {
+      "status": "Waste Management",
+      "count": 45
+    },
+    {
+      "status": "Solid Waste Management /Food Waste Management/Environment Awareness /Housekeeping ",
+      "count": 6
+    },
+    {
+      "status": "waste management at camp & site",
+      "count": 35
+    },
+    {
+      "status": "Environment Awareness ",
+      "count": 12
+    },
+    {
+      "status": "Pollution Prevention & Control",
+      "count": 15
+    },
+    {
+      "status": "Noise and Vibration Management",
+      "count": 17
+    },
+    {
+      "status": "Waste management at site.",
+      "count": 30
+    },
+    {
+      "status": "Air, noise and water pollution",
+      "count": 40
+    },
+    {
+      "status": "Waste Management ",
+      "count": 130
+    },
+    {
+      "status": "Waste Management  ",
+      "count": 5
+    },
+    {
+      "status": "Concrete Waste Management ",
+      "count": 22
+    },
+    {
+      "status": "Food waste ,  Waste Management ",
+      "count": 18
+    },
+    {
+      "status": "Safe handling and disposal of hazardous waste such as oil, grease, batteries, and chemical containers as per instructions.",
+      "count": 18
+    },
+    {
+      "status": "Avoid unnecessary use of horns and loud equipment, especially near residential or camp areas.",
+      "count": 10
+    },
+    {
+      "status": "Dispose of hazardous waste such as batteries, oils, and chemicals through authorized waste handlers only\nMaintain good housekeeping practices at worksites to prevent accidents, fire hazards, and environmental pollution.\n3.Ensure proper ventilation in working areas to reduce exposure to harmful fumes and dust.\n4.Follow safe lifting and material handling procedures to avoid injuries and workplace accidents\n",
+      "count": 13
+    },
+    {
+      "status": "Maintain good housekeeping practices at worksites to prevent accidents, fire hazards, and environmental pollution.\n3.Ensure proper ventilation in working areas to reduce exposure to harmful fumes and dust.\n4.Follow safe lifting and material handling procedures to avoid injuries and workplace accidents\n",
+      "count": 6
+    },
+    {
+      "status": "1.Dispose of hazardous waste such as batteries, oils, and chemicals through authorized waste handlers only.\n2.Maintain good housekeeping practices at worksites to prevent accidents, fire hazards, and environmental pollution.\n3.Ensure proper ventilation in working areas to reduce exposure to harmful fumes and dust.\n4.Follow safe lifting and material handling procedures to avoid injuries and workplace accidents\n",
+      "count": 23
+    },
+    {
+      "status": "Organic Compost utilization",
+      "count": 3
+    },
+    {
+      "status": "Environmental Impact Assessment",
+      "count": 12
+    },
+    {
+      "status": "Environmental Awareness",
+      "count": 8
+    },
+    {
+      "status": "Dust Suppression and Dust Generation",
+      "count": 8
+    },
+    {
+      "status": "Top Soil Preservation and Importance of Trees",
+      "count": 9
+    },
+    {
+      "status": "Health and personal Hygiene ",
+      "count": 13
+    },
+    {
+      "status": "Env. Training  ",
+      "count": 10
+    },
+    {
+      "status": "PPE ",
+      "count": 12
+    },
+    {
+      "status": "Housekeeping ",
+      "count": 10
+    },
+    {
+      "status": "Air Pollution & Dust Control Measures",
+      "count": 8
+    },
+    {
+      "status": "Air, Noise pollution awareness and control measures",
+      "count": 13
+    },
+    {
+      "status": "Use marked waste bins and avoid open dumping or burning of waste ",
+      "count": 12
+    },
+    {
+      "status": "Avoid washing vehicles or equipment near rivers, ponds, or drains to prevent water pollution.",
+      "count": 9
+    },
+    {
+      "status": "Waste management and Land pollution awareness",
+      "count": 7
+    },
+    {
+      "status": "Maintain good housekeeping practices at worksites to prevent accidents, fire hazards, and environmental pollution.",
+      "count": 39
+    },
+    {
+      "status": "Do not discharge wastewater, chemicals, or hazardous materials into open land or water bodies.",
+      "count": 27
+    },
+    {
+      "status": "Protect nearby vegetation and avoid cutting trees or damaging plants without approval",
+      "count": 10
+    },
+    {
+      "status": "Avoid unnecessary use of horns and loud equipment, especially near residential or camp areas",
+      "count": 6
+    },
+    {
+      "status": "Switch off lights, fans, machinery, and equipment when not in use to conserve energy.",
+      "count": 14
+    },
+    {
+      "status": "Waste management Training",
+      "count": 30
+    },
+    {
+      "status": "Dust Mitigation Training",
+      "count": 40
+    },
+    {
+      "status": "Topics of discussion :\n\tProper segregation of waste at the site\n\tUse of PPE (Personal Protective Equipment) for safety \n\tHousekeeping & cleanliness at the site\n",
+      "count": 35
+    },
+    {
+      "status": "House keeping ",
+      "count": 40
+    },
+    {
+      "status": "Labour Camp Housekeeping",
+      "count": 12
+    },
+    {
+      "status": "Dry and wet waste",
+      "count": 24
+    },
+    {
+      "status": "SEGREGATION LABELLING AND STORAGE HANDLING",
+      "count": 12
+    },
+    {
+      "status": "Record maintanance",
+      "count": 3
+    },
+    {
+      "status": "Discussion MPRs",
+      "count": 4
+    },
+    {
+      "status": "Solid Waste Management",
+      "count": 4
+    },
+    {
+      "status": "Bio Diversity",
+      "count": 6
+    },
+    {
+      "status": "Dust pollution & noise level",
+      "count": 5
+    },
+    {
+      "status": "Resource efficiency",
+      "count": 6
+    },
+    {
+      "status": "Solid waste Management",
+      "count": 5
+    },
+    {
+      "status": "Machenery Waste Handling",
+      "count": 4
+    },
+    {
+      "status": "Dust control  & Noise pollution",
+      "count": 8
+    },
+    {
+      "status": "Solid waste management",
+      "count": 6
+    },
+    {
+      "status": "Machinery waste handling",
+      "count": 4
+    },
+    {
+      "status": "    Machinery waste handling",
+      "count": 4
+    },
+    {
+      "status": "Dust suppression & Noise pollution",
+      "count": 5
+    },
+    {
+      "status": "Maintain records ",
+      "count": 4
+    },
+    {
+      "status": "SEGRATION OF WASTE METRIALS ",
+      "count": 10
+    },
+    {
+      "status": "Dispose of hazardous waste such as batteries, oils, and chemicals through authorized waste handlers only.",
+      "count": 11
+    },
+    {
+      "status": "Maintain good housekeeping practices at worksites to prevent accidents, fire hazards, and environmental pollution",
+      "count": 8
+    },
+    {
+      "status": "Maintain proper drainage systems to prevent water stagnation and mosquito breeding.",
+      "count": 13
+    },
+    {
+      "status": "Ensure proper ventilation in working areas to reduce exposure to harmful fumes and dust.",
+      "count": 8
+    },
+    {
+      "status": "Dispose of hazardous waste such as batteries, oils, and chemicals through authorized waste handlers only",
+      "count": 6
+    },
+    {
+      "status": "1.Train on maintaining machinery to reduce smoke and emissions. Avoid unnecessary idling of vehicles, and use hearing protection in noisy areas",
+      "count": 7
+    },
+    {
+      "status": "Material Handling\nand C & D Waste\nManagement",
+      "count": 4
+    },
+    {
+      "status": "Water Usage and\nConservation,\nEnvironmental\nObjectives",
+      "count": 7
+    },
+    {
+      "status": "Energy Savings and\nEmergency\nResponse Plan",
+      "count": 8
+    },
+    {
+      "status": "Dust Control Measures, Sustainable  Practices, Waste Management at Site",
+      "count": 10
+    },
+    {
+      "status": "Awareness on Environment and Hygiene",
+      "count": 14
+    },
+    {
+      "status": "Equipment Maintenance and Material Handling",
+      "count": 8
+    },
+    {
+      "status": "Environmental Impact Assessment ",
+      "count": 9
+    },
+    {
+      "status": " Dust Suppression,\nDust Generation",
+      "count": 24
+    },
+    {
+      "status": "Top Soil\nPreservation,\nImportance of Tress",
+      "count": 60
+    },
+    {
+      "status": "Protect nearby vegetation and avoid cutting trees or damaging plants without approval.",
+      "count": 12
+    },
+    {
+      "status": "Use water responsibly; avoid wastage during cleaning, washing, or dust suppression activities.",
+      "count": 10
+    },
+    {
+      "status": "WASTE SEGREGATION AND DISPOSAL",
+      "count": 24
+    },
+    {
+      "status": "Material Handling and C & D Waste Management",
+      "count": 15
+    },
+    {
+      "status": "Waste Usage and Conservation, Environmental Objectives",
+      "count": 7
+    },
+    {
+      "status": "Energy Savings and Emergency Response Plan",
+      "count": 8
+    },
+    {
+      "status": "Top Soil Preservation, Importance of Trees",
+      "count": 30
+    },
+    {
+      "status": "Dust Suppression,  Dust Generation",
+      "count": 8
+    },
+    {
+      "status": "Equipment Maintenance and CESMP",
+      "count": 12
+    },
+    {
+      "status": "CESMP and Material Handling",
+      "count": 4
+    },
+    {
+      "status": "C & D Waste Management and CESMP",
+      "count": 24
+    },
+    {
+      "status": "Environmental Incidents and CESMP Agreement",
+      "count": 15
+    },
+    {
+      "status": "Energy Savings and Biodiversity and Tree",
+      "count": 39
+    },
+    {
+      "status": "CESMP Agreement Regulations and Importance",
+      "count": 20
+    },
+    {
+      "status": "CESMP &  Environmental Incident",
+      "count": 8
+    },
+    {
+      "status": "Energy Savings and CESMP",
+      "count": 13
+    },
+    {
+      "status": "World Environment Day",
+      "count": 44
+    },
+    {
+      "status": "Dust Control Measures and CEMSP Agreement",
+      "count": 3
+    },
+    {
+      "status": "Working  Near Sensitive Areas, Environmental Awareness and CESMP",
+      "count": 11
+    },
+    {
+      "status": "Waste Management, Recycling and CESMP, Protection of Culture and CESMP",
+      "count": 18
+    },
+    {
+      "status": "Material Handling and CESMP",
+      "count": 18
+    },
+    {
+      "status": "Material Handling and Working Near Sensitive Areas",
+      "count": 18
+    },
+    {
+      "status": "Waste Management and House Keeping",
+      "count": 16
+    },
+    {
+      "status": "Water Usage and Conservation  and CESMP",
+      "count": 5
+    },
+    {
+      "status": "Fuel  and Chemical Storage and CESMP",
+      "count": 13
+    },
+    {
+      "status": "Material Handling\nand C & D Waste\nManagement\n",
+      "count": 4
+    },
+    {
+      "status": "Water Usage and Conservation,  Environmental Objectives",
+      "count": 7
+    },
+    {
+      "status": "Dust Control Measures, Sustainable Practices, Waste Management at Site",
+      "count": 10
+    },
+    {
+      "status": "Environment Impact Assessment",
+      "count": 9
+    },
+    {
+      "status": "Dust Suppression, Dust Generation",
+      "count": 4
+    },
+    {
+      "status": "Top Soil Preservation, Importance of Tress",
+      "count": 10
+    },
+    {
+      "status": "Equipment Maintenance",
+      "count": 6
+    },
+    {
+      "status": "CESMP & Material Handling",
+      "count": 12
+    },
+    {
+      "status": "Energy Savings and Bio diversity  and Tree",
+      "count": 13
+    },
+    {
+      "status": "C & D Waste Management  and CESMP",
+      "count": 16
+    },
+    {
+      "status": "CESMP and Environmental Incident",
+      "count": 8
+    },
+    {
+      "status": "Dust Control Measures and CESMP Agreement",
+      "count": 9
+    },
+    {
+      "status": "Working Near Sensitive Areas and CESMP",
+      "count": 15
+    },
+    {
+      "status": "Environmental Awareness and CESMP",
+      "count": 6
+    },
+    {
+      "status": "Waste Management, Recycling , Protection of Cultural and CESMP",
+      "count": 18
+    },
+    {
+      "status": "Material Handling  and CESMP",
+      "count": 6
+    },
+    {
+      "status": "Water Usage and Conservation  & CESMP",
+      "count": 5
+    },
+    {
+      "status": "Fuel and Chemical Storage and CESMP",
+      "count": 26
+    },
+    {
+      "status": "SEGREGATION HANDLING STORAGE AND LABELLING",
+      "count": 11
+    },
+    {
+      "status": "Do not discharge wastewater, chemicals, or hazardous materials into open land or water bodies",
+      "count": 14
+    },
+    {
+      "status": "Segregation of waste based on their properties at the source and disposal through proper waste collection bins.",
+      "count": 7
+    },
+    {
+      "status": " Dust Suppression, Dust Generation",
+      "count": 4
+    },
+    {
+      "status": "Top Soil Preservation,\nImportance of Tress",
+      "count": 10
+    },
+    {
+      "status": "Equipment Maintenance & CESMP",
+      "count": 6
+    },
+    {
+      "status": "C & D Waste Management & CESMP",
+      "count": 2
+    },
+    {
+      "status": "Environmental Incidents and CESMP Agreement ",
+      "count": 5
+    },
+    {
+      "status": "CESMP Regulations and Its Importance",
+      "count": 10
+    },
+    {
+      "status": "CESMP and Environmental Incidents",
+      "count": 8
+    },
+    {
+      "status": "World Environmental Day",
+      "count": 44
+    },
+    {
+      "status": "Environmental Awareness  and CESMP",
+      "count": 12
+    },
+    {
+      "status": "Protection of Cultural and CESMP",
+      "count": 22
+    },
+    {
+      "status": "Waste Management, Recycling and CESMP",
+      "count": 7
+    },
+    {
+      "status": "Material Handling and Working near sensitive areas",
+      "count": 9
+    },
+    {
+      "status": "Water Usage and Conservation and CESMP",
+      "count": 10
+    },
+    {
+      "status": "Fuel and Chemical Storage  and CESMP",
+      "count": 13
+    },
+    {
+      "status": "CESMP and Environmental Incident.",
+      "count": 8
+    },
+    {
+      "status": "Waste Management, Recycling and CESMP ",
+      "count": 0
+    },
+    {
+      "status": "Concrete Hazards and Precautions",
+      "count": 10
+    },
+    {
+      "status": "Piling Safety , Dust mitigation Measures",
+      "count": 10
+    },
+    {
+      "status": "Kyoto Protocol",
+      "count": 8
+    },
+    {
+      "status": "Environmental Awareness and Housekeeping ",
+      "count": 18
+    },
+    {
+      "status": "Reducing Environmental Risks Through Batter Waste Handling",
+      "count": 20
+    },
+    {
+      "status": "Environmental Awareness and Importance of PPE",
+      "count": 20
+    },
+    {
+      "status": "Environmental Management ",
+      "count": 50
+    },
+    {
+      "status": "House Keeping ",
+      "count": 495
+    },
+    {
+      "status": "Do not Waste Drinking Water",
+      "count": 100
+    },
+    {
+      "status": "Energy Conservation  - Switch Off outdoor construction lights during the day",
+      "count": 70
+    },
+    {
+      "status": "Cleanliness and Hygiene",
+      "count": 300
+    }
+  ],
+  "trainingGenderBreakdown": {
+    "male": 3216,
+    "female": 160
+  },
+  "campsPerContractor": [
+    {
+      "contractorId": "c-2",
+      "name": "BSR",
+      "code": "BSR",
+      "camps": 24,
+      "workers": 0
+    },
+    {
+      "contractorId": "c-4",
+      "name": "NCC",
+      "code": "NCC",
+      "camps": 23,
+      "workers": 0
+    },
+    {
+      "contractorId": "c-0",
+      "name": "MEIL",
+      "code": "MEI",
+      "camps": 22,
+      "workers": 0
+    },
+    {
+      "contractorId": "c-1",
+      "name": "RVR",
+      "code": "RVR",
+      "camps": 15,
+      "workers": 0
+    },
+    {
+      "contractorId": "c-3",
+      "name": "L&T",
+      "code": "L&T",
+      "camps": 4,
+      "workers": 0
+    },
+    {
+      "contractorId": "c-5",
+      "name": "MVR",
+      "code": "MVR",
+      "camps": 2,
+      "workers": 0
+    },
+    {
+      "contractorId": "c-7",
+      "name": "SPC",
+      "code": "SPC",
+      "camps": 2,
+      "workers": 0
+    },
+    {
+      "contractorId": "c-6",
+      "name": "BSCPL",
+      "code": "BSC",
+      "camps": 1,
+      "workers": 0
+    }
+  ],
+  "workforcePerCamp": [
+    {
+      "id": "camp-0",
+      "name": "Inavolu",
+      "contractor": "RVR",
+      "site": "Zone - 10",
+      "workers": 8569,
+      "capacity": 8619
+    },
+    {
+      "id": "camp-1",
+      "name": "Thulluru",
+      "contractor": "NCC",
+      "site": "Zone - 3A",
+      "workers": 7502,
+      "capacity": 7552
+    },
+    {
+      "id": "camp-2",
+      "name": "Nelapadu Village",
+      "contractor": "L&T",
+      "site": "NGO (Housing+Ext. Infra) - 12 Towers",
+      "workers": 4257,
+      "capacity": 4307
+    },
+    {
+      "id": "camp-3",
+      "name": "Nelapadu",
+      "contractor": "SPC",
+      "site": "GAD Tower - Structure",
+      "workers": 4195,
+      "capacity": 4245
+    },
+    {
+      "id": "camp-4",
+      "name": "Larsen & Toubro Limited, E3-N9 Junction, Mandadam Village, Thullur Taluka, Guntur District",
+      "contractor": "L&T",
+      "site": "Zone - 7",
+      "workers": 4044,
+      "capacity": 4094
+    },
+    {
+      "id": "camp-5",
+      "name": "Thullur",
+      "contractor": "RVR",
+      "site": "Zone - 3A",
+      "workers": 3166,
+      "capacity": 3216
+    },
+    {
+      "id": "camp-6",
+      "name": "kuragallu",
+      "contractor": "MEIL",
+      "site": "Zone - 12",
+      "workers": 2796,
+      "capacity": 2846
+    },
+    {
+      "id": "camp-7",
+      "name": "krishnayapalem",
+      "contractor": "NCC",
+      "site": "Zone - 9A",
+      "workers": 2232,
+      "capacity": 2282
+    },
+    {
+      "id": "camp-8",
+      "name": "Navuluru",
+      "contractor": "NCC",
+      "site": "Zone - 12",
+      "workers": 1360,
+      "capacity": 1410
+    },
+    {
+      "id": "camp-9",
+      "name": "Velagapudi-VIT",
+      "contractor": "MEIL",
+      "site": "Zone - 3B",
+      "workers": 1056,
+      "capacity": 1106
+    },
+    {
+      "id": "camp-10",
+      "name": "Labor Camp - 1, Thulluru",
+      "contractor": "RVR",
+      "site": "Zone - 3A",
+      "workers": 993,
+      "capacity": 1043
+    },
+    {
+      "id": "camp-11",
+      "name": "NOWLURU",
+      "contractor": "NCC",
+      "site": "Zone - 12",
+      "workers": 925,
+      "capacity": 975
+    },
+    {
+      "id": "camp-12",
+      "name": "KURAGALLU CAMP",
+      "contractor": "NCC",
+      "site": "Zone - 12",
+      "workers": 903,
+      "capacity": 953
+    },
+    {
+      "id": "camp-13",
+      "name": "Rayapudi",
+      "contractor": "MEIL",
+      "site": "Zone - 3B",
+      "workers": 808,
+      "capacity": 858
+    },
+    {
+      "id": "camp-14",
+      "name": "KONDARAJUPALEM(NELAPDU)",
+      "contractor": "L&T",
+      "site": "Tower 3 and 4 - Structure",
+      "workers": 776,
+      "capacity": 826
+    },
+    {
+      "id": "camp-15",
+      "name": "APGC NELAPADU",
+      "contractor": "SPC",
+      "site": "GOs and Group D employees - Housing",
+      "workers": 743,
+      "capacity": 793
+    },
+    {
+      "id": "camp-16",
+      "name": "Zone 5D at Nekkallu",
+      "contractor": "BSR",
+      "site": "Zone - 5D",
+      "workers": 638,
+      "capacity": 688
+    },
+    {
+      "id": "camp-17",
+      "name": "Velagapudi VIT",
+      "contractor": "MEIL",
+      "site": "Zone - 9",
+      "workers": 593,
+      "capacity": 643
+    },
+    {
+      "id": "camp-18",
+      "name": "Velagapudi VIT camp",
+      "contractor": "MEIL",
+      "site": "Zone - 9",
+      "workers": 542,
+      "capacity": 592
+    },
+    {
+      "id": "camp-19",
+      "name": "Innavolu",
+      "contractor": "RVR",
+      "site": "Flood Works - Neerukonda Reservoir",
+      "workers": 510,
+      "capacity": 560
+    },
+    {
+      "id": "camp-20",
+      "name": "BSR ZONE-1 LABOUR CAMP NEKKALLU",
+      "contractor": "BSR",
+      "site": "Zone - 1A",
+      "workers": 463,
+      "capacity": 513
+    },
+    {
+      "id": "camp-21",
+      "name": "N-12 Road , Sakhamuru Camp",
+      "contractor": "NCC",
+      "site": "N12 Road",
+      "workers": 461,
+      "capacity": 511
+    },
+    {
+      "id": "camp-22",
+      "name": "Camp-2",
+      "contractor": "RVR",
+      "site": "E8 Road",
+      "workers": 446,
+      "capacity": 496
+    },
+    {
+      "id": "camp-23",
+      "name": "Labour camp-2 Inavolu",
+      "contractor": "RVR",
+      "site": "E9 Road",
+      "workers": 446,
+      "capacity": 496
+    },
+    {
+      "id": "camp-24",
+      "name": "Labor Camp - 2, Inavolu",
+      "contractor": "RVR",
+      "site": "E13 Road",
+      "workers": 446,
+      "capacity": 496
+    },
+    {
+      "id": "camp-25",
+      "name": "Krishnyapalem",
+      "contractor": "MEIL",
+      "site": "Zone - 9A",
+      "workers": 434,
+      "capacity": 484
+    },
+    {
+      "id": "camp-26",
+      "name": "NEKKALLU-2",
+      "contractor": "BSR",
+      "site": "Zone - 1A",
+      "workers": 392,
+      "capacity": 442
+    }
+  ]
+}

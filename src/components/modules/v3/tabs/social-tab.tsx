@@ -235,7 +235,7 @@ export function SocialTab({
   ]
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       {/* Sub-Tabs Selector Header for the 4 Social Domain Forms */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-card border rounded-xl shadow-2xs">
         <div>
@@ -272,10 +272,10 @@ export function SocialTab({
       {/* 1. FORM 4: SOCIAL SAFEGUARD FORM (MPR) */}
       {/* ========================================================================= */}
       {subTab === 'safeguard' && (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-3">
           {/* Visual E: Key-Value (KV) Card: Labour Influx & Camps */}
           <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Active Camps</span>
                 <div className="text-xl font-black text-foreground mt-0.5">{influx.camps_count}</div>
@@ -283,7 +283,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Migrant Workers</span>
                 <div className="text-xl font-black text-foreground mt-0.5">{influx.migrant_workers.toLocaleString()}</div>
@@ -291,7 +291,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">New Workers</span>
                 <div className="text-xl font-black text-primary mt-0.5">{influx.new_workers.toLocaleString()}</div>
@@ -299,7 +299,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Police Verification</span>
                 <div className="text-xl font-black text-emerald-600 mt-0.5">{influx.police_verified_pct}%</div>
@@ -307,7 +307,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Medical Covered</span>
                 <div className="text-xl font-black text-emerald-600 mt-0.5">{influx.medical_coverage_pct}%</div>
@@ -315,7 +315,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Programs Held</span>
                 <div className="text-xl font-black text-foreground mt-0.5">{influx.programs_conducted}</div>
@@ -325,9 +325,9 @@ export function SocialTab({
           </div>
 
           {/* Top Row: Visual A (E&S Staff Deployment H-Bar) + Visual C (Observations Stacked Bar + Line) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual A: Horizontal Bar Chart: Deployment of E&S Staff */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -377,7 +377,7 @@ export function SocialTab({
             </Card>
 
             {/* Visual C: Stacked Bar + Line Chart: Observations (Raised vs Closed vs Pending) */}
-            <Card className="border shadow-xs flex flex-col justify-between">
+            <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -436,9 +436,9 @@ export function SocialTab({
           </div>
 
           {/* Bottom Row: Visual B (Monthly Site Inspections by PMC) + Visual D (GRC Grievance Redressal Grouped Bar) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Grouped Bar Chart: Monthly Site Inspections by PMC */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -495,7 +495,7 @@ export function SocialTab({
             </Card>
 
             {/* Visual D: Grouped Bar Chart: Grievance Redressal Committee (GRC) */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -565,10 +565,10 @@ export function SocialTab({
       {/* 2. FORM 5: SKILL TRAINING & EMPLOYMENT FORM */}
       {/* ========================================================================= */}
       {subTab === 'skills' && (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-3">
           {/* Visual A: KPI Strip: Workforce Indicators */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Total Workforce</span>
                 <div className="text-2xl font-black text-foreground mt-0.5">{skillKpis.total_workers.toLocaleString()}</div>
@@ -576,7 +576,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Local Workforce %</span>
                 <div className="text-2xl font-black text-primary mt-0.5">{skillKpis.local_pct}%</div>
@@ -584,7 +584,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Female Workforce %</span>
                 <div className="text-2xl font-black text-indigo-600 mt-0.5">{skillKpis.female_pct}%</div>
@@ -592,7 +592,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trained %</span>
                 <div className="text-2xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_pct}%</div>
@@ -600,7 +600,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trained & Employed %</span>
                 <div className="text-2xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_employed_pct}%</div>
@@ -610,9 +610,9 @@ export function SocialTab({
           </div>
 
           {/* Top Row: Visual B (Type of Local Workers Employed) + Visual C (Total Workforce 6-Month Trend) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Horizontal Bar Chart: Type of Local Workers Employed */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -649,7 +649,7 @@ export function SocialTab({
             </Card>
 
             {/* Visual C: Line Chart: Total Workforce Trend (6 Months) */}
-            <Card className="border shadow-xs flex flex-col justify-between">
+            <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -697,7 +697,7 @@ export function SocialTab({
           </div>
 
           {/* Visual D: Horizontal Bar Chart: Skill-Set-Wise Local Workers Employed (All 26 Skill Sets) */}
-          <Card className="border shadow-xs">
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
             <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -744,9 +744,9 @@ export function SocialTab({
       {/* 3. FORM 6: LABOUR LAW COMPLIANCE FORM */}
       {/* ========================================================================= */}
       {subTab === 'labour' && (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-3">
           {/* Visual A: Table: Establishment Registration & Licenses (7 Acts) */}
-          <Card className="border shadow-xs">
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
             <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -816,9 +816,9 @@ export function SocialTab({
           </Card>
 
           {/* Middle Row: Visual B (Basic Camp Facilities H-Bar) + Visual C (Source of Labour Doughnut) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Horizontal Bar Chart: Basic Facilities at Labour Camp */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -869,7 +869,7 @@ export function SocialTab({
             </Card>
 
             {/* Visual C: Doughnut / Distribution: Source of Labour */}
-            <Card className="border shadow-xs flex flex-col justify-between">
+            <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20">
                 <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                   <Users className="w-4 h-4 text-primary" />
@@ -879,7 +879,7 @@ export function SocialTab({
                   Contractor vs Sub-Contractor vs Independent workforce distribution
                 </p>
               </CardHeader>
-              <CardContent className="p-5 flex flex-col justify-between flex-1 gap-4">
+              <CardContent className="p-4 flex flex-col justify-between flex-1 gap-4">
                 <div className="flex items-center justify-center py-2">
                   <div className="relative w-40 h-40 flex items-center justify-center">
                     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -940,9 +940,9 @@ export function SocialTab({
           </div>
 
           {/* Bottom Row: Visual D (Labour Profile Origin & Age) + Visual E (Registers Submitted) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual D: Horizontal Bar Chart: Labour Profile — Origin & Age */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -1006,7 +1006,7 @@ export function SocialTab({
             </Card>
 
             {/* Visual E: Horizontal Bar Chart: Registers & Records Submitted (8 Statutory Registers) */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -1052,10 +1052,10 @@ export function SocialTab({
       {/* 4. FORM 7: GENDER FORM */}
       {/* ========================================================================= */}
       {subTab === 'gender' && (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-3">
           {/* Visual A: Key-Value (KV) Card: GBV Focal Point & ICC */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">GBV Focal Deployed</span>
                 <div className="text-2xl font-black text-foreground mt-0.5">{genderFocal.focal_deployed} / 48</div>
@@ -1063,7 +1063,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">ICC Constituted</span>
                 <div className="text-2xl font-black text-emerald-600 mt-0.5">{genderFocal.icc_constituted} / 48</div>
@@ -1071,7 +1071,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">ICC Meetings Held</span>
                 <div className="text-2xl font-black text-foreground mt-0.5">{genderFocal.icc_meetings_held}</div>
@@ -1079,7 +1079,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">ICC Members Trained</span>
                 <div className="text-2xl font-black text-indigo-600 mt-0.5">{genderFocal.icc_members_trained}</div>
@@ -1087,7 +1087,7 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardContent className="p-3.5">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">CoC Signed %</span>
                 <div className="text-2xl font-black text-emerald-600 mt-0.5">{genderFocal.coc_signed_pct}%</div>
@@ -1097,9 +1097,9 @@ export function SocialTab({
           </div>
 
           {/* Top Row: Visual B (SEA/SH Complaint Status Table) + Visual D (Children's Data in Labour Camps) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Table: SEA/SH Complaint Status */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -1154,7 +1154,7 @@ export function SocialTab({
             </Card>
 
             {/* Visual D: Table: Children's Data in Labour Camp */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -1199,7 +1199,7 @@ export function SocialTab({
           </div>
 
           {/* Middle Row: Visual C (Gender-Specific Facilities H-Bar) */}
-          <Card className="border shadow-xs">
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
             <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -1252,9 +1252,9 @@ export function SocialTab({
           </Card>
 
           {/* Bottom Row: Visual E (Women Newly Employed) + Visual F (Capacity Building) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual E: Grouped Bar Chart: Women Newly Employed — Construction */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -1306,7 +1306,7 @@ export function SocialTab({
             </Card>
 
             {/* Visual F: Horizontal Bar Chart: Capacity Building */}
-            <Card className="border shadow-xs">
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
               <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
