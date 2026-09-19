@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
+const EVMMap = dynamic(() => import("./evm-map"), { ssr: false });
 import {
   Leaf,
   Wind,
@@ -488,347 +490,197 @@ export function EvmTab({
             </div>
           </CardContent>
         </Card>
-        {/* Middle Split: Visual B (SVG Geographic Map) + Station Inspection Side-Panel */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
-            <div>
-              <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary" />
-                SVG Geographic Map
-              </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Interactive plots for Air (AAQ), Noise (N), and Soil (S)
-                stations. Click any point to inspect exact parameters.
-              </p>
-            </div>
-            <div className="flex items-center gap-3 text-xs">
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />{" "}
-                Air (Normal)
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />{" "}
-                Air (Exceedance)
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 bg-blue-500 inline-block rounded-md" />{" "}
-                Noise (dB)
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 bg-amber-700 inline-block rounded-md" />{" "}
-                Soil Point
-              </span>
-            </div>
-          </CardHeader>
-          <CardContent className="p-4 flex flex-col lg:flex-row gap-3">
-            {/* SVG Map Canvas */}
-            <div className="flex-1 bg-slate-950/5 dark:bg-slate-900/40 rounded-xl border border-border/80 relative min-h-[360px] p-4 flex items-center justify-center overflow-hidden">
-              {/* Background Map Contours (Amaravati River & Zone Grid) */}
-              <svg className="w-full h-[340px]" viewBox="0 0 800 400">
-                {/* Krishna River Path */}
-                <path
-                  d="M 50 120 Q 200 80 400 130 T 750 110"
-                  fill="none"
-                  stroke="#38bdf8"
-                  strokeWidth="16"
-                  strokeOpacity="0.35"
-                />
-                <text
-                  x="70"
-                  y="100"
-                  fill="#0284c7"
-                  fontSize="12"
-                  fontWeight="bold"
-                >
-                  Krishna River
-                </text>
-
-                {/* Capital City Zone Boundary Guides */}
-                <rect
-                  x="100"
-                  y="140"
-                  width="580"
-                  height="230"
-                  rx="15"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  className="text-muted-foreground/30"
-                />
-                <text
-                  x="120"
-                  y="165"
-                  fill="currentColor"
-                  fontSize="11"
-                  className="text-muted-foreground/50"
-                >
-                  Amaravati Core Capital Region
-                </text>
-
-                {/* Air Stations (Circles) */}
-                {airStations.map((stn, i) => {
-                  // Map Lat/Lng to X/Y
-                  const x = 120 + ((i * 53) % 520);
-                  const y = 160 + ((i * 47) % 180);
-                  const isSelected = selectedStation?.code === stn.code;
-                  return (
-                    <g
-                      key={`air-${i}`}
-                      onClick={() =>
-                        setSelectedStation({ ...stn, type: "Air Quality" })
-                      }
-                      className="cursor-pointer transition-transform hover:scale-125"
-                    >
-                      <circle
-                        cx={x}
-                        cy={y}
-                        r={isSelected ? 10 : 7}
-                        className={
-                          stn.exceedance
-                            ? "fill-rose-500 animate-pulse"
-                            : "fill-emerald-500"
-                        }
-                        stroke="#ffffff"
-                        strokeWidth="2"
-                      />
-                      <text
-                        x={x + 9}
-                        y={y + 4}
-                        fill="currentColor"
-                        fontSize="10"
-                        fontWeight="bold"
-                        className="text-foreground select-none"
-                      >
-                        {stn.code}
-                      </text>
-                    </g>
-                  );
-                })}
-
-                {/* Noise Stations (Blue Squares) */}
-                {noiseStations.map((nstn, i) => {
-                  const x = 160 + ((i * 61) % 480);
-                  const y = 190 + ((i * 37) % 150);
-                  const isSelected = selectedStation?.code === nstn.code;
-                  return (
-                    <g
-                      key={`noise-${i}`}
-                      onClick={() =>
-                        setSelectedStation({
-                          ...nstn,
-                          type: "Noise Monitoring",
-                        })
-                      }
-                      className="cursor-pointer transition-transform hover:scale-125"
-                    >
-                      <rect
-                        x={x - 6}
-                        y={y - 6}
-                        width={isSelected ? 14 : 11}
-                        height={isSelected ? 14 : 11}
-                        rx="2"
-                        className="fill-blue-500"
-                        stroke="#ffffff"
-                        strokeWidth="2"
-                      />
-                      <text
-                        x={x + 8}
-                        y={y + 4}
-                        fill="currentColor"
-                        fontSize="10"
-                        fontWeight="bold"
-                        className="text-foreground select-none"
-                      >
-                        {nstn.code}
-                      </text>
-                    </g>
-                  );
-                })}
-
-                {/* Soil Stations (Brown Squares) */}
-                {soilStations.map((sstn, i) => {
-                  const x = 200 + ((i * 120) % 400);
-                  const y = 230 + ((i * 50) % 110);
-                  const isSelected = selectedStation?.code === sstn.code;
-                  return (
-                    <g
-                      key={`soil-${i}`}
-                      onClick={() =>
-                        setSelectedStation({ ...sstn, type: "Soil Sampling" })
-                      }
-                      className="cursor-pointer transition-transform hover:scale-125"
-                    >
-                      <polygon
-                        points={`${x},${y - 7} ${x + 7},${y + 7} ${x - 7},${y + 7}`}
-                        className="fill-amber-700"
-                        stroke="#ffffff"
-                        strokeWidth="2"
-                      />
-                      <text
-                        x={x + 9}
-                        y={y + 4}
-                        fill="currentColor"
-                        fontSize="10"
-                        fontWeight="bold"
-                        className="text-foreground select-none"
-                      >
-                        {sstn.code}
-                      </text>
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
-
-            {/* Interactive Side-Panel */}
-            <div className="w-full lg:w-80 border rounded-xl p-4 bg-card flex flex-col justify-between shrink-0">
-              {selectedStation ? (
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <Badge className="mb-1 text-[10px]">
-                        {selectedStation.type}
-                      </Badge>
-                      <h4 className="text-sm font-bold text-foreground">
-                        {selectedStation.name}
-                      </h4>
-                      <span className="text-[11px] font-mono text-muted-foreground block">
-                        {selectedStation.code} •{" "}
-                        {selectedStation.gps || "GPS Tagged"}
-                      </span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setSelectedStation(null)}
-                      className="h-6 w-6"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                    </Button>
-                  </div>
-
-                  {selectedStation.type === "Air Quality" && (
-                    <div className="flex flex-col gap-2 pt-2 border-t text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          PM10 (Limit &le; 100):
-                        </span>
-                        <span
-                          className={`font-mono font-bold ${selectedStation.pm10 > 100 ? "text-rose-600" : "text-foreground"}`}
-                        >
-                          {selectedStation.pm10 ?? "-"} µg/m³{" "}
-                          {selectedStation.pm10 > 100 ? "▲ (Exceeded)" : ""}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          PM2.5 (Limit &le; 60):
-                        </span>
-                        <span
-                          className={`font-mono font-bold ${selectedStation.pm25 > 60 ? "text-rose-600" : "text-foreground"}`}
-                        >
-                          {selectedStation.pm25 ?? "-"} µg/m³{" "}
-                          {selectedStation.pm25 > 60 ? "▲ (Exceeded)" : ""}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          SO2 (Limit &le; 80):
-                        </span>
-                        <span className="font-mono">
-                          {selectedStation.so2 ?? "-"} µg/m³
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          NOx (Limit &le; 80):
-                        </span>
-                        <span className="font-mono">
-                          {selectedStation.nox ?? "-"} µg/m³
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          CO (Limit &le; 2.0):
-                        </span>
-                        <span className="font-mono">
-                          {selectedStation.co ?? "-"} mg/m³
-                        </span>
-                      </div>
-                      <div className="p-2 rounded-md bg-muted/40 mt-1">
-                        <span className="text-[10px] text-muted-foreground">
-                          Project:{" "}
-                          <strong>{selectedStation.projectName}</strong>
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  {selectedStation.type === "Noise Monitoring" && (
-                    <div className="flex flex-col gap-2 pt-2 border-t text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          Day Leq (Limit &le; 75):
-                        </span>
-                        <span className="font-mono font-bold">
-                          {selectedStation.lday ?? selectedStation.leq ?? "-"}{" "}
-                          dB(A)
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          Night Leq (Limit &le; 70):
-                        </span>
-                        <span className="font-mono font-bold">
-                          {selectedStation.lnight ?? "-"} dB(A)
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Lmax:</span>
-                        <span className="font-mono">
-                          {selectedStation.lmax ?? "-"} dB(A)
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  {selectedStation.type === "Soil Sampling" && (
-                    <div className="flex flex-col gap-2 pt-2 border-t text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          Soil Quality:
-                        </span>
-                        <span className="font-bold text-emerald-600">
-                          Compliant (Baseline)
-                        </span>
-                      </div>
-                      <span className="text-[11px] text-muted-foreground">
-                        Heavy metals & pH within prescribed agricultural
-                        standards
-                      </span>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="p-4 text-center text-muted-foreground text-xs my-auto flex flex-col items-center">
-                  <Info className="w-8 h-8 text-muted-foreground/60 mb-2" />
-                  <span className="font-medium text-foreground">
-                    Click a Station Node
-                  </span>
-                  <span className="text-[11px] mt-1">
-                    Select any point on the SVG map to view real-time sensor
-                    parameters against standards.
-                  </span>
-                </div>
-              )}
-              <span className="text-[10px] text-muted-foreground text-center border-t pt-2 block">
-                APCRDA Environmental GIS Layer
-              </span>
-            </div>
-          </CardContent>
-        </Card>
       </div>
+      {/* Middle Split: Visual B (SVG Geographic Map) + Station Inspection Side-Panel */}
+      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <CardHeader className="px-4 py-1.5 border-b bg-muted/20 flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-primary" />
+              Geographic Map
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Interactive plots for Air (AAQ), Noise (N), and Soil (S) stations.
+              Click any point to inspect exact parameters.
+            </p>
+          </div>
+          <div className="flex items-center gap-3 text-xs">
+            <span className="flex items-center gap-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />{" "}
+              Air (Normal)
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />{" "}
+              Air (Exceedance)
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-2.5 h-2.5 bg-blue-500 inline-block rounded-md" />{" "}
+              Noise (dB)
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-2.5 h-2.5 bg-amber-700 inline-block rounded-md" />{" "}
+              Soil Point
+            </span>
+          </div>
+        </CardHeader>
+        <CardContent className="p-2 flex flex-col lg:flex-row gap-3">
+          {/* SVG Map Canvas */}
+          <div className="flex-1 bg-slate-950/5 dark:bg-slate-900/40 rounded-xl border border-border/80 relative min-h-[600px] p-4 flex items-center justify-center overflow-hidden">
+            {/* Background Map Contours (Amaravati River & Zone Grid) */}
+            <EVMMap
+              airStations={airStations}
+              noiseStations={noiseStations}
+              soilStations={soilStations}
+              selectedStation={selectedStation}
+              setSelectedStation={setSelectedStation}
+            />
+          </div>
+
+          {/* Interactive Side-Panel */}
+          <div className="w-full lg:w-80 border rounded-xl p-4 bg-card flex flex-col justify-between shrink-0">
+            {selectedStation ? (
+              <div className="flex flex-col gap-3">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <Badge className="mb-1 text-[10px]">
+                      {selectedStation.type}
+                    </Badge>
+                    <h4 className="text-sm font-bold text-foreground">
+                      {selectedStation.name}
+                    </h4>
+                    <span className="text-[11px] font-mono text-muted-foreground block">
+                      {selectedStation.code} •{" "}
+                      {selectedStation.gps || "GPS Tagged"}
+                    </span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSelectedStation(null)}
+                    className="h-6 w-6"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </Button>
+                </div>
+
+                {selectedStation.type === "Air Quality" && (
+                  <div className="flex flex-col gap-2 pt-2 border-t text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        PM10 (Limit &le; 100):
+                      </span>
+                      <span
+                        className={`font-mono font-bold ${selectedStation.pm10 > 100 ? "text-rose-600" : "text-foreground"}`}
+                      >
+                        {selectedStation.pm10 ?? "-"} µg/m³{" "}
+                        {selectedStation.pm10 > 100 ? "▲ (Exceeded)" : ""}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        PM2.5 (Limit &le; 60):
+                      </span>
+                      <span
+                        className={`font-mono font-bold ${selectedStation.pm25 > 60 ? "text-rose-600" : "text-foreground"}`}
+                      >
+                        {selectedStation.pm25 ?? "-"} µg/m³{" "}
+                        {selectedStation.pm25 > 60 ? "▲ (Exceeded)" : ""}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        SO2 (Limit &le; 80):
+                      </span>
+                      <span className="font-mono">
+                        {selectedStation.so2 ?? "-"} µg/m³
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        NOx (Limit &le; 80):
+                      </span>
+                      <span className="font-mono">
+                        {selectedStation.nox ?? "-"} µg/m³
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        CO (Limit &le; 2.0):
+                      </span>
+                      <span className="font-mono">
+                        {selectedStation.co ?? "-"} mg/m³
+                      </span>
+                    </div>
+                    <div className="p-2 rounded-md bg-muted/40 mt-1">
+                      <span className="text-[10px] text-muted-foreground">
+                        Project: <strong>{selectedStation.projectName}</strong>
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {selectedStation.type === "Noise Monitoring" && (
+                  <div className="flex flex-col gap-2 pt-2 border-t text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        Day Leq (Limit &le; 75):
+                      </span>
+                      <span className="font-mono font-bold">
+                        {selectedStation.lday ?? selectedStation.leq ?? "-"}{" "}
+                        dB(A)
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        Night Leq (Limit &le; 70):
+                      </span>
+                      <span className="font-mono font-bold">
+                        {selectedStation.lnight ?? "-"} dB(A)
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Lmax:</span>
+                      <span className="font-mono">
+                        {selectedStation.lmax ?? "-"} dB(A)
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {selectedStation.type === "Soil Sampling" && (
+                  <div className="flex flex-col gap-2 pt-2 border-t text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        Soil Quality:
+                      </span>
+                      <span className="font-bold text-emerald-600">
+                        Compliant (Baseline)
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-muted-foreground">
+                      Heavy metals & pH within prescribed agricultural standards
+                    </span>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="p-4 text-center text-muted-foreground text-xs my-auto flex flex-col items-center">
+                <Info className="w-8 h-8 text-muted-foreground/60 mb-2" />
+                <span className="font-medium text-foreground">
+                  Click a Station Node
+                </span>
+                <span className="text-[11px] mt-1">
+                  Select any point on the SVG map to view real-time sensor
+                  parameters against standards.
+                </span>
+              </div>
+            )}
+            <span className="text-[10px] text-muted-foreground text-center border-t pt-2 block">
+              APCRDA Environmental GIS Layer
+            </span>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
