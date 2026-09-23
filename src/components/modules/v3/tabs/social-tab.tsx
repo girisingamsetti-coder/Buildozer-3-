@@ -237,6 +237,33 @@ export function SocialTab({
     { program: 'Adolescent Safety & Child Protection Drive', participants: 310 },
   ]
 
+  const staffingCocData = [
+    {
+      title: 'Social & labour managers deployed',
+      subtitle: '54 of required 59',
+      pct: 92,
+      color: '#15803d',
+    },
+    {
+      title: 'New joiners who signed the CoC',
+      subtitle: '11,538 of new staff & labourers 11,296',
+      pct: 102,
+      color: '#15803d',
+    },
+    {
+      title: 'Projects with an ICC',
+      subtitle: '53 of projects 56',
+      pct: 95,
+      color: '#15803d',
+    },
+    {
+      title: 'Women among ICC members trained',
+      subtitle: '122 of trained members 288',
+      pct: 42,
+      color: '#0d5c50',
+    },
+  ]
+
   return (
     <div className="flex flex-col gap-3">
       {/* Sub-Tabs Selector Header for the 4 Social Domain Forms */}
@@ -1056,48 +1083,68 @@ export function SocialTab({
       {/* ========================================================================= */}
       {subTab === 'gender' && (
         <div className="flex flex-col gap-3">
-          {/* Visual A: Key-Value (KV) Card: GBV Focal Point & ICC */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">GBV Focal Deployed</span>
-                <div className="text-2xl font-black text-foreground mt-0.5">{genderFocal.focal_deployed} / 48</div>
-                <span className="text-[10px] text-emerald-600 font-medium">95.8% Sites Covered</span>
-              </CardContent>
-            </Card>
+          {/* Staffing and Code of Conduct */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+            <CardHeader className="p-4 pb-2 border-b bg-muted/20">
+              <CardTitle className="text-sm font-bold text-foreground">
+                Staffing and Code of Conduct
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {staffingCocData.map((item, idx) => {
+                  const r = 38;
+                  const c = 2 * Math.PI * r;
+                  const strokePct = Math.min(100, item.pct);
+                  const dash = (strokePct / 100) * c;
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-[#f0f4f2] dark:bg-muted/30 rounded-2xl p-5 flex flex-col items-center justify-between text-center min-h-[190px]"
+                    >
+                      <div className="relative w-24 h-24 flex items-center justify-center">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r={r}
+                            fill="transparent"
+                            stroke="currentColor"
+                            strokeWidth="8.5"
+                            className="text-slate-200 dark:text-slate-700/60"
+                          />
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r={r}
+                            fill="transparent"
+                            stroke={item.color}
+                            strokeWidth="8.5"
+                            strokeDasharray={`${dash} ${c}`}
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-xl font-bold text-foreground font-sans">
+                            {item.pct}%
+                          </span>
+                        </div>
+                      </div>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">ICC Constituted</span>
-                <div className="text-2xl font-black text-emerald-600 mt-0.5">{genderFocal.icc_constituted} / 48</div>
-                <span className="text-[10px] text-muted-foreground">Internal Complaints Comm.</span>
-              </CardContent>
-            </Card>
-
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">ICC Meetings Held</span>
-                <div className="text-2xl font-black text-foreground mt-0.5">{genderFocal.icc_meetings_held}</div>
-                <span className="text-[10px] text-muted-foreground">Periodic review meets</span>
-              </CardContent>
-            </Card>
-
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">ICC Members Trained</span>
-                <div className="text-2xl font-black text-indigo-600 mt-0.5">{genderFocal.icc_members_trained}</div>
-                <span className="text-[10px] text-muted-foreground">Male & Female members</span>
-              </CardContent>
-            </Card>
-
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">CoC Signed %</span>
-                <div className="text-2xl font-black text-emerald-600 mt-0.5">{genderFocal.coc_signed_pct}%</div>
-                <span className="text-[10px] text-muted-foreground">Code of Conduct executed</span>
-              </CardContent>
-            </Card>
-          </div>
+                      <div className="flex flex-col items-center mt-3">
+                        <span className="font-bold text-xs text-foreground leading-snug">
+                          {item.title}
+                        </span>
+                        <span className="text-[11px] text-muted-foreground mt-1">
+                          {item.subtitle}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Top Row: Visual B (SEA/SH Complaint Status Table) + Visual D (Children's Data in Labour Camps) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
