@@ -98,6 +98,36 @@ export function SocialTab({
     programs_conducted: 26,
   }
 
+  const pmcSiteVisitsBySpecialist = {
+    total: 1074,
+    items: [
+      { label: 'Environmental manager', count: 312, pct: 29, displayPct: '29%', color: '#115e59' },
+      { label: 'Social manager', count: 402, pct: 37, displayPct: '37%', color: '#d97706' },
+      { label: 'OHS', count: 360, pct: 34, displayPct: '34%', color: '#7c3aed' },
+    ],
+  }
+
+  const closureRates = [
+    {
+      title: 'PMC observations closed',
+      subtitle: '883 of raised 1,418',
+      pct: 62,
+      color: '#d97706',
+    },
+    {
+      title: 'Sub-committee observations closed',
+      subtitle: '373 of issued 506',
+      pct: 74,
+      color: '#d97706',
+    },
+    {
+      title: 'Grievances resolved',
+      subtitle: '19 of received 23',
+      pct: 83,
+      color: '#15803d',
+    },
+  ]
+
   // 2. Skill Training & Employment (Form 5) Data
   const skillKpis = sklAgg?.kpis || {
     total_workers: 18450,
@@ -651,6 +681,161 @@ export function SocialTab({
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Programs Held</span>
                 <div className="text-xl font-black text-foreground mt-0.5">{influx.programs_conducted}</div>
                 <span className="text-[10px] text-muted-foreground">Community & health</span>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Row 2: PMC site visits by specialist + Closure rates */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Card 1: PMC site visits by specialist */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  PMC site visits by specialist
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 pt-2">
+                <div className="flex flex-col sm:flex-row items-center justify-around gap-6 h-full min-h-[190px]">
+                  {/* Donut Chart */}
+                  {(() => {
+                    const r = 38;
+                    const c = 2 * Math.PI * r;
+                    const gap = 3.5;
+                    let cumulative = 0;
+
+                    return (
+                      <div className="w-36 h-36 relative flex items-center justify-center shrink-0">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r={r}
+                            fill="transparent"
+                            stroke="currentColor"
+                            strokeWidth="11"
+                            className="text-muted/15"
+                          />
+                          {pmcSiteVisitsBySpecialist.items.map((item, idx) => {
+                            const dash = Math.max(0, (item.pct / 100) * c - gap);
+                            const offset = (cumulative / 100) * c;
+                            cumulative += item.pct;
+                            return (
+                              <circle
+                                key={idx}
+                                cx="50"
+                                cy="50"
+                                r={r}
+                                fill="transparent"
+                                stroke={item.color}
+                                strokeWidth="11"
+                                strokeDasharray={`${dash} ${c - dash}`}
+                                strokeDashoffset={-offset}
+                              />
+                            );
+                          })}
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                          <span className="text-xl font-black text-foreground font-mono leading-none">
+                            {pmcSiteVisitsBySpecialist.total.toLocaleString()}
+                          </span>
+                          <span className="text-xs text-muted-foreground font-medium mt-1">
+                            visits
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Legend breakdown */}
+                  <div className="space-y-3.5 w-full sm:w-auto min-w-[220px]">
+                    {pmcSiteVisitsBySpecialist.items.map((item) => (
+                      <div key={item.label} className="flex items-center justify-between gap-4 text-xs">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span
+                            className="w-2.5 h-2.5 rounded-xs shrink-0"
+                            style={{ backgroundColor: item.color }}
+                          />
+                          <span className="font-medium text-foreground truncate">
+                            {item.label}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-4 shrink-0 font-mono">
+                          <span className="font-bold text-foreground text-right w-10">
+                            {item.count.toLocaleString()}
+                          </span>
+                          <span className="text-muted-foreground text-right w-8">
+                            {item.displayPct}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Card 2: Closure rates */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  Closure rates
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                  {closureRates.map((item) => {
+                    const r = 36;
+                    const c = 2 * Math.PI * r;
+                    const dash = (item.pct / 100) * c;
+
+                    return (
+                      <div
+                        key={item.title}
+                        className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[190px]"
+                      >
+                        {/* Circular Progress Gauge */}
+                        <div className="w-24 h-24 relative flex items-center justify-center shrink-0">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r={r}
+                              fill="transparent"
+                              stroke="currentColor"
+                              strokeWidth="8"
+                              className="text-muted/20"
+                            />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r={r}
+                              fill="transparent"
+                              stroke={item.color}
+                              strokeWidth="8"
+                              strokeDasharray={`${dash} ${c}`}
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center text-center">
+                            <span className="text-base sm:text-lg font-black text-foreground font-mono">
+                              {item.pct}%
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Title & Subtitle */}
+                        <div className="w-full mt-3 flex flex-col items-center">
+                          <h5 className="text-xs font-bold text-foreground leading-tight text-center">
+                            {item.title}
+                          </h5>
+                          <p className="text-[11px] text-muted-foreground mt-1 font-medium text-center">
+                            {item.subtitle}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </CardContent>
             </Card>
           </div>
