@@ -155,6 +155,27 @@ export function SocialTab({
     },
   ]
 
+  const localWorkersBySkill = [
+    { skill: 'Highly\nskilled', men: 65, women: 0, total: 65, displayTotal: '65' },
+    { skill: 'Skilled', men: 1260, women: 43, total: 1303, displayTotal: '1,303' },
+    { skill: 'Semi\nSkilled', men: 850, women: 18, total: 868, displayTotal: '868' },
+    { skill: 'Un Skilled', men: 2360, women: 38, total: 2398, displayTotal: '2,398' },
+    { skill: 'Unskilled', men: 1550, women: 428, total: 1978, displayTotal: '1,978' },
+  ]
+
+  const localWorkersByTrade = [
+    { trade: 'Others (Pls Specify)', count: 1545, displayCount: '1,545' },
+    { trade: 'Others', count: 1030, displayCount: '1,030' },
+    { trade: 'Assistant Mason', count: 428, displayCount: '428' },
+    { trade: 'House Keeping', count: 322, displayCount: '322' },
+    { trade: 'Masonry', count: 248, displayCount: '248' },
+    { trade: 'Fitter', count: 165, displayCount: '165' },
+    { trade: 'Security', count: 145, displayCount: '145' },
+    { trade: 'Driver', count: 135, displayCount: '135' },
+    { trade: 'Carpentry', count: 104, displayCount: '104' },
+    { trade: 'Front Office Assistance', count: 100, displayCount: '100' },
+  ]
+
   // 3. Labour Law Compliance (Form 6) Data
   const licenses = labAgg?.licenses || {
     'BOCW Registration (Building & Other Construction Workers)': { valid: 42, expiring: 4, expired: 0 },
@@ -991,44 +1012,136 @@ export function SocialTab({
             </CardContent>
           </Card>
 
-          {/* Top Row: Visual B (Type of Local Workers Employed) + Visual C (Total Workforce 6-Month Trend) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Visual B: Horizontal Bar Chart: Type of Local Workers Employed */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+          {/* Row 2: Local workers by skill level + Local workers by trade */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Card 1: Local workers by skill level */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-6">
                 <div>
-                  <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <Users className="w-4 h-4 text-primary" />
-                    Type of Local Workers Employed (Skill Levels)
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Categorizes local workers into 4 statutory skill levels across active packages
-                  </p>
+                  <h3 className="text-sm font-bold text-foreground">Local workers by skill level</h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
                 </div>
-                <Badge variant="outline" className="text-xs font-mono">
-                  {totalLocalWorkers.toLocaleString()} Total Local
-                </Badge>
-              </CardHeader>
-              <CardContent className="p-4 flex flex-col gap-3.5">
-                {Object.entries(localTypes).map(([category, count], idx) => {
-                  const pct = Math.round((count / totalLocalWorkers) * 100)
-                  return (
-                    <div key={idx} className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-muted/30 transition-colors">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold text-foreground">{category}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-muted-foreground">{count.toLocaleString()} workers</span>
-                          <Badge className="bg-primary/15 text-primary border-primary/30 text-[10px] font-mono">
-                            {pct}%
-                          </Badge>
-                        </div>
+
+                {/* Legend */}
+                <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" />
+                    <span>Men</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" />
+                    <span>Women</span>
+                  </div>
+                </div>
+
+                {/* Chart Area */}
+                <div className="relative h-60 pt-2 pb-8 pl-12 pr-4">
+                  {/* Y Axis & Grid Lines */}
+                  <div className="absolute inset-0 top-2 bottom-8 left-12 right-4 flex flex-col justify-between pointer-events-none">
+                    {[
+                      { label: '4,000', val: 4000 },
+                      { label: '3,000', val: 3000 },
+                      { label: '2,000', val: 2000 },
+                      { label: '1,000', val: 1000 },
+                      { label: '0', val: 0 },
+                    ].map((tick) => (
+                      <div key={tick.label} className="w-full flex items-center relative">
+                        <span className="absolute -left-12 w-10 text-right text-xs text-muted-foreground font-mono">
+                          {tick.label}
+                        </span>
+                        <div className="w-full border-b border-dashed border-border/60" />
                       </div>
-                      <Progress value={pct} className="h-2" />
-                    </div>
-                  )
-                })}
+                    ))}
+                  </div>
+
+                  {/* Columns */}
+                  <div className="relative h-full flex items-end justify-around z-10">
+                    {localWorkersBySkill.map((item) => {
+                      const maxVal = 4000;
+                      const totalPct = (item.total / maxVal) * 100;
+                      const menPct = (item.men / item.total) * 100;
+                      const womenPct = (item.women / item.total) * 100;
+
+                      return (
+                        <div key={item.skill} className="flex flex-col items-center justify-end h-full relative">
+                          {/* Total on top */}
+                          <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                            {item.displayTotal}
+                          </span>
+
+                          {/* Stacked bar */}
+                          <div
+                            style={{ height: `${totalPct}%` }}
+                            className="w-10 sm:w-11 rounded-t-xs flex flex-col-reverse overflow-hidden shadow-2xs"
+                          >
+                            <div
+                              style={{ height: `${menPct}%` }}
+                              className="bg-[#2563eb] w-full"
+                              title={`Men: ${item.men.toLocaleString()}`}
+                            />
+                            {item.women > 0 && (
+                              <div
+                                style={{ height: `${womenPct}%` }}
+                                className="bg-[#be185d] w-full"
+                                title={`Women: ${item.women.toLocaleString()}`}
+                              />
+                            )}
+                          </div>
+
+                          {/* X Axis Label */}
+                          <div className="absolute -bottom-8 flex flex-col items-center">
+                            <span className="text-xs text-muted-foreground text-center whitespace-pre-line leading-tight">
+                              {item.skill}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </CardContent>
             </Card>
+
+            {/* Card 2: Local workers by trade */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-6">
+                <div>
+                  <h3 className="text-sm font-bold text-foreground">Local workers by trade</h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
+                </div>
+
+                <div className="space-y-3 mt-4">
+                  {localWorkersByTrade.map((item) => {
+                    const maxScale = 1545;
+                    const pct = (item.count / maxScale) * 100;
+
+                    return (
+                      <div key={item.trade} className="flex items-center gap-3 text-xs">
+                        <div className="w-36 sm:w-44 shrink-0 truncate text-foreground font-medium" title={item.trade}>
+                          {item.trade}
+                        </div>
+
+                        <div className="flex-1 bg-muted/40 h-2.5 rounded-full overflow-hidden flex relative">
+                          <div
+                            style={{ width: `${pct}%` }}
+                            className="bg-[#115e59] h-full rounded-full transition-all"
+                            title={`${item.trade}: ${item.count.toLocaleString()}`}
+                          />
+                        </div>
+
+                        <div className="w-12 shrink-0 text-right font-bold text-foreground font-mono">
+                          {item.displayCount}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Row 3: Visual C (Total Workforce Trend) + Visual D (All 26 Skill Sets) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
 
             {/* Visual C: Line Chart: Total Workforce Trend (6 Months) */}
             <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
