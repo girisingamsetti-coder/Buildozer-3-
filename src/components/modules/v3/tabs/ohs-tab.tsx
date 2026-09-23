@@ -672,7 +672,11 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </p>
         </div>
 
-        {/* Incidents reported by month Chart Card */}
+        
+        
+      {/* Combined Requested Row 3 */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
+{/* Incidents reported by month Chart Card */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 pb-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
@@ -719,9 +723,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </CardContent>
         </Card>
 
-        {/* Middle Split: Incident types */}
-        <div className="grid grid-cols-1 gap-3">
-          {/* Incident types */}
+{/* Incident types */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
             <CardHeader className="p-4 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
@@ -771,9 +773,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
             </CardContent>
           </Card>
 
-                  </div>
-
-        {/* Visual D: Table: Near Miss / Incident Report */}
+{/* Visual D: Table: Near Miss / Incident Report */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
@@ -838,7 +838,15 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </table>
         </CardContent>
       </Card>
+
       </div>
+
+{/* Middle Split: Incident types */}
+        <div className="grid grid-cols-1 gap-3">
+          
+                  </div>
+
+              </div>
 
 </div>
   )
