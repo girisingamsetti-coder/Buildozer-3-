@@ -899,12 +899,7 @@ export function EvmTab({
         </Card>
       </div>
 
-    
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <div className="lg:col-span-1">
-          <AttentionCard attentionItems={attentionItems} month={month} domain="EVM" />
-        </div>
-      </div>
+
 </div>
   );
 }
