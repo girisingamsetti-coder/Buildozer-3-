@@ -237,6 +237,57 @@ export function SocialTab({
     { program: 'Adolescent Safety & Child Protection Drive', participants: 310 },
   ]
 
+  const capacityBuildingDetailed = [
+    {
+      title: 'Training on Code of Conduct to all project workers',
+      men: 8474,
+      women: 364,
+      total: 8838,
+      displayTotal: '8,838',
+    },
+    {
+      title: 'Sensitization Training on GBV SEA/SH for E&S Specialist, Engineers etc .,',
+      men: 3200,
+      women: 665,
+      total: 3865,
+      displayTotal: '3,865',
+    },
+    {
+      title: 'Training to IC Committee members on POSH Act, SEA/SH',
+      men: 1700,
+      women: 444,
+      total: 2144,
+      displayTotal: '2,144',
+    },
+    {
+      title: 'Gender Sensitization Training on GBV, SEA/SH for VOs, GCs',
+      men: 850,
+      women: 504,
+      total: 1354,
+      displayTotal: '1,354',
+    },
+    {
+      title: 'Community Awareness program on GBV for SHGs, Stakeholders, PAPs, La...',
+      men: 30,
+      women: 135,
+      total: 165,
+      displayTotal: '165',
+    },
+  ]
+
+  const womenEmployedDetailed = [
+    { skill: 'Highly\nskilled', local: 10, migrant: 10, total: 20, displayTotal: '20' },
+    { skill: 'Skilled', local: 400, migrant: 137, total: 537, displayTotal: '537' },
+    { skill: 'Semi-skilled', local: 30, migrant: 151, total: 181, displayTotal: '181' },
+    { skill: 'Unskilled', local: 770, migrant: 555, total: 1325, displayTotal: '1,325' },
+  ]
+
+  const childrenByAgeDetailed = [
+    { age: '0–5 years', boys: 38, girls: 37, max: 38 },
+    { age: '6–10 years', boys: 16, girls: 21, max: 21 },
+    { age: '11–18 years', boys: 7, girls: 14, max: 14 },
+  ]
+
   const staffingCocData = [
     {
       title: 'Social & labour managers deployed',
@@ -1491,92 +1542,235 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Bottom Row: Visual E (Women Newly Employed) + Visual F (Capacity Building) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Visual E: Grouped Bar Chart: Women Newly Employed — Construction */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <Users className="w-4 h-4 text-primary" />
-                    Women Newly Employed in Construction (Local AP vs Migrant)
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Categorized across 4 skill levels: Highly Skilled, Skilled, Semi-Skilled, Unskilled
-                  </p>
+          {/* Capacity building participants (Full Width) */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+            <CardContent className="p-6">
+              <div>
+                <h3 className="text-sm font-bold text-foreground">Capacity building participants</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">Sum of monthly reports.</p>
+              </div>
+
+              {/* Legend */}
+              <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" />
+                  <span>Men</span>
                 </div>
-                <Badge variant="outline" className="text-xs font-mono">
-                  1,462 Total Women
-                </Badge>
-              </CardHeader>
-              <CardContent className="p-4 flex flex-col gap-3.5">
-                {womenEmployed.map((w, idx) => {
-                  const total = w.local_ap + w.migrant
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" />
+                  <span>Women</span>
+                </div>
+              </div>
+
+              {/* Horizontal Stacked Bars */}
+              <div className="space-y-4">
+                {capacityBuildingDetailed.map((item) => {
+                  const maxScale = 9200;
+                  const totalPct = (item.total / maxScale) * 100;
+                  const menRatio = item.men / item.total;
+                  const womenRatio = item.women / item.total;
+
                   return (
-                    <div key={idx} className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-muted/30 transition-colors">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold text-foreground">{w.skill}</span>
-                        <span className="font-mono text-muted-foreground">
-                          {w.local_ap} Local AP • {w.migrant} Migrant (Total: {total})
-                        </span>
+                    <div key={item.title} className="flex items-center gap-4 text-xs">
+                      <div className="w-[340px] md:w-[420px] shrink-0 truncate text-foreground font-medium" title={item.title}>
+                        {item.title}
                       </div>
-                      <div className="w-full bg-muted/50 rounded-full h-2.5 overflow-hidden flex">
+
+                      <div className="flex-1 bg-muted/40 h-2.5 rounded-full overflow-hidden flex relative">
                         <div
-                          style={{ width: `${Math.round((w.local_ap / total) * 100)}%` }}
-                          className="bg-indigo-500 h-full"
-                          title={`Local AP: ${w.local_ap}`}
-                        />
-                        <div
-                          style={{ width: `${Math.round((w.migrant / total) * 100)}%` }}
-                          className="bg-emerald-500 h-full"
-                          title={`Migrant: ${w.migrant}`}
-                        />
+                          style={{ width: `${totalPct}%` }}
+                          className="h-full flex overflow-hidden rounded-full"
+                        >
+                          <div
+                            style={{ width: `${menRatio * 100}%` }}
+                            className="bg-[#2563eb] h-full transition-all"
+                            title={`Men: ${item.men.toLocaleString()}`}
+                          />
+                          <div
+                            style={{ width: `${womenRatio * 100}%` }}
+                            className="bg-[#be185d] h-full transition-all"
+                            title={`Women: ${item.women.toLocaleString()}`}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-16 shrink-0 text-right font-bold text-foreground font-mono">
+                        {item.displayTotal}
                       </div>
                     </div>
-                  )
+                  );
                 })}
-                <div className="flex items-center justify-between pt-2 border-t text-[11px] text-muted-foreground">
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-indigo-500" /> Local AP Women (80.2%)</span>
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500" /> Migrant Women (19.8%)</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Bottom Grid: Women newly employed, by skill & Children in labour camps, by age */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Card 1: Women newly employed, by skill */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-6">
+                <div>
+                  <h3 className="text-sm font-bold text-foreground">Women newly employed, by skill</h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">Sum of monthly reports.</p>
+                </div>
+
+                {/* Legend */}
+                <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#115e59]" />
+                    <span>Local (AP)</span>
                   </div>
-                  <span className="font-semibold text-foreground">Target: &gt; 12% Female Workforce</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#d97706]" />
+                    <span>Migrant</span>
+                  </div>
+                </div>
+
+                {/* Chart Area */}
+                <div className="relative h-60 pt-2 pb-8 pl-12 pr-4">
+                  {/* Y Axis & Grid Lines */}
+                  <div className="absolute inset-0 top-2 bottom-8 left-12 right-4 flex flex-col justify-between pointer-events-none">
+                    {[
+                      { label: '2,000', val: 2000 },
+                      { label: '1,500', val: 1500 },
+                      { label: '1,000', val: 1000 },
+                      { label: '500', val: 500 },
+                      { label: '0', val: 0 },
+                    ].map((tick) => (
+                      <div key={tick.label} className="w-full flex items-center relative">
+                        <span className="absolute -left-12 w-10 text-right text-xs text-muted-foreground font-mono">
+                          {tick.label}
+                        </span>
+                        <div className="w-full border-b border-dashed border-border/60" />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Columns */}
+                  <div className="relative h-full flex items-end justify-around z-10">
+                    {womenEmployedDetailed.map((item) => {
+                      const maxVal = 2000;
+                      const totalPct = (item.total / maxVal) * 100;
+                      const localPct = (item.local / item.total) * 100;
+                      const migrantPct = (item.migrant / item.total) * 100;
+
+                      return (
+                        <div key={item.skill} className="flex flex-col items-center justify-end h-full relative">
+                          {/* Total on top */}
+                          <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                            {item.displayTotal}
+                          </span>
+
+                          {/* Stacked bar */}
+                          <div
+                            style={{ height: `${totalPct}%` }}
+                            className="w-12 rounded-t-xs flex flex-col-reverse overflow-hidden shadow-2xs"
+                          >
+                            <div
+                              style={{ height: `${localPct}%` }}
+                              className="bg-[#115e59] w-full"
+                              title={`Local (AP): ${item.local}`}
+                            />
+                            <div
+                              style={{ height: `${migrantPct}%` }}
+                              className="bg-[#d97706] w-full"
+                              title={`Migrant: ${item.migrant}`}
+                            />
+                          </div>
+
+                          {/* X Axis Label */}
+                          <div className="absolute -bottom-8 flex flex-col items-center">
+                            <span className="text-xs text-muted-foreground text-center whitespace-pre-line leading-tight">
+                              {item.skill}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Visual F: Horizontal Bar Chart: Capacity Building */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+            {/* Card 2: Children in labour camps, by age */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-6">
                 <div>
-                  <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-primary" />
-                    Gender Capacity Building & Awareness Programs (7 Programs)
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Participants trained across POSH, CoC, female health and adolescent protection
-                  </p>
+                  <h3 className="text-sm font-bold text-foreground">Children in labour camps, by age</h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
                 </div>
-                <Badge variant="outline" className="text-xs font-mono">
-                  7 Programs
-                </Badge>
-              </CardHeader>
-              <CardContent className="p-4 flex flex-col gap-2.5">
-                {capacityBuilding.map((prog, idx) => {
-                  const pct = Math.round((prog.participants / 1300) * 100)
-                  return (
-                    <div key={idx} className="flex flex-col gap-1 p-1 rounded-md hover:bg-muted/30 transition-colors">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-medium text-foreground truncate max-w-xs">{prog.program}</span>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <span className="font-mono font-bold text-foreground">{prog.participants}</span>
-                          <span className="text-[10px] text-muted-foreground">trained</span>
-                        </div>
+
+                {/* Legend */}
+                <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" />
+                    <span>Boys</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" />
+                    <span>Girls</span>
+                  </div>
+                </div>
+
+                {/* Chart Area */}
+                <div className="relative h-60 pt-2 pb-8 pl-10 pr-4">
+                  {/* Y Axis & Grid Lines */}
+                  <div className="absolute inset-0 top-2 bottom-8 left-10 right-4 flex flex-col justify-between pointer-events-none">
+                    {[
+                      { label: '40', val: 40 },
+                      { label: '30', val: 30 },
+                      { label: '20', val: 20 },
+                      { label: '10', val: 10 },
+                      { label: '0', val: 0 },
+                    ].map((tick) => (
+                      <div key={tick.label} className="w-full flex items-center relative">
+                        <span className="absolute -left-10 w-8 text-right text-xs text-muted-foreground font-mono">
+                          {tick.label}
+                        </span>
+                        <div className="w-full border-b border-dashed border-border/60" />
                       </div>
-                      <Progress value={pct} className="h-1.5" />
-                    </div>
-                  )
-                })}
+                    ))}
+                  </div>
+
+                  {/* Columns */}
+                  <div className="relative h-full flex items-end justify-around z-10">
+                    {childrenByAgeDetailed.map((item) => {
+                      const maxVal = 40;
+                      const boysPct = (item.boys / maxVal) * 100;
+                      const girlsPct = (item.girls / maxVal) * 100;
+
+                      return (
+                        <div key={item.age} className="flex flex-col items-center justify-end h-full relative">
+                          {/* Max/Peak value on top */}
+                          <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                            {item.max}
+                          </span>
+
+                          {/* Side by side bars */}
+                          <div className="flex items-end gap-1.5">
+                            <div
+                              style={{ height: `${boysPct}%` }}
+                              className="w-5 bg-[#2563eb] rounded-t-xs transition-all shadow-2xs"
+                              title={`Boys: ${item.boys}`}
+                            />
+                            <div
+                              style={{ height: `${girlsPct}%` }}
+                              className="w-5 bg-[#be185d] rounded-t-xs transition-all shadow-2xs"
+                              title={`Girls: ${item.girls}`}
+                            />
+                          </div>
+
+                          {/* X Axis Label */}
+                          <div className="absolute -bottom-8 flex flex-col items-center">
+                            <span className="text-xs text-muted-foreground text-center whitespace-nowrap leading-tight">
+                              {item.age}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
