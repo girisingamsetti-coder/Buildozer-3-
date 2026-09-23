@@ -647,65 +647,14 @@ export function EvmTab({
           </Card>
         </div>
 
-        {/* Card 3: Solid waste: generated vs disposed */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 w-1/2">
-          <CardHeader className="p-4 border-b bg-muted/20">
-            <CardTitle className="text-sm font-bold text-foreground">
-              Solid waste: generated vs disposed
-            </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Units differ by waste type, so each row has its own scale.
-            </p>
-            <div className="flex items-center gap-4 mt-3 text-xs">
-              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
-                <span className="w-2.5 h-2.5 rounded-sm bg-[#0d5c50]" /> Generated
-              </span>
-              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
-                <span className="w-2.5 h-2.5 rounded-sm bg-[#eab308]" /> Disposed
-              </span>
-            </div>
-          </CardHeader>
-          <CardContent className="p-4">
-            <div className="max-h-[380px] overflow-y-auto pr-4 flex flex-col gap-4">
-              {wasteList.map((w, idx) => {
-                const maxVal = Math.max(w.generated, w.disposed, 1);
-                const genPct = (w.generated / maxVal) * 100;
-                const dispPct = (w.disposed / maxVal) * 100;
-                
-                const formatVal = (val: number) => {
-                  if(val >= 1000000) return (val/1000000).toFixed(1) + 'M';
-                  if(val >= 1000) return Math.round(val/1000) + 'k';
-                  return val.toLocaleString();
-                };
-
-                return (
-                  <div key={idx} className="flex items-center gap-4 text-xs group">
-                    <span className="w-[300px] font-medium text-muted-foreground shrink-0 truncate" title={w.type}>
-                      {w.type} ({w.unit})
-                    </span>
-                    <div className="flex-1 flex flex-col justify-center gap-1">
-                      <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex items-center">
-                        <div className="h-full bg-[#0d5c50] rounded-full" style={{ width: `${genPct}%` }} />
-                      </div>
-                      <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex items-center">
-                        <div className="h-full bg-[#eab308] rounded-full" style={{ width: `${dispPct}%` }} />
-                      </div>
-                    </div>
-                    <span className="w-[100px] text-right font-medium text-foreground shrink-0">
-                      {formatVal(w.generated)} / {formatVal(w.disposed)}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
+        
       </div>
       
-      
-            {/* Middle Split: Visual B (SVG Geographic Map) + Station Inspection Side-Panel */}
+      {/* Map and Solid Waste Split Row */}
+      <div className="flex flex-col lg:flex-row gap-3 items-stretch">
+        {/* Middle Split: Visual B (SVG Geographic Map) + Station Inspection Side-Panel */}
 
-      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 w-full lg:w-[65%] h-full">
         <CardHeader className="px-4 py-1.5 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -894,6 +843,62 @@ export function EvmTab({
           </div>
         </CardContent>
       </Card>
+        
+        {/* Card 3: Solid waste: generated vs disposed */}
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 w-full lg:w-[35%] h-full">
+          <CardHeader className="p-4 border-b bg-muted/20">
+            <CardTitle className="text-sm font-bold text-foreground">
+              Solid waste: generated vs disposed
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Units differ by waste type, so each row has its own scale.
+            </p>
+            <div className="flex items-center gap-4 mt-3 text-xs">
+              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#0d5c50]" /> Generated
+              </span>
+              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#eab308]" /> Disposed
+              </span>
+            </div>
+          </CardHeader>
+          <CardContent className="p-4">
+            <div className="max-h-[380px] overflow-y-auto pr-4 flex flex-col gap-4">
+              {wasteList.map((w, idx) => {
+                const maxVal = Math.max(w.generated, w.disposed, 1);
+                const genPct = (w.generated / maxVal) * 100;
+                const dispPct = (w.disposed / maxVal) * 100;
+                
+                const formatVal = (val: number) => {
+                  if(val >= 1000000) return (val/1000000).toFixed(1) + 'M';
+                  if(val >= 1000) return Math.round(val/1000) + 'k';
+                  return val.toLocaleString();
+                };
+
+                return (
+                  <div key={idx} className="flex items-center gap-4 text-xs group">
+                    <span className="w-[300px] font-medium text-muted-foreground shrink-0 truncate" title={w.type}>
+                      {w.type} ({w.unit})
+                    </span>
+                    <div className="flex-1 flex flex-col justify-center gap-1">
+                      <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex items-center">
+                        <div className="h-full bg-[#0d5c50] rounded-full" style={{ width: `${genPct}%` }} />
+                      </div>
+                      <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex items-center">
+                        <div className="h-full bg-[#eab308] rounded-full" style={{ width: `${dispPct}%` }} />
+                      </div>
+                    </div>
+                    <span className="w-[100px] text-right font-medium text-foreground shrink-0">
+                      {formatVal(w.generated)} / {formatVal(w.disposed)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
     
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         <div className="lg:col-span-1">
