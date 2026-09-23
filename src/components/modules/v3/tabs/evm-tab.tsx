@@ -573,7 +573,7 @@ export function EvmTab({
         </div>
 
         {/* Card 3: Solid waste: generated vs disposed */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 w-1/2">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Solid waste: generated vs disposed
