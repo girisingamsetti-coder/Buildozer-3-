@@ -25,7 +25,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip as RechartsTooltip,
-  LabelList
+  LabelList,
+  PieChart,
+  Pie,
+  Cell
 } from 'recharts'
 import { AttentionCard } from '../attention-card';
 import { ProjectData, DomainAggregatesMonth, AttentionItem } from '../v3-types'
@@ -94,6 +97,26 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
     { month: 'Jul 26', incident: 0, firstAid: 5, nearMiss: 17, other: 1, total: 23 },
     { month: 'Aug 26', incident: 0, firstAid: 0, nearMiss: 1, other: 1, total: 2 },
     { month: 'Sep 26', incident: 0, firstAid: 0, nearMiss: 0, other: 0, total: 0 }
+  ]
+
+  const incidentTypesData = [
+    { name: 'Incident / accident', value: 2, color: '#991b1b', pct: '1%' },
+    { name: 'First-aid case', value: 42, color: '#d97706', pct: '28%' },
+    { name: 'Near miss', value: 90, color: '#8b5cf6', pct: '61%' },
+    { name: 'Other', value: 14, color: '#2563eb', pct: '9%' },
+  ]
+
+  const topIncidentProjects = [
+    { name: 'Tower 1 and 2 - Structure', count: 7 },
+    { name: "Bungalows for Hon'ble Ministers & Hon'ble Judges", count: 6 },
+    { name: 'E6 Road', count: 6 },
+    { name: 'E8 Road', count: 6 },
+    { name: 'N8 Road', count: 6 },
+    { name: 'Zone - 5D', count: 6 },
+    { name: 'E4 Road', count: 5 },
+    { name: "Hon'ble MLAs and MLCs and AIS Officers - Housing", count: 5 },
+    { name: 'N12 Road', count: 5 },
+    { name: 'Zone - 2A', count: 5 },
   ]
 
   // Visual E: 6 OHS Policies & Plans Availability
@@ -373,6 +396,109 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
             </ResponsiveContainer>
           </CardContent>
         </Card>
+
+        {/* Middle Split: Incident types + Projects reporting the most incidents */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {/* Incident types */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 flex flex-col">
+            <CardHeader className="p-4 border-b bg-muted/20">
+              <CardTitle className="text-sm font-bold text-foreground">
+                Incident types
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6 flex-1 flex flex-col sm:flex-row items-center justify-around gap-6">
+              <div className="w-52 h-52 relative shrink-0">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={incidentTypesData}
+                      innerRadius="72%"
+                      outerRadius="98%"
+                      paddingAngle={2}
+                      dataKey="value"
+                      stroke="none"
+                      startAngle={90}
+                      endAngle={-270}
+                    >
+                      {incidentTypesData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span className="text-3xl font-black text-slate-800 dark:text-slate-100">148</span>
+                  <span className="text-xs text-muted-foreground mt-0.5">reports</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4 flex-1 max-w-[240px]">
+                {incidentTypesData.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                      <span className="font-medium text-slate-700 dark:text-slate-300">{item.name}</span>
+                    </div>
+                    <div className="flex items-center gap-4 text-right shrink-0">
+                      <span className="font-bold text-foreground font-mono">{item.value}</span>
+                      <span className="text-muted-foreground w-8 font-mono">{item.pct}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Projects reporting the most incidents */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 flex flex-col">
+            <CardHeader className="p-4 border-b bg-muted/20">
+              <CardTitle className="text-sm font-bold text-foreground">
+                Projects reporting the most incidents
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Select a project to focus on it.
+              </p>
+            </CardHeader>
+            <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
+              {topIncidentProjects.map((p, idx) => {
+                const maxVal = 7;
+                const pct = (p.count / maxVal) * 100;
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      const matched = projects.find(proj =>
+                        proj.name.toLowerCase().includes(p.name.toLowerCase().slice(0, 10))
+                      );
+                      if (matched) onSelectProject(matched);
+                    }}
+                    className="flex items-center gap-2.5 text-xs py-1 px-1.5 rounded-md cursor-pointer hover:bg-muted/30 group transition-colors"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-medium shrink-0">
+                      {idx + 1}
+                    </span>
+                    <div className="flex-1 flex flex-col gap-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                          {p.name}
+                        </span>
+                        <span className="font-bold text-foreground font-mono ml-2 shrink-0">
+                          {p.count}
+                        </span>
+                      </div>
+                      <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 overflow-hidden">
+                        <div
+                          style={{ width: `${pct}%` }}
+                          className="h-full bg-[#0d5c50] rounded-full transition-all duration-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Visual D: Table: Near Miss / Incident Report */}
         <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
