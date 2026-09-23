@@ -249,10 +249,10 @@ export function EvmTab({
         </Card>
       </div>
 
-      {/* Top Split: Visual A (Statutory Tracking Stacked Table) + Visual D (Water & Wastewater) */}
+      {/* Top Split: Statutory, Air Quality, and Noise */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Visual A: Stacked Bar Table: Statutory Compliance Tracking */}
-        <Card className="lg:col-span-2 border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -378,11 +378,7 @@ export function EvmTab({
             </div>
           </CardContent>
         </Card>
-      </div>
 
-      
-      {/* Air Quality & Noise Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Visual C: Table: Air Quality Monitoring */}
         <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
