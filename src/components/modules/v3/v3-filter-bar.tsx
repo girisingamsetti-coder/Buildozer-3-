@@ -48,7 +48,6 @@ export function V3FilterBar({
         <div className="relative flex-1 min-w-[200px] max-w-[320px]">
           <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
           <Input
-            placeholder="Search project or ID (e.g. Zone - 9A)..."
             value={filters.searchQuery}
             onChange={(e) => onFilterChange({ searchQuery: e.target.value })}
             className="pl-8 pr-3 h-9 text-xs bg-background"
