@@ -17,16 +17,30 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { ProjectData, DomainAggregatesMonth } from '../v3-types'
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  LabelList
+} from 'recharts'
+import { AttentionCard } from '../attention-card';
+import { ProjectData, DomainAggregatesMonth, AttentionItem } from '../v3-types'
 
 interface OhsTabProps {
   projects: ProjectData[]
   month: string
   domainAggregates?: DomainAggregatesMonth
   onSelectProject: (p: ProjectData) => void
+  attentionItems: AttentionItem[];
 }
 
-export function OhsTab({ projects, month, domainAggregates, onSelectProject }: OhsTabProps) {
+export function OhsTab({ projects, month, domainAggregates, onSelectProject,
+  attentionItems,
+}: OhsTabProps) {
   const ohsAgg = domainAggregates?.ohs
 
   // Visual A: OHS Requirement Groups
@@ -68,6 +82,18 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
     { project: 'Zone - 9A', type: 'Near Miss', description: 'Rebar stack shift during crane slewing', status: 'CAPA Closed', rca: 'Rigging sling tension imbalance rectified' },
     { project: 'N9 Road', type: 'First Aid Treatment', description: 'Minor finger laceration handling formwork', status: 'CAPA Closed', rca: 'Cut-resistant gloves issued & mandatory TBT' },
     { project: 'Flood Works - KV', type: 'Near Miss', description: 'Excavator bucket touched overhead utility barricade', status: 'CAPA Open', rca: 'Banksman re-assigned, height barrier erected' }
+  ]
+
+  const incidentsReportedByMonth = [
+    { month: 'Jan 26', incident: 0, firstAid: 2, nearMiss: 2, other: 0, total: 4 },
+    { month: 'Feb 26', incident: 0, firstAid: 3, nearMiss: 9, other: 2, total: 14 },
+    { month: 'Mar 26', incident: 1, firstAid: 7, nearMiss: 8, other: 3, total: 19 },
+    { month: 'Apr 26', incident: 0, firstAid: 9, nearMiss: 20, other: 5, total: 34 },
+    { month: 'May 26', incident: 0, firstAid: 9, nearMiss: 16, other: 1, total: 26 },
+    { month: 'Jun 26', incident: 1, firstAid: 7, nearMiss: 17, other: 1, total: 26 },
+    { month: 'Jul 26', incident: 0, firstAid: 5, nearMiss: 17, other: 1, total: 23 },
+    { month: 'Aug 26', incident: 0, firstAid: 0, nearMiss: 1, other: 1, total: 2 },
+    { month: 'Sep 26', incident: 0, firstAid: 0, nearMiss: 0, other: 0, total: 0 }
   ]
 
   // Visual E: 6 OHS Policies & Plans Availability
@@ -292,8 +318,64 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
         </Card>
       </div>
 
-      {/* Visual D: Table: Near Miss / Incident Report */}
-      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+      {/* Incidents Section */}
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-3 px-1">
+          <h3 className="font-bold text-foreground text-lg">Incidents</h3>
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            The form records one incident type per report, so these count reports, not individual incidents.
+          </p>
+        </div>
+
+        {/* Incidents reported by month Chart Card */}
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+          <CardHeader className="p-4 pb-2 border-b bg-muted/20">
+            <CardTitle className="text-sm font-bold text-foreground">
+              Incidents reported by month
+            </CardTitle>
+            <div className="flex flex-wrap items-center gap-5 mt-2 text-xs">
+              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#991b1b]" /> Incident / accident
+              </span>
+              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#d97706]" /> First-aid case
+              </span>
+              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#8b5cf6]" /> Near miss
+              </span>
+              <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#2563eb]" /> Other
+              </span>
+            </div>
+          </CardHeader>
+          <CardContent className="p-4 h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={incidentsReportedByMonth} margin={{ top: 25, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} dy={10} />
+                <YAxis domain={[0, 40]} ticks={[0, 10, 20, 30, 40]} axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
+                <RechartsTooltip cursor={{ fill: 'transparent' }} contentStyle={{ fontSize: '12px', borderRadius: '6px' }} />
+                <Bar dataKey="incident" stackId="a" fill="#991b1b" maxBarSize={38} />
+                <Bar dataKey="firstAid" stackId="a" fill="#d97706" maxBarSize={38} />
+                <Bar dataKey="nearMiss" stackId="a" fill="#8b5cf6" maxBarSize={38} />
+                <Bar dataKey="other" stackId="a" fill="#2563eb" maxBarSize={38} radius={[4, 4, 0, 0]}>
+                  <LabelList
+                    dataKey="total"
+                    position="top"
+                    offset={8}
+                    fill="#334155"
+                    fontSize={11}
+                    fontWeight={700}
+                    formatter={(v: any) => (v > 0 ? v : '')}
+                  />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Visual D: Table: Near Miss / Incident Report */}
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -357,6 +439,13 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject }: O
           </table>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <div className="lg:col-span-1">
+          <AttentionCard attentionItems={attentionItems} month={month} domain="OHS" />
+        </div>
+      </div>
+</div>
   )
 }

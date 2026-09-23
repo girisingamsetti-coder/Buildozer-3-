@@ -26,7 +26,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import { ProjectData, DomainAggregatesMonth, V3CompliancePayload } from '../v3-types'
+import { AttentionCard } from '../attention-card';
+import { ProjectData, DomainAggregatesMonth, AttentionItem, V3CompliancePayload } from '../v3-types'
 
 interface SocialTabProps {
   projects: ProjectData[]
@@ -34,6 +35,7 @@ interface SocialTabProps {
   domainAggregates?: DomainAggregatesMonth
   metadata?: V3CompliancePayload['metadata']
   onSelectProject: (p: ProjectData) => void
+  attentionItems: AttentionItem[];
 }
 
 export function SocialTab({
@@ -42,6 +44,7 @@ export function SocialTab({
   domainAggregates,
   metadata,
   onSelectProject,
+  attentionItems,
 }: SocialTabProps) {
   const [subTab, setSubTab] = useState<'safeguard' | 'skills' | 'labour' | 'gender'>('safeguard')
 
@@ -1342,6 +1345,12 @@ export function SocialTab({
           </div>
         </div>
       )}
-    </div>
+    
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <div className="lg:col-span-1">
+          <AttentionCard attentionItems={attentionItems} month={month} domain="Social" />
+        </div>
+      </div>
+</div>
   )
 }

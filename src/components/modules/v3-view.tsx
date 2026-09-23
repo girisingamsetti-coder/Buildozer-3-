@@ -41,6 +41,7 @@ export default function V3View() {
     month: '2026-09',
     searchQuery: '',
     contractor: 'ALL',
+    project: 'ALL',
     statusFilter: 'ALL',
   })
 
@@ -85,6 +86,15 @@ export default function V3View() {
     return Array.from(set).sort()
   }, [data])
 
+  const projectsList = useMemo(() => {
+    if (!data) return []
+    const set = new Set<string>()
+    data.projects.forEach((p) => {
+      set.add(p.name)
+    })
+    return Array.from(set).sort()
+  }, [data])
+
   // Filtered Projects
   const filteredProjects = useMemo(() => {
     if (!data) return []
@@ -99,6 +109,11 @@ export default function V3View() {
 
       // 2. Contractor
       if (filters.contractor !== 'ALL' && p.contractor !== filters.contractor) {
+        return false
+      }
+
+      // 3. Project Filter
+      if (filters.project !== 'ALL' && p.name !== filters.project) {
         return false
       }
 
@@ -198,6 +213,7 @@ export default function V3View() {
         onFilterChange={handleFilterChange}
         months={months}
         contractors={contractors}
+        projects={projectsList}
         filteredCount={filteredProjects.length}
         totalCount={data.projects.length}
         onExport={handleExport}
@@ -280,6 +296,7 @@ export default function V3View() {
             month={filters.month}
             domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
+            attentionItems={data.attention_required}
           />
         </TabsContent>
 
@@ -290,6 +307,7 @@ export default function V3View() {
             month={filters.month}
             domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
+            attentionItems={data.attention_required}
           />
         </TabsContent>
 
@@ -301,6 +319,7 @@ export default function V3View() {
             officialItems={data.metadata.official_road_safety_items}
             domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
+            attentionItems={data.attention_required}
           />
         </TabsContent>
 
@@ -312,6 +331,7 @@ export default function V3View() {
             domainAggregates={currentDomainAgg}
             metadata={data.metadata}
             onSelectProject={handleOpenProject}
+            attentionItems={data.attention_required}
           />
         </TabsContent>
 

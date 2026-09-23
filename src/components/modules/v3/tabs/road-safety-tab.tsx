@@ -17,7 +17,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { ProjectData, DomainAggregatesMonth } from '../v3-types'
+import { AttentionCard } from '../attention-card';
+import { ProjectData, DomainAggregatesMonth, AttentionItem } from '../v3-types'
 
 interface RoadSafetyTabProps {
   projects: ProjectData[]
@@ -25,6 +26,7 @@ interface RoadSafetyTabProps {
   officialItems: string[]
   domainAggregates?: DomainAggregatesMonth
   onSelectProject: (p: ProjectData) => void
+  attentionItems: AttentionItem[];
 }
 
 export function RoadSafetyTab({
@@ -33,6 +35,7 @@ export function RoadSafetyTab({
   officialItems,
   domainAggregates,
   onSelectProject,
+  attentionItems,
 }: RoadSafetyTabProps) {
   const rsAgg = domainAggregates?.road_safety
 
@@ -354,6 +357,12 @@ export function RoadSafetyTab({
           </div>
         </CardContent>
       </Card>
-    </div>
+    
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <div className="lg:col-span-1">
+          <AttentionCard attentionItems={attentionItems} month={month} domain="Road Safety" />
+        </div>
+      </div>
+</div>
   )
 }

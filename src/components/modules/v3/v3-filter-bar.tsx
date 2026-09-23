@@ -13,6 +13,7 @@ interface V3FilterBarProps {
   onFilterChange: (newFilters: Partial<DashboardFilterState>) => void
   months: string[]
   contractors: string[]
+  projects: string[]
   filteredCount: number
   totalCount: number
   onExport?: () => void
@@ -34,6 +35,7 @@ export function V3FilterBar({
   onFilterChange,
   months,
   contractors,
+  projects,
   filteredCount,
   totalCount,
   onExport,
@@ -96,6 +98,29 @@ export function V3FilterBar({
           </Select>
         </div>
 
+        {/* Project Filter */}
+        <div className="flex items-center gap-1.5">
+
+          <Select
+            value={filters.project}
+            onValueChange={(val) => onFilterChange({ project: val })}
+          >
+            <SelectTrigger className="w-[160px] h-9 text-xs font-medium bg-background">
+              <SelectValue placeholder="All Projects" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ALL" className="text-xs">
+                All Projects
+              </SelectItem>
+              {projects.map((p) => (
+                <SelectItem key={p} value={p} className="text-xs">
+                  {p}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
         {/* Status Filter */}
         <div className="flex items-center gap-1.5">
 
@@ -126,7 +151,6 @@ export function V3FilterBar({
 
       {/* Right Controls: Count & Export */}
       <div className="flex items-center gap-2 shrink-0">
-        <AddNewFormsDropdown />
         {onExport && (
           <Button
             variant="outline"
@@ -138,6 +162,7 @@ export function V3FilterBar({
             Export Data
           </Button>
         )}
+        <AddNewFormsDropdown />
       </div>
     </div>
   )

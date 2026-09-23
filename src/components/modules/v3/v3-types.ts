@@ -237,5 +237,6 @@ export interface DashboardFilterState {
   month: string
   searchQuery: string
   contractor: string
+  project: string
   statusFilter: 'ALL' | 'COMPLIANT' | 'ATTENTION' | 'MISSING'
 }

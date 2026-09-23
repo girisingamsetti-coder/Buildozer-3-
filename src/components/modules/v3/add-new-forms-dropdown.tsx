@@ -13,13 +13,13 @@ import {
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-import RoadSafetyFormDialog from '../../road-safety-form-dialog'
-import EVMFormDialog from '../../evm-form-dialog'
-import SocialSafeguardFormDialog from '../../social-safeguard-form-dialog'
-import SkillTrainingFormDialog from '../../skill-training-form-dialog'
-import LabourLawFormDialog from '../../labour-law-form-dialog'
-import GenderFormDialog from '../../gender-form-dialog'
-import OHSFormDialog from '../../ohs-form-dialog'
+import RoadSafetyFormDialog from '../road-safety-form-dialog'
+import EVMFormDialog from '../evm-form-dialog'
+import SocialSafeguardFormDialog from '../social-safeguard-form-dialog'
+import SkillTrainingFormDialog from '../skill-training-form-dialog'
+import LabourLawFormDialog from '../labour-law-form-dialog'
+import GenderFormDialog from '../gender-form-dialog'
+import OHSFormDialog from '../ohs-form-dialog'
 
 export function AddNewFormsDropdown() {
   const [addMenuOpen, setAddMenuOpen] = useState(false)

@@ -4,7 +4,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { toast } from 'sonner'
 import {
-  Plus, Search, X, FileText, ChevronDown, Trash2, Calendar, CheckCircle2, XCircle, Clock, AlertTriangle, Pencil,
+  Plus, Search, X, FileText, ChevronDown, Trash2, Calendar, CheckCircle2, XCircle, Clock, AlertTriangle, Pencil, ChevronLeft, ChevronRight,
 } from 'lucide-react'
 import RoadSafetyFormDialog, { type RoadSafetySubmission } from '../../road-safety-form-dialog'
 import EVMFormDialog, { type EVMSubmission } from '../../evm-form-dialog'
@@ -303,7 +303,7 @@ function StatCard({ formType, entries }: { formType: FormType; entries: FormEntr
             </span>
           ))}
         </div>
-        <div className="border border-orange-400 rounded-md px-2 py-1.5 text-center bg-orange-50 dark:bg-orange-900/20">
+        <div className="border border-orange-400 rounded-md px-1.5 py-1 text-center bg-orange-50 dark:bg-orange-900/20 flex items-center justify-between mt-0.5">
           <p className="text-[9px] font-bold text-orange-500 uppercase tracking-wider">Pending</p>
           <p className="text-xl font-black text-orange-500 leading-none">{pending}</p>
         </div>
@@ -502,15 +502,34 @@ export default function ReportTab() {
     toast.success('Record deleted')
   }
 
-  const filtered = useMemo(() => forms.filter(f => {
+  const unifiedData = useMemo(() => {
+    const combined = [
+      ...ohsSubmissions.map(s => ({ id: s.id, formType: 'OHS', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'OHS' })),
+      ...rsSubmissions.map(s => ({ id: s.id, formType: 'Road Safety', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'RoadSafety' })),
+      ...evmSubmissions.map(s => ({ id: s.id, formType: 'EVM', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'EVM' })),
+      ...ssSubmissions.map(s => ({ id: s.id, formType: 'Social Safeguard', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'SocialSafeguard' })),
+      ...stSubmissions.map(s => ({ id: s.id, formType: 'Skill Training', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'SkillTraining' })),
+      ...llSubmissions.map(s => ({ id: s.id, formType: 'Labour Law', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'LabourLaw' })),
+      ...genSubmissions.map(s => ({ id: s.id, formType: 'Gender & GBV', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'Gender' })),
+      ...forms.map(f => ({ id: f.id, formType: f.formType, projectName: f.location, reportingMonth: f.date, submittedAt: f.date, status: f.status, isMock: true }))
+    ]
+    return combined.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime())
+  }, [ohsSubmissions, rsSubmissions, evmSubmissions, ssSubmissions, stSubmissions, llSubmissions, genSubmissions, forms])
+
+  const filteredUnified = useMemo(() => unifiedData.filter(f => {
     if (typeFilter && f.formType !== typeFilter) return false
     if (statusFilter && f.status !== statusFilter) return false
     if (search) {
       const q = search.toLowerCase()
-      if (!f.formType.toLowerCase().includes(q) && !f.submittedBy.toLowerCase().includes(q) && !f.location.toLowerCase().includes(q)) return false
+      if (!f.formType.toLowerCase().includes(q) && !f.projectName.toLowerCase().includes(q)) return false
     }
     return true
-  }).sort((a, b) => b.date.localeCompare(a.date)), [forms, search, typeFilter, statusFilter])
+  }), [unifiedData, search, typeFilter, statusFilter])
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
+  const totalPages = Math.ceil(filteredUnified.length / itemsPerPage)
+  const paginatedData = filteredUnified.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
   const hasFilter = !!(search || typeFilter || statusFilter)
 
@@ -527,476 +546,110 @@ export default function ReportTab() {
             ))}
           </div>
 
-          {/* Project Summary Table */}
-          <ProjectSummaryTable forms={forms} />
-
-          {/* Road Safety Submissions Dashboard */}
-          {rsSubmissions.length > 0 && (
-            <Card className="shrink-0">
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                  <p className="text-sm font-bold text-[#0d9488]" >Road Safety Submissions</p>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setRsOpen(true)}>
-                    <Plus className="h-3 w-3" /> New Submission
-                  </Button>
-                </div>
-                <div className="overflow-x-auto min-h-[400px]">
-                  <table className="text-xs w-full">
-                    <thead>
-                      <tr className="bg-muted/40 border-b">
-                        <th className="text-left px-4 py-2 font-semibold">Project</th>
-                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                        <th className="text-center px-3 py-2 font-semibold text-emerald-600">Yes</th>
-                        <th className="text-center px-3 py-2 font-semibold text-red-500">No</th>
-                        <th className="text-left px-4 py-2 font-semibold">Status</th>
-                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                        <th className="px-3 py-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {rsSubmissions.map(rs => {
-                        const checklist = Array.isArray(rs.checklist) ? rs.checklist : []
-                        const yes = checklist.filter((c: any) => c?.answer === 'yes' || c?.status === 'Yes').length
-                        const no = checklist.filter((c: any) => c?.answer === 'no' || c?.status === 'No').length
-                        const statusConfig = {
-                          'Draft': { color: 'bg-slate-100 text-slate-600', icon: Clock },
-                          'Submitted': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                          'Needs Corrective Action': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
-                          'Approved': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                          'Rejected': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
-                          'Pending': { color: 'bg-amber-100 text-amber-700', icon: Clock },
-                        }[rs.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
-                        const Icon = statusConfig?.icon || Clock
-                        return (
-                          <tr key={rs.id} className="border-b hover:bg-muted/20">
-                            <td className="px-4 py-2 font-medium">{rs.projectName}</td>
-                            <td className="px-4 py-2 text-muted-foreground">{rs.reportingMonth}</td>
-                            <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
-                            <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
-                            <td className="px-4 py-2">
-                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
-                                <Icon className="h-2.5 w-2.5" />{rs.status}
-                              </span>
-                            </td>
-                            <td className="px-4 py-2 text-muted-foreground">
-                              {rs.submittedAt ? new Date(rs.submittedAt).toLocaleDateString('en-IN') : '—'}
-                            </td>
-                            <td className="px-3 py-2">
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                                onClick={() => deleteMutation.mutate({ formType: 'RoadSafety', id: rs.id })}>
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* OHS Submissions Dashboard */}
-          {ohsSubmissions.length > 0 && (
-            <Card className="shrink-0">
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                  <p className="text-sm font-bold text-[#0d9488]" >OHS Submissions</p>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setOhsOpen(true)}>
-                    <Plus className="h-3 w-3" /> New Submission
-                  </Button>
-                </div>
-                <div className="overflow-x-auto min-h-[400px]">
-                  <table className="text-xs w-full">
-                    <thead>
-                      <tr className="bg-muted/40 border-b">
-                        <th className="text-left px-4 py-2 font-semibold">Project</th>
-                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                        <th className="text-center px-3 py-2 font-semibold text-emerald-600">Compliant</th>
-                        <th className="text-center px-3 py-2 font-semibold text-red-500">Non-Compliant</th>
-                        <th className="text-center px-3 py-2 font-semibold text-amber-500">Pending</th>
-                        <th className="text-left px-4 py-2 font-semibold">Status</th>
-                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                        <th className="px-3 py-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {ohsSubmissions.map(ohs => {
-                        const checks = [
-                          ohs.induction?.status || (ohs.daily_monitoring?.ohs_induction_conducted ? 'yes' : 'no'),
-                          ohs.wmsHira?.status || (ohs.weekly_reporting?.wms_hira_approval === 'Approved' ? 'yes' : 'no'),
-                          ohs.ohsCommittee?.status || (ohs.monthly_monitoring?.ohs_committee_formed ? 'yes' : 'no'),
-                          ohs.safetyAudit?.status || (ohs.ohs_audits ? 'yes' : 'no'),
-                          ohs.hira?.status || (ohs.hazard_id_sop?.hira_carried_out_quarterly ? 'yes' : 'no'),
-                          ohs.ohsPolicy?.status || (ohs.ohs_policies?.health_and_safety_policy_displayed ? 'yes' : 'no')
-                        ]
-                        const yes = checks.filter(c => c === 'yes' || c === 'Yes' || c === true).length
-                        const no = checks.filter(c => c === 'no' || c === 'No' || c === false).length
-                        const pending = checks.filter(c => !c || c === 'null').length
-                        const statusConfig = {
-                          'Draft': { color: 'bg-slate-100 text-slate-600', icon: Clock },
-                          'Submitted': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                          'Needs Corrective Action': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
-                          'Approved': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                          'Rejected': { color: 'bg-red-100 text-red-600', icon: AlertTriangle },
-                          'Pending': { color: 'bg-amber-100 text-amber-700', icon: Clock },
-                        }[ohs.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
-                        const Icon = statusConfig?.icon || Clock
-                        return (
-                          <tr key={ohs.id} className="border-b hover:bg-muted/20">
-                            <td className="px-4 py-2 font-medium">{ohs.projectName}</td>
-                            <td className="px-4 py-2 text-muted-foreground">{ohs.reportingMonth}</td>
-                            <td className="px-3 py-2 text-center font-bold text-emerald-600">{yes}</td>
-                            <td className="px-3 py-2 text-center font-bold text-red-500">{no}</td>
-                            <td className="px-3 py-2 text-center font-bold text-amber-500">{pending}</td>
-                            <td className="px-4 py-2">
-                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig?.color}`}>
-                                <Icon className="h-2.5 w-2.5" />{ohs.status}
-                              </span>
-                            </td>
-                            <td className="px-4 py-2 text-muted-foreground">
-                              {ohs.submittedAt ? new Date(ohs.submittedAt).toLocaleDateString('en-IN') : '—'}
-                            </td>
-                            <td className="px-3 py-2">
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                                onClick={() => deleteMutation.mutate({ formType: 'OHS', id: ohs.id })}>
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* EVM Submissions Dashboard */}
-          {evmSubmissions.length > 0 && (
-            <Card className="shrink-0">
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                  <p className="text-sm font-bold text-[#0d9488]">EVM — Environmental Compliance Monitoring</p>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setEvmOpen(true)}>
-                    <Plus className="h-3 w-3" /> New EVM Report
-                  </Button>
-                </div>
-                <div className="overflow-x-auto min-h-[400px]">
-                  <table className="text-xs w-full">
-                    <thead>
-                      <tr className="bg-muted/40 border-b">
-                        <th className="text-left px-4 py-2 font-semibold">Project</th>
-                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                        <th className="text-left px-4 py-2 font-semibold">Status</th>
-                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                        <th className="px-3 py-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {evmSubmissions.map(ev => {
-                        const statusConfig = {
-                          'Draft': { color: 'bg-slate-100 text-slate-600', icon: Clock },
-                          'Submitted': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                          'Pending PM Certification': { color: 'bg-blue-100 text-blue-700', icon: Clock },
-                          'Pending PMC': { color: 'bg-amber-100 text-amber-700', icon: Clock },
-                          'Pending PgMC': { color: 'bg-purple-100 text-purple-700', icon: Clock },
-                          'Pending ESMU': { color: 'bg-indigo-100 text-indigo-700', icon: Clock },
-                          'Returned': { color: 'bg-orange-100 text-orange-700', icon: AlertTriangle },
-                          'Approved': { color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-                        }[ev.status] || { color: 'bg-slate-100 text-slate-600', icon: Clock }
-                        const Icon = statusConfig.icon
-                        return (
-                          <tr key={ev.id} className="border-b hover:bg-muted/20">
-                            <td className="px-4 py-2 font-medium">{ev.projectName || '—'}</td>
-                            <td className="px-4 py-2 text-muted-foreground">{ev.reportingMonth}</td>
-                            <td className="px-4 py-2">
-                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusConfig.color}`}>
-                                <Icon className="h-2.5 w-2.5" />{ev.status}
-                              </span>
-                            </td>
-                            <td className="px-4 py-2 text-muted-foreground">
-                              {ev.submittedAt ? new Date(ev.submittedAt).toLocaleDateString('en-IN') : '—'}
-                            </td>
-                            <td className="px-3 py-2">
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                                onClick={() => deleteMutation.mutate({ formType: 'EVM', id: ev.id })}>
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Social Modules Dashboards */}
-          {ssSubmissions.length > 0 && (
-            <Card className="shrink-0">
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                  <p className="text-sm font-bold text-[#0d9488]">Social Safeguard Compliance for MPR</p>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setSsOpen(true)}>
-                    <Plus className="h-3 w-3" /> New Report
-                  </Button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="text-xs w-full">
-                    <thead>
-                      <tr className="bg-muted/40 border-b">
-                        <th className="text-left px-4 py-2 font-semibold">Project</th>
-                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                        <th className="text-left px-4 py-2 font-semibold">Status</th>
-                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                        <th className="px-3 py-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {ssSubmissions.map(sub => (
-                        <tr key={sub.id} className="border-b hover:bg-muted/20">
-                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                          <td className="px-4 py-2">
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                          <td className="px-3 py-2">
-                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SocialSafeguard', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {stSubmissions.length > 0 && (
-            <Card className="shrink-0">
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                  <p className="text-sm font-bold text-[#0d9488]">Skill Training & Employment</p>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setStOpen(true)}>
-                    <Plus className="h-3 w-3" /> New Report
-                  </Button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="text-xs w-full">
-                    <thead>
-                      <tr className="bg-muted/40 border-b">
-                        <th className="text-left px-4 py-2 font-semibold">Project</th>
-                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                        <th className="text-left px-4 py-2 font-semibold">Status</th>
-                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                        <th className="px-3 py-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {stSubmissions.map(sub => (
-                        <tr key={sub.id} className="border-b hover:bg-muted/20">
-                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                          <td className="px-4 py-2">
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                          <td className="px-3 py-2">
-                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'SkillTraining', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {llSubmissions.length > 0 && (
-            <Card className="shrink-0">
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                  <p className="text-sm font-bold text-[#0d9488]">Labour Law Compliance</p>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setLlOpen(true)}>
-                    <Plus className="h-3 w-3" /> New Report
-                  </Button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="text-xs w-full">
-                    <thead>
-                      <tr className="bg-muted/40 border-b">
-                        <th className="text-left px-4 py-2 font-semibold">Project</th>
-                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                        <th className="text-left px-4 py-2 font-semibold">Status</th>
-                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                        <th className="px-3 py-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {llSubmissions.map(sub => (
-                        <tr key={sub.id} className="border-b hover:bg-muted/20">
-                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                          <td className="px-4 py-2">
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                          <td className="px-3 py-2">
-                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'LabourLaw', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {genSubmissions.length > 0 && (
-            <Card className="shrink-0">
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                  <p className="text-sm font-bold text-[#0d9488]">Gender & GBV Compliance</p>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={() => setGenOpen(true)}>
-                    <Plus className="h-3 w-3" /> New Report
-                  </Button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="text-xs w-full">
-                    <thead>
-                      <tr className="bg-muted/40 border-b">
-                        <th className="text-left px-4 py-2 font-semibold">Project</th>
-                        <th className="text-left px-4 py-2 font-semibold">Reporting Month</th>
-                        <th className="text-center px-4 py-2 font-semibold">GBV Instances?</th>
-                        <th className="text-left px-4 py-2 font-semibold">Status</th>
-                        <th className="text-left px-4 py-2 font-semibold">Submitted Date</th>
-                        <th className="px-3 py-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {genSubmissions.map(sub => (
-                        <tr key={sub.id} className="border-b hover:bg-muted/20">
-                          <td className="px-4 py-2 font-medium">{sub.projectName}</td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</td>
-                          <td className="px-4 py-2 text-center">
-                            {sub.gbvInstances === 'Yes' ? (
-                              <span className="text-red-600 font-bold">Yes</span>
-                            ) : sub.gbvInstances === 'No' ? (
-                              <span className="text-emerald-600 font-bold">No</span>
-                            ) : '—'}
-                          </td>
-                          <td className="px-4 py-2">
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
-                              {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}{sub.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2 text-muted-foreground">{sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}</td>
-                          <td className="px-3 py-2">
-                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600" onClick={() => deleteMutation.mutate({ formType: 'Gender', id: sub.id })}><Trash2 className="h-3 w-3" /></Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Forms Summary Table */}
-          <Card className="flex flex-col mb-6">
+          
+          {/* Unified Submissions Table */}
+          <Card className="flex flex-col mb-6 shrink-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
-              <p className="text-sm font-bold text-[#0d9488] shrink-0">Forms Summary</p>
+              <p className="text-sm font-bold text-[#0d9488] shrink-0">All Submissions</p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-2 flex-1 justify-end">
                 <div className="relative w-full max-w-sm">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search by form type, person, location..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
+                  <Input placeholder="Search project or type..." value={search} onChange={e => {setSearch(e.target.value); setCurrentPage(1)}} className="pl-9 h-8 text-xs" />
                 </div>
-                <Select value={typeFilter} onValueChange={setTypeFilter}>
-                  <SelectTrigger className="w-full sm:w-36 h-8 text-xs"><SelectValue placeholder="Form Type" /></SelectTrigger>
-                  <SelectContent>{FORM_TYPES.map(t => <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>)}</SelectContent>
-                </Select>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full sm:w-32 h-8 text-xs"><SelectValue placeholder="Status" /></SelectTrigger>
-                  <SelectContent>{STATUS_OPTIONS.map(s => <SelectItem key={s} value={s} className="text-xs">{s}</SelectItem>)}</SelectContent>
+                <Select value={typeFilter} onValueChange={v => {setTypeFilter(v); setCurrentPage(1)}}>
+                  <SelectTrigger className="w-full sm:w-40 h-8 text-xs"><SelectValue placeholder="Form Type" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="All">All Types</SelectItem>
+                    <SelectItem value="OHS">OHS</SelectItem>
+                    <SelectItem value="Road Safety">Road Safety</SelectItem>
+                    <SelectItem value="EVM">EVM</SelectItem>
+                    <SelectItem value="Social Safeguard">Social Safeguard</SelectItem>
+                    <SelectItem value="Skill Training">Skill Training</SelectItem>
+                    <SelectItem value="Labour Law">Labour Law</SelectItem>
+                    <SelectItem value="Gender & GBV">Gender & GBV</SelectItem>
+                  </SelectContent>
                 </Select>
                 {hasFilter && (
                   <Button variant="outline" size="sm" className="h-8 bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 text-xs px-2"
-                    onClick={() => { setSearch(''); setTypeFilter(''); setStatusFilter('') }}>
+                    onClick={() => { setSearch(''); setTypeFilter(''); setStatusFilter(''); setCurrentPage(1) }}>
                     Clear <X className="h-3.5 w-3.5 ml-1" />
                   </Button>
                 )}
               </div>
             </div>
             <CardContent className="p-0">
-              <Table containerClassName="max-h-[min(650px,calc(100vh-250px))] overflow-auto">
-                <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
-                  <TableRow>
-                    <TableHead className="text-xs font-bold text-foreground">Form Type</TableHead>
-                    <TableHead className="text-xs font-bold text-foreground">Submitted By</TableHead>
-                    <TableHead className="text-xs font-bold text-foreground">Location</TableHead>
-                    <TableHead className="text-xs font-bold text-foreground">Date</TableHead>
-                    <TableHead className="text-xs font-bold text-foreground">Status</TableHead>
-                    <TableHead className="text-xs font-bold text-foreground">Remarks</TableHead>
-                    <TableHead className="text-xs font-bold text-foreground text-right w-20 pr-4">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filtered.length === 0 ? (
+              <div className="overflow-x-auto min-h-[400px]">
+                <Table className="w-full text-xs">
+                  <TableHeader className="bg-muted/40">
                     <TableRow>
-                      <TableCell colSpan={7} className="text-center py-12 text-muted-foreground text-sm">No form submissions found.</TableCell>
+                      <TableHead className="px-4 py-2 font-semibold">Form Type</TableHead>
+                      <TableHead className="px-4 py-2 font-semibold">Project</TableHead>
+                      <TableHead className="px-4 py-2 font-semibold">Reporting Month / Date</TableHead>
+                      <TableHead className="px-4 py-2 font-semibold">Status</TableHead>
+                      <TableHead className="px-4 py-2 font-semibold">Submitted Date</TableHead>
+                      <TableHead className="px-3 py-2 w-10"></TableHead>
                     </TableRow>
-                  ) : filtered.map(entry => (
-                    <TableRow key={entry.id} className="hover:bg-muted/40">
-                      <TableCell>
-                        <Badge variant="outline" className="text-xs font-semibold border-[#0d9488]/40 text-[#0d9488]">{entry.formType}</Badge>
-                      </TableCell>
-                      <TableCell className="text-sm">{entry.submittedBy}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">{entry.location}</TableCell>
-                      <TableCell className="text-sm">
-                        <span className="flex items-center gap-1 text-muted-foreground">
-                          <Calendar className="h-3 w-3" />{entry.date}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold text-white"
-                          style={{ backgroundColor: STATUS_COLORS[entry.status] }}>
-                          {entry.status}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-xs text-muted-foreground max-w-[120px] truncate">{entry.remarks || '—'}</TableCell>
-                      <TableCell className="pr-4">
-                        <div className="flex items-center justify-end gap-1">
-                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-blue-500 hover:text-blue-600 hover:bg-blue-50"
-                            onClick={() => { setEditingEntry(entry); setAddType(entry.formType); setAddOpen(true); }}>
-                            <Pencil className="h-3.5 w-3.5" />
+                  </TableHeader>
+                  <TableBody>
+                    {paginatedData.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">No submissions found.</TableCell>
+                      </TableRow>
+                    ) : paginatedData.map((sub: any) => (
+                      <TableRow key={sub.id} className="border-b hover:bg-muted/20">
+                        <TableCell className="px-4 py-2">
+                          <Badge variant="outline" className="text-xs font-semibold border-[#0d9488]/40 text-[#0d9488]">
+                            {sub.formType}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="px-4 py-2 font-medium">{sub.projectName}</TableCell>
+                        <TableCell className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</TableCell>
+                        <TableCell className="px-4 py-2">
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                            {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />} {sub.status}
+                          </span>
+                        </TableCell>
+                        <TableCell className="px-4 py-2 text-muted-foreground">
+                          {sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}
+                        </TableCell>
+                        <TableCell className="px-3 py-2">
+                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                            onClick={() => {
+                              if (sub.isMock) {
+                                handleDelete(sub.id)
+                              } else {
+                                deleteMutation.mutate({ formType: sub.originalType, id: sub.id })
+                              }
+                            }}>
+                            <Trash2 className="h-3 w-3" />
                           </Button>
-                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
-                            onClick={() => handleDelete(entry.id)}>
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between px-4 py-3 border-t">
+                  <div className="text-xs text-muted-foreground">
+                    Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, filteredUnified.length)} of {filteredUnified.length} entries
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === 1} onClick={() => setCurrentPage(p => Math.max(1, p - 1))}>
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <span className="text-xs font-medium px-2">Page {currentPage} of {totalPages}</span>
+                    <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}>
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
+
       {addOpen && (
         <AddFormDialog
           key={editingEntry ? editingEntry.id : String(addType)}
