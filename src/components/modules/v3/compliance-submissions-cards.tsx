@@ -562,11 +562,12 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
   return (
     <div className="w-3/4">
       <Card className="shrink-0">
+        {/* Card header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-3">
           <div>
             <p className="text-sm font-bold text-[#0d9488]">Submitted Forms</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {filtered.length} project{filtered.length !== 1 ? 's' : ''} · Showing {Math.min((currentPage - 1) * PAGE_SIZE + 1, filtered.length || 1)}–{Math.min(currentPage * PAGE_SIZE, filtered.length)}
+              {filtered.length} project{filtered.length !== 1 ? 's' : ''} &middot; Showing {Math.min((currentPage - 1) * PAGE_SIZE + 1, filtered.length || 1)}&ndash;{Math.min(currentPage * PAGE_SIZE, filtered.length)}
             </p>
           </div>
           <div className="relative w-full sm:max-w-xs">
@@ -580,54 +581,61 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
         </div>
 
         <CardContent className="p-0">
+          {/* ONE scroll container, ONE table — colgroup keeps all columns aligned */}
           <div className="overflow-x-auto">
-            {/* Sticky header */}
-            <table className="w-full text-xs border-collapse">
-              <thead>
-                <tr className="bg-muted/40 border-b">
-                  <th className="px-3 py-2.5 text-left font-semibold text-foreground w-10">S.No</th>
-                  <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[180px]">Project Name</th>
-                  <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[100px]">Contractor</th>
-                  {FORM_COLS.map(col => (
-                    <th key={col.key} className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">
-                      {col.label}
-                    </th>
-                  ))}
-                  <th className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">Total</th>
-                </tr>
-              </thead>
-            </table>
-
-            {/* Scrollable body */}
             <div className="overflow-y-auto max-h-[440px]">
-              <table className="w-full text-xs border-collapse">
+              <table className="w-full text-xs border-collapse table-fixed">
+                <colgroup>
+                  <col style={{ width: '42px' }} />
+                  <col style={{ width: '220px' }} />
+                  <col style={{ width: '110px' }} />
+                  {FORM_COLS.map(col => <col key={col.key} style={{ width: '90px' }} />)}
+                  <col style={{ width: '72px' }} />
+                </colgroup>
+
+                <thead className="sticky top-0 z-10">
+                  <tr className="bg-muted/40 border-b">
+                    <th className="px-3 py-2.5 text-left font-semibold text-foreground">S.No</th>
+                    <th className="px-3 py-2.5 text-left font-semibold text-foreground">Project Name</th>
+                    <th className="px-3 py-2.5 text-left font-semibold text-foreground">Contractor</th>
+                    {FORM_COLS.map(col => (
+                      <th key={col.key} className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">
+                        {col.label}
+                      </th>
+                    ))}
+                    <th className="px-3 py-2.5 text-center font-semibold text-foreground">Total</th>
+                  </tr>
+                </thead>
+
                 <tbody>
                   {paged.length === 0 ? (
-                    <tr><td colSpan={3 + FORM_COLS.length + 1} className="text-center py-10 text-muted-foreground">No data available.</td></tr>
+                    <tr>
+                      <td colSpan={3 + FORM_COLS.length + 1} className="text-center py-10 text-muted-foreground">
+                        No data available.
+                      </td>
+                    </tr>
                   ) : paged.map((row, i) => {
                     const rowTotal = FORM_COLS.reduce((sum, col) => sum + (row.counts[col.key] || 0), 0)
                     return (
                       <tr key={row.name} className={`border-b transition-colors hover:bg-muted/20 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
-                        <td className="px-3 py-2 text-muted-foreground tabular-nums w-10">{row.sno}</td>
-                        <td className="px-3 py-2 font-medium text-foreground min-w-[180px] max-w-[260px] truncate" title={row.name}>{row.name}</td>
-                        <td className="px-3 py-2 text-muted-foreground min-w-[100px] max-w-[140px] truncate" title={row.contractor}>{row.contractor}</td>
+                        <td className="px-3 py-2 text-muted-foreground tabular-nums">{row.sno}</td>
+                        <td className="px-3 py-2 font-medium text-foreground truncate" title={row.name}>{row.name}</td>
+                        <td className="px-3 py-2 text-muted-foreground truncate" title={row.contractor}>{row.contractor}</td>
                         {FORM_COLS.map(col => {
                           const val = row.counts[col.key] || 0
                           return (
-                            <td key={col.key} className="px-3 py-2 text-center tabular-nums whitespace-nowrap">
+                            <td key={col.key} className="px-3 py-2 text-center tabular-nums">
                               {val > 0 ? (
-                                <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
+                                <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
                                   {val}
                                 </span>
-                              ) : (
-                                <span className="text-slate-300 dark:text-slate-700">—</span>
-                              )}
+                              ) : <span className="text-slate-300 dark:text-slate-700">—</span>}
                             </td>
                           )
                         })}
-                        <td className="px-3 py-2 text-center tabular-nums whitespace-nowrap">
+                        <td className="px-3 py-2 text-center tabular-nums">
                           {rowTotal > 0 ? (
-                            <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">
+                            <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">
                               {rowTotal}
                             </span>
                           ) : <span className="text-slate-300 dark:text-slate-700">—</span>}
@@ -636,29 +644,25 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
                     )
                   })}
                 </tbody>
+
+                <tfoot className="sticky bottom-0 z-10">
+                  <tr className="bg-sidebar dark:bg-sidebar/80 border-t-2 border-slate-200 dark:border-slate-700">
+                    <td colSpan={3} className="px-3 py-2.5 font-bold text-sidebar-foreground text-xs">Total</td>
+                    {FORM_COLS.map(col => (
+                      <td key={col.key} className="px-3 py-2.5 text-center font-bold text-foreground tabular-nums">
+                        {totalRow[col.key] || 0}
+                      </td>
+                    ))}
+                    <td className="px-3 py-2.5 text-center font-bold text-indigo-700 tabular-nums">
+                      {FORM_COLS.reduce((sum, col) => sum + (totalRow[col.key] || 0), 0)}
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
-
-            {/* Totals row */}
-            <table className="w-full text-xs border-collapse">
-              <tfoot>
-                <tr className="bg-sidebar dark:bg-sidebar/80 border-t-2 border-slate-200 dark:border-slate-700">
-                  <td colSpan={3} className="px-3 py-2.5 font-bold text-sidebar-foreground text-xs">Total</td>
-                  {FORM_COLS.map(col => (
-                    <td key={col.key} className="px-3 py-2.5 text-center font-bold text-foreground tabular-nums whitespace-nowrap">
-                      {totalRow[col.key] || 0}
-                    </td>
-                  ))}
-                  <td className="px-3 py-2.5 text-center font-bold text-indigo-700 tabular-nums whitespace-nowrap">
-                    {FORM_COLS.reduce((sum, col) => sum + (totalRow[col.key] || 0), 0)}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
           </div>
         </CardContent>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-between px-4 py-3 border-t bg-muted/10">
             <span className="text-xs text-muted-foreground">Page {currentPage} of {totalPages}</span>
