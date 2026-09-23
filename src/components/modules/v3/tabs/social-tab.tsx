@@ -128,6 +128,66 @@ export function SocialTab({
     },
   ]
 
+  const pmcObservationsMonthly = [
+    { month: 'Jan 26', raised: 21, closed: 21 },
+    { month: 'Feb 26', raised: 216, closed: 73 },
+    { month: 'Mar 26', raised: 259, closed: 138 },
+    { month: 'Apr 26', raised: 286, closed: 172 },
+    { month: 'May 26', raised: 244, closed: 178 },
+    { month: 'Jun 26', raised: 145, closed: 101 },
+    { month: 'Jul 26', raised: 184, closed: 149 },
+    { month: 'Aug 26', raised: 63, closed: 51 },
+  ]
+
+  const outreachHealthActivities = [
+    {
+      name: 'Programs & events',
+      total: 14039,
+      displayTotal: '14,039',
+      men: 12214,
+      women: 1825,
+    },
+    {
+      name: 'Trainings & orientations',
+      total: 7367,
+      displayTotal: '7,367',
+      men: 6483,
+      women: 884,
+    },
+    {
+      name: 'Stakeholder meetings',
+      total: 1071,
+      displayTotal: '1,071',
+      men: 910,
+      women: 161,
+    },
+    {
+      name: 'Medical & health activities',
+      total: 6652,
+      displayTotal: '6,652',
+      men: 5787,
+      women: 865,
+    },
+  ]
+
+  const policeSubmissionCompliance = [
+    {
+      name: 'Workers in labour camps',
+      yesPct: 59,
+      noPct: 41,
+    },
+    {
+      name: 'Migrant workers',
+      yesPct: 63,
+      noPct: 37,
+    },
+    {
+      name: 'New workers',
+      yesPct: 58,
+      noPct: 42,
+    },
+  ]
+
   // 2. Skill Training & Employment (Form 5) Data
   const skillKpis = sklAgg?.kpis || {
     total_workers: 18450,
@@ -835,6 +895,282 @@ export function SocialTab({
                       </div>
                     );
                   })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Row 3: Full-width Card: PMC observations by month */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+            <CardHeader className="p-6 pb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  PMC observations by month
+                </CardTitle>
+              </div>
+              <div className="flex items-center gap-4 mt-2 text-xs">
+                <span className="flex items-center gap-1.5 font-medium text-foreground">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#115e59]" /> Raised
+                </span>
+                <span className="flex items-center gap-1.5 font-medium text-foreground">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#d97706]" /> Closed
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6 pt-1">
+              <div className="w-full overflow-x-auto">
+                <div className="min-w-[620px]">
+                  <svg className="w-full h-56" viewBox="0 0 820 230">
+                    {/* Y-axis gridlines and labels */}
+                    {[
+                      { val: 400, y: 28 },
+                      { val: 300, y: 69.5 },
+                      { val: 200, y: 111 },
+                      { val: 100, y: 152.5 },
+                      { val: 0, y: 194 },
+                    ].map((g) => (
+                      <g key={g.val}>
+                        <text
+                          x="42"
+                          y={g.y + 3.5}
+                          textAnchor="end"
+                          className="text-[11px] font-mono fill-muted-foreground select-none"
+                        >
+                          {g.val}
+                        </text>
+                        <line
+                          x1="50"
+                          y1={g.y}
+                          x2="800"
+                          y2={g.y}
+                          stroke="currentColor"
+                          className="text-border/60"
+                          strokeDasharray="3 3"
+                        />
+                      </g>
+                    ))}
+
+                    {/* Baseline */}
+                    <line
+                      x1="50"
+                      y1="194"
+                      x2="800"
+                      y2="194"
+                      stroke="currentColor"
+                      className="text-border/80"
+                    />
+
+                    {/* Bars & Labels */}
+                    {pmcObservationsMonthly.map((item, idx) => {
+                      const xStep = 750 / 8;
+                      const cx = 50 + xStep * (idx + 0.5);
+                      const barWidth = 15;
+                      const raisedH = item.raised * 0.415;
+                      const raisedY = 194 - raisedH;
+                      const closedH = item.closed * 0.415;
+                      const closedY = 194 - closedH;
+
+                      return (
+                        <g key={item.month}>
+                          {/* Number above raised bar */}
+                          <text
+                            x={cx - 9}
+                            y={raisedY - 6}
+                            textAnchor="middle"
+                            className="text-[11px] font-bold font-mono fill-foreground select-none"
+                          >
+                            {item.raised}
+                          </text>
+
+                          {/* Raised Bar */}
+                          <rect
+                            x={cx - 17}
+                            y={raisedY}
+                            width={barWidth}
+                            height={raisedH}
+                            fill="#115e59"
+                            rx="2"
+                          >
+                            <title>{`${item.month} - Raised: ${item.raised}`}</title>
+                          </rect>
+
+                          {/* Closed Bar */}
+                          <rect
+                            x={cx}
+                            y={closedY}
+                            width={barWidth}
+                            height={closedH}
+                            fill="#d97706"
+                            rx="2"
+                          >
+                            <title>{`${item.month} - Closed: ${item.closed}`}</title>
+                          </rect>
+
+                          {/* Month label */}
+                          <text
+                            x={cx - 1}
+                            y="214"
+                            textAnchor="middle"
+                            className="text-[11px] font-medium fill-muted-foreground select-none"
+                          >
+                            {item.month}
+                          </text>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Row 4: Outreach and health activities + Worker details submitted to police */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Card 1: Outreach and health activities */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  Outreach and health activities
+                </CardTitle>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Participants; entries repeated across months are counted once.
+                </p>
+                <div className="flex items-center gap-4 mt-3 text-xs">
+                  <span className="flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" /> Men
+                  </span>
+                  <span className="flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" /> Women
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6 pt-3">
+                <div className="space-y-4">
+                  {outreachHealthActivities.map((item) => {
+                    const maxRef = 14039;
+                    const totalPct = (item.total / maxRef) * 100;
+                    const menShare = (item.men / item.total) * 100;
+                    const womenShare = (item.women / item.total) * 100;
+
+                    return (
+                      <div key={item.name} className="flex items-center gap-4">
+                        <div className="w-44 sm:w-52 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                          {item.name}
+                        </div>
+                        <div className="flex-1 bg-muted/40 h-2.5 rounded-full overflow-hidden flex relative">
+                          <div
+                            style={{ width: `${totalPct}%` }}
+                            className="h-full flex overflow-hidden rounded-full"
+                          >
+                            <div
+                              style={{ width: `${menShare}%` }}
+                              className="bg-[#2563eb] h-full"
+                              title={`${item.name} - Men: ${item.men.toLocaleString()}`}
+                            />
+                            <div
+                              style={{ width: `${womenShare}%` }}
+                              className="bg-[#be185d] h-full"
+                              title={`${item.name} - Women: ${item.women.toLocaleString()}`}
+                            />
+                          </div>
+                        </div>
+                        <div className="w-14 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                          {item.displayTotal}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Card 2: Worker details submitted to police */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  Worker details submitted to police
+                </CardTitle>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Share of projects answering Yes. Open a chart to see which projects.
+                </p>
+              </CardHeader>
+              <CardContent className="p-6 pt-2 flex flex-col justify-between flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                  {policeSubmissionCompliance.map((item) => {
+                    const r = 34;
+                    const c = 2 * Math.PI * r;
+                    const gap = 3.5;
+                    const dashGreen = Math.max(0, (item.yesPct / 100) * c - gap);
+                    const dashRed = Math.max(0, ((100 - item.yesPct) / 100) * c - gap);
+                    const offsetRed = (item.yesPct / 100) * c;
+
+                    return (
+                      <div
+                        key={item.name}
+                        className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[175px]"
+                      >
+                        {/* Donut / Ring chart */}
+                        <div className="w-24 h-24 relative flex items-center justify-center shrink-0">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r={r}
+                              fill="transparent"
+                              stroke="currentColor"
+                              strokeWidth="8.5"
+                              className="text-muted/15"
+                            />
+                            {/* Green Arc (Yes) */}
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r={r}
+                              fill="transparent"
+                              stroke="#16a34a"
+                              strokeWidth="8.5"
+                              strokeDasharray={`${dashGreen} ${c - dashGreen}`}
+                              strokeDashoffset={0}
+                            />
+                            {/* Red Arc (No) */}
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r={r}
+                              fill="transparent"
+                              stroke="#dc2626"
+                              strokeWidth="8.5"
+                              strokeDasharray={`${dashRed} ${c - dashRed}`}
+                              strokeDashoffset={-offsetRed}
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <span className="text-base font-black text-foreground font-mono leading-none">
+                              {item.yesPct}%
+                            </span>
+                            <span className="text-[10px] text-muted-foreground font-medium mt-0.5">
+                              Yes
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Label */}
+                        <h5 className="text-xs font-semibold text-foreground mt-3 text-center leading-tight">
+                          {item.name}
+                        </h5>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Legend Footer */}
+                <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border/40 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#16a34a]" /> Yes
+                  </span>
+                  <span className="flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#dc2626]" /> No
+                  </span>
                 </div>
               </CardContent>
             </Card>
