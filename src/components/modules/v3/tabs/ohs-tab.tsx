@@ -146,6 +146,21 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
     { name: 'N6 Utilities', pct: 55 }
   ]
 
+  const trainingsConductedData = [
+    { name: 'Job specific trainings-Monthly', count: 234 },
+    { name: 'Personnel Protective Equipments-Monthly', count: 145 },
+    { name: 'Others', count: 130 },
+    { name: 'Health & Hygenic conditions-Monthly', count: 120 },
+    { name: 'Defensive driving-Quarterly', count: 96 },
+    { name: 'Workers well being and mental health - Monthly', count: 95 },
+    { name: 'Behaviour Based Safety-Yearly', count: 69 },
+    { name: 'Emergency response plan & Mock drill-Quarterly', count: 69 },
+    { name: 'Heat stress-Half yearly', count: 68 },
+    { name: 'Fire prevention & control-Quarterly', count: 63 },
+    { name: 'Lifting operators & riggers-Quarterly', count: 61 },
+    { name: 'Permit to work-Quarterly', count: 59 },
+  ]
+
   // Visual E: 6 OHS Policies & Plans Availability
   const policies = ohsAgg?.policies || {
     'OHS Policy Displayed': { yes: 44, no: 2 },
@@ -361,6 +376,36 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
             </CardContent>
           </Card>
         </div>
+
+        {/* Card 3: Trainings conducted */}
+        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+          <CardHeader className="p-4 border-b bg-muted/20">
+            <CardTitle className="text-sm font-bold text-foreground">
+              Trainings conducted
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Number of monthly reports that ticked each training.
+            </p>
+          </CardHeader>
+          <CardContent className="p-4 flex flex-col gap-2">
+            {trainingsConductedData.map((t, idx) => (
+              <div key={idx} className="flex items-center gap-4 text-xs py-1 px-1.5 hover:bg-muted/30 rounded-md transition-colors">
+                <span className="w-56 sm:w-72 md:w-80 font-medium text-foreground truncate shrink-0" title={t.name}>
+                  {t.name}
+                </span>
+                <div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                  <div
+                    style={{ width: `${(t.count / 234) * 100}%` }}
+                    className="h-full bg-[#0d5c50] rounded-full transition-all duration-300"
+                  />
+                </div>
+                <span className="font-bold text-foreground font-mono w-9 text-right shrink-0">
+                  {t.count}
+                </span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </div>
 
       {/* Middle Split: Visual B (OHS Audits Table) + Visual C (Trainings per Frequency Table) */}
