@@ -419,7 +419,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
               Formula: (Total Yes / Total Applicable in Group) * 100 | Green (&ge;90%), Amber (70-89%), Red (&lt;70%)
             </p>
           </CardHeader>
-          <CardContent className="p-4 flex flex-col gap-3">
+          <CardContent className="p-4 flex flex-col gap-3 max-h-[280px] overflow-y-auto custom-scrollbar">
             {Object.entries(groups).map(([gname, gdata]) => {
               const color =
                 gdata.pct >= 90 ? 'bg-emerald-500' : gdata.pct >= 70 ? 'bg-amber-500' : 'bg-rose-500'
@@ -466,7 +466,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
                 Share of Yes in each project's latest answers. Select a project to see its gaps.
               </p>
             </CardHeader>
-            <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
+            <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5 max-h-[280px] overflow-y-auto custom-scrollbar">
               {lowestComplianceProjects.map((p, idx) => {
                 const isRed = p.pct < 40;
                 return (
@@ -515,7 +515,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
               Number of monthly reports that ticked each training.
             </p>
           </CardHeader>
-          <CardContent className="p-4 flex flex-col gap-2">
+          <CardContent className="p-4 flex flex-col gap-2 max-h-[280px] overflow-y-auto custom-scrollbar">
             {trainingsConductedData.map((t, idx) => (
               <div key={idx} className="flex items-center gap-4 text-xs py-1 px-1.5 hover:bg-muted/30 rounded-md transition-colors">
                 <span className="w-56 sm:w-72 md:w-80 font-medium text-foreground truncate shrink-0" title={t.name}>
