@@ -18,6 +18,7 @@ import {
   Search, X, Trash2, CheckCircle2, Clock, ChevronLeft, ChevronRight,
 } from 'lucide-react'
 import { toast } from 'sonner'
+import { SubmittedFormsWizard } from './submitted-forms-wizard'
 
 // ==================== TYPES ====================
 
@@ -431,6 +432,18 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
     return map
   }, [misData])
 
+  const [wizardConfig, setWizardConfig] = useState<{
+    isOpen: boolean
+    project: { projectName: string; contractor: string; pmc: string } | null
+    formType: string | null
+    stats: { raised: number; approved: number; rejected: number; inProgress: number } | null
+  }>({
+    isOpen: false,
+    project: null,
+    formType: null,
+    stats: null,
+  })
+
   const getCount = (mis: MisEntry | undefined, key: string): number => {
     if (!mis) return 0
     switch (key) {
@@ -457,7 +470,10 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
         sno: idx + 1,
         name: p.name,
         contractor: p.contractor || mis?.contractor || '—',
+        // @ts-ignore
+        pmc: p.pmc || mis?.pmc || '—',
         counts,
+        mis: mis || null,
         hasMis: !!mis,
       }
     })
@@ -472,7 +488,9 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
           sno: projects.length + i + 1,
           name: e.projectName,
           contractor: e.contractor || '—',
+          pmc: e.pmc || '—',
           counts,
+          mis: e,
           hasMis: true,
         })
       }
@@ -498,7 +516,8 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
   }, [rows])
 
   return (
-    <Card className="shrink-0 w-full">
+    <>
+      <Card className="shrink-0 w-full">
         {/* Card header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-3">
           <div>
@@ -563,7 +582,28 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
                           return (
                             <td key={col.key} className="px-3 py-2 text-center tabular-nums">
                               {val > 0 ? (
-                                <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
+                                <span
+                                  onClick={() => {
+                                    if (!row.mis) return
+                                    let stats = null
+                                    switch (col.key) {
+                                      case 'OHS': stats = row.mis.ohs; break
+                                      case 'EVM': stats = row.mis.evm; break
+                                      case 'Road Safety': stats = row.mis.roadSafety; break
+                                      case 'Social (O)': stats = row.mis.socialO; break
+                                      case 'Social': stats = row.mis.social; break
+                                    }
+                                    if (stats && stats.raised > 0) {
+                                      setWizardConfig({
+                                        isOpen: true,
+                                        project: { projectName: row.name, contractor: row.contractor, pmc: row.pmc },
+                                        formType: col.key,
+                                        stats,
+                                      })
+                                    }
+                                  }}
+                                  className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300 cursor-pointer hover:bg-teal-200 dark:hover:bg-teal-800 hover:scale-105 transition-all shadow-sm border border-teal-100 dark:border-teal-800"
+                                >
                                   {val}
                                 </span>
                               ) : <span className="text-slate-300 dark:text-slate-700">—</span>}
@@ -600,7 +640,15 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
           </div>
         </CardContent>
 
-
       </Card>
+
+      <SubmittedFormsWizard
+        isOpen={wizardConfig.isOpen}
+        onClose={() => setWizardConfig(prev => ({ ...prev, isOpen: false }))}
+        project={wizardConfig.project}
+        formType={wizardConfig.formType}
+        stats={wizardConfig.stats}
+      />
+    </>
   )
 }
