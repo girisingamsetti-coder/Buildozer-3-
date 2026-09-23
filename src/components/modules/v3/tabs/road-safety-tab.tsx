@@ -377,111 +377,9 @@ export function RoadSafetyTab({
 
       
       
-      {/* Combined Requested Row 2 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-3">
-{/* Card 2: Projects with the lowest checklist compliance */}
-        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
-          <CardHeader className="p-4 border-b bg-muted/20">
-            <CardTitle className="text-sm font-bold text-foreground">
-              Projects with the lowest checklist compliance
-            </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Share of Yes in each project's latest answers. Select a project to see its gaps.
-            </p>
-          </CardHeader>
-          <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
-            {lowestComplianceProjects.map((p, idx) => {
-              return (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    const matched = projects.find(proj =>
-                      proj.name.toLowerCase().includes(p.name.toLowerCase().slice(0, 8))
-                    );
-                    if (matched) onSelectProject(matched);
-                  }}
-                  className="flex items-center gap-2.5 text-xs py-1 px-1.5 rounded-md cursor-pointer hover:bg-muted/30 group transition-colors"
-                >
-                  <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-medium shrink-0">
-                    {idx + 1}
-                  </span>
-                  <div className="flex-1 flex flex-col gap-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
-                        {p.name}
-                      </span>
-                      <span className="font-bold text-foreground font-mono ml-2 shrink-0">
-                        {p.pct}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 overflow-hidden">
-                      <div
-                        style={{ width: `${p.pct}%` }}
-                        className="h-full rounded-full transition-all duration-300 bg-[#dc2626]"
-                      />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </CardContent>
-        </Card>
-
-{/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
-      <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-        <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
-          <div>
-            <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-amber-500" />
-              15 Statutory Checklist Items — Sorted Worst-First (Lowest Compliance Top)
-            </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Evaluates individual checklist item compliance across submitting projects during {month}
-            </p>
-          </div>
-          <Badge variant="secondary" className="text-xs">
-            15 IRC SP:55-2014 Standards
-          </Badge>
-        </CardHeader>
-        <CardContent className="p-4">
-          <div className="flex flex-col gap-3.5 max-h-[460px] overflow-y-auto pr-2">
-            {sortedItems.map((itm, idx) => {
-              const isLow = itm.compliance_pct < 85
-              return (
-                <div key={idx} className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-muted/30 transition-colors">
-                  <div className="flex items-start justify-between gap-3 text-xs">
-                    <div className="flex items-start gap-2 max-w-2xl">
-                      <span className="font-mono text-muted-foreground font-bold w-5 shrink-0">#{idx + 1}</span>
-                      <span className="font-medium text-foreground">{itm.name}</span>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-[11px] text-muted-foreground font-mono">
-                        (Yes: {itm.yes}, No: {itm.no}, Blank: {itm.blank}, NA: {itm.na})
-                      </span>
-                      <Badge
-                        className={`text-[11px] font-mono font-bold ${
-                          isLow
-                            ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border-rose-500/30'
-                            : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
-                        }`}
-                      >
-                        {itm.compliance_pct}%
-                      </Badge>
-                    </div>
-                  </div>
-                  <Progress
-                    value={itm.compliance_pct}
-                    className={`h-2 ${isLow ? '[&>div]:bg-rose-500' : '[&>div]:bg-emerald-500'}`}
-                  />
-                </div>
-              )
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      </div>
-
+      
+      {/* Combined Requested Row 3 Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
 {/* Visual D: Exception Table: Projects with "No" Responses */}
       <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
@@ -575,6 +473,111 @@ export function RoadSafetyTab({
           </div>
         </CardContent>
       </Card>
+
+{/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
+      <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+        <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-amber-500" />
+              15 Statutory Checklist Items — Sorted Worst-First (Lowest Compliance Top)
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Evaluates individual checklist item compliance across submitting projects during {month}
+            </p>
+          </div>
+          <Badge variant="secondary" className="text-xs">
+            15 IRC SP:55-2014 Standards
+          </Badge>
+        </CardHeader>
+        <CardContent className="p-4">
+          <div className="flex flex-col gap-3.5 max-h-[460px] overflow-y-auto pr-2">
+            {sortedItems.map((itm, idx) => {
+              const isLow = itm.compliance_pct < 85
+              return (
+                <div key={idx} className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-muted/30 transition-colors">
+                  <div className="flex items-start justify-between gap-3 text-xs">
+                    <div className="flex items-start gap-2 max-w-2xl">
+                      <span className="font-mono text-muted-foreground font-bold w-5 shrink-0">#{idx + 1}</span>
+                      <span className="font-medium text-foreground">{itm.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[11px] text-muted-foreground font-mono">
+                        (Yes: {itm.yes}, No: {itm.no}, Blank: {itm.blank}, NA: {itm.na})
+                      </span>
+                      <Badge
+                        className={`text-[11px] font-mono font-bold ${
+                          isLow
+                            ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border-rose-500/30'
+                            : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
+                        }`}
+                      >
+                        {itm.compliance_pct}%
+                      </Badge>
+                    </div>
+                  </div>
+                  <Progress
+                    value={itm.compliance_pct}
+                    className={`h-2 ${isLow ? '[&>div]:bg-rose-500' : '[&>div]:bg-emerald-500'}`}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+{/* Card 2: Projects with the lowest checklist compliance */}
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
+          <CardHeader className="p-4 border-b bg-muted/20">
+            <CardTitle className="text-sm font-bold text-foreground">
+              Projects with the lowest checklist compliance
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Share of Yes in each project's latest answers. Select a project to see its gaps.
+            </p>
+          </CardHeader>
+          <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
+            {lowestComplianceProjects.map((p, idx) => {
+              return (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    const matched = projects.find(proj =>
+                      proj.name.toLowerCase().includes(p.name.toLowerCase().slice(0, 8))
+                    );
+                    if (matched) onSelectProject(matched);
+                  }}
+                  className="flex items-center gap-2.5 text-xs py-1 px-1.5 rounded-md cursor-pointer hover:bg-muted/30 group transition-colors"
+                >
+                  <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-medium shrink-0">
+                    {idx + 1}
+                  </span>
+                  <div className="flex-1 flex flex-col gap-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                        {p.name}
+                      </span>
+                      <span className="font-bold text-foreground font-mono ml-2 shrink-0">
+                        {p.pct}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 overflow-hidden">
+                      <div
+                        style={{ width: `${p.pct}%` }}
+                        className="h-full rounded-full transition-all duration-300 bg-[#dc2626]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </CardContent>
+        </Card>
+
+      </div>
+
+
     
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         <div className="lg:col-span-1">
