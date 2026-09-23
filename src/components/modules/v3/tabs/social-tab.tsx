@@ -182,6 +182,53 @@ export function SocialTab({
     'Workers Registration Acknowledgement': { yes: 46, missing: 2 },
   }
 
+  const workforceProfileData = [
+    {
+      title: 'Gender',
+      total: 18543,
+      items: [
+        { label: 'Male', count: 17995, pct: 97, displayPct: '97%', color: '#2563eb' },
+        { label: 'Female', count: 548, pct: 3, displayPct: '3%', color: '#be185d' },
+      ],
+    },
+    {
+      title: 'Skill',
+      total: 17805,
+      items: [
+        { label: 'Highly Skilled', count: 109, pct: 0.6, displayPct: '0.6%', color: '#115e59' },
+        { label: 'Skilled', count: 6640, pct: 37, displayPct: '37%', color: '#d97706' },
+        { label: 'Semi-Skilled', count: 2489, pct: 14, displayPct: '14%', color: '#9333ea' },
+        { label: 'Unskilled', count: 8567, pct: 48, displayPct: '48%', color: '#2563eb' },
+      ],
+    },
+    {
+      title: 'Origin',
+      total: 18463,
+      items: [
+        { label: 'Local', count: 1176, pct: 6, displayPct: '6%', color: '#115e59' },
+        { label: 'Other State', count: 17287, pct: 94, displayPct: '94%', color: '#d97706' },
+      ],
+    },
+    {
+      title: 'Age',
+      total: 18574,
+      items: [
+        { label: '18–25', count: 5821, pct: 31, displayPct: '31%', color: '#d97706' },
+        { label: '25–50', count: 10804, pct: 58, displayPct: '58%', color: '#9333ea' },
+        { label: 'Above 50', count: 1949, pct: 10, displayPct: '10%', color: '#2563eb' },
+      ],
+    },
+    {
+      title: 'Source',
+      total: 17041,
+      items: [
+        { label: 'Main Contractor', count: 156, pct: 0.9, displayPct: '0.9%', color: '#115e59' },
+        { label: 'Sub-contractor', count: 16414, pct: 96, displayPct: '96%', color: '#d97706' },
+        { label: 'Independent', count: 471, pct: 3, displayPct: '3%', color: '#9333ea' },
+      ],
+    },
+  ]
+
   // 4. Gender (Form 7) Data
   const genderFocal = genAgg?.focal_icc || {
     focal_deployed: 46,
@@ -935,7 +982,105 @@ export function SocialTab({
             </CardContent>
           </Card>
 
-          {/* Middle Row: Visual B (Basic Camp Facilities H-Bar) + Visual C (Source of Labour Doughnut) */}
+          {/* Workforce profile (5 Donut Cards) */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+            <CardHeader className="p-6 pb-3">
+              <CardTitle className="text-base font-bold text-foreground">
+                Workforce profile
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Latest report per project.
+              </p>
+            </CardHeader>
+            <CardContent className="p-6 pt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+                {workforceProfileData.map((card) => {
+                  const r = 38;
+                  const c = 2 * Math.PI * r;
+                  let cumulative = 0;
+
+                  return (
+                    <div
+                      key={card.title}
+                      className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-4 flex flex-col items-center justify-between"
+                    >
+                      <h4 className="text-xs font-bold text-foreground mb-3 text-center">
+                        {card.title}
+                      </h4>
+
+                      {/* Donut Chart */}
+                      <div className="w-28 h-28 relative flex items-center justify-center shrink-0">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r={r}
+                            fill="transparent"
+                            stroke="currentColor"
+                            strokeWidth="11"
+                            className="text-muted/20"
+                          />
+                          {card.items.map((item, idx) => {
+                            const dash = (item.pct / 100) * c;
+                            const offset = (cumulative / 100) * c;
+                            cumulative += item.pct;
+                            return (
+                              <circle
+                                key={idx}
+                                cx="50"
+                                cy="50"
+                                r={r}
+                                fill="transparent"
+                                stroke={item.color}
+                                strokeWidth="11"
+                                strokeDasharray={`${dash} ${c}`}
+                                strokeDashoffset={-offset}
+                              />
+                            );
+                          })}
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                          <span className="text-sm font-black text-foreground font-mono leading-none">
+                            {card.total.toLocaleString()}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground font-medium mt-0.5">
+                            total
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Breakdown List */}
+                      <div className="w-full mt-4 space-y-1.5 text-xs">
+                        {card.items.map((item) => (
+                          <div key={item.label} className="flex items-center justify-between gap-1 text-[11px]">
+                            <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                              <span
+                                className="w-2.5 h-2.5 rounded-xs shrink-0"
+                                style={{ backgroundColor: item.color }}
+                              />
+                              <span className="truncate text-foreground font-medium" title={item.label}>
+                                {item.label}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <span className="font-bold font-mono text-foreground text-right">
+                                {item.count.toLocaleString()}
+                              </span>
+                              <span className="font-mono text-muted-foreground w-8 text-right">
+                                {item.displayPct}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Bottom Row: Visual B (Basic Camp Facilities H-Bar) + Visual E (Registers Submitted) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Horizontal Bar Chart: Basic Facilities at Labour Camp */}
             <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
@@ -985,143 +1130,6 @@ export function SocialTab({
                     </div>
                   )
                 })}
-              </CardContent>
-            </Card>
-
-            {/* Visual C: Doughnut / Distribution: Source of Labour */}
-            <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20">
-                <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                  <Users className="w-4 h-4 text-primary" />
-                  Workforce Engagement by Source
-                </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Contractor vs Sub-Contractor vs Independent workforce distribution
-                </p>
-              </CardHeader>
-              <CardContent className="p-4 flex flex-col justify-between flex-1 gap-4">
-                <div className="flex items-center justify-center py-2">
-                  <div className="relative w-40 h-40 flex items-center justify-center">
-                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                      <circle cx="50" cy="50" r="40" fill="transparent" stroke="currentColor" strokeWidth="14" className="text-muted/30" />
-                      {/* Main Contractor: 34% (Indigo) */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="40"
-                        fill="transparent"
-                        stroke="currentColor"
-                        strokeWidth="14"
-                        strokeDasharray={`${34 * 2.51} 251.2`}
-                        className="text-indigo-500"
-                      />
-                      {/* Sub-contractor: 52% (Emerald) */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="40"
-                        fill="transparent"
-                        stroke="currentColor"
-                        strokeWidth="14"
-                        strokeDasharray={`${52 * 2.51} 251.2`}
-                        strokeDashoffset={`-${34 * 2.51}`}
-                        className="text-emerald-500"
-                      />
-                      {/* Independent: 10% (Amber) */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="40"
-                        fill="transparent"
-                        stroke="currentColor"
-                        strokeWidth="14"
-                        strokeDasharray={`${10 * 2.51} 251.2`}
-                        strokeDashoffset={`-${86 * 2.51}`}
-                        className="text-amber-500"
-                      />
-                    </svg>
-                    <div className="absolute flex flex-col items-center justify-center text-center">
-                      <span className="text-xl font-black text-foreground">52%</span>
-                      <span className="text-[10px] text-muted-foreground uppercase font-semibold">Sub-Contract</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  {Object.entries(sourceOfLabour).map(([src, pct], idx) => (
-                    <div key={idx} className="p-2 border rounded-md bg-card flex items-center justify-between">
-                      <span className="text-muted-foreground truncate">{src}</span>
-                      <span className="font-bold text-foreground font-mono">{pct}%</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Bottom Row: Visual D (Labour Profile Origin & Age) + Visual E (Registers Submitted) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Visual D: Horizontal Bar Chart: Labour Profile — Origin & Age */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 text-primary" />
-                    Labour Profile: Origin & Age Demographics
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Critical Alert Logic: If 14-18 &gt; 0, bar turns Red and triggers "Attention" flag (Child Labour Prohibition)
-                  </p>
-                </div>
-                <Badge variant="outline" className="text-xs font-mono">
-                  Demographic Breakdown
-                </Badge>
-              </CardHeader>
-              <CardContent className="p-4 flex flex-col gap-4">
-                {/* 1. Origin Stacked Bar */}
-                <div className="flex flex-col gap-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-foreground">Workforce Origin Distribution</span>
-                    <span className="text-muted-foreground font-mono text-[11px]">Local: 74% • Other States: 26%</span>
-                  </div>
-                  <div className="w-full bg-muted/50 rounded-full h-3 overflow-hidden flex">
-                    <div style={{ width: '74%' }} className="bg-primary h-full" title="Local AP: 74%" />
-                    <div style={{ width: '26%' }} className="bg-indigo-500 h-full" title="Other States: 26%" />
-                  </div>
-                  <div className="flex items-center gap-4 text-[11px] text-muted-foreground pt-0.5">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary" /> Andhra Pradesh (74%)</span>
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-indigo-500" /> Other Indian States (26%)</span>
-                  </div>
-                </div>
-
-                {/* 2. Age Bands Stacked Bar */}
-                <div className="flex flex-col gap-1.5 pt-2 border-t">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-foreground">Workforce Age Brackets</span>
-                    <span className="text-[11px] font-mono text-emerald-600 font-bold">14-18 Band: 0 (No Child Labour)</span>
-                  </div>
-                  <div className="w-full bg-muted/50 rounded-full h-3 overflow-hidden flex">
-                    {/* 14-18 (Red if > 0) */}
-                    {profileAge['14-18 (Adolescent Risk)'] > 0 && (
-                      <div
-                        style={{ width: `${profileAge['14-18 (Adolescent Risk)']}%` }}
-                        className="bg-rose-600 h-full"
-                      />
-                    )}
-                    {/* 18-25 (Emerald) */}
-                    <div style={{ width: `${profileAge['18-25']}%` }} className="bg-emerald-500 h-full" />
-                    {/* 25-50 (Indigo) */}
-                    <div style={{ width: `${profileAge['25-50']}%` }} className="bg-indigo-500 h-full" />
-                    {/* Above 50 (Amber) */}
-                    <div style={{ width: `${profileAge['Above 50']}%` }} className="bg-amber-500 h-full" />
-                  </div>
-                  <div className="grid grid-cols-4 gap-1 text-[10px] text-muted-foreground pt-0.5">
-                    <span className="font-bold text-emerald-600">14-18: 0%</span>
-                    <span>18-25: 32%</span>
-                    <span>25-50: 58%</span>
-                    <span>&gt;50: 10%</span>
-                  </div>
-                </div>
               </CardContent>
             </Card>
 
