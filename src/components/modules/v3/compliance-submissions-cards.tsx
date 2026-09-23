@@ -459,6 +459,8 @@ const FORM_COLS = [
 
 export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string; name: string; contractor: string }> }) {
   const [search, setSearch] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const PAGE_SIZE = 20
 
   const { data: ohsSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'OHS'],             queryFn: () => fetchSubmissions('OHS')            })
   const { data: evmSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'EVM'],             queryFn: () => fetchSubmissions('EVM')            })
@@ -500,7 +502,7 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
     FORM_COLS.forEach(col => {
       submissionMap[col.key]?.forEach((s: any) => {
         const n = (s.projectName || '').trim()
-        if (n && n !== '\u2014' && !v3Names.has(n.toLowerCase())) extraNames.add(n)
+        if (n && n !== '—' && !v3Names.has(n.toLowerCase())) extraNames.add(n)
       })
     })
     mockForms.forEach(f => {
@@ -518,7 +520,7 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
         ).length
         counts[col.key] = apiCount + mockCount
       })
-      return { sno: projects.length + i + 1, name, contractor: '\u2014', counts }
+      return { sno: projects.length + i + 1, name, contractor: '—', counts }
     })
 
     return [...projectRows, ...extraRows]
@@ -532,6 +534,9 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
       .map((r, i) => ({ ...r, sno: i + 1 }))
   }, [rows, search])
 
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
+  const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+
   const totalRow = useMemo(() => {
     const t: Record<string, number> = {}
     FORM_COLS.forEach(col => { t[col.key] = rows.reduce((sum, r) => sum + (r.counts[col.key] || 0), 0) })
@@ -539,63 +544,118 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
   }, [rows])
 
   return (
-    <Card className="shrink-0">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-3">
-        <p className="text-sm font-bold text-[#0d9488] shrink-0">Submitted Forms</p>
-        <div className="relative w-full sm:max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-          <Input value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
+    <div className="w-3/4">
+      <Card className="shrink-0">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-3">
+          <div>
+            <p className="text-sm font-bold text-[#0d9488]">Submitted Forms</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {filtered.length} project{filtered.length !== 1 ? 's' : ''} · Showing {Math.min((currentPage - 1) * PAGE_SIZE + 1, filtered.length || 1)}–{Math.min(currentPage * PAGE_SIZE, filtered.length)}
+            </p>
+          </div>
+          <div className="relative w-full sm:max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={e => { setSearch(e.target.value); setCurrentPage(1) }}
+              className="pl-9 h-8 text-xs"
+            />
+          </div>
         </div>
-      </div>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs border-collapse">
-            <thead>
-              <tr className="bg-muted/40 border-b">
-                <th className="px-3 py-2.5 text-left font-semibold text-foreground w-10">S.No</th>
-                <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[180px]">Project Name</th>
-                <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[130px]">Contractor</th>
-                {FORM_COLS.map(col => (
-                  <th key={col.key} className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">{col.label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.length === 0 ? (
-                <tr><td colSpan={3 + FORM_COLS.length} className="text-center py-10 text-muted-foreground">No data available.</td></tr>
-              ) : filtered.map((row, i) => (
-                <tr key={row.name} className={`border-b transition-colors hover:bg-muted/20 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
-                  <td className="px-3 py-2 text-muted-foreground tabular-nums">{row.sno}</td>
-                  <td className="px-3 py-2 font-medium text-foreground max-w-[260px] truncate" title={row.name}>{row.name}</td>
-                  <td className="px-3 py-2 text-muted-foreground max-w-[160px] truncate" title={row.contractor}>{row.contractor}</td>
-                  {FORM_COLS.map(col => {
-                    const val = row.counts[col.key] || 0
-                    return (
-                      <td key={col.key} className="px-3 py-2 text-center tabular-nums">
-                        {val > 0 ? (
-                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
-                            {val}
-                          </span>
-                        ) : (
-                          <span className="text-slate-300 dark:text-slate-700">—</span>
-                        )}
-                      </td>
-                    )
-                  })}
+
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            {/* Sticky header */}
+            <table className="w-full text-xs border-collapse">
+              <thead>
+                <tr className="bg-muted/40 border-b">
+                  <th className="px-3 py-2.5 text-left font-semibold text-foreground w-10">S.No</th>
+                  <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[180px]">Project Name</th>
+                  <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[130px]">Contractor</th>
+                  {FORM_COLS.map(col => (
+                    <th key={col.key} className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">
+                      {col.label}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr className="bg-sidebar dark:bg-sidebar/80 border-t-2 border-slate-200 dark:border-slate-700">
-                <td colSpan={3} className="px-3 py-2.5 font-bold text-sidebar-foreground text-xs">Total</td>
-                {FORM_COLS.map(col => (
-                  <td key={col.key} className="px-3 py-2.5 text-center font-bold text-foreground tabular-nums">{totalRow[col.key] || 0}</td>
-                ))}
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
+              </thead>
+            </table>
+
+            {/* Scrollable body – max 20 rows visible */}
+            <div className="overflow-y-auto max-h-[440px]">
+              <table className="w-full text-xs border-collapse">
+                <tbody>
+                  {paged.length === 0 ? (
+                    <tr><td colSpan={3 + FORM_COLS.length} className="text-center py-10 text-muted-foreground">No data available.</td></tr>
+                  ) : paged.map((row, i) => (
+                    <tr key={row.name} className={`border-b transition-colors hover:bg-muted/20 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                      <td className="px-3 py-2 text-muted-foreground tabular-nums w-10">{row.sno}</td>
+                      <td className="px-3 py-2 font-medium text-foreground min-w-[180px] max-w-[260px] truncate" title={row.name}>{row.name}</td>
+                      <td className="px-3 py-2 text-muted-foreground min-w-[130px] max-w-[160px] truncate" title={row.contractor}>{row.contractor}</td>
+                      {FORM_COLS.map(col => {
+                        const val = row.counts[col.key] || 0
+                        return (
+                          <td key={col.key} className="px-3 py-2 text-center tabular-nums whitespace-nowrap">
+                            {val > 0 ? (
+                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
+                                {val}
+                              </span>
+                            ) : (
+                              <span className="text-slate-300 dark:text-slate-700">—</span>
+                            )}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Totals row – always visible, outside scroll */}
+            <table className="w-full text-xs border-collapse">
+              <tfoot>
+                <tr className="bg-sidebar dark:bg-sidebar/80 border-t-2 border-slate-200 dark:border-slate-700">
+                  <td colSpan={3} className="px-3 py-2.5 font-bold text-sidebar-foreground text-xs w-[320px]">Total</td>
+                  {FORM_COLS.map(col => (
+                    <td key={col.key} className="px-3 py-2.5 text-center font-bold text-foreground tabular-nums whitespace-nowrap">
+                      {totalRow[col.key] || 0}
+                    </td>
+                  ))}
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </CardContent>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between px-4 py-3 border-t bg-muted/10">
+            <span className="text-xs text-muted-foreground">Page {currentPage} of {totalPages}</span>
+            <div className="flex items-center gap-1">
+              <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === 1}
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}>
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                const start = Math.max(1, Math.min(currentPage - 2, totalPages - 4))
+                const page = start + i
+                return (
+                  <Button key={page} variant={currentPage === page ? 'default' : 'outline'} size="sm"
+                    className={`h-7 w-7 p-0 text-xs ${currentPage === page ? 'bg-[#0d9488] text-white hover:bg-[#0f766e]' : ''}`}
+                    onClick={() => setCurrentPage(page)}>
+                    {page}
+                  </Button>
+                )
+              })}
+              <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        )}
+      </Card>
+    </div>
   )
 }
