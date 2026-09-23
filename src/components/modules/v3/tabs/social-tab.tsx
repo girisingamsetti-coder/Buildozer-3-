@@ -128,6 +128,33 @@ export function SocialTab({
   const sortedSkillTrades = Object.entries(skillTrades).sort((a, b) => b[1] - a[1])
   const maxSkillTradeCount = sortedSkillTrades[0]?.[1] || 2500
 
+  const whoIsEmployedData = [
+    {
+      title: 'All workers by gender',
+      total: 10348,
+      items: [
+        { label: 'Men', count: 9921, pct: 96, displayPct: '96%', color: '#2563eb' },
+        { label: 'Women', count: 427, pct: 4, displayPct: '4%', color: '#be185d' },
+      ],
+    },
+    {
+      title: 'Local vs other workers',
+      total: 10348,
+      items: [
+        { label: 'Local', count: 816, pct: 8, displayPct: '8%', color: '#115e59' },
+        { label: 'Other', count: 9532, pct: 92, displayPct: '92%', color: '#d97706' },
+      ],
+    },
+    {
+      title: 'Local workers by gender',
+      total: 816,
+      items: [
+        { label: 'Men', count: 576, pct: 71, displayPct: '71%', color: '#2563eb' },
+        { label: 'Women', count: 240, pct: 29, displayPct: '29%', color: '#be185d' },
+      ],
+    },
+  ]
+
   // 3. Labour Law Compliance (Form 6) Data
   const licenses = labAgg?.licenses || {
     'BOCW Registration (Building & Other Construction Workers)': { valid: 42, expiring: 4, expired: 0 },
@@ -865,6 +892,104 @@ export function SocialTab({
               </CardContent>
             </Card>
           </div>
+
+          {/* Who is employed (3 Donut Cards) */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+            <CardHeader className="p-6 pb-3">
+              <CardTitle className="text-base font-bold text-foreground">
+                Who is employed
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Latest report per project.
+              </p>
+            </CardHeader>
+            <CardContent className="p-6 pt-0">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {whoIsEmployedData.map((card) => {
+                  const r = 38;
+                  const c = 2 * Math.PI * r;
+                  let cumulative = 0;
+
+                  return (
+                    <div
+                      key={card.title}
+                      className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-5 flex flex-col items-center justify-between"
+                    >
+                      <h4 className="text-xs font-bold text-foreground mb-4 text-center">
+                        {card.title}
+                      </h4>
+
+                      {/* Donut Chart */}
+                      <div className="w-32 h-32 relative flex items-center justify-center shrink-0">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r={r}
+                            fill="transparent"
+                            stroke="currentColor"
+                            strokeWidth="11"
+                            className="text-muted/20"
+                          />
+                          {card.items.map((item, idx) => {
+                            const dash = (item.pct / 100) * c;
+                            const offset = (cumulative / 100) * c;
+                            cumulative += item.pct;
+                            return (
+                              <circle
+                                key={idx}
+                                cx="50"
+                                cy="50"
+                                r={r}
+                                fill="transparent"
+                                stroke={item.color}
+                                strokeWidth="11"
+                                strokeDasharray={`${dash} ${c}`}
+                                strokeDashoffset={-offset}
+                              />
+                            );
+                          })}
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                          <span className="text-base font-black text-foreground font-mono leading-none">
+                            {card.total.toLocaleString()}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground font-medium mt-1">
+                            total
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Breakdown List */}
+                      <div className="w-full mt-6 space-y-2 text-xs">
+                        {card.items.map((item) => (
+                          <div key={item.label} className="flex items-center justify-between gap-2 text-xs">
+                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                              <span
+                                className="w-2.5 h-2.5 rounded-xs shrink-0"
+                                style={{ backgroundColor: item.color }}
+                              />
+                              <span className="truncate text-foreground font-medium" title={item.label}>
+                                {item.label}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-3 shrink-0">
+                              <span className="font-bold font-mono text-foreground text-right">
+                                {item.count.toLocaleString()}
+                              </span>
+                              <span className="font-mono text-muted-foreground w-8 text-right">
+                                {item.displayPct}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Top Row: Visual B (Type of Local Workers Employed) + Visual C (Total Workforce 6-Month Trend) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
