@@ -329,41 +329,38 @@ export function AllSubmissionsTable() {
 
   return (
     <Card className="flex flex-col shrink-0 h-full">
-      <div className="flex flex-col gap-2 px-3 py-2.5 border-b bg-muted/20">
-        <p className="text-sm font-bold text-[#0d9488]">Recent Submissions</p>
-        <div className="flex flex-col gap-1.5">
-          <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-            <Input
-              placeholder="Search..."
-              value={search}
-              onChange={e => { setSearch(e.target.value); setCurrentPage(1) }}
-              className="pl-7 h-7 text-xs"
-            />
-          </div>
-          <div className="flex gap-1.5 items-center">
-            <Select value={typeFilter} onValueChange={v => { setTypeFilter(v); setCurrentPage(1) }}>
-              <SelectTrigger className="flex-1 h-7 text-xs"><SelectValue placeholder="Type" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Types</SelectItem>
-                <SelectItem value="OHS">OHS</SelectItem>
-                <SelectItem value="Road Safety">Road Safety</SelectItem>
-                <SelectItem value="EVM">EVM</SelectItem>
-                <SelectItem value="Social Safeguard">Social Safeguard</SelectItem>
-                <SelectItem value="Skill Training">Skill Training</SelectItem>
-                <SelectItem value="Labour Law">Labour Law</SelectItem>
-                <SelectItem value="Gender & GBV">Gender & GBV</SelectItem>
-              </SelectContent>
-            </Select>
-            {hasFilter && (
-              <Button variant="outline" size="sm" className="h-7 px-2 text-xs shrink-0"
-                onClick={() => { setSearch(''); setTypeFilter(''); setCurrentPage(1) }}>
-                <X className="h-3 w-3" />
-              </Button>
-            )}
-          </div>
+      <div className="flex flex-row items-center gap-2 px-3 py-2.5 border-b bg-muted/20">
+        <p className="text-sm font-bold text-[#0d9488] shrink-0">Recent Submissions</p>
+        <div className="relative flex-1 min-w-0">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+          <Input
+            placeholder="Search..."
+            value={search}
+            onChange={e => { setSearch(e.target.value); setCurrentPage(1) }}
+            className="pl-7 h-7 text-xs w-full"
+          />
         </div>
+        <Select value={typeFilter} onValueChange={v => { setTypeFilter(v); setCurrentPage(1) }}>
+          <SelectTrigger className="w-28 h-7 text-xs shrink-0"><SelectValue placeholder="Type" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="All">All Types</SelectItem>
+            <SelectItem value="OHS">OHS</SelectItem>
+            <SelectItem value="Road Safety">Road Safety</SelectItem>
+            <SelectItem value="EVM">EVM</SelectItem>
+            <SelectItem value="Social Safeguard">Social Safeguard</SelectItem>
+            <SelectItem value="Skill Training">Skill Training</SelectItem>
+            <SelectItem value="Labour Law">Labour Law</SelectItem>
+            <SelectItem value="Gender & GBV">Gender & GBV</SelectItem>
+          </SelectContent>
+        </Select>
+        {hasFilter && (
+          <Button variant="outline" size="sm" className="h-7 w-7 p-0 shrink-0"
+            onClick={() => { setSearch(''); setTypeFilter(''); setCurrentPage(1) }}>
+            <X className="h-3 w-3" />
+          </Button>
+        )}
       </div>
+
       <CardContent className="p-0">
         <div className="overflow-x-auto overflow-y-auto max-h-[440px]">
           <Table className="w-full text-xs">
