@@ -275,12 +275,12 @@ export default function V3View() {
           <ComplianceSubmissionsCards />
 
           {/* Submitted Forms + Recent Submissions side by side */}
-          <div className="flex flex-row items-start gap-4 w-full">
-            <div className="flex-[3] min-w-0">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 w-full">
+            <div className="lg:col-span-2 min-w-0">
               <SubmittedFormsTable projects={filteredProjects} />
             </div>
             {/* Recent Submissions Table */}
-            <div className="flex-[1] min-w-0">
+            <div className="min-w-0">
               <AllSubmissionsTable />
             </div>
           </div>
