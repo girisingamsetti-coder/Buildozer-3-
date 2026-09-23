@@ -254,8 +254,159 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
       </div>
 
-      {/* Top Split: Visual A (Compliance by OHS Group) + Visual E (Policies & Plans Availability) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      
+      {/* Combined Requested Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
+{/* Visual E: Horizontal Bar Chart: OHS Policies & Plans Availability */}
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+          <CardHeader className="p-4 border-b bg-muted/20">
+            <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
+              <FileCheck className="w-4 h-4 text-primary" />
+              OHS Policies & Plans Availability
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Evaluation of 6 mandatory statutory plans across projects | Alert if No &gt; 3 (Red)
+            </p>
+          </CardHeader>
+          <CardContent className="p-4 flex flex-col gap-3">
+            {Object.entries(policies).map(([pname, pdata]) => {
+              const total = pdata.yes + pdata.no || 46
+              const yesPct = Math.round((pdata.yes / total) * 100)
+              const isAlert = pdata.no > 3
+              return (
+                <div key={pname} className="flex flex-col gap-1 p-2 rounded-md hover:bg-muted/30 transition-colors">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-semibold text-foreground">{pname}</span>
+                    <div className="flex items-center gap-2 font-mono">
+                      <span className="text-emerald-600 font-bold">{pdata.yes} Yes</span>
+                      <span className="text-muted-foreground">•</span>
+                      <span className={pdata.no > 3 ? 'text-rose-600 font-bold' : 'text-amber-600 font-medium'}>
+                        {pdata.no} No
+                      </span>
+                      <Badge
+                        className={`text-[10px] ${
+                          isAlert
+                            ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border-rose-500/30'
+                            : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
+                        }`}
+                      >
+                        {yesPct}% Available
+                      </Badge>
+                    </div>
+                  </div>
+                  <div className="w-full bg-muted/50 rounded-full h-2 overflow-hidden">
+                    <div
+                      style={{ width: `${yesPct}%` }}
+                      className={`h-full rounded-full transition-all duration-500 ${isAlert ? 'bg-amber-500' : 'bg-emerald-500'}`}
+                    />
+                  </div>
+                </div>
+              )
+            })}
+          </CardContent>
+        </Card>
+
+{/* Card 1: Checklist compliance by month */}
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+            <CardHeader className="p-4 border-b bg-muted/20">
+              <CardTitle className="text-sm font-bold text-foreground">
+                Checklist compliance by month
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Share of Yes among all checklist answers in each month's reports.
+              </p>
+            </CardHeader>
+            <CardContent className="p-4 h-[340px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={complianceTrendData} margin={{ top: 25, right: 15, left: -20, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="complianceGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#16a34a" stopOpacity={0.25} />
+                      <stop offset="95%" stopColor="#16a34a" stopOpacity={0.02} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} dy={10} />
+                  <YAxis domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} tickFormatter={(v) => `${v}%`} axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
+                  <RechartsTooltip formatter={(val: any) => [`${val}%`, 'Compliance']} contentStyle={{ fontSize: '12px', borderRadius: '6px' }} />
+                  <Area
+                    type="monotone"
+                    dataKey="compliance"
+                    stroke="#16a34a"
+                    strokeWidth={2.5}
+                    fill="url(#complianceGradient)"
+                    dot={{ stroke: '#16a34a', strokeWidth: 2, fill: '#ffffff', r: 4 }}
+                    activeDot={{ stroke: '#16a34a', strokeWidth: 2, fill: '#ffffff', r: 6 }}
+                  >
+                    <LabelList
+                      dataKey="compliance"
+                      position="top"
+                      offset={10}
+                      fill="#334155"
+                      fontSize={11}
+                      fontWeight={600}
+                      formatter={(v: any) => `${v}%`}
+                    />
+                  </Area>
+                </AreaChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+{/* Projects reporting the most incidents */}
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
+            <CardHeader className="p-4 border-b bg-muted/20">
+              <CardTitle className="text-sm font-bold text-foreground">
+                Projects reporting the most incidents
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Select a project to focus on it.
+              </p>
+            </CardHeader>
+            <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
+              {topIncidentProjects.map((p, idx) => {
+                const maxVal = 7;
+                const pct = (p.count / maxVal) * 100;
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      const matched = projects.find(proj =>
+                        proj.name.toLowerCase().includes(p.name.toLowerCase().slice(0, 10))
+                      );
+                      if (matched) onSelectProject(matched);
+                    }}
+                    className="flex items-center gap-2.5 text-xs py-1 px-1.5 rounded-md cursor-pointer hover:bg-muted/30 group transition-colors"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-medium shrink-0">
+                      {idx + 1}
+                    </span>
+                    <div className="flex-1 flex flex-col gap-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                          {p.name}
+                        </span>
+                        <span className="font-bold text-foreground font-mono ml-2 shrink-0">
+                          {p.count}
+                        </span>
+                      </div>
+                      <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 overflow-hidden">
+                        <div
+                          style={{ width: `${pct}%` }}
+                          className="h-full bg-[#0d5c50] rounded-full transition-all duration-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </CardContent>
+          </Card>
+
+      </div>
+
+{/* Top Split: Visual A (Compliance by OHS Group) */}
+      <div className="grid grid-cols-1 gap-3">
         {/* Visual A: Horizontal Bar Chart: Compliance by OHS Requirement Group */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
@@ -304,55 +455,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </CardContent>
         </Card>
 
-        {/* Visual E: Horizontal Bar Chart: OHS Policies & Plans Availability */}
-        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
-            <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-              <FileCheck className="w-4 h-4 text-primary" />
-              OHS Policies & Plans Availability
-            </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Evaluation of 6 mandatory statutory plans across projects | Alert if No &gt; 3 (Red)
-            </p>
-          </CardHeader>
-          <CardContent className="p-4 flex flex-col gap-3">
-            {Object.entries(policies).map(([pname, pdata]) => {
-              const total = pdata.yes + pdata.no || 46
-              const yesPct = Math.round((pdata.yes / total) * 100)
-              const isAlert = pdata.no > 3
-              return (
-                <div key={pname} className="flex flex-col gap-1 p-2 rounded-md hover:bg-muted/30 transition-colors">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-foreground">{pname}</span>
-                    <div className="flex items-center gap-2 font-mono">
-                      <span className="text-emerald-600 font-bold">{pdata.yes} Yes</span>
-                      <span className="text-muted-foreground">•</span>
-                      <span className={pdata.no > 3 ? 'text-rose-600 font-bold' : 'text-amber-600 font-medium'}>
-                        {pdata.no} No
-                      </span>
-                      <Badge
-                        className={`text-[10px] ${
-                          isAlert
-                            ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border-rose-500/30'
-                            : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
-                        }`}
-                      >
-                        {yesPct}% Available
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className="w-full bg-muted/50 rounded-full h-2 overflow-hidden">
-                    <div
-                      style={{ width: `${yesPct}%` }}
-                      className={`h-full rounded-full transition-all duration-500 ${isAlert ? 'bg-amber-500' : 'bg-emerald-500'}`}
-                    />
-                  </div>
-                </div>
-              )
-            })}
-          </CardContent>
-        </Card>
-      </div>
+              </div>
 
       {/* Compliance Trend and Training Section */}
       <div className="flex flex-col gap-3">
@@ -360,54 +463,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           <h3 className="font-bold text-foreground text-lg">Compliance trend and training</h3>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-          {/* Card 1: Checklist compliance by month */}
-          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20">
-              <CardTitle className="text-sm font-bold text-foreground">
-                Checklist compliance by month
-              </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Share of Yes among all checklist answers in each month's reports.
-              </p>
-            </CardHeader>
-            <CardContent className="p-4 h-[340px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={complianceTrendData} margin={{ top: 25, right: 15, left: -20, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="complianceGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#16a34a" stopOpacity={0.25} />
-                      <stop offset="95%" stopColor="#16a34a" stopOpacity={0.02} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} dy={10} />
-                  <YAxis domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} tickFormatter={(v) => `${v}%`} axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
-                  <RechartsTooltip formatter={(val: any) => [`${val}%`, 'Compliance']} contentStyle={{ fontSize: '12px', borderRadius: '6px' }} />
-                  <Area
-                    type="monotone"
-                    dataKey="compliance"
-                    stroke="#16a34a"
-                    strokeWidth={2.5}
-                    fill="url(#complianceGradient)"
-                    dot={{ stroke: '#16a34a', strokeWidth: 2, fill: '#ffffff', r: 4 }}
-                    activeDot={{ stroke: '#16a34a', strokeWidth: 2, fill: '#ffffff', r: 6 }}
-                  >
-                    <LabelList
-                      dataKey="compliance"
-                      position="top"
-                      offset={10}
-                      fill="#334155"
-                      fontSize={11}
-                      fontWeight={600}
-                      formatter={(v: any) => `${v}%`}
-                    />
-                  </Area>
-                </AreaChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
+        <div className="grid grid-cols-1 gap-3">
           {/* Card 2: Projects with the lowest checklist compliance */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
             <CardHeader className="p-4 border-b bg-muted/20">
@@ -655,8 +711,8 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </CardContent>
         </Card>
 
-        {/* Middle Split: Incident types + Projects reporting the most incidents */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        {/* Middle Split: Incident types */}
+        <div className="grid grid-cols-1 gap-3">
           {/* Incident types */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
             <CardHeader className="p-4 border-b bg-muted/20">
@@ -707,56 +763,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
             </CardContent>
           </Card>
 
-          {/* Projects reporting the most incidents */}
-          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
-            <CardHeader className="p-4 border-b bg-muted/20">
-              <CardTitle className="text-sm font-bold text-foreground">
-                Projects reporting the most incidents
-              </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Select a project to focus on it.
-              </p>
-            </CardHeader>
-            <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
-              {topIncidentProjects.map((p, idx) => {
-                const maxVal = 7;
-                const pct = (p.count / maxVal) * 100;
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      const matched = projects.find(proj =>
-                        proj.name.toLowerCase().includes(p.name.toLowerCase().slice(0, 10))
-                      );
-                      if (matched) onSelectProject(matched);
-                    }}
-                    className="flex items-center gap-2.5 text-xs py-1 px-1.5 rounded-md cursor-pointer hover:bg-muted/30 group transition-colors"
-                  >
-                    <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-medium shrink-0">
-                      {idx + 1}
-                    </span>
-                    <div className="flex-1 flex flex-col gap-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
-                          {p.name}
-                        </span>
-                        <span className="font-bold text-foreground font-mono ml-2 shrink-0">
-                          {p.count}
-                        </span>
-                      </div>
-                      <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 overflow-hidden">
-                        <div
-                          style={{ width: `${pct}%` }}
-                          className="h-full bg-[#0d5c50] rounded-full transition-all duration-300"
-                        />
-                      </div>
-                    </div>
                   </div>
-                );
-              })}
-            </CardContent>
-          </Card>
-        </div>
 
         {/* Visual D: Table: Near Miss / Incident Report */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
