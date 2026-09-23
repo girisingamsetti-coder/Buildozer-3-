@@ -369,7 +369,6 @@ export function AllSubmissionsTable() {
                 <TableHead className="px-2 py-2 font-semibold">Type</TableHead>
                 <TableHead className="px-2 py-2 font-semibold">Project</TableHead>
                 <TableHead className="px-2 py-2 font-semibold">Status</TableHead>
-                <TableHead className="px-2 py-2 w-8"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -392,12 +391,6 @@ export function AllSubmissionsTable() {
                       {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}
                       {' '}{sub.status}
                     </span>
-                  </TableCell>
-                  <TableCell className="px-2 py-1.5">
-                    <Button variant="ghost" size="sm" className="h-5 w-5 p-0 text-red-400 hover:text-red-600"
-                      onClick={() => sub.isMock ? handleDelete(sub.id) : deleteMutation.mutate({ formType: sub.originalType, id: sub.id })}>
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
