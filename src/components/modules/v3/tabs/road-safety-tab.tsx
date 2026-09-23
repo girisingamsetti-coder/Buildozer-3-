@@ -178,9 +178,10 @@ export function RoadSafetyTab({
         </Card>
       </div>
 
-      {/* 2-Card Row: Checklist compliance by month + Projects with lowest compliance */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {/* Card 1: Checklist compliance by month */}
+      
+      {/* Combined Requested Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
+{/* Card 1: Checklist compliance by month */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
@@ -227,58 +228,7 @@ export function RoadSafetyTab({
           </CardContent>
         </Card>
 
-        {/* Card 2: Projects with the lowest checklist compliance */}
-        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
-          <CardHeader className="p-4 border-b bg-muted/20">
-            <CardTitle className="text-sm font-bold text-foreground">
-              Projects with the lowest checklist compliance
-            </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Share of Yes in each project's latest answers. Select a project to see its gaps.
-            </p>
-          </CardHeader>
-          <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
-            {lowestComplianceProjects.map((p, idx) => {
-              return (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    const matched = projects.find(proj =>
-                      proj.name.toLowerCase().includes(p.name.toLowerCase().slice(0, 8))
-                    );
-                    if (matched) onSelectProject(matched);
-                  }}
-                  className="flex items-center gap-2.5 text-xs py-1 px-1.5 rounded-md cursor-pointer hover:bg-muted/30 group transition-colors"
-                >
-                  <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-medium shrink-0">
-                    {idx + 1}
-                  </span>
-                  <div className="flex-1 flex flex-col gap-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
-                        {p.name}
-                      </span>
-                      <span className="font-bold text-foreground font-mono ml-2 shrink-0">
-                        {p.pct}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 overflow-hidden">
-                      <div
-                        style={{ width: `${p.pct}%` }}
-                        className="h-full rounded-full transition-all duration-300 bg-[#dc2626]"
-                      />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Top Split: Checklist Mix Doughnut + Monthly Compliance Trend */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        {/* Visual A: Doughnut Chart: Checklist Response Mix */}
+{/* Visual A: Doughnut Chart: Checklist Response Mix */}
         <Card className="border shadow-xs flex flex-col justify-between rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -364,8 +314,8 @@ export function RoadSafetyTab({
           </CardContent>
         </Card>
 
-        {/* Visual C: Monthly Road Safety Compliance Trend (6 Months) */}
-        <Card className="lg:col-span-2 border shadow-xs flex flex-col justify-between rounded-xl shadow-sm border-border/40">
+{/* Visual C: Monthly Road Safety Compliance Trend (6 Months) */}
+        <Card className="border shadow-xs flex flex-col justify-between rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -412,7 +362,65 @@ export function RoadSafetyTab({
             </div>
           </CardContent>
         </Card>
+
       </div>
+
+{/* 2-Card Row: Checklist compliance by month + Projects with lowest compliance */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        
+        {/* Card 2: Projects with the lowest checklist compliance */}
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
+          <CardHeader className="p-4 border-b bg-muted/20">
+            <CardTitle className="text-sm font-bold text-foreground">
+              Projects with the lowest checklist compliance
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Share of Yes in each project's latest answers. Select a project to see its gaps.
+            </p>
+          </CardHeader>
+          <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
+            {lowestComplianceProjects.map((p, idx) => {
+              return (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    const matched = projects.find(proj =>
+                      proj.name.toLowerCase().includes(p.name.toLowerCase().slice(0, 8))
+                    );
+                    if (matched) onSelectProject(matched);
+                  }}
+                  className="flex items-center gap-2.5 text-xs py-1 px-1.5 rounded-md cursor-pointer hover:bg-muted/30 group transition-colors"
+                >
+                  <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-medium shrink-0">
+                    {idx + 1}
+                  </span>
+                  <div className="flex-1 flex flex-col gap-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                        {p.name}
+                      </span>
+                      <span className="font-bold text-foreground font-mono ml-2 shrink-0">
+                        {p.pct}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 overflow-hidden">
+                      <div
+                        style={{ width: `${p.pct}%` }}
+                        className="h-full rounded-full transition-all duration-300 bg-[#dc2626]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Top Split: Checklist Mix Doughnut + Monthly Compliance Trend */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        
+              </div>
 
       {/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
       <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
