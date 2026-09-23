@@ -531,8 +531,7 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
   }, [rows])
 
   return (
-    <div className="w-3/4">
-      <Card className="shrink-0">
+    <Card className="shrink-0 w-full">
         {/* Card header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-3">
           <div>
@@ -636,6 +635,5 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
 
 
       </Card>
-    </div>
   )
 }

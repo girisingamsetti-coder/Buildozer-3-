@@ -276,9 +276,11 @@ export default function V3View() {
 
           {/* Submitted Forms + Recent Submissions side by side */}
           <div className="flex flex-row items-start gap-4 w-full">
-            <SubmittedFormsTable projects={filteredProjects} />
+            <div className="flex-[3] min-w-0">
+              <SubmittedFormsTable projects={filteredProjects} />
+            </div>
             {/* Recent Submissions Table */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-[1] min-w-0">
               <AllSubmissionsTable />
             </div>
           </div>
