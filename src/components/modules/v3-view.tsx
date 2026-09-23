@@ -13,7 +13,6 @@ import {
   Users,
   LayoutDashboard,
   AlertCircle,
-  FileText
 } from 'lucide-react'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
@@ -29,7 +28,6 @@ import { EvmTab } from './v3/tabs/evm-tab'
 import { OhsTab } from './v3/tabs/ohs-tab'
 import { RoadSafetyTab } from './v3/tabs/road-safety-tab'
 import { SocialTab } from './v3/tabs/social-tab'
-import ReportTab from './v3/tabs/report-tab'
 import { ComplianceSubmissionsCards, AllSubmissionsTable } from './v3/compliance-submissions-cards'
 
 export default function V3View() {
@@ -262,13 +260,6 @@ export default function V3View() {
             <Users className="w-3.5 h-3.5 text-indigo-500" />
             Social
           </TabsTrigger>
-          <TabsTrigger 
-            value="report" 
-            className="flex-1 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 data-[state=active]:bg-slate-200 dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-none rounded-md text-xs font-bold text-black dark:text-white gap-2 py-2"
-          >
-            <FileText className="w-3.5 h-3.5 text-orange-500" />
-            Report
-          </TabsTrigger>
         </TabsList>
 
         {/* Tab 1: Overview - Stat cards appear only here */}
@@ -342,10 +333,6 @@ export default function V3View() {
           />
         </TabsContent>
 
-        {/* Tab 6: Report */}
-        <TabsContent value="report" className="m-0 h-full focus-visible:outline-none">
-          <ReportTab />
-        </TabsContent>
       </Tabs>
 
       {/* Contextual Project E&S Profile Drawer */}
