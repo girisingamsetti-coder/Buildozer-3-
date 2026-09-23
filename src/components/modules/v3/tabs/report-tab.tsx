@@ -535,16 +535,7 @@ export default function ReportTab() {
 
   return (
     <div className="flex flex-col gap-4 mt-0 h-full min-h-0 overflow-y-auto pr-2 pb-6">
-      <div className="flex justify-between items-center shrink-0">
-        <h2 className="text-lg font-bold text-foreground">Compliance Submissions & Reports</h2>
-      </div>
 
-      {/* Stat Cards — responsive grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 shrink-0">
-            {FORM_TYPES.map(type => (
-              <StatCard key={type} formType={type} entries={forms.filter(f => f.formType === type)} />
-            ))}
-          </div>
 
           
           {/* Unified Submissions Table */}
