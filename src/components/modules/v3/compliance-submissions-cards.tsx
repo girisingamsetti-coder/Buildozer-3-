@@ -328,93 +328,77 @@ export function AllSubmissionsTable() {
   const hasFilter = !!(search || typeFilter)
 
   return (
-    <Card className="flex flex-col shrink-0">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
-        <p className="text-sm font-bold text-[#0d9488] shrink-0">Recent Submissions</p>
-        <div className="flex flex-col sm:flex-row flex-wrap gap-2 flex-1 justify-end">
-          <div className="relative w-full max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+    <Card className="flex flex-col shrink-0 h-full">
+      <div className="flex flex-col gap-2 px-3 py-2.5 border-b bg-muted/20">
+        <p className="text-sm font-bold text-[#0d9488]">Recent Submissions</p>
+        <div className="flex flex-col gap-1.5">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
             <Input
-              placeholder="Search project or type..."
+              placeholder="Search..."
               value={search}
               onChange={e => { setSearch(e.target.value); setCurrentPage(1) }}
-              className="pl-9 h-8 text-xs"
+              className="pl-7 h-7 text-xs"
             />
           </div>
-          <Select value={typeFilter} onValueChange={v => { setTypeFilter(v); setCurrentPage(1) }}>
-            <SelectTrigger className="w-full sm:w-40 h-8 text-xs"><SelectValue placeholder="Form Type" /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="All">All Types</SelectItem>
-              <SelectItem value="OHS">OHS</SelectItem>
-              <SelectItem value="Road Safety">Road Safety</SelectItem>
-              <SelectItem value="EVM">EVM</SelectItem>
-              <SelectItem value="Social Safeguard">Social Safeguard</SelectItem>
-              <SelectItem value="Skill Training">Skill Training</SelectItem>
-              <SelectItem value="Labour Law">Labour Law</SelectItem>
-              <SelectItem value="Gender & GBV">Gender & GBV</SelectItem>
-            </SelectContent>
-          </Select>
-          {hasFilter && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 text-xs px-2"
-              onClick={() => { setSearch(''); setTypeFilter(''); setCurrentPage(1) }}
-            >
-              Clear <X className="h-3.5 w-3.5 ml-1" />
-            </Button>
-          )}
+          <div className="flex gap-1.5 items-center">
+            <Select value={typeFilter} onValueChange={v => { setTypeFilter(v); setCurrentPage(1) }}>
+              <SelectTrigger className="flex-1 h-7 text-xs"><SelectValue placeholder="Type" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All Types</SelectItem>
+                <SelectItem value="OHS">OHS</SelectItem>
+                <SelectItem value="Road Safety">Road Safety</SelectItem>
+                <SelectItem value="EVM">EVM</SelectItem>
+                <SelectItem value="Social Safeguard">Social Safeguard</SelectItem>
+                <SelectItem value="Skill Training">Skill Training</SelectItem>
+                <SelectItem value="Labour Law">Labour Law</SelectItem>
+                <SelectItem value="Gender & GBV">Gender & GBV</SelectItem>
+              </SelectContent>
+            </Select>
+            {hasFilter && (
+              <Button variant="outline" size="sm" className="h-7 px-2 text-xs shrink-0"
+                onClick={() => { setSearch(''); setTypeFilter(''); setCurrentPage(1) }}>
+                <X className="h-3 w-3" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       <CardContent className="p-0">
-        <div className="overflow-x-auto min-h-[200px]">
+        <div className="overflow-x-auto overflow-y-auto max-h-[440px]">
           <Table className="w-full text-xs">
-            <TableHeader className="bg-muted/40">
+            <TableHeader className="bg-muted/40 sticky top-0 z-10">
               <TableRow>
-                <TableHead className="px-4 py-2 font-semibold">Form Type</TableHead>
-                <TableHead className="px-4 py-2 font-semibold">Project</TableHead>
-                <TableHead className="px-4 py-2 font-semibold">Reporting Month / Date</TableHead>
-                <TableHead className="px-4 py-2 font-semibold">Status</TableHead>
-                <TableHead className="px-4 py-2 font-semibold">Submitted Date</TableHead>
-                <TableHead className="px-3 py-2 w-10"></TableHead>
+                <TableHead className="px-2 py-2 font-semibold">Type</TableHead>
+                <TableHead className="px-2 py-2 font-semibold">Project</TableHead>
+                <TableHead className="px-2 py-2 font-semibold">Status</TableHead>
+                <TableHead className="px-2 py-2 w-8"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {paginatedData.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">No submissions found.</TableCell>
+                  <TableCell colSpan={4} className="text-center py-12 text-muted-foreground">No submissions found.</TableCell>
                 </TableRow>
               ) : paginatedData.map((sub: any) => (
                 <TableRow key={sub.id} className="border-b hover:bg-muted/20">
-                  <TableCell className="px-4 py-2">
-                    <Badge variant="outline" className="text-xs font-semibold border-[#0d9488]/40 text-[#0d9488]">
+                  <TableCell className="px-2 py-1.5">
+                    <Badge variant="outline" className="text-[10px] font-semibold border-[#0d9488]/40 text-[#0d9488] whitespace-nowrap">
                       {sub.formType}
                     </Badge>
                   </TableCell>
-                  <TableCell className="px-4 py-2 font-medium">{sub.projectName}</TableCell>
-                  <TableCell className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</TableCell>
-                  <TableCell className="px-4 py-2">
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                  <TableCell className="px-2 py-1.5 font-medium max-w-[120px] truncate" title={sub.projectName}>{sub.projectName}</TableCell>
+                  <TableCell className="px-2 py-1.5">
+                    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold ${
+                      sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'
+                    }`}>
                       {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}
                       {' '}{sub.status}
                     </span>
                   </TableCell>
-                  <TableCell className="px-4 py-2 text-muted-foreground">
-                    {sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}
-                  </TableCell>
-                  <TableCell className="px-3 py-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
-                      onClick={() => {
-                        if (sub.isMock) {
-                          handleDelete(sub.id)
-                        } else {
-                          deleteMutation.mutate({ formType: sub.originalType, id: sub.id })
-                        }
-                      }}
-                    >
+                  <TableCell className="px-2 py-1.5">
+                    <Button variant="ghost" size="sm" className="h-5 w-5 p-0 text-red-400 hover:text-red-600"
+                      onClick={() => sub.isMock ? handleDelete(sub.id) : deleteMutation.mutate({ formType: sub.originalType, id: sub.id })}>
                       <Trash2 className="h-3 w-3" />
                     </Button>
                   </TableCell>

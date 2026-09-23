@@ -274,8 +274,14 @@ export default function V3View() {
           {/* Compliance Submissions & Reports Cards */}
           <ComplianceSubmissionsCards />
 
-          {/* Submitted Forms cross-reference table */}
-          <SubmittedFormsTable projects={filteredProjects} />
+          {/* Submitted Forms + Recent Submissions side by side */}
+          <div className="flex flex-row items-start gap-4 w-full">
+            <SubmittedFormsTable projects={filteredProjects} />
+            {/* Recent Submissions Table */}
+            <div className="flex-1 min-w-0">
+              <AllSubmissionsTable />
+            </div>
+          </div>
 
           <OverviewTab
             projects={filteredProjects}
@@ -285,12 +291,8 @@ export default function V3View() {
             domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
           />
-
-          {/* Recent Submissions Table */}
-          <AllSubmissionsTable />
         </TabsContent>
 
-        {/* Tab 2: EVM (Environment) */}
         <TabsContent value="evm" className="m-0 focus-visible:outline-none">
           <EvmTab
             projects={filteredProjects}
