@@ -188,6 +188,39 @@ export function SocialTab({
     },
   ]
 
+  const labourInfluxData = [
+    {
+      category: 'In labour camps',
+      total: 12363,
+      displayTotal: '12,363',
+      men: 11992,
+      women: 371,
+    },
+    {
+      category: 'Migrant workers',
+      total: 11837,
+      displayTotal: '11,837',
+      men: 11482,
+      women: 355,
+    },
+    {
+      category: 'New workers',
+      subCategory: '(period)',
+      total: 12066,
+      displayTotal: '12,066',
+      men: 11704,
+      women: 362,
+    },
+  ]
+
+  const hostCommunityProfileData = [
+    { name: 'Population', count: 272000, displayCount: '272k', pct: 100 },
+    { name: 'Vulnerable households', count: 48396, displayCount: '48,396', pct: (48396 / 272000) * 100 },
+    { name: 'Elderly (60+)', count: 21635, displayCount: '21,635', pct: (21635 / 272000) * 100 },
+    { name: 'Women-headed households', count: 13693, displayCount: '13,693', pct: (13693 / 272000) * 100 },
+    { name: 'Persons with disability', count: 3408, displayCount: '3,408', pct: (3408 / 272000) * 100 },
+  ]
+
   // 2. Skill Training & Employment (Form 5) Data
   const skillKpis = sklAgg?.kpis || {
     total_workers: 18450,
@@ -1171,6 +1204,172 @@ export function SocialTab({
                   <span className="flex items-center gap-1.5 font-medium text-foreground">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#dc2626]" /> No
                   </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Row 5: Labour influx + Host community profile */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Card 1: Labour influx */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  Labour influx
+                </CardTitle>
+                <div className="flex items-center gap-4 mt-2 text-xs">
+                  <span className="flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" /> Men
+                  </span>
+                  <span className="flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" /> Women
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6 pt-1">
+                <div className="w-full">
+                  <svg className="w-full h-56" viewBox="0 0 460 230">
+                    {/* Y-axis gridlines and labels */}
+                    {[
+                      { val: '20,000', y: 28, num: 20000 },
+                      { val: '15,000', y: 69.5, num: 15000 },
+                      { val: '10,000', y: 111, num: 10000 },
+                      { val: '5,000', y: 152.5, num: 5000 },
+                      { val: '0', y: 194, num: 0 },
+                    ].map((g) => (
+                      <g key={g.val}>
+                        <text
+                          x="48"
+                          y={g.y + 3.5}
+                          textAnchor="end"
+                          className="text-[11px] font-mono fill-muted-foreground select-none"
+                        >
+                          {g.val}
+                        </text>
+                        <line
+                          x1="56"
+                          y1={g.y}
+                          x2="440"
+                          y2={g.y}
+                          stroke="currentColor"
+                          className="text-border/60"
+                          strokeDasharray="3 3"
+                        />
+                      </g>
+                    ))}
+
+                    {/* Baseline */}
+                    <line
+                      x1="56"
+                      y1="194"
+                      x2="440"
+                      y2="194"
+                      stroke="currentColor"
+                      className="text-border/80"
+                    />
+
+                    {/* Bars & Labels */}
+                    {labourInfluxData.map((item, idx) => {
+                      const cx = 125 + idx * 125;
+                      const barWidth = 26;
+                      const totalH = (item.total / 20000) * 166;
+                      const menH = (item.men / 20000) * 166;
+                      const womenH = Math.max(3, (item.women / 20000) * 166);
+                      const totalY = 194 - totalH;
+                      const menY = 194 - menH;
+
+                      return (
+                        <g key={item.category}>
+                          {/* Total count above bar */}
+                          <text
+                            x={cx}
+                            y={totalY - 6}
+                            textAnchor="middle"
+                            className="text-[11px] font-bold font-mono fill-foreground select-none"
+                          >
+                            {item.displayTotal}
+                          </text>
+
+                          {/* Men Bar (Blue) */}
+                          <rect
+                            x={cx - barWidth / 2}
+                            y={menY}
+                            width={barWidth}
+                            height={menH}
+                            fill="#2563eb"
+                            rx="0"
+                          >
+                            <title>{`${item.category} - Men: ${item.men.toLocaleString()}`}</title>
+                          </rect>
+
+                          {/* Women Bar (Magenta - cap on top) */}
+                          <rect
+                            x={cx - barWidth / 2}
+                            y={totalY}
+                            width={barWidth}
+                            height={womenH}
+                            fill="#be185d"
+                            rx="2"
+                          >
+                            <title>{`${item.category} - Women: ${item.women.toLocaleString()}`}</title>
+                          </rect>
+
+                          {/* Category Labels below axis */}
+                          <text
+                            x={cx}
+                            y={item.subCategory ? 210 : 214}
+                            textAnchor="middle"
+                            className="text-[11px] font-medium fill-muted-foreground select-none"
+                          >
+                            {item.category}
+                          </text>
+                          {item.subCategory && (
+                            <text
+                              x={cx}
+                              y="223"
+                              textAnchor="middle"
+                              className="text-[11px] font-medium fill-muted-foreground select-none"
+                            >
+                              {item.subCategory}
+                            </text>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Card 2: Host community profile */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  Host community profile
+                </CardTitle>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Latest report per project.
+                </p>
+              </CardHeader>
+              <CardContent className="p-6 pt-3 flex flex-col justify-around flex-1">
+                <div className="space-y-4">
+                  {hostCommunityProfileData.map((item) => (
+                    <div key={item.name} className="flex items-center gap-4">
+                      <div className="w-48 sm:w-56 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                        {item.name}
+                      </div>
+                      <div className="flex-1 bg-muted/40 h-2.5 rounded-full overflow-hidden flex relative">
+                        <div
+                          style={{ width: `${item.pct}%` }}
+                          className="bg-[#115e59] h-full rounded-full transition-all"
+                          title={`${item.name}: ${item.displayCount}`}
+                        />
+                      </div>
+                      <div className="w-14 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                        {item.displayCount}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
