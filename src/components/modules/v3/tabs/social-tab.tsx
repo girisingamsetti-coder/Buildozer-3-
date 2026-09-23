@@ -728,67 +728,67 @@ export function SocialTab({
       {subTab === 'safeguard' && (
         <div className="flex flex-col gap-3">
           {/* Visual E: Key-Value (KV) Card: Labour Influx & Camps */}
-          <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-6 gap-2.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Active Camps</span>
-                <div className="text-xl font-black text-foreground mt-0.5">{influx.camps_count}</div>
+                <div className="text-lg font-black text-foreground mt-0.5">{influx.camps_count}</div>
                 <span className="text-[10px] text-muted-foreground">Regulated & Habited</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Migrant Workers</span>
-                <div className="text-xl font-black text-foreground mt-0.5">{influx.migrant_workers.toLocaleString()}</div>
+                <div className="text-lg font-black text-foreground mt-0.5">{influx.migrant_workers.toLocaleString()}</div>
                 <span className="text-[10px] text-muted-foreground">Inter-state pool</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">New Workers</span>
-                <div className="text-xl font-black text-primary mt-0.5">{influx.new_workers.toLocaleString()}</div>
+                <div className="text-lg font-black text-primary mt-0.5">{influx.new_workers.toLocaleString()}</div>
                 <span className="text-[10px] text-muted-foreground">Inducted this month</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Police Verification</span>
-                <div className="text-xl font-black text-emerald-600 mt-0.5">{influx.police_verified_pct}%</div>
+                <div className="text-lg font-black text-emerald-600 mt-0.5">{influx.police_verified_pct}%</div>
                 <span className="text-[10px] text-emerald-600/80 font-medium">Clearance Verified</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Medical Covered</span>
-                <div className="text-xl font-black text-emerald-600 mt-0.5">{influx.medical_coverage_pct}%</div>
+                <div className="text-lg font-black text-emerald-600 mt-0.5">{influx.medical_coverage_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Health checkup done</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Programs Held</span>
-                <div className="text-xl font-black text-foreground mt-0.5">{influx.programs_conducted}</div>
+                <div className="text-lg font-black text-foreground mt-0.5">{influx.programs_conducted}</div>
                 <span className="text-[10px] text-muted-foreground">Community & health</span>
               </CardContent>
             </Card>
           </div>
 
           {/* Row 2: PMC site visits by specialist + Closure rates */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: PMC site visits by specialist */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   PMC site visits by specialist
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 pt-2">
-                <div className="flex flex-col sm:flex-row items-center justify-around gap-6 h-full min-h-[190px]">
+              <CardContent className="p-4 pt-1">
+                <div className="flex flex-col sm:flex-row items-center justify-around gap-4 min-h-[160px]">
                   {/* Donut Chart */}
                   {(() => {
                     const r = 38;
@@ -797,7 +797,7 @@ export function SocialTab({
                     let cumulative = 0;
 
                     return (
-                      <div className="w-36 h-36 relative flex items-center justify-center shrink-0">
+                      <div className="w-32 h-32 relative flex items-center justify-center shrink-0">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                           <circle
                             cx="50"
@@ -828,10 +828,10 @@ export function SocialTab({
                           })}
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                          <span className="text-xl font-black text-foreground font-mono leading-none">
+                          <span className="text-lg font-black text-foreground font-mono leading-none">
                             {pmcSiteVisitsBySpecialist.total.toLocaleString()}
                           </span>
-                          <span className="text-xs text-muted-foreground font-medium mt-1">
+                          <span className="text-[11px] text-muted-foreground font-medium mt-0.5">
                             visits
                           </span>
                         </div>
@@ -840,23 +840,23 @@ export function SocialTab({
                   })()}
 
                   {/* Legend breakdown */}
-                  <div className="space-y-3.5 w-full sm:w-auto min-w-[220px]">
+                  <div className="space-y-2 w-full sm:w-auto min-w-[200px]">
                     {pmcSiteVisitsBySpecialist.items.map((item) => (
-                      <div key={item.label} className="flex items-center justify-between gap-4 text-xs">
-                        <div className="flex items-center gap-2.5 min-w-0">
+                      <div key={item.label} className="flex items-center justify-between gap-3 text-xs">
+                        <div className="flex items-center gap-2 min-w-0">
                           <span
                             className="w-2.5 h-2.5 rounded-xs shrink-0"
                             style={{ backgroundColor: item.color }}
                           />
-                          <span className="font-medium text-foreground truncate">
+                          <span className="font-medium text-foreground truncate text-[11px]">
                             {item.label}
                           </span>
                         </div>
-                        <div className="flex items-center gap-4 shrink-0 font-mono">
-                          <span className="font-bold text-foreground text-right w-10">
+                        <div className="flex items-center gap-3 shrink-0 font-mono text-[11px]">
+                          <span className="font-bold text-foreground text-right w-9">
                             {item.count.toLocaleString()}
                           </span>
-                          <span className="text-muted-foreground text-right w-8">
+                          <span className="text-muted-foreground text-right w-7">
                             {item.displayPct}
                           </span>
                         </div>
@@ -868,14 +868,14 @@ export function SocialTab({
             </Card>
 
             {/* Card 2: Closure rates */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Closure rates
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 pt-2">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <CardContent className="p-4 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {closureRates.map((item) => {
                     const r = 36;
                     const c = 2 * Math.PI * r;
@@ -884,10 +884,10 @@ export function SocialTab({
                     return (
                       <div
                         key={item.title}
-                        className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[190px]"
+                        className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-xl p-3 flex flex-col items-center justify-between text-center min-h-[155px]"
                       >
                         {/* Circular Progress Gauge */}
-                        <div className="w-24 h-24 relative flex items-center justify-center shrink-0">
+                        <div className="w-20 h-20 relative flex items-center justify-center shrink-0">
                           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                             <circle
                               cx="50"
@@ -910,18 +910,18 @@ export function SocialTab({
                             />
                           </svg>
                           <div className="absolute inset-0 flex items-center justify-center text-center">
-                            <span className="text-base sm:text-lg font-black text-foreground font-mono">
+                            <span className="text-base font-black text-foreground font-mono">
                               {item.pct}%
                             </span>
                           </div>
                         </div>
 
                         {/* Title & Subtitle */}
-                        <div className="w-full mt-3 flex flex-col items-center">
-                          <h5 className="text-xs font-bold text-foreground leading-tight text-center">
+                        <div className="w-full mt-2 flex flex-col items-center">
+                          <h5 className="text-[11px] font-bold text-foreground leading-tight text-center">
                             {item.title}
                           </h5>
-                          <p className="text-[11px] text-muted-foreground mt-1 font-medium text-center">
+                          <p className="text-[10px] text-muted-foreground mt-0.5 font-medium text-center">
                             {item.subtitle}
                           </p>
                         </div>
@@ -934,26 +934,26 @@ export function SocialTab({
           </div>
 
           {/* Row 3: Full-width Card: PMC observations by month */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-            <CardHeader className="p-6 pb-2">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+            <CardHeader className="p-4 pb-1">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   PMC observations by month
                 </CardTitle>
-              </div>
-              <div className="flex items-center gap-4 mt-2 text-xs">
-                <span className="flex items-center gap-1.5 font-medium text-foreground">
-                  <span className="w-2.5 h-2.5 rounded-xs bg-[#115e59]" /> Raised
-                </span>
-                <span className="flex items-center gap-1.5 font-medium text-foreground">
-                  <span className="w-2.5 h-2.5 rounded-xs bg-[#d97706]" /> Closed
-                </span>
+                <div className="flex items-center gap-3 text-xs">
+                  <span className="flex items-center gap-1.5 font-medium text-foreground text-[11px]">
+                    <span className="w-2 h-2 rounded-xs bg-[#115e59]" /> Raised
+                  </span>
+                  <span className="flex items-center gap-1.5 font-medium text-foreground text-[11px]">
+                    <span className="w-2 h-2 rounded-xs bg-[#d97706]" /> Closed
+                  </span>
+                </div>
               </div>
             </CardHeader>
-            <CardContent className="p-6 pt-1">
+            <CardContent className="p-4 pt-0">
               <div className="w-full overflow-x-auto">
-                <div className="min-w-[620px]">
-                  <svg className="w-full h-56" viewBox="0 0 820 230">
+                <div className="min-w-[600px]">
+                  <svg className="w-full h-44 sm:h-48" viewBox="0 0 820 230">
                     {/* Y-axis gridlines and labels */}
                     {[
                       { val: 400, y: 28 },
@@ -1058,27 +1058,31 @@ export function SocialTab({
           </Card>
 
           {/* Row 4: Outreach and health activities + Worker details submitted to police */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Outreach and health activities */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
-                <CardTitle className="text-sm font-bold text-foreground">
-                  Outreach and health activities
-                </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Participants; entries repeated across months are counted once.
-                </p>
-                <div className="flex items-center gap-4 mt-3 text-xs">
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" /> Men
-                  </span>
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" /> Women
-                  </span>
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <div>
+                    <CardTitle className="text-sm font-bold text-foreground">
+                      Outreach and health activities
+                    </CardTitle>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Participants; entries repeated across months are counted once.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs">
+                    <span className="flex items-center gap-1 font-medium text-foreground text-[11px]">
+                      <span className="w-2 h-2 rounded-xs bg-[#2563eb]" /> Men
+                    </span>
+                    <span className="flex items-center gap-1 font-medium text-foreground text-[11px]">
+                      <span className="w-2 h-2 rounded-xs bg-[#be185d]" /> Women
+                    </span>
+                  </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-6 pt-3">
-                <div className="space-y-4">
+              <CardContent className="p-4 pt-1.5">
+                <div className="space-y-2.5">
                   {outreachHealthActivities.map((item) => {
                     const maxRef = 14039;
                     const totalPct = (item.total / maxRef) * 100;
@@ -1086,11 +1090,11 @@ export function SocialTab({
                     const womenShare = (item.women / item.total) * 100;
 
                     return (
-                      <div key={item.name} className="flex items-center gap-4">
-                        <div className="w-44 sm:w-52 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                      <div key={item.name} className="flex items-center gap-3 text-xs">
+                        <div className="w-40 sm:w-48 shrink-0 truncate font-medium text-foreground text-[11px]" title={item.name}>
                           {item.name}
                         </div>
-                        <div className="flex-1 bg-muted/40 h-2.5 rounded-full overflow-hidden flex relative">
+                        <div className="flex-1 bg-muted/40 h-2 rounded-full overflow-hidden flex relative">
                           <div
                             style={{ width: `${totalPct}%` }}
                             className="h-full flex overflow-hidden rounded-full"
@@ -1107,7 +1111,7 @@ export function SocialTab({
                             />
                           </div>
                         </div>
-                        <div className="w-14 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                        <div className="w-12 text-right font-bold text-[11px] text-foreground font-mono shrink-0">
                           {item.displayTotal}
                         </div>
                       </div>
@@ -1118,8 +1122,8 @@ export function SocialTab({
             </Card>
 
             {/* Card 2: Worker details submitted to police */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Worker details submitted to police
                 </CardTitle>
@@ -1127,8 +1131,8 @@ export function SocialTab({
                   Share of projects answering Yes. Open a chart to see which projects.
                 </p>
               </CardHeader>
-              <CardContent className="p-6 pt-2 flex flex-col justify-between flex-1">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <CardContent className="p-4 pt-1.5 flex flex-col justify-between flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {policeSubmissionCompliance.map((item) => {
                     const r = 34;
                     const c = 2 * Math.PI * r;
@@ -1140,10 +1144,10 @@ export function SocialTab({
                     return (
                       <div
                         key={item.name}
-                        className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-4 flex flex-col items-center justify-between text-center min-h-[175px]"
+                        className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-xl p-3 flex flex-col items-center justify-between text-center min-h-[150px]"
                       >
                         {/* Donut / Ring chart */}
-                        <div className="w-24 h-24 relative flex items-center justify-center shrink-0">
+                        <div className="w-20 h-20 relative flex items-center justify-center shrink-0">
                           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                             <circle
                               cx="50"
@@ -1178,17 +1182,17 @@ export function SocialTab({
                             />
                           </svg>
                           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <span className="text-base font-black text-foreground font-mono leading-none">
+                            <span className="text-sm font-black text-foreground font-mono leading-none">
                               {item.yesPct}%
                             </span>
-                            <span className="text-[10px] text-muted-foreground font-medium mt-0.5">
+                            <span className="text-[9px] text-muted-foreground font-medium mt-0.5">
                               Yes
                             </span>
                           </div>
                         </div>
 
                         {/* Label */}
-                        <h5 className="text-xs font-semibold text-foreground mt-3 text-center leading-tight">
+                        <h5 className="text-[11px] font-semibold text-foreground mt-2 text-center leading-tight">
                           {item.name}
                         </h5>
                       </div>
@@ -1197,12 +1201,12 @@ export function SocialTab({
                 </div>
 
                 {/* Legend Footer */}
-                <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border/40 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#16a34a]" /> Yes
+                <div className="flex items-center gap-3 mt-2.5 pt-2 border-t border-border/40 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1 font-medium text-foreground text-[11px]">
+                    <span className="w-2 h-2 rounded-full bg-[#16a34a]" /> Yes
                   </span>
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#dc2626]" /> No
+                  <span className="flex items-center gap-1 font-medium text-foreground text-[11px]">
+                    <span className="w-2 h-2 rounded-full bg-[#dc2626]" /> No
                   </span>
                 </div>
               </CardContent>
@@ -1210,25 +1214,27 @@ export function SocialTab({
           </div>
 
           {/* Row 5: Labour influx + Host community profile */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Labour influx */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
-                <CardTitle className="text-sm font-bold text-foreground">
-                  Labour influx
-                </CardTitle>
-                <div className="flex items-center gap-4 mt-2 text-xs">
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" /> Men
-                  </span>
-                  <span className="flex items-center gap-1.5 font-medium text-foreground">
-                    <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" /> Women
-                  </span>
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <CardTitle className="text-sm font-bold text-foreground">
+                    Labour influx
+                  </CardTitle>
+                  <div className="flex items-center gap-3 text-xs">
+                    <span className="flex items-center gap-1 font-medium text-foreground text-[11px]">
+                      <span className="w-2 h-2 rounded-xs bg-[#2563eb]" /> Men
+                    </span>
+                    <span className="flex items-center gap-1 font-medium text-foreground text-[11px]">
+                      <span className="w-2 h-2 rounded-xs bg-[#be185d]" /> Women
+                    </span>
+                  </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-6 pt-1">
+              <CardContent className="p-4 pt-1">
                 <div className="w-full">
-                  <svg className="w-full h-56" viewBox="0 0 460 230">
+                  <svg className="w-full h-44 sm:h-48" viewBox="0 0 460 230">
                     {/* Y-axis gridlines and labels */}
                     {[
                       { val: '20,000', y: 28, num: 20000 },
@@ -1342,8 +1348,8 @@ export function SocialTab({
             </Card>
 
             {/* Card 2: Host community profile */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Host community profile
                 </CardTitle>
@@ -1351,21 +1357,21 @@ export function SocialTab({
                   Latest report per project.
                 </p>
               </CardHeader>
-              <CardContent className="p-6 pt-3 flex flex-col justify-around flex-1">
-                <div className="space-y-4">
+              <CardContent className="p-4 pt-1.5 flex flex-col justify-around flex-1">
+                <div className="space-y-2.5">
                   {hostCommunityProfileData.map((item) => (
-                    <div key={item.name} className="flex items-center gap-4">
-                      <div className="w-48 sm:w-56 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                    <div key={item.name} className="flex items-center gap-3 text-xs">
+                      <div className="w-44 sm:w-52 shrink-0 truncate text-[11px] font-medium text-foreground" title={item.name}>
                         {item.name}
                       </div>
-                      <div className="flex-1 bg-muted/40 h-2.5 rounded-full overflow-hidden flex relative">
+                      <div className="flex-1 bg-muted/40 h-2 rounded-full overflow-hidden flex relative">
                         <div
                           style={{ width: `${item.pct}%` }}
                           className="bg-[#115e59] h-full rounded-full transition-all"
                           title={`${item.name}: ${item.displayCount}`}
                         />
                       </div>
-                      <div className="w-14 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                      <div className="w-12 text-right font-bold text-[11px] text-foreground font-mono shrink-0">
                         {item.displayCount}
                       </div>
                     </div>
@@ -1618,60 +1624,60 @@ export function SocialTab({
       {subTab === 'skills' && (
         <div className="flex flex-col gap-3">
           {/* Visual A: KPI Strip: Workforce Indicators */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Total Workforce</span>
-                <div className="text-2xl font-black text-foreground mt-0.5">{skillKpis.total_workers.toLocaleString()}</div>
+                <div className="text-xl font-black text-foreground mt-0.5">{skillKpis.total_workers.toLocaleString()}</div>
                 <span className="text-[10px] text-muted-foreground">Active on site</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Local Workforce %</span>
-                <div className="text-2xl font-black text-primary mt-0.5">{skillKpis.local_pct}%</div>
+                <div className="text-xl font-black text-primary mt-0.5">{skillKpis.local_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Local / Total) * 100</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Female Workforce %</span>
-                <div className="text-2xl font-black text-indigo-600 mt-0.5">{skillKpis.female_pct}%</div>
+                <div className="text-xl font-black text-indigo-600 mt-0.5">{skillKpis.female_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Female / Total) * 100</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trained %</span>
-                <div className="text-2xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_pct}%</div>
+                <div className="text-xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Trained / Local) * 100</span>
               </CardContent>
             </Card>
 
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardContent className="p-3.5">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardContent className="p-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trained & Employed %</span>
-                <div className="text-2xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_employed_pct}%</div>
+                <div className="text-xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_employed_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Employed / Trained) * 100</span>
               </CardContent>
             </Card>
           </div>
 
           {/* Who is employed (3 Donut Cards) */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-            <CardHeader className="p-6 pb-3">
-              <CardTitle className="text-base font-bold text-foreground">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+            <CardHeader className="p-4 pb-1">
+              <CardTitle className="text-sm font-bold text-foreground">
                 Who is employed
               </CardTitle>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Latest report per project.
               </p>
             </CardHeader>
-            <CardContent className="p-6 pt-0">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <CardContent className="p-4 pt-1">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {whoIsEmployedData.map((card) => {
                   const r = 38;
                   const c = 2 * Math.PI * r;
@@ -1680,14 +1686,14 @@ export function SocialTab({
                   return (
                     <div
                       key={card.title}
-                      className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-5 flex flex-col items-center justify-between"
+                      className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-xl p-3.5 flex flex-col items-center justify-between"
                     >
-                      <h4 className="text-xs font-bold text-foreground mb-4 text-center">
+                      <h4 className="text-xs font-bold text-foreground mb-2 text-center">
                         {card.title}
                       </h4>
 
                       {/* Donut Chart */}
-                      <div className="w-32 h-32 relative flex items-center justify-center shrink-0">
+                      <div className="w-28 h-28 relative flex items-center justify-center shrink-0">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                           <circle
                             cx="50"
@@ -1718,33 +1724,33 @@ export function SocialTab({
                           })}
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                          <span className="text-base font-black text-foreground font-mono leading-none">
+                          <span className="text-sm font-black text-foreground font-mono leading-none">
                             {card.total.toLocaleString()}
                           </span>
-                          <span className="text-[10px] text-muted-foreground font-medium mt-1">
+                          <span className="text-[9px] text-muted-foreground font-medium mt-0.5">
                             total
                           </span>
                         </div>
                       </div>
 
                       {/* Breakdown List */}
-                      <div className="w-full mt-6 space-y-2 text-xs">
+                      <div className="w-full mt-3 space-y-1.5 text-xs">
                         {card.items.map((item) => (
                           <div key={item.label} className="flex items-center justify-between gap-2 text-xs">
-                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                            <div className="flex items-center gap-1.5 min-w-0 flex-1">
                               <span
-                                className="w-2.5 h-2.5 rounded-xs shrink-0"
+                                className="w-2 h-2 rounded-xs shrink-0"
                                 style={{ backgroundColor: item.color }}
                               />
-                              <span className="truncate text-foreground font-medium" title={item.label}>
+                              <span className="truncate text-foreground font-medium text-[11px]" title={item.label}>
                                 {item.label}
                               </span>
                             </div>
-                            <div className="flex items-center gap-3 shrink-0">
-                              <span className="font-bold font-mono text-foreground text-right">
+                            <div className="flex items-center gap-2 shrink-0">
+                              <span className="font-bold font-mono text-foreground text-right text-[11px]">
                                 {item.count.toLocaleString()}
                               </span>
-                              <span className="font-mono text-muted-foreground w-8 text-right">
+                              <span className="font-mono text-muted-foreground w-7 text-right text-[11px]">
                                 {item.displayPct}
                               </span>
                             </div>
@@ -1759,31 +1765,32 @@ export function SocialTab({
           </Card>
 
           {/* Row 2: Local workers by skill level + Local workers by trade */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Local workers by skill level */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-6">
-                <div>
-                  <h3 className="text-sm font-bold text-foreground">Local workers by skill level</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
-                </div>
-
-                {/* Legend */}
-                <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" />
-                    <span>Men</span>
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <div>
+                    <h3 className="text-sm font-bold text-foreground">Local workers by skill level</h3>
+                    <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-xs bg-[#be185d]" />
-                    <span>Women</span>
+                  {/* Legend */}
+                  <div className="flex items-center gap-3 text-xs text-foreground font-medium">
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-xs bg-[#2563eb]" />
+                      <span className="text-[11px]">Men</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-xs bg-[#be185d]" />
+                      <span className="text-[11px]">Women</span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Chart Area */}
-                <div className="relative h-60 pt-2 pb-8 pl-12 pr-4">
+                <div className="relative h-48 pt-2 pb-6 pl-10 pr-2 mt-2">
                   {/* Y Axis & Grid Lines */}
-                  <div className="absolute inset-0 top-2 bottom-8 left-12 right-4 flex flex-col justify-between pointer-events-none">
+                  <div className="absolute inset-0 top-2 bottom-6 left-10 right-2 flex flex-col justify-between pointer-events-none">
                     {[
                       { label: '4,000', val: 4000 },
                       { label: '3,000', val: 3000 },
@@ -1792,7 +1799,7 @@ export function SocialTab({
                       { label: '0', val: 0 },
                     ].map((tick) => (
                       <div key={tick.label} className="w-full flex items-center relative">
-                        <span className="absolute -left-12 w-10 text-right text-xs text-muted-foreground font-mono">
+                        <span className="absolute -left-10 w-8 text-right text-[11px] text-muted-foreground font-mono">
                           {tick.label}
                         </span>
                         <div className="w-full border-b border-dashed border-border/60" />
@@ -1811,14 +1818,14 @@ export function SocialTab({
                       return (
                         <div key={item.skill} className="flex flex-col items-center justify-end h-full relative">
                           {/* Total on top */}
-                          <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                          <span className="text-[11px] font-bold text-foreground mb-1 font-mono">
                             {item.displayTotal}
                           </span>
 
                           {/* Stacked bar */}
                           <div
                             style={{ height: `${totalPct}%` }}
-                            className="w-10 sm:w-11 rounded-t-xs flex flex-col-reverse overflow-hidden shadow-2xs"
+                            className="w-9 sm:w-10 rounded-t-xs flex flex-col-reverse overflow-hidden shadow-2xs"
                           >
                             <div
                               style={{ height: `${menPct}%` }}
@@ -1835,8 +1842,8 @@ export function SocialTab({
                           </div>
 
                           {/* X Axis Label */}
-                          <div className="absolute -bottom-8 flex flex-col items-center">
-                            <span className="text-xs text-muted-foreground text-center whitespace-pre-line leading-tight">
+                          <div className="absolute -bottom-6 flex flex-col items-center">
+                            <span className="text-[11px] text-muted-foreground text-center whitespace-pre-line leading-tight">
                               {item.skill}
                             </span>
                           </div>
@@ -1849,25 +1856,25 @@ export function SocialTab({
             </Card>
 
             {/* Card 2: Local workers by trade */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-6">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-4">
                 <div>
                   <h3 className="text-sm font-bold text-foreground">Local workers by trade</h3>
                   <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
                 </div>
 
-                <div className="space-y-3 mt-4">
+                <div className="space-y-1.5 mt-3">
                   {localWorkersByTrade.map((item) => {
                     const maxScale = 1545;
                     const pct = (item.count / maxScale) * 100;
 
                     return (
                       <div key={item.trade} className="flex items-center gap-3 text-xs">
-                        <div className="w-36 sm:w-44 shrink-0 truncate text-foreground font-medium" title={item.trade}>
+                        <div className="w-32 sm:w-40 shrink-0 truncate text-foreground font-medium text-[11px]" title={item.trade}>
                           {item.trade}
                         </div>
 
-                        <div className="flex-1 bg-muted/40 h-2.5 rounded-full overflow-hidden flex relative">
+                        <div className="flex-1 bg-muted/40 h-2 rounded-full overflow-hidden flex relative">
                           <div
                             style={{ width: `${pct}%` }}
                             className="bg-[#115e59] h-full rounded-full transition-all"
@@ -1875,7 +1882,7 @@ export function SocialTab({
                           />
                         </div>
 
-                        <div className="w-12 shrink-0 text-right font-bold text-foreground font-mono">
+                        <div className="w-10 shrink-0 text-right font-bold text-foreground font-mono text-[11px]">
                           {item.displayCount}
                         </div>
                       </div>
@@ -1887,10 +1894,10 @@ export function SocialTab({
           </div>
 
           {/* Row 3: Local workers by project + Workers employed by project */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Local workers by project */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Local workers by project
                 </CardTitle>
@@ -1898,8 +1905,8 @@ export function SocialTab({
                   Select a project to focus on it.
                 </p>
               </CardHeader>
-              <CardContent className="p-6 pt-1">
-                <div className="space-y-1.5">
+              <CardContent className="p-4 pt-1">
+                <div className="space-y-1">
                   {localWorkersByProject.map((item) => {
                     const maxVal = 102;
                     const pct = (item.count / maxVal) * 100;
@@ -1910,24 +1917,24 @@ export function SocialTab({
                           const proj = projects.find((p) => p.name.toLowerCase().includes(item.name.toLowerCase()));
                           if (proj) onSelectProject(proj);
                         }}
-                        className={`p-2 rounded-xl flex items-center gap-3 transition-colors cursor-pointer ${
+                        className={`p-1.5 rounded-lg flex items-center gap-2.5 transition-colors cursor-pointer ${
                           item.rank === 5 ? 'bg-muted/40' : 'hover:bg-muted/30'
                         }`}
                       >
-                        <div className="w-5 h-5 rounded-full bg-muted/60 text-muted-foreground font-semibold text-[10px] flex items-center justify-center shrink-0">
+                        <div className="w-4.5 h-4.5 rounded-full bg-muted/60 text-muted-foreground font-semibold text-[9px] flex items-center justify-center shrink-0">
                           {item.rank}
                         </div>
-                        <div className="w-48 sm:w-56 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                        <div className="w-44 sm:w-52 shrink-0 truncate text-[11px] font-medium text-foreground" title={item.name}>
                           {item.name}
                         </div>
-                        <div className="flex-1 bg-muted/40 h-2 rounded-full overflow-hidden flex relative">
+                        <div className="flex-1 bg-muted/40 h-1.5 rounded-full overflow-hidden flex relative">
                           <div
                             style={{ width: `${pct}%` }}
                             className="bg-[#115e59] h-full rounded-full transition-all"
                             title={`${item.name}: ${item.count}`}
                           />
                         </div>
-                        <div className="w-10 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                        <div className="w-8 text-right font-bold text-[11px] text-foreground font-mono shrink-0">
                           {item.count}
                         </div>
                       </div>
@@ -1938,8 +1945,8 @@ export function SocialTab({
             </Card>
 
             {/* Card 2: Workers employed by project */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-6 pb-2">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-4 pb-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Workers employed by project
                 </CardTitle>
@@ -1947,8 +1954,8 @@ export function SocialTab({
                   Select a project to focus on it.
                 </p>
               </CardHeader>
-              <CardContent className="p-6 pt-1">
-                <div className="space-y-1.5">
+              <CardContent className="p-4 pt-1">
+                <div className="space-y-1">
                   {workersEmployedByProject.map((item) => {
                     const maxVal = 1141;
                     const pct = (item.count / maxVal) * 100;
@@ -1959,22 +1966,22 @@ export function SocialTab({
                           const proj = projects.find((p) => p.name.toLowerCase().includes(item.name.toLowerCase()));
                           if (proj) onSelectProject(proj);
                         }}
-                        className="p-2 rounded-xl flex items-center gap-3 transition-colors cursor-pointer hover:bg-muted/30"
+                        className="p-1.5 rounded-lg flex items-center gap-2.5 transition-colors cursor-pointer hover:bg-muted/30"
                       >
-                        <div className="w-5 h-5 rounded-full bg-muted/60 text-muted-foreground font-semibold text-[10px] flex items-center justify-center shrink-0">
+                        <div className="w-4.5 h-4.5 rounded-full bg-muted/60 text-muted-foreground font-semibold text-[9px] flex items-center justify-center shrink-0">
                           {item.rank}
                         </div>
-                        <div className="w-48 sm:w-56 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                        <div className="w-44 sm:w-52 shrink-0 truncate text-[11px] font-medium text-foreground" title={item.name}>
                           {item.name}
                         </div>
-                        <div className="flex-1 bg-muted/40 h-2 rounded-full overflow-hidden flex relative">
+                        <div className="flex-1 bg-muted/40 h-1.5 rounded-full overflow-hidden flex relative">
                           <div
                             style={{ width: `${pct}%` }}
                             className="bg-[#115e59] h-full rounded-full transition-all"
                             title={`${item.name}: ${item.count.toLocaleString()}`}
                           />
                         </div>
-                        <div className="w-12 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                        <div className="w-10 text-right font-bold text-[11px] text-foreground font-mono shrink-0">
                           {item.displayCount}
                         </div>
                       </div>
@@ -2352,17 +2359,17 @@ export function SocialTab({
           </div>
 
           {/* Workforce profile (5 Donut Cards) */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-            <CardHeader className="p-6 pb-3">
-              <CardTitle className="text-base font-bold text-foreground">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+            <CardHeader className="p-4 pb-1">
+              <CardTitle className="text-sm font-bold text-foreground">
                 Workforce profile
               </CardTitle>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Latest report per project.
               </p>
             </CardHeader>
-            <CardContent className="p-6 pt-0">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+            <CardContent className="p-4 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
                 {workforceProfileData.map((card) => {
                   const r = 38;
                   const c = 2 * Math.PI * r;
@@ -2371,14 +2378,14 @@ export function SocialTab({
                   return (
                     <div
                       key={card.title}
-                      className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-2xl p-4 flex flex-col items-center justify-between"
+                      className="bg-[#f8faf9] dark:bg-muted/20 border border-border/40 rounded-xl p-3 flex flex-col items-center justify-between"
                     >
-                      <h4 className="text-xs font-bold text-foreground mb-3 text-center">
+                      <h4 className="text-[11px] font-bold text-foreground mb-2 text-center">
                         {card.title}
                       </h4>
 
                       {/* Donut Chart */}
-                      <div className="w-28 h-28 relative flex items-center justify-center shrink-0">
+                      <div className="w-24 h-24 relative flex items-center justify-center shrink-0">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                           <circle
                             cx="50"
@@ -2409,33 +2416,33 @@ export function SocialTab({
                           })}
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                          <span className="text-sm font-black text-foreground font-mono leading-none">
+                          <span className="text-xs font-black text-foreground font-mono leading-none">
                             {card.total.toLocaleString()}
                           </span>
-                          <span className="text-[9px] text-muted-foreground font-medium mt-0.5">
+                          <span className="text-[8px] text-muted-foreground font-medium mt-0.5">
                             total
                           </span>
                         </div>
                       </div>
 
                       {/* Breakdown List */}
-                      <div className="w-full mt-4 space-y-1.5 text-xs">
+                      <div className="w-full mt-2.5 space-y-1 text-xs">
                         {card.items.map((item) => (
                           <div key={item.label} className="flex items-center justify-between gap-1 text-[11px]">
                             <div className="flex items-center gap-1.5 min-w-0 flex-1">
                               <span
-                                className="w-2.5 h-2.5 rounded-xs shrink-0"
+                                className="w-2 h-2 rounded-xs shrink-0"
                                 style={{ backgroundColor: item.color }}
                               />
-                              <span className="truncate text-foreground font-medium" title={item.label}>
+                              <span className="truncate text-foreground font-medium text-[10px]" title={item.label}>
                                 {item.label}
                               </span>
                             </div>
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              <span className="font-bold font-mono text-foreground text-right">
+                            <div className="flex items-center gap-1 shrink-0">
+                              <span className="font-bold font-mono text-foreground text-right text-[10px]">
                                 {item.count.toLocaleString()}
                               </span>
-                              <span className="font-mono text-muted-foreground w-8 text-right">
+                              <span className="font-mono text-muted-foreground w-6 text-right text-[10px]">
                                 {item.displayPct}
                               </span>
                             </div>
@@ -2551,14 +2558,14 @@ export function SocialTab({
       {subTab === 'gender' && (
         <div className="flex flex-col gap-3">
           {/* Staffing and Code of Conduct */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 pb-2 border-b bg-muted/20">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+            <CardHeader className="p-4 pb-1 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Staffing and Code of Conduct
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <CardContent className="p-4 pt-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
                 {staffingCocData.map((item, idx) => {
                   const r = 38;
                   const c = 2 * Math.PI * r;
@@ -2567,9 +2574,9 @@ export function SocialTab({
                   return (
                     <div
                       key={idx}
-                      className="bg-[#f0f4f2] dark:bg-muted/30 rounded-2xl p-5 flex flex-col items-center justify-between text-center min-h-[190px]"
+                      className="bg-[#f0f4f2] dark:bg-muted/30 rounded-xl p-3.5 flex flex-col items-center justify-between text-center min-h-[155px]"
                     >
-                      <div className="relative w-24 h-24 flex items-center justify-center">
+                      <div className="relative w-20 h-20 flex items-center justify-center">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                           <circle
                             cx="50"
@@ -2592,17 +2599,17 @@ export function SocialTab({
                           />
                         </svg>
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-xl font-bold text-foreground font-sans">
+                          <span className="text-lg font-bold text-foreground font-sans">
                             {item.pct}%
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-center mt-3">
+                      <div className="flex flex-col items-center mt-2">
                         <span className="font-bold text-xs text-foreground leading-snug">
                           {item.title}
                         </span>
-                        <span className="text-[11px] text-muted-foreground mt-1">
+                        <span className="text-[11px] text-muted-foreground mt-0.5">
                           {item.subtitle}
                         </span>
                       </div>
@@ -2614,14 +2621,14 @@ export function SocialTab({
           </Card>
 
           {/* Code of Conduct signing by month */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-            <CardContent className="p-6">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+            <CardContent className="p-4">
               <div>
                 <h3 className="text-sm font-bold text-foreground">Code of Conduct signing by month</h3>
               </div>
 
               {/* Legend */}
-              <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+              <div className="flex items-center gap-4 mt-1.5 mb-3 text-xs text-foreground font-medium">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-xs bg-[#115e59]" />
                   <span>New labourers</span>
@@ -2633,9 +2640,9 @@ export function SocialTab({
               </div>
 
               {/* Chart Area */}
-              <div className="relative h-64 pt-2 pb-8 pl-12 pr-4">
+              <div className="relative h-48 pt-2 pb-6 pl-10 pr-2">
                 {/* Y Axis & Grid Lines */}
-                <div className="absolute inset-0 top-2 bottom-8 left-12 right-4 flex flex-col justify-between pointer-events-none">
+                <div className="absolute inset-0 top-2 bottom-6 left-10 right-2 flex flex-col justify-between pointer-events-none">
                   {[
                     { label: '4,000', val: 4000 },
                     { label: '3,000', val: 3000 },
@@ -2644,7 +2651,7 @@ export function SocialTab({
                     { label: '0', val: 0 },
                   ].map((tick) => (
                     <div key={tick.label} className="w-full flex items-center relative">
-                      <span className="absolute -left-12 w-10 text-right text-xs text-muted-foreground font-mono">
+                      <span className="absolute -left-10 w-8 text-right text-[11px] text-muted-foreground font-mono">
                         {tick.label}
                       </span>
                       <div className="w-full border-b border-dashed border-border/60" />
@@ -2662,7 +2669,7 @@ export function SocialTab({
                     return (
                       <div key={item.month} className="flex flex-col items-center justify-end h-full relative">
                         {/* Peak value on top */}
-                        <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                        <span className="text-[11px] font-bold text-foreground mb-1 font-mono">
                           {item.peak}
                         </span>
 
@@ -2681,8 +2688,8 @@ export function SocialTab({
                         </div>
 
                         {/* X Axis Label */}
-                        <div className="absolute -bottom-7 flex flex-col items-center">
-                          <span className="text-xs text-muted-foreground text-center whitespace-nowrap leading-tight">
+                        <div className="absolute -bottom-5 flex flex-col items-center">
+                          <span className="text-[11px] text-muted-foreground text-center whitespace-nowrap leading-tight">
                             {item.month}
                           </span>
                         </div>
@@ -2697,8 +2704,8 @@ export function SocialTab({
           {/* Top Row: Visual B (SEA/SH Complaint Status Table) + Visual D (Children's Data in Labour Camps) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Table: SEA/SH Complaint Status */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <HeartHandshake className="w-4 h-4 text-primary" />
@@ -2716,11 +2723,11 @@ export function SocialTab({
                 <table className="w-full text-left text-xs border-collapse">
                   <thead className="bg-muted/60 border-b">
                     <tr>
-                      <th className="p-3 font-semibold text-foreground">Reporting Period</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Registered</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Resolved</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Pending</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Status</th>
+                      <th className="p-2.5 font-semibold text-foreground">Reporting Period</th>
+                      <th className="p-2.5 font-semibold text-center text-foreground">Registered</th>
+                      <th className="p-2.5 font-semibold text-center text-foreground">Resolved</th>
+                      <th className="p-2.5 font-semibold text-center text-foreground">Pending</th>
+                      <th className="p-2.5 font-semibold text-center text-foreground">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y">
@@ -2728,13 +2735,13 @@ export function SocialTab({
                       const isPending = row.pending > 0
                       return (
                         <tr key={idx} className={`hover:bg-muted/30 ${isPending ? 'bg-rose-500/5' : ''}`}>
-                          <td className="p-3 font-semibold text-foreground">{row.period}</td>
-                          <td className="p-3 text-center font-mono font-bold text-foreground">{row.registered}</td>
-                          <td className="p-3 text-center font-mono font-bold text-emerald-600">{row.resolved}</td>
-                          <td className={`p-3 text-center font-mono font-bold ${isPending ? 'text-rose-600 bg-rose-500/10' : 'text-emerald-600'}`}>
+                          <td className="p-2.5 font-semibold text-foreground">{row.period}</td>
+                          <td className="p-2.5 text-center font-mono font-bold text-foreground">{row.registered}</td>
+                          <td className="p-2.5 text-center font-mono font-bold text-emerald-600">{row.resolved}</td>
+                          <td className={`p-2.5 text-center font-mono font-bold ${isPending ? 'text-rose-600 bg-rose-500/10' : 'text-emerald-600'}`}>
                             {row.pending}
                           </td>
-                          <td className="p-3 text-center">
+                          <td className="p-2.5 text-center">
                             {isPending ? (
                               <Badge variant="destructive" className="text-[10px]">Attention Needed</Badge>
                             ) : (
@@ -2752,8 +2759,8 @@ export function SocialTab({
             </Card>
 
             {/* Visual D: Table: Children's Data in Labour Camp */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <Users className="w-4 h-4 text-primary" />
@@ -2768,7 +2775,7 @@ export function SocialTab({
                 </Badge>
               </CardHeader>
               <CardContent className="p-0">
-                <div className="max-h-[260px] overflow-y-auto">
+                <div className="max-h-[240px] overflow-y-auto">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead className="bg-muted/60 sticky top-0 z-10 border-b">
                       <tr>
@@ -2799,11 +2806,11 @@ export function SocialTab({
           {/* Middle Row: Gender-specific facilities + IEC material displayed */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Gender-specific facilities at labour camps */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
-                <div className="flex items-start gap-4">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-2.5 border-b bg-muted/20">
+                <div className="flex items-start gap-3">
                   {/* Overall Donut */}
-                  <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
+                  <div className="w-14 h-14 relative flex items-center justify-center shrink-0">
                     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                       <circle
                         cx="50"
@@ -2824,7 +2831,7 @@ export function SocialTab({
                       />
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                      <span className="text-sm font-black text-foreground leading-none">75%</span>
+                      <span className="text-xs font-black text-foreground leading-none">75%</span>
                       <span className="text-[8px] text-muted-foreground mt-0.5 font-medium">overall</span>
                     </div>
                   </div>
@@ -2841,14 +2848,14 @@ export function SocialTab({
                         <span className="w-2 h-2 rounded-full bg-[#dc2626]" /> No 152
                       </span>
                     </div>
-                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug">
-                      12 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded). Select a card to see which projects answered what.
+                    <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug">
+                      12 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded).
                     </p>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <CardContent className="p-4 pt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {genderFacilitiesDetailed.map((item) => {
                     const isGreen = item.pct >= 80;
                     const isAmber = item.pct >= 50 && item.pct < 80;
@@ -2861,7 +2868,7 @@ export function SocialTab({
                         key={item.name}
                         className={`bg-[#f8faf9] dark:bg-muted/20 rounded-xl p-2.5 flex items-center gap-2.5 border border-border/40 border-l-[3.5px] ${borderClass} hover:bg-muted/40 transition-colors`}
                       >
-                        <div className="w-10 h-10 relative flex items-center justify-center shrink-0">
+                        <div className="w-9 h-9 relative flex items-center justify-center shrink-0">
                           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 40 40">
                             <circle
                               cx="20"
@@ -2905,11 +2912,11 @@ export function SocialTab({
             </Card>
 
             {/* Card 2: IEC material displayed */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
-                <div className="flex items-start gap-4">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-2.5 border-b bg-muted/20">
+                <div className="flex items-start gap-3">
                   {/* Overall Donut */}
-                  <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
+                  <div className="w-14 h-14 relative flex items-center justify-center shrink-0">
                     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                       <circle
                         cx="50"
@@ -2930,7 +2937,7 @@ export function SocialTab({
                       />
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                      <span className="text-sm font-black text-foreground leading-none">91%</span>
+                      <span className="text-xs font-black text-foreground leading-none">91%</span>
                       <span className="text-[8px] text-muted-foreground mt-0.5 font-medium">overall</span>
                     </div>
                   </div>
@@ -2947,14 +2954,14 @@ export function SocialTab({
                         <span className="w-2 h-2 rounded-full bg-[#dc2626]" /> No 39
                       </span>
                     </div>
-                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug">
-                      10 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded). Select a card to see which projects answered what.
+                    <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug">
+                      10 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded).
                     </p>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <CardContent className="p-4 pt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {iecMaterialDetailed.map((item) => {
                     const isGreen = item.pct >= 80;
                     const isAmber = item.pct >= 50 && item.pct < 80;
@@ -2967,7 +2974,7 @@ export function SocialTab({
                         key={item.name}
                         className={`bg-[#f8faf9] dark:bg-muted/20 rounded-xl p-2.5 flex items-center gap-2.5 border border-border/40 border-l-[3.5px] ${borderClass} hover:bg-muted/40 transition-colors`}
                       >
-                        <div className="w-10 h-10 relative flex items-center justify-center shrink-0">
+                        <div className="w-9 h-9 relative flex items-center justify-center shrink-0">
                           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 40 40">
                             <circle
                               cx="20"
@@ -3012,15 +3019,15 @@ export function SocialTab({
           </div>
 
           {/* Capacity building participants (Full Width) */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-            <CardContent className="p-6">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+            <CardContent className="p-4">
               <div>
                 <h3 className="text-sm font-bold text-foreground">Capacity building participants</h3>
                 <p className="text-xs text-muted-foreground mt-0.5">Sum of monthly reports.</p>
               </div>
 
               {/* Legend */}
-              <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+              <div className="flex items-center gap-4 mt-1.5 mb-3 text-xs text-foreground font-medium">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" />
                   <span>Men</span>
@@ -3032,7 +3039,7 @@ export function SocialTab({
               </div>
 
               {/* Horizontal Stacked Bars */}
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {capacityBuildingDetailed.map((item) => {
                   const maxScale = 9200;
                   const totalPct = (item.total / maxScale) * 100;
@@ -3040,8 +3047,8 @@ export function SocialTab({
                   const womenRatio = item.women / item.total;
 
                   return (
-                    <div key={item.title} className="flex items-center gap-4 text-xs">
-                      <div className="w-[340px] md:w-[420px] shrink-0 truncate text-foreground font-medium" title={item.title}>
+                    <div key={item.title} className="flex items-center gap-3 text-xs">
+                      <div className="w-[260px] sm:w-[320px] md:w-[380px] shrink-0 truncate text-foreground font-medium" title={item.title}>
                         {item.title}
                       </div>
 
@@ -3063,7 +3070,7 @@ export function SocialTab({
                         </div>
                       </div>
 
-                      <div className="w-16 shrink-0 text-right font-bold text-foreground font-mono">
+                      <div className="w-14 shrink-0 text-right font-bold text-foreground font-mono">
                         {item.displayTotal}
                       </div>
                     </div>
@@ -3074,17 +3081,17 @@ export function SocialTab({
           </Card>
 
           {/* Bottom Grid: Women newly employed, by skill & Children in labour camps, by age */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Women newly employed, by skill */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-6">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-4">
                 <div>
                   <h3 className="text-sm font-bold text-foreground">Women newly employed, by skill</h3>
                   <p className="text-xs text-muted-foreground mt-0.5">Sum of monthly reports.</p>
                 </div>
 
                 {/* Legend */}
-                <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+                <div className="flex items-center gap-4 mt-1.5 mb-3 text-xs text-foreground font-medium">
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-xs bg-[#115e59]" />
                     <span>Local (AP)</span>
@@ -3096,9 +3103,9 @@ export function SocialTab({
                 </div>
 
                 {/* Chart Area */}
-                <div className="relative h-60 pt-2 pb-8 pl-12 pr-4">
+                <div className="relative h-48 pt-2 pb-6 pl-10 pr-2">
                   {/* Y Axis & Grid Lines */}
-                  <div className="absolute inset-0 top-2 bottom-8 left-12 right-4 flex flex-col justify-between pointer-events-none">
+                  <div className="absolute inset-0 top-2 bottom-6 left-10 right-2 flex flex-col justify-between pointer-events-none">
                     {[
                       { label: '2,000', val: 2000 },
                       { label: '1,500', val: 1500 },
@@ -3107,7 +3114,7 @@ export function SocialTab({
                       { label: '0', val: 0 },
                     ].map((tick) => (
                       <div key={tick.label} className="w-full flex items-center relative">
-                        <span className="absolute -left-12 w-10 text-right text-xs text-muted-foreground font-mono">
+                        <span className="absolute -left-10 w-8 text-right text-[11px] text-muted-foreground font-mono">
                           {tick.label}
                         </span>
                         <div className="w-full border-b border-dashed border-border/60" />
@@ -3126,14 +3133,14 @@ export function SocialTab({
                       return (
                         <div key={item.skill} className="flex flex-col items-center justify-end h-full relative">
                           {/* Total on top */}
-                          <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                          <span className="text-[11px] font-bold text-foreground mb-1 font-mono">
                             {item.displayTotal}
                           </span>
 
                           {/* Stacked bar */}
                           <div
                             style={{ height: `${totalPct}%` }}
-                            className="w-12 rounded-t-xs flex flex-col-reverse overflow-hidden shadow-2xs"
+                            className="w-10 sm:w-11 rounded-t-xs flex flex-col-reverse overflow-hidden shadow-2xs"
                           >
                             <div
                               style={{ height: `${localPct}%` }}
@@ -3148,8 +3155,8 @@ export function SocialTab({
                           </div>
 
                           {/* X Axis Label */}
-                          <div className="absolute -bottom-8 flex flex-col items-center">
-                            <span className="text-xs text-muted-foreground text-center whitespace-pre-line leading-tight">
+                          <div className="absolute -bottom-5 flex flex-col items-center">
+                            <span className="text-[11px] text-muted-foreground text-center whitespace-pre-line leading-tight">
                               {item.skill}
                             </span>
                           </div>
@@ -3162,15 +3169,15 @@ export function SocialTab({
             </Card>
 
             {/* Card 2: Children in labour camps, by age */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-6">
+            <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
+              <CardContent className="p-4">
                 <div>
                   <h3 className="text-sm font-bold text-foreground">Children in labour camps, by age</h3>
                   <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
                 </div>
 
                 {/* Legend */}
-                <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+                <div className="flex items-center gap-4 mt-1.5 mb-3 text-xs text-foreground font-medium">
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-xs bg-[#2563eb]" />
                     <span>Boys</span>
@@ -3182,9 +3189,9 @@ export function SocialTab({
                 </div>
 
                 {/* Chart Area */}
-                <div className="relative h-60 pt-2 pb-8 pl-10 pr-4">
+                <div className="relative h-48 pt-2 pb-6 pl-9 pr-2">
                   {/* Y Axis & Grid Lines */}
-                  <div className="absolute inset-0 top-2 bottom-8 left-10 right-4 flex flex-col justify-between pointer-events-none">
+                  <div className="absolute inset-0 top-2 bottom-6 left-9 right-2 flex flex-col justify-between pointer-events-none">
                     {[
                       { label: '40', val: 40 },
                       { label: '30', val: 30 },
@@ -3193,7 +3200,7 @@ export function SocialTab({
                       { label: '0', val: 0 },
                     ].map((tick) => (
                       <div key={tick.label} className="w-full flex items-center relative">
-                        <span className="absolute -left-10 w-8 text-right text-xs text-muted-foreground font-mono">
+                        <span className="absolute -left-9 w-7 text-right text-[11px] text-muted-foreground font-mono">
                           {tick.label}
                         </span>
                         <div className="w-full border-b border-dashed border-border/60" />
@@ -3211,7 +3218,7 @@ export function SocialTab({
                       return (
                         <div key={item.age} className="flex flex-col items-center justify-end h-full relative">
                           {/* Max/Peak value on top */}
-                          <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                          <span className="text-[11px] font-bold text-foreground mb-1 font-mono">
                             {item.max}
                           </span>
 
@@ -3219,19 +3226,19 @@ export function SocialTab({
                           <div className="flex items-end gap-1.5">
                             <div
                               style={{ height: `${boysPct}%` }}
-                              className="w-5 bg-[#2563eb] rounded-t-xs transition-all shadow-2xs"
+                              className="w-4 sm:w-5 bg-[#2563eb] rounded-t-xs transition-all shadow-2xs"
                               title={`Boys: ${item.boys}`}
                             />
                             <div
                               style={{ height: `${girlsPct}%` }}
-                              className="w-5 bg-[#be185d] rounded-t-xs transition-all shadow-2xs"
+                              className="w-4 sm:w-5 bg-[#be185d] rounded-t-xs transition-all shadow-2xs"
                               title={`Girls: ${item.girls}`}
                             />
                           </div>
 
                           {/* X Axis Label */}
-                          <div className="absolute -bottom-8 flex flex-col items-center">
-                            <span className="text-xs text-muted-foreground text-center whitespace-nowrap leading-tight">
+                          <div className="absolute -bottom-5 flex flex-col items-center">
+                            <span className="text-[11px] text-muted-foreground text-center whitespace-nowrap leading-tight">
                               {item.age}
                             </span>
                           </div>
