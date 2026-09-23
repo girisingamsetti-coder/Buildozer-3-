@@ -443,3 +443,159 @@ export function AllSubmissionsTable() {
     </Card>
   )
 }
+
+
+// ==================== SUBMITTED FORMS TABLE ====================
+
+const FORM_COLS = [
+  { key: 'OHS',              label: 'OHS'              },
+  { key: 'EVM',              label: 'EVM'              },
+  { key: 'Road Safety',      label: 'Road Safety'      },
+  { key: 'Social Safeguard', label: 'Social Safeguard' },
+  { key: 'Skill Training',   label: 'Skill Training'   },
+  { key: 'Labour Law',       label: 'Labour Law'       },
+  { key: 'Gender & GBV',     label: 'Gender & GBV'     },
+]
+
+export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string; name: string; contractor: string }> }) {
+  const [search, setSearch] = useState('')
+
+  const { data: ohsSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'OHS'],             queryFn: () => fetchSubmissions('OHS')            })
+  const { data: evmSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'EVM'],             queryFn: () => fetchSubmissions('EVM')            })
+  const { data: rsSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'RoadSafety'],      queryFn: () => fetchSubmissions('RoadSafety')     })
+  const { data: ssSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'SocialSafeguard'], queryFn: () => fetchSubmissions('SocialSafeguard')})
+  const { data: stSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'SkillTraining'],   queryFn: () => fetchSubmissions('SkillTraining')  })
+  const { data: llSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'LabourLaw'],       queryFn: () => fetchSubmissions('LabourLaw')      })
+  const { data: genSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'Gender'],          queryFn: () => fetchSubmissions('Gender')         })
+
+  const [mockForms] = useState<FormEntry[]>(() => loadForms())
+
+  const submissionMap: Record<string, any[]> = useMemo(() => ({
+    'OHS':              ohsSubs,
+    'EVM':              evmSubs,
+    'Road Safety':      rsSubs,
+    'Social Safeguard': ssSubs,
+    'Skill Training':   stSubs,
+    'Labour Law':       llSubs,
+    'Gender & GBV':     genSubs,
+  }), [ohsSubs, evmSubs, rsSubs, ssSubs, stSubs, llSubs, genSubs])
+
+  const rows = useMemo(() => {
+    const projectRows = projects.map((p, idx) => {
+      const counts: Record<string, number> = {}
+      FORM_COLS.forEach(col => {
+        const apiCount = submissionMap[col.key]?.filter(
+          (s: any) => (s.projectName || '').toLowerCase() === p.name.toLowerCase()
+        ).length ?? 0
+        const mockCount = mockForms.filter(
+          f => f.formType === col.key && (f.location || '').toLowerCase() === p.name.toLowerCase()
+        ).length
+        counts[col.key] = apiCount + mockCount
+      })
+      return { sno: idx + 1, name: p.name, contractor: p.contractor, counts }
+    })
+
+    const v3Names = new Set(projects.map(p => p.name.toLowerCase()))
+    const extraNames = new Set<string>()
+    FORM_COLS.forEach(col => {
+      submissionMap[col.key]?.forEach((s: any) => {
+        const n = (s.projectName || '').trim()
+        if (n && n !== '\u2014' && !v3Names.has(n.toLowerCase())) extraNames.add(n)
+      })
+    })
+    mockForms.forEach(f => {
+      const n = (f.location || '').trim()
+      if (n && !v3Names.has(n.toLowerCase())) extraNames.add(n)
+    })
+    const extraRows = Array.from(extraNames).map((name, i) => {
+      const counts: Record<string, number> = {}
+      FORM_COLS.forEach(col => {
+        const apiCount = submissionMap[col.key]?.filter(
+          (s: any) => (s.projectName || '').toLowerCase() === name.toLowerCase()
+        ).length ?? 0
+        const mockCount = mockForms.filter(
+          f => f.formType === col.key && (f.location || '').toLowerCase() === name.toLowerCase()
+        ).length
+        counts[col.key] = apiCount + mockCount
+      })
+      return { sno: projects.length + i + 1, name, contractor: '\u2014', counts }
+    })
+
+    return [...projectRows, ...extraRows]
+  }, [projects, submissionMap, mockForms])
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return rows
+    const q = search.toLowerCase()
+    return rows
+      .filter(r => r.name.toLowerCase().includes(q) || r.contractor.toLowerCase().includes(q))
+      .map((r, i) => ({ ...r, sno: i + 1 }))
+  }, [rows, search])
+
+  const totalRow = useMemo(() => {
+    const t: Record<string, number> = {}
+    FORM_COLS.forEach(col => { t[col.key] = rows.reduce((sum, r) => sum + (r.counts[col.key] || 0), 0) })
+    return t
+  }, [rows])
+
+  return (
+    <Card className="shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-3">
+        <p className="text-sm font-bold text-[#0d9488] shrink-0">Submitted Forms</p>
+        <div className="relative w-full sm:max-w-xs">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+          <Input value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
+        </div>
+      </div>
+      <CardContent className="p-0">
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs border-collapse">
+            <thead>
+              <tr className="bg-muted/40 border-b">
+                <th className="px-3 py-2.5 text-left font-semibold text-foreground w-10">S.No</th>
+                <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[180px]">Project Name</th>
+                <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[130px]">Contractor</th>
+                {FORM_COLS.map(col => (
+                  <th key={col.key} className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">{col.label}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr><td colSpan={3 + FORM_COLS.length} className="text-center py-10 text-muted-foreground">No data available.</td></tr>
+              ) : filtered.map((row, i) => (
+                <tr key={row.name} className={`border-b transition-colors hover:bg-muted/20 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                  <td className="px-3 py-2 text-muted-foreground tabular-nums">{row.sno}</td>
+                  <td className="px-3 py-2 font-medium text-foreground max-w-[260px] truncate" title={row.name}>{row.name}</td>
+                  <td className="px-3 py-2 text-muted-foreground max-w-[160px] truncate" title={row.contractor}>{row.contractor}</td>
+                  {FORM_COLS.map(col => {
+                    const val = row.counts[col.key] || 0
+                    return (
+                      <td key={col.key} className="px-3 py-2 text-center tabular-nums">
+                        {val > 0 ? (
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
+                            {val}
+                          </span>
+                        ) : (
+                          <span className="text-slate-300 dark:text-slate-700">—</span>
+                        )}
+                      </td>
+                    )
+                  })}
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr className="bg-sidebar dark:bg-sidebar/80 border-t-2 border-slate-200 dark:border-slate-700">
+                <td colSpan={3} className="px-3 py-2.5 font-bold text-sidebar-foreground text-xs">Total</td>
+                {FORM_COLS.map(col => (
+                  <td key={col.key} className="px-3 py-2.5 text-center font-bold text-foreground tabular-nums">{totalRow[col.key] || 0}</td>
+                ))}
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
