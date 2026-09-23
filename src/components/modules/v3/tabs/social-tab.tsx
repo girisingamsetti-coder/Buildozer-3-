@@ -139,6 +139,96 @@ export function SocialTab({
     'Labour Camp Habitation Approval': { valid: 41, expiring: 3, expired: 0 },
   }
 
+  const licenceValidityDetailed = [
+    {
+      name: 'BOCW Act 1996',
+      pct: 80,
+      yes: 44,
+      total: 55,
+      expired: 9,
+    },
+    {
+      name: 'Contract Labour Act 1970',
+      pct: 73,
+      yes: 40,
+      total: 55,
+      expired: 13,
+    },
+    {
+      name: 'Inter-State Migrant Workmen Act 1979',
+      pct: 80,
+      yes: 44,
+      total: 55,
+      expired: 9,
+    },
+    {
+      name: 'Workmen Compensation Policy',
+      pct: 33,
+      yes: 18,
+      total: 54,
+      expired: 35,
+    },
+    {
+      name: 'Motor Transport Workers registration - 1961',
+      pct: 45,
+      yes: 24,
+      total: 53,
+      expired: 29,
+    },
+  ]
+
+  const licenceDocumentsDetailed = [
+    {
+      name: 'BOCW Act 1996',
+      pct: 100,
+      yes: 52,
+      total: 52,
+      no: 0,
+    },
+    {
+      name: 'Contract Labour Act 1970',
+      pct: 100,
+      yes: 53,
+      total: 53,
+      no: 0,
+    },
+    {
+      name: 'Inter-State Migrant Workmen Act 1979',
+      pct: 100,
+      yes: 53,
+      total: 53,
+      no: 0,
+    },
+    {
+      name: 'EPF Act 1952',
+      pct: 16,
+      yes: 6,
+      total: 38,
+      no: 32,
+    },
+    {
+      name: 'ESI Act 1948',
+      pct: 11,
+      yes: 4,
+      total: 38,
+      no: 34,
+    },
+    {
+      name: 'Workmen Compensation Policy',
+      pct: 98,
+      yes: 51,
+      total: 52,
+      no: 1,
+    },
+    {
+      name: 'Motor Transport Workers registration - 1961',
+      pct: 67,
+      yes: 30,
+      total: 45,
+      no: 15,
+    },
+  ]
+
   const campFacilities = labAgg?.facilities || {
     'Hygienic Canteen / Dining Area': { yes_pct: 88, no: 4 },
     'Separate Rest Rooms & Shelters': { yes_pct: 92, no: 3 },
@@ -912,75 +1002,271 @@ export function SocialTab({
       {/* ========================================================================= */}
       {subTab === 'labour' && (
         <div className="flex flex-col gap-3">
-          {/* Visual A: Table: Establishment Registration & Licenses (7 Acts) */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
-              <div>
-                <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                  <Scale className="w-4 h-4 text-primary" />
-                  Establishment Registration & Statutory Licenses (7 Enactments)
-                </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Tracks statutory validity across BOCW, CLRA, ISMW, EPF, ESI, WC, MTW. Critical Alert: Expired &gt; 0 triggers "Non-Compliant" flag.
-                </p>
-              </div>
-              <Badge variant="outline" className="text-xs font-mono">
-                7 Statutory Enactments
-              </Badge>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-muted/60 border-b">
-                    <tr>
-                      <th className="p-3 font-semibold text-foreground">Act / Statutory Registration</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Valid Licenses</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Expiring (&le; 2 Months)</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Expired (Non-Compliant)</th>
-                      <th className="p-3 font-semibold text-center text-foreground">Status Flag</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y">
-                    {Object.entries(licenses).map(([act, val], idx) => {
-                      const isExpired = val.expired > 0
-                      const isExpiring = val.expiring > 0
-                      return (
-                        <tr key={idx} className={`hover:bg-muted/30 ${isExpired ? 'bg-rose-500/5' : ''}`}>
-                          <td className="p-3 font-medium text-foreground">
-                            {act}
-                          </td>
-                          <td className="p-3 text-center font-mono font-bold text-emerald-600">
-                            {val.valid}
-                          </td>
-                          <td className="p-3 text-center font-mono font-medium text-amber-600">
-                            {val.expiring}
-                          </td>
-                          <td className={`p-3 text-center font-mono font-bold ${isExpired ? 'text-rose-600 bg-rose-500/10' : 'text-muted-foreground'}`}>
-                            {val.expired}
-                          </td>
-                          <td className="p-3 text-center">
-                            {isExpired ? (
-                              <Badge variant="destructive" className="text-[10px]">
-                                Non-Compliant (Rule 9)
-                              </Badge>
-                            ) : isExpiring ? (
-                              <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30 text-[10px]">
-                                Renewal Due
-                              </Badge>
-                            ) : (
-                              <Badge className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 text-[10px]">
-                                Compliant
-                              </Badge>
+          {/* Top Row: Licence validity + Licence documents uploaded */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {/* Card 1: Licence validity (as of today) */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
+                <div className="flex items-start gap-4">
+                  {/* Overall Donut */}
+                  <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="currentColor"
+                        strokeWidth="11"
+                        className="text-muted/20"
+                      />
+                      {/* Valid: 170 / 275 (61.8%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#16a34a"
+                        strokeWidth="11"
+                        strokeDasharray={`${(170 / 275) * 238.76} 238.76`}
+                      />
+                      {/* Expires within 60 days: 7 / 275 (2.5%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#d97706"
+                        strokeWidth="11"
+                        strokeDasharray={`${(7 / 275) * 238.76} 238.76`}
+                        strokeDashoffset={`-${(170 / 275) * 238.76}`}
+                      />
+                      {/* Expired: 95 / 275 (34.5%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#dc2626"
+                        strokeWidth="11"
+                        strokeDasharray={`${(95 / 275) * 238.76} 238.76`}
+                        strokeDashoffset={`-${((170 + 7) / 275) * 238.76}`}
+                      />
+                      {/* No expiry date: 3 / 275 (1.1%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#94a3b8"
+                        strokeWidth="11"
+                        strokeDasharray={`${(3 / 275) * 238.76} 238.76`}
+                        strokeDashoffset={`-${((170 + 7 + 95) / 275) * 238.76}`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-sm font-black text-foreground leading-none">63%</span>
+                      <span className="text-[8px] text-muted-foreground mt-0.5 font-medium">overall</span>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-sm font-bold text-foreground">
+                      Licence validity (as of today)
+                    </CardTitle>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">
+                      EPF and ESI registrations do not expire, so they are left out here.
+                    </p>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs">
+                      <span className="flex items-center gap-1 font-semibold text-foreground text-[11px]">
+                        <span className="w-2 h-2 rounded-full bg-[#16a34a]" /> Valid 170
+                      </span>
+                      <span className="flex items-center gap-1 font-semibold text-foreground text-[11px]">
+                        <span className="w-2 h-2 rounded-full bg-[#d97706]" /> Expires within 60 days 7
+                      </span>
+                      <span className="flex items-center gap-1 font-semibold text-foreground text-[11px]">
+                        <span className="w-2 h-2 rounded-full bg-[#dc2626]" /> Expired 95
+                      </span>
+                      <span className="flex items-center gap-1 font-semibold text-foreground text-[11px]">
+                        <span className="w-2 h-2 rounded-full bg-[#94a3b8]" /> No expiry date 3
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1.5 leading-snug">
+                      5 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded). Select a card to see which projects answered what.
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {licenceValidityDetailed.map((item) => {
+                    const isGreen = item.pct >= 80;
+                    const isAmber = item.pct >= 50 && item.pct < 80;
+                    const borderClass = isGreen ? 'border-l-emerald-500' : isAmber ? 'border-l-amber-500' : 'border-l-rose-500';
+                    const r = 16;
+                    const c = 2 * Math.PI * r;
+                    const dash = (item.pct / 100) * c;
+                    return (
+                      <div
+                        key={item.name}
+                        className={`bg-[#f8faf9] dark:bg-muted/20 rounded-xl p-2.5 flex items-center gap-2.5 border border-border/40 border-l-[3.5px] ${borderClass} hover:bg-muted/40 transition-colors`}
+                      >
+                        <div className="w-10 h-10 relative flex items-center justify-center shrink-0">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 40 40">
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r={r}
+                              fill="transparent"
+                              stroke="#dc2626"
+                              strokeWidth="3.5"
+                            />
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r={r}
+                              fill="transparent"
+                              stroke="#16a34a"
+                              strokeWidth="3.5"
+                              strokeDasharray={`${dash} ${c}`}
+                            />
+                          </svg>
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-foreground font-mono">
+                            {item.pct}%
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className="font-semibold text-xs text-foreground truncate" title={item.name}>
+                            {item.name}
+                          </span>
+                          <span className="text-[11px] text-muted-foreground mt-0.5 truncate">
+                            {item.yes} of {item.total} projects ·{' '}
+                            <span className="text-rose-600 font-semibold">
+                              {item.expired} expired
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Card 2: Licence documents uploaded */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
+                <div className="flex items-start gap-4">
+                  {/* Overall Donut */}
+                  <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#dc2626"
+                        strokeWidth="11"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#16a34a"
+                        strokeWidth="11"
+                        strokeDasharray={`${0.75 * 238.76} 238.76`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-sm font-black text-foreground leading-none">75%</span>
+                      <span className="text-[8px] text-muted-foreground mt-0.5 font-medium">overall</span>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-sm font-bold text-foreground">
+                      Licence documents uploaded
+                    </CardTitle>
+                    <div className="flex items-center gap-3 mt-1.5 text-xs">
+                      <span className="flex items-center gap-1 font-semibold text-foreground text-[11px]">
+                        <span className="w-2 h-2 rounded-full bg-[#16a34a]" /> Yes 249
+                      </span>
+                      <span className="flex items-center gap-1 font-semibold text-foreground text-[11px]">
+                        <span className="w-2 h-2 rounded-full bg-[#dc2626]" /> No 82
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1.5 leading-snug">
+                      7 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded). Select a card to see which projects answered what.
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {licenceDocumentsDetailed.map((item) => {
+                    const isGreen = item.pct >= 80;
+                    const isAmber = item.pct >= 50 && item.pct < 80;
+                    const borderClass = isGreen ? 'border-l-emerald-500' : isAmber ? 'border-l-amber-500' : 'border-l-rose-500';
+                    const r = 16;
+                    const c = 2 * Math.PI * r;
+                    const dash = (item.pct / 100) * c;
+                    return (
+                      <div
+                        key={item.name}
+                        className={`bg-[#f8faf9] dark:bg-muted/20 rounded-xl p-2.5 flex items-center gap-2.5 border border-border/40 border-l-[3.5px] ${borderClass} hover:bg-muted/40 transition-colors`}
+                      >
+                        <div className="w-10 h-10 relative flex items-center justify-center shrink-0">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 40 40">
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r={r}
+                              fill="transparent"
+                              stroke={item.pct === 100 ? '#16a34a' : '#dc2626'}
+                              strokeWidth="3.5"
+                            />
+                            {item.pct < 100 && (
+                              <circle
+                                cx="20"
+                                cy="20"
+                                r={r}
+                                fill="transparent"
+                                stroke="#16a34a"
+                                strokeWidth="3.5"
+                                strokeDasharray={`${dash} ${c}`}
+                              />
                             )}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+                          </svg>
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-foreground font-mono">
+                            {item.pct}%
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className="font-semibold text-xs text-foreground truncate" title={item.name}>
+                            {item.name}
+                          </span>
+                          <span className="text-[11px] text-muted-foreground mt-0.5 truncate">
+                            {item.yes} of {item.total} projects
+                            {item.no > 0 && (
+                              <>
+                                {' · '}
+                                <span className="text-rose-600 font-semibold">
+                                  {item.no} no
+                                </span>
+                              </>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
           {/* Workforce profile (5 Donut Cards) */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
