@@ -286,7 +286,7 @@ export default function V3View() {
             onSelectProject={handleOpenProject}
           />
 
-          {/* All Submissions Table */}
+          {/* Recent Submissions Table */}
           <AllSubmissionsTable />
         </TabsContent>
 

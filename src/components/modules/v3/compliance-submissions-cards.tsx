@@ -246,7 +246,7 @@ export function ComplianceSubmissionsCards() {
   )
 }
 
-// ==================== ALL SUBMISSIONS TABLE ====================
+// ==================== RECENT SUBMISSIONS TABLE ====================
 
 const fetchSubmissions = async (formType: string) => {
   const res = await fetch(`/api/es-forms/${formType}`)
@@ -330,7 +330,7 @@ export function AllSubmissionsTable() {
   return (
     <Card className="flex flex-col shrink-0">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
-        <p className="text-sm font-bold text-[#0d9488] shrink-0">All Submissions</p>
+        <p className="text-sm font-bold text-[#0d9488] shrink-0">Recent Submissions</p>
         <div className="flex flex-col sm:flex-row flex-wrap gap-2 flex-1 justify-end">
           <div className="relative w-full max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
