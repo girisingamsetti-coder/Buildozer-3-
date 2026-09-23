@@ -405,9 +405,10 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
 
       </div>
 
-{/* Top Split: Visual A (Compliance by OHS Group) */}
-      <div className="grid grid-cols-1 gap-3">
-        {/* Visual A: Horizontal Bar Chart: Compliance by OHS Requirement Group */}
+
+      {/* Combined Requested Row 2 */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
+{/* Visual A: Horizontal Bar Chart: Compliance by OHS Requirement Group */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -455,16 +456,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </CardContent>
         </Card>
 
-              </div>
-
-      {/* Compliance Trend and Training Section */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-baseline gap-3 px-1">
-          <h3 className="font-bold text-foreground text-lg">Compliance trend and training</h3>
-        </div>
-
-        <div className="grid grid-cols-1 gap-3">
-          {/* Card 2: Projects with the lowest checklist compliance */}
+{/* Card 2: Projects with the lowest checklist compliance */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
             <CardHeader className="p-4 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
@@ -512,9 +504,8 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
               })}
             </CardContent>
           </Card>
-        </div>
 
-        {/* Card 3: Trainings conducted */}
+{/* Card 3: Trainings conducted */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
@@ -543,7 +534,24 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
             ))}
           </CardContent>
         </Card>
+
       </div>
+
+{/* Top Split: Visual A (Compliance by OHS Group) */}
+      <div className="grid grid-cols-1 gap-3">
+        
+              </div>
+
+      {/* Compliance Trend and Training Section */}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-baseline gap-3 px-1">
+          <h3 className="font-bold text-foreground text-lg">Compliance trend and training</h3>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3">
+                  </div>
+
+              </div>
 
       {/* Middle Split: Visual B (OHS Audits Table) + Visual C (Trainings per Frequency Table) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
