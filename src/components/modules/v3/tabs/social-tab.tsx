@@ -288,6 +288,17 @@ export function SocialTab({
     { age: '11–18 years', boys: 7, girls: 14, max: 14 },
   ]
 
+  const cocSigningByMonth = [
+    { month: 'Jan 26', newLabourers: 82, signed: 129, peak: '129' },
+    { month: 'Feb 26', newLabourers: 934, signed: 1219, peak: '1,219' },
+    { month: 'Mar 26', newLabourers: 1542, signed: 1418, peak: '1,542' },
+    { month: 'Apr 26', newLabourers: 1165, signed: 2093, peak: '2,093' },
+    { month: 'May 26', newLabourers: 1361, signed: 1342, peak: '1,361' },
+    { month: 'Jun 26', newLabourers: 1379, signed: 1072, peak: '1,379' },
+    { month: 'Jul 26', newLabourers: 2344, signed: 2344, peak: '2,344' },
+    { month: 'Aug 26', newLabourers: 1983, signed: 1912, peak: '1,983' },
+  ]
+
   const staffingCocData = [
     {
       title: 'Social & labour managers deployed',
@@ -1221,6 +1232,87 @@ export function SocialTab({
                     </div>
                   );
                 })}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Code of Conduct signing by month */}
+          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+            <CardContent className="p-6">
+              <div>
+                <h3 className="text-sm font-bold text-foreground">Code of Conduct signing by month</h3>
+              </div>
+
+              {/* Legend */}
+              <div className="flex items-center gap-4 mt-2.5 mb-6 text-xs text-foreground font-medium">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#115e59]" />
+                  <span>New labourers</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#d97706]" />
+                  <span>Signed</span>
+                </div>
+              </div>
+
+              {/* Chart Area */}
+              <div className="relative h-64 pt-2 pb-8 pl-12 pr-4">
+                {/* Y Axis & Grid Lines */}
+                <div className="absolute inset-0 top-2 bottom-8 left-12 right-4 flex flex-col justify-between pointer-events-none">
+                  {[
+                    { label: '4,000', val: 4000 },
+                    { label: '3,000', val: 3000 },
+                    { label: '2,000', val: 2000 },
+                    { label: '1,000', val: 1000 },
+                    { label: '0', val: 0 },
+                  ].map((tick) => (
+                    <div key={tick.label} className="w-full flex items-center relative">
+                      <span className="absolute -left-12 w-10 text-right text-xs text-muted-foreground font-mono">
+                        {tick.label}
+                      </span>
+                      <div className="w-full border-b border-dashed border-border/60" />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Columns */}
+                <div className="relative h-full flex items-end justify-around z-10">
+                  {cocSigningByMonth.map((item) => {
+                    const maxVal = 4000;
+                    const newPct = (item.newLabourers / maxVal) * 100;
+                    const signedPct = (item.signed / maxVal) * 100;
+
+                    return (
+                      <div key={item.month} className="flex flex-col items-center justify-end h-full relative">
+                        {/* Peak value on top */}
+                        <span className="text-xs font-bold text-foreground mb-1 font-mono">
+                          {item.peak}
+                        </span>
+
+                        {/* Side by side bars */}
+                        <div className="flex items-end gap-1">
+                          <div
+                            style={{ height: `${newPct}%` }}
+                            className="w-4 sm:w-5 bg-[#115e59] rounded-t-xs transition-all shadow-2xs"
+                            title={`New labourers: ${item.newLabourers.toLocaleString()}`}
+                          />
+                          <div
+                            style={{ height: `${signedPct}%` }}
+                            className="w-4 sm:w-5 bg-[#d97706] rounded-t-xs transition-all shadow-2xs"
+                            title={`Signed: ${item.signed.toLocaleString()}`}
+                          />
+                        </div>
+
+                        {/* X Axis Label */}
+                        <div className="absolute -bottom-7 flex flex-col items-center">
+                          <span className="text-xs text-muted-foreground text-center whitespace-nowrap leading-tight">
+                            {item.month}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </CardContent>
           </Card>
