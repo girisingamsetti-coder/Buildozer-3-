@@ -274,9 +274,6 @@ export default function V3View() {
           {/* Compliance Submissions & Reports Cards */}
           <ComplianceSubmissionsCards />
 
-          {/* All Submissions Table */}
-          <AllSubmissionsTable />
-
           <OverviewTab
             projects={filteredProjects}
             month={filters.month}
@@ -285,6 +282,9 @@ export default function V3View() {
             domainAggregates={currentDomainAgg}
             onSelectProject={handleOpenProject}
           />
+
+          {/* All Submissions Table */}
+          <AllSubmissionsTable />
         </TabsContent>
 
         {/* Tab 2: EVM (Environment) */}
