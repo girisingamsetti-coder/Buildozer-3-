@@ -503,7 +503,7 @@ export function EvmTab({
                 How excavated muck was used
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 flex items-center gap-6">
+            <CardContent className="p-4 flex flex-col items-center gap-6 h-full justify-center">
               <div className="w-36 h-36 relative">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -527,7 +527,7 @@ export function EvmTab({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 flex-1">
+              <div className="flex flex-col gap-3 w-full max-w-[240px]">
                 {muckUsage.map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2">
@@ -605,8 +605,8 @@ export function EvmTab({
                 Participants by gender
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 flex items-center justify-between h-[300px]">
-              <div className="w-48 h-48 relative ml-4">
+            <CardContent className="p-4 flex flex-col items-center gap-6 h-full justify-center min-h-[300px]">
+              <div className="w-40 h-40 relative">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -629,7 +629,7 @@ export function EvmTab({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4 flex-1 max-w-[200px] mr-8">
+              <div className="flex flex-col gap-3 w-full max-w-[240px]">
                 {trainingGender.map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
