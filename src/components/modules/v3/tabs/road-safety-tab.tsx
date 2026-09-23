@@ -105,12 +105,83 @@ export function RoadSafetyTab({
     { name: 'AGC Infrastructure', pct: 47 },
   ]
 
+  const reportingCompletenessPct = Math.round(((mix.yes + mix.no + mix.na) / totalMix) * 100)
+
   return (
     <div className="flex flex-col gap-3">
+      {/* Road Safety Top KPI Stat Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Compliance Rate</span>
+              <Car className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{yesPct}%</div>
+            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">IRC SP:55 Standard</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Passed Checks</span>
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-emerald-600 mt-0.5">{mix.yes}</div>
+            <span className="text-[10px] text-muted-foreground">Yes Responses</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Identified Gaps</span>
+              <AlertTriangle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-rose-600 mt-0.5">{mix.no}</div>
+            <span className="text-[10px] text-rose-600/80 font-medium">No Responses ({noPct}%)</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Active Packages</span>
+              <TrendingUp className="w-3.5 h-3.5 text-primary shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{projects.length}</div>
+            <span className="text-[10px] text-muted-foreground">Corridors Monitored</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Exceptions Flagged</span>
+              <ShieldAlert className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-amber-600 mt-0.5">{exceptionProjects.length}</div>
+            <span className="text-[10px] text-muted-foreground">Projects with Gaps</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Report Completeness</span>
+              <FileText className="w-3.5 h-3.5 text-purple-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{reportingCompletenessPct}%</div>
+            <span className="text-[10px] text-muted-foreground">{mix.blank} Blanks · {mix.na} NA</span>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* 2-Card Row: Checklist compliance by month + Projects with lowest compliance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Card 1: Checklist compliance by month */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Checklist compliance by month
@@ -157,7 +228,7 @@ export function RoadSafetyTab({
         </Card>
 
         {/* Card 2: Projects with the lowest checklist compliance */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 flex flex-col">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Projects with the lowest checklist compliance
@@ -208,7 +279,7 @@ export function RoadSafetyTab({
       {/* Top Split: Checklist Mix Doughnut + Monthly Compliance Trend */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Visual A: Doughnut Chart: Checklist Response Mix */}
-        <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs flex flex-col justify-between rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Car className="w-4 h-4 text-primary" />
@@ -294,7 +365,7 @@ export function RoadSafetyTab({
         </Card>
 
         {/* Visual C: Monthly Road Safety Compliance Trend (6 Months) */}
-        <Card className="lg:col-span-2 border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
+        <Card className="lg:col-span-2 border shadow-xs flex flex-col justify-between rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -344,7 +415,7 @@ export function RoadSafetyTab({
       </div>
 
       {/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
-      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+      <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -397,7 +468,7 @@ export function RoadSafetyTab({
       </Card>
 
       {/* Visual D: Exception Table: Projects with "No" Responses */}
-      <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+      <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">

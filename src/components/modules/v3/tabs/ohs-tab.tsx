@@ -171,12 +171,93 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
     'Lifting Tools Third-Party Inspection': { yes: 41, no: 5 }
   }
 
+  // Computed High-Level Stat Metrics
+  const totalAuditsConducted = Object.values(audits).reduce((acc, a) => acc + (a.conducted || 0), 0)
+  const totalTrainingSessions = trainingsConductedData.reduce((acc, t) => acc + (t.count || 0), 0)
+  const totalTrainingAttendance = Object.values(trainings).reduce((acc, t) => acc + (t.attendance || 0), 0)
+  const nearMissCount = incidentTypesData.find(i => i.name.toLowerCase().includes('near'))?.value || 90
+  const avgGroupCompliance = Math.round(
+    Object.values(groups).reduce((acc, g) => acc + g.pct, 0) / Math.max(1, Object.keys(groups).length)
+  )
+  const policyYesCount = Object.values(policies).reduce((acc, p) => acc + p.yes, 0)
+  const policyTotalCount = Object.values(policies).reduce((acc, p) => acc + (p.yes + p.no), 0)
+  const policyPct = policyTotalCount > 0 ? Math.round((policyYesCount / policyTotalCount) * 100) : 94
+
   return (
     <div className="flex flex-col gap-3">
+      {/* OHS Top KPI Stat Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">OHS Compliance</span>
+              <HardHat className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{avgGroupCompliance}%</div>
+            <span className="text-[10px] text-muted-foreground">8 Statutory Groups</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trainings</span>
+              <GraduationCap className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{totalTrainingSessions.toLocaleString()}</div>
+            <span className="text-[10px] text-muted-foreground">{totalTrainingAttendance.toLocaleString()} Attendance</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Audits Conducted</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{totalAuditsConducted}</div>
+            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">4 Periodic Streams</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Policy Availability</span>
+              <FileCheck className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{policyPct}%</div>
+            <span className="text-[10px] text-muted-foreground">6 Mandatory Plans</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Fatalities / LTI</span>
+              <AlertCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-emerald-600 mt-0.5">0 LTI</div>
+            <span className="text-[10px] text-muted-foreground">Zero Harm Target</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between text-muted-foreground mb-1">
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Near Misses</span>
+              <Activity className="w-3.5 h-3.5 text-purple-500 shrink-0" />
+            </div>
+            <div className="text-lg font-black text-foreground mt-0.5">{nearMissCount}</div>
+            <span className="text-[10px] text-muted-foreground">100% CAPA Logged</span>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Top Split: Visual A (Compliance by OHS Group) + Visual E (Policies & Plans Availability) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Visual A: Horizontal Bar Chart: Compliance by OHS Requirement Group */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <HardHat className="w-4 h-4 text-primary" />
@@ -224,7 +305,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
 
         {/* Visual E: Horizontal Bar Chart: OHS Policies & Plans Availability */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <FileCheck className="w-4 h-4 text-primary" />
@@ -281,7 +362,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {/* Card 1: Checklist compliance by month */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
             <CardHeader className="p-4 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Checklist compliance by month
@@ -328,7 +409,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </Card>
 
           {/* Card 2: Projects with the lowest checklist compliance */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 flex flex-col">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
             <CardHeader className="p-4 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Projects with the lowest checklist compliance
@@ -378,7 +459,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </div>
 
         {/* Card 3: Trainings conducted */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Trainings conducted
@@ -411,7 +492,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
       {/* Middle Split: Visual B (OHS Audits Table) + Visual C (Trainings per Frequency Table) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Visual B: Table: OHS Audits Conducted This Month */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -468,7 +549,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
 
         {/* Visual C: Table: Trainings Conducted (per frequency) */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -528,7 +609,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </div>
 
         {/* Incidents reported by month Chart Card */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
           <CardHeader className="p-4 pb-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Incidents reported by month
@@ -577,7 +658,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         {/* Middle Split: Incident types + Projects reporting the most incidents */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {/* Incident types */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 flex flex-col">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
             <CardHeader className="p-4 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Incident types
@@ -627,7 +708,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </Card>
 
           {/* Projects reporting the most incidents */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 flex flex-col">
+          <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
             <CardHeader className="p-4 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Projects reporting the most incidents
@@ -678,7 +759,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </div>
 
         {/* Visual D: Table: Near Miss / Incident Report */}
-        <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+        <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
