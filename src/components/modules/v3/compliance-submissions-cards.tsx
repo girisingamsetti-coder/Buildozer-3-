@@ -1,9 +1,23 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { cn } from '@/lib/utils'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/components/ui/select'
+import {
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+} from '@/components/ui/table'
+import {
+  Search, X, Trash2, CheckCircle2, Clock, ChevronLeft, ChevronRight,
+} from 'lucide-react'
+import { toast } from 'sonner'
 
 // ==================== TYPES ====================
 
@@ -229,5 +243,203 @@ export function ComplianceSubmissionsCards() {
         ))}
       </div>
     </div>
+  )
+}
+
+// ==================== ALL SUBMISSIONS TABLE ====================
+
+const fetchSubmissions = async (formType: string) => {
+  const res = await fetch(`/api/es-forms/${formType}`)
+  if (!res.ok) throw new Error('Failed to fetch')
+  const json = await res.json()
+  return (json.data || []).map((dbItem: any) => ({
+    id: dbItem.id,
+    projectName: dbItem.projectName,
+    reportingMonth: dbItem.reportingMonth,
+    status: dbItem.status,
+    submittedAt: dbItem.submittedAt,
+    ...JSON.parse(dbItem.formData || '{}')
+  }))
+}
+
+export function AllSubmissionsTable() {
+  const [forms, setForms] = useState<FormEntry[]>(() => loadForms())
+  const [search, setSearch] = useState('')
+  const [typeFilter, setTypeFilter] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const queryClient = useQueryClient()
+
+  const { data: ohsSubmissions = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'OHS'], queryFn: () => fetchSubmissions('OHS') })
+  const { data: rsSubmissions = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'RoadSafety'], queryFn: () => fetchSubmissions('RoadSafety') })
+  const { data: evmSubmissions = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'EVM'], queryFn: () => fetchSubmissions('EVM') })
+  const { data: ssSubmissions = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'SocialSafeguard'], queryFn: () => fetchSubmissions('SocialSafeguard') })
+  const { data: stSubmissions = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'SkillTraining'], queryFn: () => fetchSubmissions('SkillTraining') })
+  const { data: llSubmissions = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'LabourLaw'], queryFn: () => fetchSubmissions('LabourLaw') })
+  const { data: genSubmissions = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'Gender'], queryFn: () => fetchSubmissions('Gender') })
+
+  const deleteMutation = useMutation({
+    mutationFn: async ({ formType, id }: { formType: string; id: string }) => {
+      const res = await fetch(`/api/es-forms/${formType}?id=${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed to delete')
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['es-forms', variables.formType] })
+      toast.success('Deleted')
+    },
+    onError: () => toast.error('Failed to delete record'),
+  })
+
+  const handleDelete = (id: string) => {
+    const updated = forms.filter(f => f.id !== id)
+    setForms(updated)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    toast.success('Record deleted')
+  }
+
+  const unifiedData = useMemo(() => {
+    const combined = [
+      ...ohsSubmissions.map((s: any) => ({ id: s.id, formType: 'OHS', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'OHS' })),
+      ...rsSubmissions.map((s: any) => ({ id: s.id, formType: 'Road Safety', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'RoadSafety' })),
+      ...evmSubmissions.map((s: any) => ({ id: s.id, formType: 'EVM', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'EVM' })),
+      ...ssSubmissions.map((s: any) => ({ id: s.id, formType: 'Social Safeguard', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'SocialSafeguard' })),
+      ...stSubmissions.map((s: any) => ({ id: s.id, formType: 'Skill Training', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'SkillTraining' })),
+      ...llSubmissions.map((s: any) => ({ id: s.id, formType: 'Labour Law', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'LabourLaw' })),
+      ...genSubmissions.map((s: any) => ({ id: s.id, formType: 'Gender & GBV', projectName: s.projectName || '—', reportingMonth: s.reportingMonth || '—', submittedAt: s.submittedAt || '', status: s.status || 'Draft', originalType: 'Gender' })),
+      ...forms.map(f => ({ id: f.id, formType: f.formType as string, projectName: f.location, reportingMonth: f.date, submittedAt: f.date, status: f.status as string, isMock: true })),
+    ]
+    return combined.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime())
+  }, [ohsSubmissions, rsSubmissions, evmSubmissions, ssSubmissions, stSubmissions, llSubmissions, genSubmissions, forms])
+
+  const filteredUnified = useMemo(() =>
+    unifiedData.filter(f => {
+      if (typeFilter && typeFilter !== 'All' && f.formType !== typeFilter) return false
+      if (search) {
+        const q = search.toLowerCase()
+        if (!f.formType.toLowerCase().includes(q) && !f.projectName.toLowerCase().includes(q)) return false
+      }
+      return true
+    }),
+    [unifiedData, search, typeFilter]
+  )
+
+  const itemsPerPage = 10
+  const totalPages = Math.ceil(filteredUnified.length / itemsPerPage)
+  const paginatedData = filteredUnified.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  const hasFilter = !!(search || typeFilter)
+
+  return (
+    <Card className="flex flex-col shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b bg-muted/20 gap-4">
+        <p className="text-sm font-bold text-[#0d9488] shrink-0">All Submissions</p>
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2 flex-1 justify-end">
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search project or type..."
+              value={search}
+              onChange={e => { setSearch(e.target.value); setCurrentPage(1) }}
+              className="pl-9 h-8 text-xs"
+            />
+          </div>
+          <Select value={typeFilter} onValueChange={v => { setTypeFilter(v); setCurrentPage(1) }}>
+            <SelectTrigger className="w-full sm:w-40 h-8 text-xs"><SelectValue placeholder="Form Type" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="All">All Types</SelectItem>
+              <SelectItem value="OHS">OHS</SelectItem>
+              <SelectItem value="Road Safety">Road Safety</SelectItem>
+              <SelectItem value="EVM">EVM</SelectItem>
+              <SelectItem value="Social Safeguard">Social Safeguard</SelectItem>
+              <SelectItem value="Skill Training">Skill Training</SelectItem>
+              <SelectItem value="Labour Law">Labour Law</SelectItem>
+              <SelectItem value="Gender & GBV">Gender & GBV</SelectItem>
+            </SelectContent>
+          </Select>
+          {hasFilter && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 text-xs px-2"
+              onClick={() => { setSearch(''); setTypeFilter(''); setCurrentPage(1) }}
+            >
+              Clear <X className="h-3.5 w-3.5 ml-1" />
+            </Button>
+          )}
+        </div>
+      </div>
+      <CardContent className="p-0">
+        <div className="overflow-x-auto min-h-[200px]">
+          <Table className="w-full text-xs">
+            <TableHeader className="bg-muted/40">
+              <TableRow>
+                <TableHead className="px-4 py-2 font-semibold">Form Type</TableHead>
+                <TableHead className="px-4 py-2 font-semibold">Project</TableHead>
+                <TableHead className="px-4 py-2 font-semibold">Reporting Month / Date</TableHead>
+                <TableHead className="px-4 py-2 font-semibold">Status</TableHead>
+                <TableHead className="px-4 py-2 font-semibold">Submitted Date</TableHead>
+                <TableHead className="px-3 py-2 w-10"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {paginatedData.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">No submissions found.</TableCell>
+                </TableRow>
+              ) : paginatedData.map((sub: any) => (
+                <TableRow key={sub.id} className="border-b hover:bg-muted/20">
+                  <TableCell className="px-4 py-2">
+                    <Badge variant="outline" className="text-xs font-semibold border-[#0d9488]/40 text-[#0d9488]">
+                      {sub.formType}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="px-4 py-2 font-medium">{sub.projectName}</TableCell>
+                  <TableCell className="px-4 py-2 text-muted-foreground">{sub.reportingMonth}</TableCell>
+                  <TableCell className="px-4 py-2">
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${sub.status === 'Draft' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-700'}`}>
+                      {sub.status === 'Draft' ? <Clock className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}
+                      {' '}{sub.status}
+                    </span>
+                  </TableCell>
+                  <TableCell className="px-4 py-2 text-muted-foreground">
+                    {sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN') : '—'}
+                  </TableCell>
+                  <TableCell className="px-3 py-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0 text-red-400 hover:text-red-600"
+                      onClick={() => {
+                        if (sub.isMock) {
+                          handleDelete(sub.id)
+                        } else {
+                          deleteMutation.mutate({ formType: sub.originalType, id: sub.id })
+                        }
+                      }}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between px-4 py-3 border-t">
+            <div className="text-xs text-muted-foreground">
+              Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, filteredUnified.length)} of {filteredUnified.length} entries
+            </div>
+            <div className="flex items-center gap-1">
+              <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === 1} onClick={() => setCurrentPage(p => Math.max(1, p - 1))}>
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-xs font-medium px-2">Page {currentPage} of {totalPages}</span>
+              <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   )
 }

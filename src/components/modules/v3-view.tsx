@@ -30,7 +30,7 @@ import { OhsTab } from './v3/tabs/ohs-tab'
 import { RoadSafetyTab } from './v3/tabs/road-safety-tab'
 import { SocialTab } from './v3/tabs/social-tab'
 import ReportTab from './v3/tabs/report-tab'
-import { ComplianceSubmissionsCards } from './v3/compliance-submissions-cards'
+import { ComplianceSubmissionsCards, AllSubmissionsTable } from './v3/compliance-submissions-cards'
 
 export default function V3View() {
   const [data, setData] = useState<V3CompliancePayload | null>(null)
@@ -282,6 +282,9 @@ export default function V3View() {
 
           {/* Compliance Submissions & Reports Cards */}
           <ComplianceSubmissionsCards />
+
+          {/* All Submissions Table */}
+          <AllSubmissionsTable />
 
           <OverviewTab
             projects={filteredProjects}
