@@ -264,6 +264,34 @@ export function SocialTab({
     },
   ]
 
+  const genderFacilitiesDetailed = [
+    { name: 'Accommodation', yes: 49, total: 50, no: 1, pct: 98 },
+    { name: 'Toilets', yes: 46, total: 50, no: 4, pct: 92 },
+    { name: 'Bathroom', yes: 46, total: 50, no: 4, pct: 92 },
+    { name: 'Kitchen', yes: 38, total: 46, no: 8, pct: 83 },
+    { name: 'Breast feeding Room', yes: 17, total: 47, no: 30, pct: 36 },
+    { name: 'Bed & Cot', yes: 34, total: 47, no: 13, pct: 72 },
+    { name: 'Creche', yes: 39, total: 50, no: 11, pct: 78 },
+    { name: 'LPG Gas', yes: 29, total: 51, no: 22, pct: 57 },
+    { name: 'Safe Drinking Water', yes: 50, total: 51, no: 1, pct: 98 },
+    { name: 'Sanitary Napkin', yes: 18, total: 49, no: 31, pct: 37 },
+    { name: 'Privacy in Health Checkup clinic', yes: 45, total: 52, no: 7, pct: 87 },
+    { name: 'Separate Nurse deployed', yes: 35, total: 55, no: 20, pct: 64 },
+  ]
+
+  const iecMaterialDetailed = [
+    { name: 'GBV/SEA/SH at labor camp', yes: 52, total: 56, no: 4, pct: 93 },
+    { name: 'COC at labor camp', yes: 48, total: 55, no: 7, pct: 87 },
+    { name: 'ICC members list at labor camp', yes: 51, total: 55, no: 4, pct: 93 },
+    { name: 'GBV providers list at labor camp', yes: 11, total: 19, no: 8, pct: 58 },
+    { name: 'GBV/SEA/SH at office', yes: 50, total: 51, no: 1, pct: 98 },
+    { name: 'COC at office', yes: 49, total: 51, no: 2, pct: 96 },
+    { name: 'ICC members list at office', yes: 49, total: 51, no: 2, pct: 96 },
+    { name: 'GBV providers list at office', yes: 10, total: 16, no: 6, pct: 63 },
+    { name: 'GBV Service providers list at labor camp', yes: 50, total: 53, no: 3, pct: 94 },
+    { name: 'GBV Service providers list at office', yes: 47, total: 49, no: 2, pct: 96 },
+  ]
+
   return (
     <div className="flex flex-col gap-3">
       {/* Sub-Tabs Selector Header for the 4 Social Domain Forms */}
@@ -1248,58 +1276,220 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Middle Row: Visual C (Gender-Specific Facilities H-Bar) */}
-          <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
-              <div>
-                <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  Gender-Specific Statutory Facilities (12 Statutory Amenities)
-                </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Calculation: Yes % across submitting projects. Color Logic: Red if No &gt; 3, Amber if No &gt; 0.
-                </p>
-              </div>
-              <Badge variant="secondary" className="text-xs">
-                12 Amenities Monitored
-              </Badge>
-            </CardHeader>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-                {Object.entries(genderFacilities).map(([facility, data], idx) => {
-                  const isRed = data.no > 3
-                  const isAmber = data.no > 0 && !isRed
-                  return (
-                    <div key={idx} className="flex flex-col gap-1 p-2 rounded-lg hover:bg-muted/30 transition-colors">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-medium text-foreground">{facility}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-mono text-muted-foreground">({data.no} Deficient)</span>
-                          <Badge
-                            className={`text-[10px] font-mono ${
-                              isRed
-                                ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border-rose-500/30'
-                                : isAmber
-                                ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30'
-                                : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
-                            }`}
-                          >
-                            {data.yes_pct}% Yes
-                          </Badge>
+          {/* Middle Row: Gender-specific facilities + IEC material displayed */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {/* Card 1: Gender-specific facilities at labour camps */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
+                <div className="flex items-start gap-4">
+                  {/* Overall Donut */}
+                  <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#dc2626"
+                        strokeWidth="11"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#16a34a"
+                        strokeWidth="11"
+                        strokeDasharray={`${0.75 * 238.76} 238.76`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-sm font-black text-foreground leading-none">75%</span>
+                      <span className="text-[8px] text-muted-foreground mt-0.5 font-medium">overall</span>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-sm font-bold text-foreground">
+                      Gender-specific facilities at labour camps
+                    </CardTitle>
+                    <div className="flex items-center gap-3 mt-1 text-xs">
+                      <span className="flex items-center gap-1 font-semibold text-foreground">
+                        <span className="w-2 h-2 rounded-full bg-[#16a34a]" /> Yes 446
+                      </span>
+                      <span className="flex items-center gap-1 font-semibold text-foreground">
+                        <span className="w-2 h-2 rounded-full bg-[#dc2626]" /> No 152
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug">
+                      12 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded). Select a card to see which projects answered what.
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {genderFacilitiesDetailed.map((item) => {
+                    const isGreen = item.pct >= 80;
+                    const isAmber = item.pct >= 50 && item.pct < 80;
+                    const borderClass = isGreen ? 'border-l-emerald-500' : isAmber ? 'border-l-amber-500' : 'border-l-rose-500';
+                    const r = 16;
+                    const c = 2 * Math.PI * r;
+                    const dash = (item.pct / 100) * c;
+                    return (
+                      <div
+                        key={item.name}
+                        className={`bg-[#f8faf9] dark:bg-muted/20 rounded-xl p-2.5 flex items-center gap-2.5 border border-border/40 border-l-[3.5px] ${borderClass} hover:bg-muted/40 transition-colors`}
+                      >
+                        <div className="w-10 h-10 relative flex items-center justify-center shrink-0">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 40 40">
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r={r}
+                              fill="transparent"
+                              stroke="#dc2626"
+                              strokeWidth="3.5"
+                            />
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r={r}
+                              fill="transparent"
+                              stroke="#16a34a"
+                              strokeWidth="3.5"
+                              strokeDasharray={`${dash} ${c}`}
+                            />
+                          </svg>
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-foreground font-mono">
+                            {item.pct}%
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className="font-semibold text-xs text-foreground truncate" title={item.name}>
+                            {item.name}
+                          </span>
+                          <span className="text-[11px] text-muted-foreground mt-0.5 truncate">
+                            {item.yes} of {item.total} projects ·{' '}
+                            <span className={item.no > 0 ? 'text-rose-600 font-semibold' : ''}>
+                              {item.no} no
+                            </span>
+                          </span>
                         </div>
                       </div>
-                      <div className="w-full bg-muted/50 rounded-full h-2 overflow-hidden flex">
-                        <div
-                          style={{ width: `${data.yes_pct}%` }}
-                          className={`h-full ${isRed ? 'bg-rose-500' : isAmber ? 'bg-amber-500' : 'bg-emerald-500'}`}
-                        />
-                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Card 2: IEC material displayed */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
+                <div className="flex items-start gap-4">
+                  {/* Overall Donut */}
+                  <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#dc2626"
+                        strokeWidth="11"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        fill="transparent"
+                        stroke="#16a34a"
+                        strokeWidth="11"
+                        strokeDasharray={`${0.91 * 238.76} 238.76`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-sm font-black text-foreground leading-none">91%</span>
+                      <span className="text-[8px] text-muted-foreground mt-0.5 font-medium">overall</span>
                     </div>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-sm font-bold text-foreground">
+                      IEC material displayed
+                    </CardTitle>
+                    <div className="flex items-center gap-3 mt-1 text-xs">
+                      <span className="flex items-center gap-1 font-semibold text-foreground">
+                        <span className="w-2 h-2 rounded-full bg-[#16a34a]" /> Yes 417
+                      </span>
+                      <span className="flex items-center gap-1 font-semibold text-foreground">
+                        <span className="w-2 h-2 rounded-full bg-[#dc2626]" /> No 39
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug">
+                      10 items, latest answer per project. Ring = answer mix; % = share compliant (NA excluded). Select a card to see which projects answered what.
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {iecMaterialDetailed.map((item) => {
+                    const isGreen = item.pct >= 80;
+                    const isAmber = item.pct >= 50 && item.pct < 80;
+                    const borderClass = isGreen ? 'border-l-emerald-500' : isAmber ? 'border-l-amber-500' : 'border-l-rose-500';
+                    const r = 16;
+                    const c = 2 * Math.PI * r;
+                    const dash = (item.pct / 100) * c;
+                    return (
+                      <div
+                        key={item.name}
+                        className={`bg-[#f8faf9] dark:bg-muted/20 rounded-xl p-2.5 flex items-center gap-2.5 border border-border/40 border-l-[3.5px] ${borderClass} hover:bg-muted/40 transition-colors`}
+                      >
+                        <div className="w-10 h-10 relative flex items-center justify-center shrink-0">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 40 40">
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r={r}
+                              fill="transparent"
+                              stroke="#dc2626"
+                              strokeWidth="3.5"
+                            />
+                            <circle
+                              cx="20"
+                              cy="20"
+                              r={r}
+                              fill="transparent"
+                              stroke="#16a34a"
+                              strokeWidth="3.5"
+                              strokeDasharray={`${dash} ${c}`}
+                            />
+                          </svg>
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-foreground font-mono">
+                            {item.pct}%
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className="font-semibold text-xs text-foreground truncate" title={item.name}>
+                            {item.name}
+                          </span>
+                          <span className="text-[11px] text-muted-foreground mt-0.5 truncate">
+                            {item.yes} of {item.total} projects ·{' '}
+                            <span className={item.no > 0 ? 'text-rose-600 font-semibold' : ''}>
+                              {item.no} no
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
           {/* Bottom Row: Visual E (Women Newly Employed) + Visual F (Capacity Building) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
