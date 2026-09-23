@@ -474,8 +474,6 @@ const fetchMisCounts = async (): Promise<MisEntry[]> => {
 
 export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string; name: string; contractor: string }> }) {
   const [search, setSearch] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const PAGE_SIZE = 20
 
   const { data: misData = [] } = useQuery<MisEntry[]>({
     queryKey: ['mis-form-counts'],
@@ -550,8 +548,7 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
       .map((r, i) => ({ ...r, sno: i + 1 }))
   }, [rows, search])
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
-  const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+
 
   const totalRow = useMemo(() => {
     const t: Record<string, number> = {}
@@ -567,14 +564,14 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
           <div>
             <p className="text-sm font-bold text-[#0d9488]">Submitted Forms</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {filtered.length} project{filtered.length !== 1 ? 's' : ''} &middot; Showing {Math.min((currentPage - 1) * PAGE_SIZE + 1, filtered.length || 1)}&ndash;{Math.min(currentPage * PAGE_SIZE, filtered.length)}
+              {filtered.length} project{filtered.length !== 1 ? 's' : ''}
             </p>
           </div>
           <div className="relative w-full sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input
               value={search}
-              onChange={e => { setSearch(e.target.value); setCurrentPage(1) }}
+              onChange={e => setSearch(e.target.value)}
               className="pl-9 h-8 text-xs"
             />
           </div>
@@ -608,13 +605,13 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
                 </thead>
 
                 <tbody>
-                  {paged.length === 0 ? (
+                  {filtered.length === 0 ? (
                     <tr>
                       <td colSpan={3 + FORM_COLS.length + 1} className="text-center py-10 text-muted-foreground">
                         No data available.
                       </td>
                     </tr>
-                  ) : paged.map((row, i) => {
+                  ) : filtered.map((row, i) => {
                     const rowTotal = FORM_COLS.reduce((sum, col) => sum + (row.counts[col.key] || 0), 0)
                     return (
                       <tr key={row.name} className={`border-b transition-colors hover:bg-muted/20 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
@@ -663,32 +660,7 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
           </div>
         </CardContent>
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between px-4 py-3 border-t bg-muted/10">
-            <span className="text-xs text-muted-foreground">Page {currentPage} of {totalPages}</span>
-            <div className="flex items-center gap-1">
-              <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === 1}
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}>
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                const start = Math.max(1, Math.min(currentPage - 2, totalPages - 4))
-                const page = start + i
-                return (
-                  <Button key={page} variant={currentPage === page ? 'default' : 'outline'} size="sm"
-                    className={`h-7 w-7 p-0 text-xs ${currentPage === page ? 'bg-[#0d9488] text-white hover:bg-[#0f766e]' : ''}`}
-                    onClick={() => setCurrentPage(page)}>
-                    {page}
-                  </Button>
-                )
-              })}
-              <Button variant="outline" size="sm" className="h-7 px-2" disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}>
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        )}
+
       </Card>
     </div>
   )
