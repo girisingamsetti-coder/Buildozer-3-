@@ -44,9 +44,19 @@ export function V3FilterBar({
     <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-card border rounded-xl shadow-xs">
       <h1 className="text-xl font-bold text-foreground shrink-0 pl-1">Environment & Safety</h1>
       <div className="flex flex-wrap items-center justify-end gap-2.5 flex-1 min-w-[300px]">
+        {/* Search by Name or ID */}
+        <div className="relative flex-1 min-w-[200px] max-w-[320px]">
+          <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <Input
+            placeholder="Search project or ID (e.g. Zone - 9A)..."
+            value={filters.searchQuery}
+            onChange={(e) => onFilterChange({ searchQuery: e.target.value })}
+            className="pl-8 pr-3 h-9 text-xs bg-background"
+          />
+        </div>
+
         {/* Month Selector */}
         <div className="flex items-center gap-1.5">
-
           <Select
             value={filters.month}
             onValueChange={(val) => onFilterChange({ month: val })}
@@ -62,17 +72,6 @@ export function V3FilterBar({
               ))}
             </SelectContent>
           </Select>
-        </div>
-
-        {/* Search by Name or ID */}
-        <div className="relative flex-1 min-w-[200px] max-w-[320px]">
-
-          <Input
-            placeholder="Search project or ID (e.g. Zone - 9A)..."
-            value={filters.searchQuery}
-            onChange={(e) => onFilterChange({ searchQuery: e.target.value })}
-            className="px-3 h-9 text-xs bg-background"
-          />
         </div>
 
         {/* Contractor Filter */}
