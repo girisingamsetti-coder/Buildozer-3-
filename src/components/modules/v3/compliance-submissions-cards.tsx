@@ -451,80 +451,96 @@ const FORM_COLS = [
   { key: 'OHS',              label: 'OHS'              },
   { key: 'EVM',              label: 'EVM'              },
   { key: 'Road Safety',      label: 'Road Safety'      },
-  { key: 'Social Safeguard', label: 'Social Safeguard' },
-  { key: 'Skill Training',   label: 'Skill Training'   },
-  { key: 'Labour Law',       label: 'Labour Law'       },
-  { key: 'Gender & GBV',     label: 'Gender & GBV'     },
+  { key: 'Social (O)',       label: 'Social (O)'       },
+  { key: 'Social',           label: 'Social'           },
 ]
+
+interface MisEntry {
+  projectName: string
+  contractor: string
+  pmc: string
+  evm: { raised: number; approved: number; rejected: number; inProgress: number }
+  socialO: { raised: number; approved: number; rejected: number; inProgress: number }
+  ohs: { raised: number; approved: number; rejected: number; inProgress: number }
+  roadSafety: { raised: number; approved: number; rejected: number; inProgress: number }
+  social: { raised: number; approved: number; rejected: number; inProgress: number }
+}
+
+const fetchMisCounts = async (): Promise<MisEntry[]> => {
+  const res = await fetch('/data/mis-form-counts.json')
+  if (!res.ok) throw new Error('Failed to load MIS counts')
+  return res.json()
+}
 
 export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string; name: string; contractor: string }> }) {
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const PAGE_SIZE = 20
 
-  const { data: ohsSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'OHS'],             queryFn: () => fetchSubmissions('OHS')            })
-  const { data: evmSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'EVM'],             queryFn: () => fetchSubmissions('EVM')            })
-  const { data: rsSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'RoadSafety'],      queryFn: () => fetchSubmissions('RoadSafety')     })
-  const { data: ssSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'SocialSafeguard'], queryFn: () => fetchSubmissions('SocialSafeguard')})
-  const { data: stSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'SkillTraining'],   queryFn: () => fetchSubmissions('SkillTraining')  })
-  const { data: llSubs   = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'LabourLaw'],       queryFn: () => fetchSubmissions('LabourLaw')      })
-  const { data: genSubs  = [] } = useQuery<any[]>({ queryKey: ['es-forms', 'Gender'],          queryFn: () => fetchSubmissions('Gender')         })
+  const { data: misData = [] } = useQuery<MisEntry[]>({
+    queryKey: ['mis-form-counts'],
+    queryFn: fetchMisCounts,
+    staleTime: 5 * 60 * 1000,
+  })
 
-  const [mockForms] = useState<FormEntry[]>(() => loadForms())
+  // Build a lookup: normalised project name -> MIS entry
+  const misLookup = useMemo(() => {
+    const map: Record<string, MisEntry> = {}
+    misData.forEach(e => {
+      map[e.projectName.toLowerCase().trim()] = e
+    })
+    return map
+  }, [misData])
 
-  const submissionMap: Record<string, any[]> = useMemo(() => ({
-    'OHS':              ohsSubs,
-    'EVM':              evmSubs,
-    'Road Safety':      rsSubs,
-    'Social Safeguard': ssSubs,
-    'Skill Training':   stSubs,
-    'Labour Law':       llSubs,
-    'Gender & GBV':     genSubs,
-  }), [ohsSubs, evmSubs, rsSubs, ssSubs, stSubs, llSubs, genSubs])
+  const getCount = (mis: MisEntry | undefined, key: string): number => {
+    if (!mis) return 0
+    switch (key) {
+      case 'OHS':        return mis.ohs.raised
+      case 'EVM':        return mis.evm.raised
+      case 'Road Safety': return mis.roadSafety.raised
+      case 'Social (O)': return mis.socialO.raised
+      case 'Social':     return mis.social.raised
+      default: return 0
+    }
+  }
 
+  // Build rows from the v3 projects list, supplemented by anything in MIS but not in v3
   const rows = useMemo(() => {
-    const projectRows = projects.map((p, idx) => {
-      const counts: Record<string, number> = {}
-      FORM_COLS.forEach(col => {
-        const apiCount = submissionMap[col.key]?.filter(
-          (s: any) => (s.projectName || '').toLowerCase() === p.name.toLowerCase()
-        ).length ?? 0
-        const mockCount = mockForms.filter(
-          f => f.formType === col.key && (f.location || '').toLowerCase() === p.name.toLowerCase()
-        ).length
-        counts[col.key] = apiCount + mockCount
-      })
-      return { sno: idx + 1, name: p.name, contractor: p.contractor, counts }
-    })
-
     const v3Names = new Set(projects.map(p => p.name.toLowerCase()))
-    const extraNames = new Set<string>()
-    FORM_COLS.forEach(col => {
-      submissionMap[col.key]?.forEach((s: any) => {
-        const n = (s.projectName || '').trim()
-        if (n && n !== '—' && !v3Names.has(n.toLowerCase())) extraNames.add(n)
-      })
-    })
-    mockForms.forEach(f => {
-      const n = (f.location || '').trim()
-      if (n && !v3Names.has(n.toLowerCase())) extraNames.add(n)
-    })
-    const extraRows = Array.from(extraNames).map((name, i) => {
+
+    const projectRows = projects.map((p, idx) => {
+      const mis = misLookup[p.name.toLowerCase().trim()]
       const counts: Record<string, number> = {}
       FORM_COLS.forEach(col => {
-        const apiCount = submissionMap[col.key]?.filter(
-          (s: any) => (s.projectName || '').toLowerCase() === name.toLowerCase()
-        ).length ?? 0
-        const mockCount = mockForms.filter(
-          f => f.formType === col.key && (f.location || '').toLowerCase() === name.toLowerCase()
-        ).length
-        counts[col.key] = apiCount + mockCount
+        counts[col.key] = getCount(mis, col.key)
       })
-      return { sno: projects.length + i + 1, name, contractor: '—', counts }
+      return {
+        sno: idx + 1,
+        name: p.name,
+        contractor: p.contractor || mis?.contractor || '—',
+        counts,
+        hasMis: !!mis,
+      }
     })
 
-    return [...projectRows, ...extraRows]
-  }, [projects, submissionMap, mockForms])
+    // Extra rows: MIS projects not in v3 payload
+    const extraRows: typeof projectRows = []
+    misData.forEach((e, i) => {
+      if (!v3Names.has(e.projectName.toLowerCase().trim())) {
+        const counts: Record<string, number> = {}
+        FORM_COLS.forEach(col => { counts[col.key] = getCount(e, col.key) })
+        extraRows.push({
+          sno: projects.length + i + 1,
+          name: e.projectName,
+          contractor: e.contractor || '—',
+          counts,
+          hasMis: true,
+        })
+      }
+    })
+
+    return [...projectRows, ...extraRows].map((r, i) => ({ ...r, sno: i + 1 }))
+  }, [projects, misLookup, misData])
 
   const filtered = useMemo(() => {
     if (!search.trim()) return rows
@@ -571,57 +587,71 @@ export function SubmittedFormsTable({ projects }: { projects: Array<{ id: string
                 <tr className="bg-muted/40 border-b">
                   <th className="px-3 py-2.5 text-left font-semibold text-foreground w-10">S.No</th>
                   <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[180px]">Project Name</th>
-                  <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[130px]">Contractor</th>
+                  <th className="px-3 py-2.5 text-left font-semibold text-foreground min-w-[100px]">Contractor</th>
                   {FORM_COLS.map(col => (
                     <th key={col.key} className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">
                       {col.label}
                     </th>
                   ))}
+                  <th className="px-3 py-2.5 text-center font-semibold text-foreground whitespace-nowrap">Total</th>
                 </tr>
               </thead>
             </table>
 
-            {/* Scrollable body – max 20 rows visible */}
+            {/* Scrollable body */}
             <div className="overflow-y-auto max-h-[440px]">
               <table className="w-full text-xs border-collapse">
                 <tbody>
                   {paged.length === 0 ? (
-                    <tr><td colSpan={3 + FORM_COLS.length} className="text-center py-10 text-muted-foreground">No data available.</td></tr>
-                  ) : paged.map((row, i) => (
-                    <tr key={row.name} className={`border-b transition-colors hover:bg-muted/20 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
-                      <td className="px-3 py-2 text-muted-foreground tabular-nums w-10">{row.sno}</td>
-                      <td className="px-3 py-2 font-medium text-foreground min-w-[180px] max-w-[260px] truncate" title={row.name}>{row.name}</td>
-                      <td className="px-3 py-2 text-muted-foreground min-w-[130px] max-w-[160px] truncate" title={row.contractor}>{row.contractor}</td>
-                      {FORM_COLS.map(col => {
-                        const val = row.counts[col.key] || 0
-                        return (
-                          <td key={col.key} className="px-3 py-2 text-center tabular-nums whitespace-nowrap">
-                            {val > 0 ? (
-                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
-                                {val}
-                              </span>
-                            ) : (
-                              <span className="text-slate-300 dark:text-slate-700">—</span>
-                            )}
-                          </td>
-                        )
-                      })}
-                    </tr>
-                  ))}
+                    <tr><td colSpan={3 + FORM_COLS.length + 1} className="text-center py-10 text-muted-foreground">No data available.</td></tr>
+                  ) : paged.map((row, i) => {
+                    const rowTotal = FORM_COLS.reduce((sum, col) => sum + (row.counts[col.key] || 0), 0)
+                    return (
+                      <tr key={row.name} className={`border-b transition-colors hover:bg-muted/20 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                        <td className="px-3 py-2 text-muted-foreground tabular-nums w-10">{row.sno}</td>
+                        <td className="px-3 py-2 font-medium text-foreground min-w-[180px] max-w-[260px] truncate" title={row.name}>{row.name}</td>
+                        <td className="px-3 py-2 text-muted-foreground min-w-[100px] max-w-[140px] truncate" title={row.contractor}>{row.contractor}</td>
+                        {FORM_COLS.map(col => {
+                          const val = row.counts[col.key] || 0
+                          return (
+                            <td key={col.key} className="px-3 py-2 text-center tabular-nums whitespace-nowrap">
+                              {val > 0 ? (
+                                <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
+                                  {val}
+                                </span>
+                              ) : (
+                                <span className="text-slate-300 dark:text-slate-700">—</span>
+                              )}
+                            </td>
+                          )
+                        })}
+                        <td className="px-3 py-2 text-center tabular-nums whitespace-nowrap">
+                          {rowTotal > 0 ? (
+                            <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">
+                              {rowTotal}
+                            </span>
+                          ) : <span className="text-slate-300 dark:text-slate-700">—</span>}
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
 
-            {/* Totals row – always visible, outside scroll */}
+            {/* Totals row */}
             <table className="w-full text-xs border-collapse">
               <tfoot>
                 <tr className="bg-sidebar dark:bg-sidebar/80 border-t-2 border-slate-200 dark:border-slate-700">
-                  <td colSpan={3} className="px-3 py-2.5 font-bold text-sidebar-foreground text-xs w-[320px]">Total</td>
+                  <td colSpan={3} className="px-3 py-2.5 font-bold text-sidebar-foreground text-xs">Total</td>
                   {FORM_COLS.map(col => (
                     <td key={col.key} className="px-3 py-2.5 text-center font-bold text-foreground tabular-nums whitespace-nowrap">
                       {totalRow[col.key] || 0}
                     </td>
                   ))}
+                  <td className="px-3 py-2.5 text-center font-bold text-indigo-700 tabular-nums whitespace-nowrap">
+                    {FORM_COLS.reduce((sum, col) => sum + (totalRow[col.key] || 0), 0)}
+                  </td>
                 </tr>
               </tfoot>
             </table>

@@ -1,0 +1,3327 @@
+[
+  {
+    "projectName": "Zone - 1A",
+    "contractor": "BSR",
+    "pmc": "Nippon Koei",
+    "evm": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 28,
+      "approved": 25,
+      "rejected": 3,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 24,
+      "approved": 9,
+      "rejected": 12,
+      "inProgress": 6
+    }
+  },
+  {
+    "projectName": "Zone - 1B",
+    "contractor": "BSR",
+    "pmc": "Nippon Koei",
+    "evm": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 3,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 30,
+      "approved": 25,
+      "rejected": 5,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 24,
+      "approved": 7,
+      "rejected": 11,
+      "inProgress": 12
+    }
+  },
+  {
+    "projectName": "Zone - 2A",
+    "contractor": "BSR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 16,
+      "approved": 11,
+      "rejected": 2,
+      "inProgress": 6
+    },
+    "roadSafety": {
+      "raised": 4,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 18,
+      "approved": 14,
+      "rejected": 3,
+      "inProgress": 2
+    }
+  },
+  {
+    "projectName": "Zone - 2B",
+    "contractor": "BSR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 16,
+      "approved": 13,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "roadSafety": {
+      "raised": 4,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 9,
+      "approved": 4,
+      "rejected": 3,
+      "inProgress": 4
+    }
+  },
+  {
+    "projectName": "Zone - 5A",
+    "contractor": "BSR",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 32,
+      "approved": 6,
+      "rejected": 13,
+      "inProgress": 26
+    }
+  },
+  {
+    "projectName": "Zone - 5C",
+    "contractor": "BSR",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 2,
+      "approved": 0,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Zone - 5D",
+    "contractor": "BSR",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 2,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "roadSafety": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 32,
+      "approved": 0,
+      "rejected": 4,
+      "inProgress": 56
+    }
+  },
+  {
+    "projectName": "Zone - 3B",
+    "contractor": "MEIL",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 3,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 20,
+      "approved": 2,
+      "rejected": 15,
+      "inProgress": 6
+    }
+  },
+  {
+    "projectName": "Zone - 6",
+    "contractor": "MEIL",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 1,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 9,
+      "approved": 6,
+      "rejected": 2,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 20,
+      "approved": 6,
+      "rejected": 2,
+      "inProgress": 24
+    }
+  },
+  {
+    "projectName": "Zone - 9",
+    "contractor": "MEIL",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 3,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 20,
+      "approved": 0,
+      "rejected": 18,
+      "inProgress": 4
+    }
+  },
+  {
+    "projectName": "Zone - 9A",
+    "contractor": "MEIL",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 6,
+      "approved": 5,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 3,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 21,
+      "approved": 0,
+      "rejected": 19,
+      "inProgress": 4
+    }
+  },
+  {
+    "projectName": "Zone - 12A",
+    "contractor": "MEIL",
+    "pmc": "Nippon Koei",
+    "evm": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 11,
+      "approved": 8,
+      "rejected": 3,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 24,
+      "approved": 1,
+      "rejected": 7,
+      "inProgress": 32
+    }
+  },
+  {
+    "projectName": "Zone - 3A",
+    "contractor": "RVR",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 8,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 3,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 15,
+      "approved": 12,
+      "rejected": 3,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 30,
+      "approved": 8,
+      "rejected": 11,
+      "inProgress": 22
+    }
+  },
+  {
+    "projectName": "Zone - 4",
+    "contractor": "RVR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 9,
+      "approved": 7,
+      "rejected": 1,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "social": {
+      "raised": 29,
+      "approved": 4,
+      "rejected": 2,
+      "inProgress": 46
+    }
+  },
+  {
+    "projectName": "Zone - 5B",
+    "contractor": "RVR",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 9,
+      "approved": 7,
+      "rejected": 1,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 14,
+      "approved": 10,
+      "rejected": 4,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 6,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 24,
+      "approved": 3,
+      "rejected": 8,
+      "inProgress": 26
+    }
+  },
+  {
+    "projectName": "Zone - 10",
+    "contractor": "RVR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 9,
+      "approved": 6,
+      "rejected": 2,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 11,
+      "approved": 7,
+      "rejected": 3,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 32,
+      "approved": 6,
+      "rejected": 3,
+      "inProgress": 46
+    }
+  },
+  {
+    "projectName": "Zone - 7",
+    "contractor": "L&T",
+    "pmc": "Nippon Koei",
+    "evm": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 16,
+      "approved": 0,
+      "rejected": 2,
+      "inProgress": 28
+    }
+  },
+  {
+    "projectName": "Zone - 12",
+    "contractor": "NCC",
+    "pmc": "Nippon Koei",
+    "evm": {
+      "raised": 2,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 28,
+      "approved": 2,
+      "rejected": 3,
+      "inProgress": 46
+    }
+  },
+  {
+    "projectName": "Zone - 8",
+    "contractor": "MEIL",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "AQCC",
+    "contractor": "L&T",
+    "pmc": "Nippon Koei",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Governor's Residence Complex",
+    "contractor": "BSR",
+    "pmc": "Nippon Koei",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "STP - Package 1 (Zone - 1,2,3,5,6)",
+    "contractor": "MEIL",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "STP - Package 2 (Zone - 4,7,9A,10)",
+    "contractor": "MEIL",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "STP - Package 3 (Zone - 12,12A)",
+    "contractor": "MEIL",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "PEB Structure (4th Shed)",
+    "contractor": "NCC",
+    "pmc": "NA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Project Office Balance Works",
+    "contractor": "KPC",
+    "pmc": "NA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E3 Road - Phase III",
+    "contractor": "NCC",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E3 Phase III - Extn. upto NH-16",
+    "contractor": "NCC",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Flood Pumping Station - 2(8400 Cusec)",
+    "contractor": "MEIL",
+    "pmc": "TYPSA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E1 Road - Bridge with Ship Lock",
+    "contractor": "MEIL",
+    "pmc": "TYPSA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E6 Road",
+    "contractor": "RVR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 6,
+      "rejected": 1,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 6,
+      "rejected": 1,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 27,
+      "approved": 2,
+      "rejected": 1,
+      "inProgress": 48
+    }
+  },
+  {
+    "projectName": "E2 Road",
+    "contractor": "BSR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 8
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Flood Works - KV, PV, Sakhamuru Reservoir",
+    "contractor": "MVR",
+    "pmc": "TYPSA",
+    "evm": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 28,
+      "approved": 9,
+      "rejected": 4,
+      "inProgress": 30
+    }
+  },
+  {
+    "projectName": "Flood Works- Gravity Canal, Krishnayapalem Reservoir",
+    "contractor": "MVR",
+    "pmc": "TYPSA",
+    "evm": {
+      "raised": 7,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 10
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 28,
+      "approved": 11,
+      "rejected": 1,
+      "inProgress": 32
+    }
+  },
+  {
+    "projectName": "Flood Works - Neerukonda Reservoir",
+    "contractor": "NCC",
+    "pmc": "TYPSA",
+    "evm": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 9,
+      "approved": 9,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 31,
+      "approved": 5,
+      "rejected": 12,
+      "inProgress": 28
+    }
+  },
+  {
+    "projectName": "Happy Nest",
+    "contractor": "NCC",
+    "pmc": "Feedback",
+    "evm": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E12 Road",
+    "contractor": "BSR",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 4,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 2,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 2
+    }
+  },
+  {
+    "projectName": "N18 Road",
+    "contractor": "BSR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 2,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 3,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 16,
+      "approved": 10,
+      "rejected": 3,
+      "inProgress": 6
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 9,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 14
+    }
+  },
+  {
+    "projectName": "Tower 3 and 4 - Structure",
+    "contractor": "L&T",
+    "pmc": "Colliers",
+    "evm": {
+      "raised": 4,
+      "approved": 3,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 3,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 6,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 10
+    }
+  },
+  {
+    "projectName": "Tower 1 and 2 - Structure",
+    "contractor": "SPCL",
+    "pmc": "Colliers",
+    "evm": {
+      "raised": 6,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 12
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 3,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "GAD Tower - Structure",
+    "contractor": "NCC",
+    "pmc": "Colliers",
+    "evm": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 1,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 1,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 7,
+      "approved": 2,
+      "rejected": 2,
+      "inProgress": 6
+    }
+  },
+  {
+    "projectName": "GOs and Group D employees - Housing",
+    "contractor": "SPCL",
+    "pmc": "Feedback",
+    "evm": {
+      "raised": 7,
+      "approved": 4,
+      "rejected": 3,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 20,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 34
+    }
+  },
+  {
+    "projectName": "GOs and Group D employees - External Infra",
+    "contractor": "SPCL",
+    "pmc": "Bureau Veritas",
+    "evm": {
+      "raised": 6,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "NGO (Housing+Ext. Infra) - 9 Towers",
+    "contractor": "L&T",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 6,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 2,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 9,
+      "approved": 9,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 28,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 42
+    }
+  },
+  {
+    "projectName": "NGO (Housing+Ext. Infra) - 12 Towers",
+    "contractor": "L&T",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 7,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 24,
+      "approved": 17,
+      "rejected": 6,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 28,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 42
+    }
+  },
+  {
+    "projectName": "N16 Road",
+    "contractor": "BSCPL",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E11 Road",
+    "contractor": "MEIL",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 7,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 14
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 32,
+      "approved": 2,
+      "rejected": 4,
+      "inProgress": 52
+    }
+  },
+  {
+    "projectName": "N14 Road",
+    "contractor": "RVR",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 0,
+      "rejected": 7,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 24,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 44
+    }
+  },
+  {
+    "projectName": "N10 Road",
+    "contractor": "RVR",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 7,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 12
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 24,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 42
+    }
+  },
+  {
+    "projectName": "N8 Road",
+    "contractor": "NCC",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 32,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 54
+    }
+  },
+  {
+    "projectName": "N17 Road",
+    "contractor": "BSCPL",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 3,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E5 Road",
+    "contractor": "BSR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 1,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "social": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 2
+    }
+  },
+  {
+    "projectName": "E13 Road",
+    "contractor": "RVR",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 8,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 16
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 4,
+      "approved": 2,
+      "rejected": 1,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 4,
+      "approved": 2,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 32,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 58
+    }
+  },
+  {
+    "projectName": "N4 Road",
+    "contractor": "BSCPL",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 6,
+      "approved": 3,
+      "rejected": 1,
+      "inProgress": 4
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 13,
+      "approved": 5,
+      "rejected": 8,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 4,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 14,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 26
+    }
+  },
+  {
+    "projectName": "N1 Road",
+    "contractor": "BSR",
+    "pmc": "Voyants",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E10 Road",
+    "contractor": "MEIL",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 5,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 29,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 58
+    }
+  },
+  {
+    "projectName": "N2 Road",
+    "contractor": "BSR",
+    "pmc": "Voyants",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "N7 Road",
+    "contractor": "RVR",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 28,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 50
+    }
+  },
+  {
+    "projectName": "E7 Road",
+    "contractor": "BSR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 1,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 5,
+      "rejected": 1,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "social": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 6
+    }
+  },
+  {
+    "projectName": "N3A and N3B Road",
+    "contractor": "BSCPL",
+    "pmc": "Voyants",
+    "evm": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 6
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 3,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 20,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 40
+    }
+  },
+  {
+    "projectName": "E4 Road",
+    "contractor": "MEIL",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 16,
+      "approved": 0,
+      "rejected": 2,
+      "inProgress": 28
+    }
+  },
+  {
+    "projectName": "N5 Road",
+    "contractor": "NCC",
+    "pmc": "Voyants",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 9,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "N13 Road",
+    "contractor": "RVR",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 7,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 14
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 4,
+      "approved": 1,
+      "rejected": 2,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 3,
+      "approved": 1,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 24,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 46
+    }
+  },
+  {
+    "projectName": "E3 Road - Phase II",
+    "contractor": "NCC",
+    "pmc": "MaRS",
+    "evm": {
+      "raised": 3,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 2,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 0,
+      "rejected": 4,
+      "inProgress": 2
+    },
+    "social": {
+      "raised": 14,
+      "approved": 0,
+      "rejected": 8,
+      "inProgress": 12
+    }
+  },
+  {
+    "projectName": "E16 Road",
+    "contractor": "NCC",
+    "pmc": "Voyants",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E15 Road",
+    "contractor": "BSR",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 4,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 8
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 6,
+      "approved": 3,
+      "rejected": 1,
+      "inProgress": 4
+    },
+    "roadSafety": {
+      "raised": 3,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "N15 Road",
+    "contractor": "NCC",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 7,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 12
+    },
+    "socialO": {
+      "raised": 2,
+      "approved": 1,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 11,
+      "approved": 5,
+      "rejected": 4,
+      "inProgress": 4
+    },
+    "roadSafety": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 16,
+      "approved": 3,
+      "rejected": 5,
+      "inProgress": 16
+    }
+  },
+  {
+    "projectName": "N12 Road",
+    "contractor": "NCC",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 5,
+      "rejected": 1,
+      "inProgress": 4
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 28,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 44
+    }
+  },
+  {
+    "projectName": "N11 Road",
+    "contractor": "RVR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 23,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 34
+    }
+  },
+  {
+    "projectName": "N9 Road",
+    "contractor": "BSR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 3,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 4,
+      "rejected": 1,
+      "inProgress": 4
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 7,
+      "approved": 0,
+      "rejected": 3,
+      "inProgress": 8
+    }
+  },
+  {
+    "projectName": "N6 Utilities",
+    "contractor": "MEIL",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 3,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "ohs": {
+      "raised": 8,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 32,
+      "approved": 4,
+      "rejected": 16,
+      "inProgress": 24
+    }
+  },
+  {
+    "projectName": "E14 Road",
+    "contractor": "MEIL",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 7,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 16,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 32
+    }
+  },
+  {
+    "projectName": "E9 Road",
+    "contractor": "RVR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 18,
+      "approved": 14,
+      "rejected": 3,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 9,
+      "approved": 8,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 20,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 40
+    }
+  },
+  {
+    "projectName": "E8 Road",
+    "contractor": "RVR",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 8,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 18,
+      "approved": 14,
+      "rejected": 3,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 8,
+      "approved": 8,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 19,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 38
+    }
+  },
+  {
+    "projectName": "E3 Road - Phase I",
+    "contractor": "NCC",
+    "pmc": "Aarvee",
+    "evm": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 4,
+      "approved": 4,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 6,
+      "approved": 4,
+      "rejected": 1,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 9,
+      "approved": 7,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 6,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 10
+    }
+  },
+  {
+    "projectName": "Bungalows for Principal Secretaries & Secretaries",
+    "contractor": "KMV",
+    "pmc": "Bureau Veritas",
+    "evm": {
+      "raised": 3,
+      "approved": 0,
+      "rejected": 2,
+      "inProgress": 2
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 5,
+      "approved": 1,
+      "rejected": 2,
+      "inProgress": 4
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Additional work of AIS Secretary & AIS Principal Secretary Bungalows",
+    "contractor": "KMV",
+    "pmc": "Bureau Veritas",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Clubhouse Building (G+4) to AIS, Secretaries and Principal Secretaries",
+    "contractor": "NCC",
+    "pmc": "NA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Construction of Additional Bungalows at Rayapudi Village",
+    "contractor": "KMV",
+    "pmc": "Bureau Veritas",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Hon'ble MLAs and MLCs and AIS Officers - Housing",
+    "contractor": "NCC",
+    "pmc": "Bureau Veritas",
+    "evm": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 6,
+      "approved": 6,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 3,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Clubhouse Building (G+3) to Ho'ble MLAs and MLCs",
+    "contractor": "NCC",
+    "pmc": "NA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Assembly - Structure",
+    "contractor": "L&T",
+    "pmc": "TUV",
+    "evm": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 5,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 10
+    }
+  },
+  {
+    "projectName": "High Court",
+    "contractor": "NCC",
+    "pmc": "TUV",
+    "evm": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 2
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Project Office",
+    "contractor": "KPC",
+    "pmc": "Feedback",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Bungalows for Hon'ble Ministers & Hon'ble Judges",
+    "contractor": "BSR",
+    "pmc": "Bureau Veritas",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 7,
+      "approved": 7,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 1,
+      "approved": 1,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E13 Road - Extn. upto NH-16",
+    "contractor": "MEIL",
+    "pmc": "Voyants",
+    "evm": {
+      "raised": 5,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 10
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 16,
+      "approved": 0,
+      "rejected": 16,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "E15 Road - Extn. upto NH-16",
+    "contractor": "MEIL",
+    "pmc": "Voyants",
+    "evm": {
+      "raised": 5,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 10
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 1,
+      "approved": 0,
+      "rejected": 1,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 16,
+      "approved": 0,
+      "rejected": 14,
+      "inProgress": 4
+    }
+  },
+  {
+    "projectName": "3 PEB structures near Project Office",
+    "contractor": "NCC",
+    "pmc": "NA",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "Water Distribution Centres (WDCs)",
+    "contractor": "NCC",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 2,
+      "approved": 0,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 3,
+      "rejected": 0,
+      "inProgress": 4
+    },
+    "social": {
+      "raised": 24,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 48
+    }
+  },
+  {
+    "projectName": "Water Treatment Plant (WTP)",
+    "contractor": "NCC",
+    "pmc": "LASA",
+    "evm": {
+      "raised": 9,
+      "approved": 6,
+      "rejected": 3,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 2,
+      "rejected": 0,
+      "inProgress": 6
+    },
+    "social": {
+      "raised": 24,
+      "approved": 6,
+      "rejected": 2,
+      "inProgress": 32
+    }
+  },
+  {
+    "projectName": "Jungle Clearance",
+    "contractor": "NCC",
+    "pmc": "-",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "MEP for 3 PEB Structures",
+    "contractor": "NCC",
+    "pmc": "-",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "AGC Infrastructure",
+    "contractor": "MEIL",
+    "pmc": "Tractebel",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 6,
+      "approved": 4,
+      "rejected": 2,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 5,
+      "approved": 5,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 4,
+      "approved": 3,
+      "rejected": 1,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "220KV EHV lines rerouting",
+    "contractor": "BSR",
+    "pmc": "-",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  },
+  {
+    "projectName": "400KV DC lines rerouting",
+    "contractor": "PVR & KRRTPPL",
+    "pmc": "-",
+    "evm": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "socialO": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "ohs": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "roadSafety": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    },
+    "social": {
+      "raised": 0,
+      "approved": 0,
+      "rejected": 0,
+      "inProgress": 0
+    }
+  }
+]
