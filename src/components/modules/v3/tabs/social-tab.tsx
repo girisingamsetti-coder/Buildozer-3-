@@ -176,6 +176,32 @@ export function SocialTab({
     { trade: 'Front Office Assistance', count: 100, displayCount: '100' },
   ]
 
+  const localWorkersByProject = [
+    { rank: 1, name: 'Zone - 5A', count: 102 },
+    { rank: 2, name: 'Zone - 7', count: 71 },
+    { rank: 3, name: 'NGO (Housing+Ext. Infra) - 9 Towers', count: 66 },
+    { rank: 4, name: 'GOs and Group D employees - Housing', count: 62 },
+    { rank: 5, name: 'Zone - 9A', count: 52 },
+    { rank: 6, name: 'E13 Road - Extn. upto NH-16', count: 48 },
+    { rank: 7, name: 'E15 Road - Extn. upto NH-16', count: 48 },
+    { rank: 8, name: 'E4 Road', count: 48 },
+    { rank: 9, name: 'E14 Road', count: 45 },
+    { rank: 10, name: 'Flood Works - Neerukonda Reservoir', count: 42 },
+  ]
+
+  const workersEmployedByProject = [
+    { rank: 1, name: 'GOs and Group D employees - Housing', count: 1141, displayCount: '1,141' },
+    { rank: 2, name: 'Zone - 7', count: 1077, displayCount: '1,077' },
+    { rank: 3, name: 'Zone - 12', count: 839, displayCount: '839' },
+    { rank: 4, name: 'NGO (Housing+Ext. Infra) - 12 Towers', count: 469, displayCount: '469' },
+    { rank: 5, name: 'NGO (Housing+Ext. Infra) - 9 Towers', count: 465, displayCount: '465' },
+    { rank: 6, name: 'Zone - 5B', count: 395, displayCount: '395' },
+    { rank: 7, name: 'Zone - 9A', count: 378, displayCount: '378' },
+    { rank: 8, name: 'Zone - 4', count: 352, displayCount: '352' },
+    { rank: 9, name: 'Zone - 3A', count: 345, displayCount: '345' },
+    { rank: 10, name: 'N8 Road', count: 319, displayCount: '319' },
+  ]
+
   // 3. Labour Law Compliance (Form 6) Data
   const licenses = labAgg?.licenses || {
     'BOCW Registration (Building & Other Construction Workers)': { valid: 42, expiring: 4, expired: 0 },
@@ -1140,7 +1166,106 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Row 3: Visual C (Total Workforce Trend) + Visual D (All 26 Skill Sets) */}
+          {/* Row 3: Local workers by project + Workers employed by project */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Card 1: Local workers by project */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  Local workers by project
+                </CardTitle>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Select a project to focus on it.
+                </p>
+              </CardHeader>
+              <CardContent className="p-6 pt-1">
+                <div className="space-y-1.5">
+                  {localWorkersByProject.map((item) => {
+                    const maxVal = 102;
+                    const pct = (item.count / maxVal) * 100;
+                    return (
+                      <div
+                        key={item.rank}
+                        onClick={() => {
+                          const proj = projects.find((p) => p.name.toLowerCase().includes(item.name.toLowerCase()));
+                          if (proj) onSelectProject(proj);
+                        }}
+                        className={`p-2 rounded-xl flex items-center gap-3 transition-colors cursor-pointer ${
+                          item.rank === 5 ? 'bg-muted/40' : 'hover:bg-muted/30'
+                        }`}
+                      >
+                        <div className="w-5 h-5 rounded-full bg-muted/60 text-muted-foreground font-semibold text-[10px] flex items-center justify-center shrink-0">
+                          {item.rank}
+                        </div>
+                        <div className="w-48 sm:w-56 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                          {item.name}
+                        </div>
+                        <div className="flex-1 bg-muted/40 h-2 rounded-full overflow-hidden flex relative">
+                          <div
+                            style={{ width: `${pct}%` }}
+                            className="bg-[#115e59] h-full rounded-full transition-all"
+                            title={`${item.name}: ${item.count}`}
+                          />
+                        </div>
+                        <div className="w-10 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                          {item.count}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Card 2: Workers employed by project */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 bg-card">
+              <CardHeader className="p-6 pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">
+                  Workers employed by project
+                </CardTitle>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Select a project to focus on it.
+                </p>
+              </CardHeader>
+              <CardContent className="p-6 pt-1">
+                <div className="space-y-1.5">
+                  {workersEmployedByProject.map((item) => {
+                    const maxVal = 1141;
+                    const pct = (item.count / maxVal) * 100;
+                    return (
+                      <div
+                        key={item.rank}
+                        onClick={() => {
+                          const proj = projects.find((p) => p.name.toLowerCase().includes(item.name.toLowerCase()));
+                          if (proj) onSelectProject(proj);
+                        }}
+                        className="p-2 rounded-xl flex items-center gap-3 transition-colors cursor-pointer hover:bg-muted/30"
+                      >
+                        <div className="w-5 h-5 rounded-full bg-muted/60 text-muted-foreground font-semibold text-[10px] flex items-center justify-center shrink-0">
+                          {item.rank}
+                        </div>
+                        <div className="w-48 sm:w-56 shrink-0 truncate text-xs font-medium text-foreground" title={item.name}>
+                          {item.name}
+                        </div>
+                        <div className="flex-1 bg-muted/40 h-2 rounded-full overflow-hidden flex relative">
+                          <div
+                            style={{ width: `${pct}%` }}
+                            className="bg-[#115e59] h-full rounded-full transition-all"
+                            title={`${item.name}: ${item.count.toLocaleString()}`}
+                          />
+                        </div>
+                        <div className="w-12 text-right font-bold text-xs text-foreground font-mono shrink-0">
+                          {item.displayCount}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Row 4: Visual C (Total Workforce Trend) + Visual D (All 26 Skill Sets) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
 
             {/* Visual C: Line Chart: Total Workforce Trend (6 Months) */}
