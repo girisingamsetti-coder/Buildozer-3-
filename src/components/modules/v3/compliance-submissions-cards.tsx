@@ -138,70 +138,37 @@ export function StatCard({ formType, entries, isSelected, onClick }: StatCardPro
     <Card
       onClick={onClick}
       className={cn(
-        'flex-1 min-w-0 border shadow-xs transition-all duration-200 cursor-pointer rounded-2xl bg-card',
+        'flex-1 min-w-0 border shadow-xs transition-all duration-200 cursor-pointer',
         isSelected
           ? 'border-2 border-teal-500 ring-2 ring-teal-500/20 shadow-md'
-          : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-sm'
+          : 'border-slate-200 dark:border-slate-800 hover:border-primary/40 hover:shadow-sm'
       )}
     >
-      <CardContent className="p-3.5 flex flex-col gap-2.5">
-        <p className="text-xs font-bold text-slate-800 dark:text-slate-100 truncate text-center">
-          {formType}
-        </p>
-        <div className="relative flex items-center justify-center">
-          <ResponsiveContainer width="100%" height={120}>
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                innerRadius="55%"
-                outerRadius="80%"
-                dataKey="value"
-                strokeWidth={0}
-                cornerRadius={5}
-              >
-                {chartData.map((entry, i) => (
-                  <Cell key={i} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  fontSize: '11px',
-                  borderRadius: '8px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.95)',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '4px 8px',
-                }}
-                formatter={(v, n) => [v, n]}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="absolute flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-xl font-black text-slate-800 dark:text-slate-100 leading-none">
-              {total}
-            </span>
-            <span className="text-[9px] text-muted-foreground font-medium mt-0.5">Created</span>
+      <CardContent className="p-3.5 flex flex-col justify-between h-full">
+        <div className="flex items-center justify-between text-muted-foreground mb-1">
+          <span className="text-xs font-medium uppercase tracking-wider truncate mr-2">{formType}</span>
+          <div className="w-5 h-5 shrink-0">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={chartData} dataKey="value" strokeWidth={0} innerRadius="30%" outerRadius="100%">
+                  {chartData.map((entry, i) => (
+                    <Cell key={i} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center">
-          {breakdown.map(b => (
-            <span
-              key={b.name}
-              className="flex items-center gap-1 text-[9px] text-slate-600 dark:text-slate-300 font-medium"
-            >
-              <span
-                className="inline-block w-2 h-2 rounded-full shrink-0"
-                style={{ backgroundColor: b.color }}
-              />
-              {b.name}: {b.value}
+        <div>
+          <div className="text-xl font-bold tracking-tight text-foreground">
+            {total}
+          </div>
+          <div className="text-[11px] text-muted-foreground flex items-center gap-2 mt-0.5">
+            <span><strong className="text-foreground">{total - pending}</strong> Processed</span>
+            <span className={pending > 0 ? "text-orange-500 font-medium" : ""}>
+              {pending} Pending
             </span>
-          ))}
-        </div>
-        <div className="border border-orange-400/80 rounded-xl px-2.5 py-1.5 text-center bg-orange-50/70 dark:bg-orange-950/20 flex items-center justify-between mt-auto">
-          <p className="text-[9px] font-bold text-orange-500 uppercase tracking-wider">Pending</p>
-          <p className="text-xl font-black text-orange-500 leading-none">{pending}</p>
+          </div>
         </div>
       </CardContent>
     </Card>
