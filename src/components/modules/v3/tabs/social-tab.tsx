@@ -690,32 +690,20 @@ export function SocialTab({
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Sub-Tabs Selector Header for the 4 Social Domain Forms */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-card border rounded-xl shadow-2xs">
-        <div>
-          <div className="flex items-center gap-2">
-            <Badge className="bg-indigo-500/15 text-indigo-700 dark:text-indigo-400 border-indigo-500/30 text-[11px] font-semibold">
-              Social Domain Portfolio Forms (4 Forms)
-            </Badge>
-            <span className="text-xs text-muted-foreground font-mono">Cycle: {month}</span>
-          </div>
-          <h2 className="text-base font-bold text-foreground mt-0.5">
-            Social Safeguards, Workforce Skills, Labour Law & Gender Governance
-          </h2>
-        </div>
-
+      {/* Sub-Tabs Selector for the 4 Social Domain Forms */}
+      <div className="flex items-center justify-start">
         <Tabs value={subTab} onValueChange={(v: any) => setSubTab(v)} className="w-full sm:w-auto">
           <TabsList className="grid grid-cols-4 h-9 p-1 bg-muted/60 border text-xs">
-            <TabsTrigger value="safeguard" className="text-[11px] font-semibold px-2.5">
+            <TabsTrigger value="safeguard" className="text-[11px] font-semibold px-3 sm:px-5">
               Social MPR (Form 4)
             </TabsTrigger>
-            <TabsTrigger value="skills" className="text-[11px] font-semibold px-2.5">
+            <TabsTrigger value="skills" className="text-[11px] font-semibold px-3 sm:px-5">
               Skill & Training (Form 5)
             </TabsTrigger>
-            <TabsTrigger value="labour" className="text-[11px] font-semibold px-2.5">
+            <TabsTrigger value="labour" className="text-[11px] font-semibold px-3 sm:px-5">
               Labour Law (Form 6)
             </TabsTrigger>
-            <TabsTrigger value="gender" className="text-[11px] font-semibold px-2.5">
+            <TabsTrigger value="gender" className="text-[11px] font-semibold px-3 sm:px-5">
               Gender & SEA (Form 7)
             </TabsTrigger>
           </TabsList>
