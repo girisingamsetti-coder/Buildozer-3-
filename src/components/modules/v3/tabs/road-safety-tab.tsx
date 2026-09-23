@@ -368,7 +368,18 @@ export function RoadSafetyTab({
 {/* 2-Card Row: Checklist compliance by month + Projects with lowest compliance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         
-        {/* Card 2: Projects with the lowest checklist compliance */}
+              </div>
+
+      {/* Top Split: Checklist Mix Doughnut + Monthly Compliance Trend */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        
+              </div>
+
+      
+      
+      {/* Combined Requested Row 2 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-3">
+{/* Card 2: Projects with the lowest checklist compliance */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
           <CardHeader className="p-4 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
@@ -415,14 +426,8 @@ export function RoadSafetyTab({
             })}
           </CardContent>
         </Card>
-      </div>
 
-      {/* Top Split: Checklist Mix Doughnut + Monthly Compliance Trend */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        
-              </div>
-
-      {/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
+{/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
       <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
@@ -475,7 +480,9 @@ export function RoadSafetyTab({
         </CardContent>
       </Card>
 
-      {/* Visual D: Exception Table: Projects with "No" Responses */}
+      </div>
+
+{/* Visual D: Exception Table: Projects with "No" Responses */}
       <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
         <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
