@@ -26,7 +26,6 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import { AttentionCard } from '../attention-card';
 import { ProjectData, DomainAggregatesMonth, AttentionItem, V3CompliancePayload } from '../v3-types'
 
 interface SocialTabProps {
@@ -718,7 +717,7 @@ export function SocialTab({
           {/* Visual E: Key-Value (KV) Card: Labour Influx & Camps */}
           <div className="grid grid-cols-2 sm:grid-cols-6 gap-2.5">
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Active Camps</span>
                 <div className="text-lg font-black text-foreground mt-0.5">{influx.camps_count}</div>
                 <span className="text-[10px] text-muted-foreground">Regulated & Habited</span>
@@ -726,7 +725,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Migrant Workers</span>
                 <div className="text-lg font-black text-foreground mt-0.5">{influx.migrant_workers.toLocaleString()}</div>
                 <span className="text-[10px] text-muted-foreground">Inter-state pool</span>
@@ -734,7 +733,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">New Workers</span>
                 <div className="text-lg font-black text-primary mt-0.5">{influx.new_workers.toLocaleString()}</div>
                 <span className="text-[10px] text-muted-foreground">Inducted this month</span>
@@ -742,7 +741,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Police Verification</span>
                 <div className="text-lg font-black text-emerald-600 mt-0.5">{influx.police_verified_pct}%</div>
                 <span className="text-[10px] text-emerald-600/80 font-medium">Clearance Verified</span>
@@ -750,7 +749,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Medical Covered</span>
                 <div className="text-lg font-black text-emerald-600 mt-0.5">{influx.medical_coverage_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Health checkup done</span>
@@ -758,7 +757,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Programs Held</span>
                 <div className="text-lg font-black text-foreground mt-0.5">{influx.programs_conducted}</div>
                 <span className="text-[10px] text-muted-foreground">Community & health</span>
@@ -766,16 +765,16 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Row 2: PMC site visits by specialist + Closure rates */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Card 1: PMC site visits by specialist */}
+          {/* Row 2: PMC site visits, Closure Rates, PMC observations */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            {/* Card 1: PMC Site Visits */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <CardTitle className="text-sm font-bold text-foreground">
                   PMC site visits by specialist
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-4 pt-1">
+              <CardContent className="p-2 px-3">
                 <div className="flex flex-col sm:flex-row items-center justify-around gap-4 min-h-[160px]">
                   {/* Donut Chart */}
                   {(() => {
@@ -857,12 +856,12 @@ export function SocialTab({
 
             {/* Card 2: Closure rates */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Closure rates
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-4 pt-1">
+              <CardContent className="p-2 px-3">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {closureRates.map((item) => {
                     const r = 36;
@@ -919,11 +918,9 @@ export function SocialTab({
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Row 3: Full-width Card: PMC observations by month */}
+          {/* Card 3: PMC Observations */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-            <CardHeader className="p-4 pb-1">
+            <CardHeader className="py-1 px-2">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                 <CardTitle className="text-sm font-bold text-foreground">
                   PMC observations by month
@@ -938,7 +935,7 @@ export function SocialTab({
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="p-4 pt-0">
+            <CardContent className="p-2 px-3">
               <div className="w-full overflow-x-auto">
                 <div className="min-w-[600px]">
                   <svg className="w-full h-44 sm:h-48" viewBox="0 0 820 230">
@@ -1044,20 +1041,19 @@ export function SocialTab({
               </div>
             </CardContent>
           </Card>
+          </div>
 
-          {/* Row 4: Outreach and health activities + Worker details submitted to police */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Card 1: Outreach and health activities */}
+          {/* Row 4: Combined Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-3">
+            {/* Card 1: Outreach & Health */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div>
                     <CardTitle className="text-sm font-bold text-foreground">
                       Outreach and health activities
                     </CardTitle>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      Participants; entries repeated across months are counted once.
-                    </p>
+                    
                   </div>
                   <div className="flex items-center gap-3 text-xs">
                     <span className="flex items-center gap-1 font-medium text-foreground text-[11px]">
@@ -1069,7 +1065,7 @@ export function SocialTab({
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-1.5">
+              <CardContent className="p-2 px-3">
                 <div className="space-y-2.5">
                   {outreachHealthActivities.map((item) => {
                     const maxRef = 14039;
@@ -1109,17 +1105,15 @@ export function SocialTab({
               </CardContent>
             </Card>
 
-            {/* Card 2: Worker details submitted to police */}
+            {/* Card 2: Police Submissions */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Worker details submitted to police
                 </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Share of projects answering Yes. Open a chart to see which projects.
-                </p>
+                
               </CardHeader>
-              <CardContent className="p-4 pt-1.5 flex flex-col justify-between flex-1">
+              <CardContent className="p-2 px-3 flex flex-col justify-between flex-1">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {policeSubmissionCompliance.map((item) => {
                     const r = 34;
@@ -1199,13 +1193,10 @@ export function SocialTab({
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Row 5: Labour influx + Host community profile */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {/* Row 5: Labour Influx + Host Community (Now part of Row 4) */}
             {/* Card 1: Labour influx */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <CardTitle className="text-sm font-bold text-foreground">
                     Labour influx
@@ -1220,7 +1211,7 @@ export function SocialTab({
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-1">
+              <CardContent className="p-2 px-3">
                 <div className="w-full">
                   <svg className="w-full h-44 sm:h-48" viewBox="0 0 460 230">
                     {/* Y-axis gridlines and labels */}
@@ -1337,15 +1328,13 @@ export function SocialTab({
 
             {/* Card 2: Host community profile */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Host community profile
                 </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Latest report per project.
-                </p>
+                
               </CardHeader>
-              <CardContent className="p-4 pt-1.5 flex flex-col justify-around flex-1">
+              <CardContent className="p-2 px-3 flex flex-col justify-around flex-1">
                 <div className="space-y-2.5">
                   {hostCommunityProfileData.map((item) => (
                     <div key={item.name} className="flex items-center gap-3 text-xs">
@@ -1367,77 +1356,21 @@ export function SocialTab({
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Top Row: Visual A (E&S Staff Deployment H-Bar) + Visual C (Observations Stacked Bar + Line) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Visual A: Horizontal Bar Chart: Deployment of E&S Staff */}
-            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-primary" />
-                    Deployment of Statutory E&S Staff
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    5 statutory positions. Threshold rule: Amber alert if Vacant &gt; 6, Green otherwise.
-                  </p>
-                </div>
-                <Badge variant="outline" className="text-xs">
-                  5 Roles Monitored
-                </Badge>
-              </CardHeader>
-              <CardContent className="p-4 flex flex-col gap-3.5">
-                {Object.entries(staff).map(([role, val], idx) => {
-                  const total = val.filled + val.vacant || 48
-                  const filledPct = Math.round((val.filled / total) * 100)
-                  const isAmber = val.vacant > 6
-                  return (
-                    <div key={idx} className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-muted/30 transition-colors">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-medium text-foreground">{role}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-muted-foreground font-mono">
-                            {val.filled} Filled • <strong className={isAmber ? 'text-amber-600' : 'text-foreground'}>{val.vacant} Vacant</strong>
-                          </span>
-                          <Badge
-                            className={`text-[10px] font-mono ${
-                              isAmber
-                                ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30'
-                                : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
-                            }`}
-                          >
-                            {isAmber ? 'Attention (Vacant > 6)' : 'Compliant'}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="w-full bg-muted/50 rounded-full h-2.5 overflow-hidden flex">
-                        <div style={{ width: `${filledPct}%` }} className="bg-emerald-500 h-full" />
-                        <div style={{ width: `${100 - filledPct}%` }} className={isAmber ? 'bg-amber-500' : 'bg-muted-foreground/30'} />
-                      </div>
-                    </div>
-                  )
-                })}
-              </CardContent>
-            </Card>
-
-            {/* Visual C: Stacked Bar + Line Chart: Observations (Raised vs Closed vs Pending) */}
+          {/* Visual C: Stacked Bar + Line Chart: Observations (Raised vs Closed vs Pending) */}
             <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4 text-amber-500" />
-                    Site Observations: Raised, Closed & Cumulative Pending
+                    Site Observations
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Stacked Bars = Raised (Amber) + Closed (Green) | Metric = Cumulative Pending (Threshold: &gt;12 triggers Attention)
-                  </p>
+                  
                 </div>
                 <Badge variant="outline" className="text-xs font-mono">
                   Pending: {obsTrend[obsTrend.length - 1]?.cumulative_pending}
                 </Badge>
               </CardHeader>
-              <CardContent className="p-4 flex flex-col justify-between flex-1">
+              <CardContent className="p-2 px-3 flex flex-col justify-between flex-1">
                 <div className="grid grid-cols-6 gap-3 h-44 items-end pb-3 border-b">
                   {obsTrend.map((o) => {
                     const totalBar = o.raised + o.closed || 1
@@ -1480,25 +1413,73 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Bottom Row: Visual B (Monthly Site Inspections by PMC) + Visual D (GRC Grievance Redressal Grouped Bar) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {/* Combined Visuals Row: Staff Deployment + Inspections + Grievance Redressal */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            {/* Visual A: Horizontal Bar Chart: Deployment of E&S Staff */}
+            <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-primary" />
+                    E&S Staff Deployment
+                  </CardTitle>
+                  
+                </div>
+                <Badge variant="outline" className="text-xs">
+                  5 Roles Monitored
+                </Badge>
+              </CardHeader>
+              <CardContent className="p-2 px-3 flex flex-col gap-3.5">
+                {Object.entries(staff).map(([role, val], idx) => {
+                  const total = val.filled + val.vacant || 48
+                  const filledPct = Math.round((val.filled / total) * 100)
+                  const isAmber = val.vacant > 6
+                  return (
+                    <div key={idx} className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-muted/30 transition-colors">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium text-foreground">{role}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-muted-foreground font-mono">
+                            {val.filled} Filled • <strong className={isAmber ? 'text-amber-600' : 'text-foreground'}>{val.vacant} Vacant</strong>
+                          </span>
+                          <Badge
+                            className={`text-[10px] font-mono ${
+                              isAmber
+                                ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30'
+                                : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
+                            }`}
+                          >
+                            {isAmber ? 'Attention (Vacant > 6)' : 'Compliant'}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted/50 rounded-full h-2.5 overflow-hidden flex">
+                        <div style={{ width: `${filledPct}%` }} className="bg-emerald-500 h-full" />
+                        <div style={{ width: `${100 - filledPct}%` }} className={isAmber ? 'bg-amber-500' : 'bg-muted-foreground/30'} />
+                      </div>
+                    </div>
+                  )
+                })}
+              </CardContent>
+            </Card>
+
+            
+
             {/* Visual B: Grouped Bar Chart: Monthly Site Inspections by PMC */}
             <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <Building className="w-4 h-4 text-primary" />
-                    Monthly Site Inspections by PMC Managers (6 Months)
+                    Monthly Inspections
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Visits conducted by PMC Environmental, Social & OHS Managers across all packages
-                  </p>
+                  
                 </div>
                 <Badge variant="outline" className="text-xs">
                   6-Month Velocity
                 </Badge>
               </CardHeader>
-              <CardContent className="p-4 flex flex-col justify-between">
+              <CardContent className="p-2 px-3 flex flex-col justify-between">
                 <div className="grid grid-cols-6 gap-3 h-44 items-end pb-3 border-b">
                   {pmcVisitsTrend.map((p) => (
                     <div key={p.month} className="flex flex-col items-center gap-1.5 h-full justify-end">
@@ -1541,15 +1522,13 @@ export function SocialTab({
 
             {/* Visual D: Grouped Bar Chart: Grievance Redressal Committee (GRC) */}
             <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <HeartHandshake className="w-4 h-4 text-indigo-500" />
-                    Grievance Redressal Committee (GRC Complaints)
+                    GRC Complaints
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Received vs Resolved over 6 months. Cumulative Pending KPI (Rule 6: Pending &gt; 4 triggers Attention flag).
-                  </p>
+                  
                 </div>
                 <Badge
                   className={`text-xs font-mono ${
@@ -1561,7 +1540,7 @@ export function SocialTab({
                   Pending: {grcTrend[grcTrend.length - 1]?.cumulative_pending}
                 </Badge>
               </CardHeader>
-              <CardContent className="p-4 flex flex-col justify-between">
+              <CardContent className="p-2 px-3 flex flex-col justify-between">
                 <div className="grid grid-cols-6 gap-3 h-44 items-end pb-3 border-b">
                   {grcTrend.map((g) => {
                     const isHigh = g.cumulative_pending > 4
@@ -1614,7 +1593,7 @@ export function SocialTab({
           {/* Visual A: KPI Strip: Workforce Indicators */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Total Workforce</span>
                 <div className="text-xl font-black text-foreground mt-0.5">{skillKpis.total_workers.toLocaleString()}</div>
                 <span className="text-[10px] text-muted-foreground">Active on site</span>
@@ -1622,7 +1601,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Local Workforce %</span>
                 <div className="text-xl font-black text-primary mt-0.5">{skillKpis.local_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Local / Total) * 100</span>
@@ -1630,7 +1609,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Female Workforce %</span>
                 <div className="text-xl font-black text-indigo-600 mt-0.5">{skillKpis.female_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Female / Total) * 100</span>
@@ -1638,7 +1617,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trained %</span>
                 <div className="text-xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Trained / Local) * 100</span>
@@ -1646,7 +1625,7 @@ export function SocialTab({
             </Card>
 
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardContent className="p-3">
+              <CardContent className="p-2 px-3">
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trained & Employed %</span>
                 <div className="text-xl font-black text-emerald-600 mt-0.5">{skillKpis.trained_employed_pct}%</div>
                 <span className="text-[10px] text-muted-foreground">Formula: (Employed / Trained) * 100</span>
@@ -1654,17 +1633,15 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Who is employed (3 Donut Cards) */}
+          {/* Employment (3 Donut Cards) */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-            <CardHeader className="p-4 pb-1">
+            <CardHeader className="py-1 px-2">
               <CardTitle className="text-sm font-bold text-foreground">
                 Who is employed
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Latest report per project.
-              </p>
+              
             </CardHeader>
-            <CardContent className="p-4 pt-1">
+            <CardContent className="p-2 px-3">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {whoIsEmployedData.map((card) => {
                   const r = 38;
@@ -1756,11 +1733,11 @@ export function SocialTab({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Local workers by skill level */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-4">
+              <CardContent className="p-2 px-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div>
                     <h3 className="text-sm font-bold text-foreground">Local workers by skill level</h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
+                    
                   </div>
                   {/* Legend */}
                   <div className="flex items-center gap-3 text-xs text-foreground font-medium">
@@ -1845,10 +1822,10 @@ export function SocialTab({
 
             {/* Card 2: Local workers by trade */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-4">
+              <CardContent className="p-2 px-3">
                 <div>
                   <h3 className="text-sm font-bold text-foreground">Local workers by trade</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
+                  
                 </div>
 
                 <div className="space-y-1.5 mt-3">
@@ -1881,19 +1858,17 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Row 3: Local workers by project + Workers employed by project */}
+          {/* Row 3: Local Workers + Workers by Project */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Local workers by project */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Local workers by project
                 </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Select a project to focus on it.
-                </p>
+                
               </CardHeader>
-              <CardContent className="p-4 pt-1">
+              <CardContent className="p-2 px-3">
                 <div className="space-y-1">
                   {localWorkersByProject.map((item) => {
                     const maxVal = 102;
@@ -1934,15 +1909,13 @@ export function SocialTab({
 
             {/* Card 2: Workers employed by project */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardHeader className="p-4 pb-1">
+              <CardHeader className="py-1 px-2">
                 <CardTitle className="text-sm font-bold text-foreground">
                   Workers employed by project
                 </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Select a project to focus on it.
-                </p>
+                
               </CardHeader>
-              <CardContent className="p-4 pt-1">
+              <CardContent className="p-2 px-3">
                 <div className="space-y-1">
                   {workersEmployedByProject.map((item) => {
                     const maxVal = 1141;
@@ -1985,21 +1958,19 @@ export function SocialTab({
 
             {/* Visual C: Line Chart: Total Workforce Trend (6 Months) */}
             <Card className="border shadow-xs flex flex-col justify-between rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-primary" />
-                    Total Workforce Headcount Trend (6-Month Labour Influx)
+                    Workforce Trend
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Monitors labour mobilization trajectory and project ramp-up across Amaravati
-                  </p>
+                  
                 </div>
                 <Badge variant="outline" className="text-xs">
                   Peak: 18,450
                 </Badge>
               </CardHeader>
-              <CardContent className="p-4 flex flex-col justify-between flex-1">
+              <CardContent className="p-2 px-3 flex flex-col justify-between flex-1">
                 <div className="grid grid-cols-6 gap-3 h-44 items-end pb-3 border-b">
                   {workforceTrend.map((w) => {
                     const heightPct = Math.round((w.total / 20000) * 100)
@@ -2033,21 +2004,19 @@ export function SocialTab({
 
           {/* Visual D: Horizontal Bar Chart: Skill-Set-Wise Local Workers Employed (All 26 Skill Sets) */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                   <GraduationCap className="w-4 h-4 text-primary" />
-                  All 26 Official Statutory Skill Sets — Local Workers Employed
+                  Skill Sets
                 </CardTitle>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Evaluates workforce breakdown across all 26 trade skill sets (Male + Female summed, sorted highest first)
-                </p>
+                
               </div>
               <Badge variant="secondary" className="text-xs font-mono">
                 26 Official Trades
               </Badge>
             </CardHeader>
-            <CardContent className="p-4">
+            <CardContent className="p-2 px-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2.5 max-h-[480px] overflow-y-auto pr-2">
                 {sortedSkillTrades.map(([trade, count], idx) => {
                   const pct = Math.round((count / maxSkillTradeCount) * 100)
@@ -2080,11 +2049,11 @@ export function SocialTab({
       {/* ========================================================================= */}
       {subTab === 'labour' && (
         <div className="flex flex-col gap-3">
-          {/* Top Row: Licence validity + Licence documents uploaded */}
+          {/* Top Row: Licence validity + Licence Documents */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Card 1: Licence validity (as of today) */}
+            {/* Card 1: Licence Validity */}
             <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20">
                 <div className="flex items-start gap-4">
                   {/* Overall Donut */}
                   <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
@@ -2175,7 +2144,7 @@ export function SocialTab({
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4">
+              <CardContent className="p-2 px-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {licenceValidityDetailed.map((item) => {
                     const isGreen = item.pct >= 80;
@@ -2234,7 +2203,7 @@ export function SocialTab({
 
             {/* Card 2: Licence documents uploaded */}
             <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-3 border-b bg-muted/20">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20">
                 <div className="flex items-start gap-4">
                   {/* Overall Donut */}
                   <div className="w-16 h-16 relative flex items-center justify-center shrink-0">
@@ -2281,7 +2250,7 @@ export function SocialTab({
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4">
+              <CardContent className="p-2 px-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {licenceDocumentsDetailed.map((item) => {
                     const isGreen = item.pct >= 80;
@@ -2346,17 +2315,15 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Workforce profile (5 Donut Cards) */}
+          {/* Workforce Profile (5 Donut Cards) */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-            <CardHeader className="p-4 pb-1">
+            <CardHeader className="py-1 px-2">
               <CardTitle className="text-sm font-bold text-foreground">
                 Workforce profile
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Latest report per project.
-              </p>
+              
             </CardHeader>
-            <CardContent className="p-4 pt-1">
+            <CardContent className="p-2 px-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
                 {workforceProfileData.map((card) => {
                   const r = 38;
@@ -2448,21 +2415,19 @@ export function SocialTab({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Horizontal Bar Chart: Basic Facilities at Labour Camp */}
             <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <Home className="w-4 h-4 text-primary" />
-                    Basic Statutory Facilities at Labour Camps (9 Facilities)
+                    Camp Facilities
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Color Logic: Red if No &gt; 3, Amber if No &gt; 0, Green otherwise
-                  </p>
+                  
                 </div>
                 <Badge variant="outline" className="text-xs">
                   9 Statutory Amenities
                 </Badge>
               </CardHeader>
-              <CardContent className="p-4 flex flex-col gap-3">
+              <CardContent className="p-2 px-3 flex flex-col gap-3">
                 {Object.entries(campFacilities).map(([facility, data], idx) => {
                   const isRed = data.no > 3
                   const isAmber = data.no > 0 && !isRed
@@ -2499,21 +2464,19 @@ export function SocialTab({
 
             {/* Visual E: Horizontal Bar Chart: Registers & Records Submitted (8 Statutory Registers) */}
             <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-              <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <FileCheck className="w-4 h-4 text-primary" />
-                    Statutory Labour Registers Submitted (8 Registers)
+                    Labour Registers
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Form XII, Form A, Wages, Attendance, Overtime, Loan, Wage Slips, Worker Registrations
-                  </p>
+                  
                 </div>
                 <Badge variant="outline" className="text-xs">
                   8 Registers
                 </Badge>
               </CardHeader>
-              <CardContent className="p-4 flex flex-col gap-2.5">
+              <CardContent className="p-2 px-3 flex flex-col gap-2.5">
                 {Object.entries(statutoryRegisters).map(([reg, val], idx) => {
                   const total = val.yes + val.missing || 48
                   const pct = Math.round((val.yes / total) * 100)
@@ -2545,14 +2508,14 @@ export function SocialTab({
       {/* ========================================================================= */}
       {subTab === 'gender' && (
         <div className="flex flex-col gap-3">
-          {/* Staffing and Code of Conduct */}
+          {/* Staffing & Conduct */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-            <CardHeader className="p-4 pb-1 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Staffing and Code of Conduct
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 pt-3">
+            <CardContent className="p-2 px-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
                 {staffingCocData.map((item, idx) => {
                   const r = 38;
@@ -2610,7 +2573,7 @@ export function SocialTab({
 
           {/* Code of Conduct signing by month */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-            <CardContent className="p-4">
+            <CardContent className="p-2 px-3">
               <div>
                 <h3 className="text-sm font-bold text-foreground">Code of Conduct signing by month</h3>
               </div>
@@ -2693,15 +2656,13 @@ export function SocialTab({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Visual B: Table: SEA/SH Complaint Status */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-2 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <HeartHandshake className="w-4 h-4 text-primary" />
-                    SEA / SH Complaint Redressal Status (Confidential Aggregate)
+                    SEA/SH Redressal
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Sexual Exploitation, Abuse & Sexual Harassment. Privacy-conscious aggregate (no PII exposed). Rule 7: Pending &gt; 0 triggers Attention flag.
-                  </p>
+                  
                 </div>
                 <Badge variant="outline" className="text-xs font-mono">
                   Zero Pending
@@ -2748,15 +2709,13 @@ export function SocialTab({
 
             {/* Visual D: Table: Children's Data in Labour Camp */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-2 border-b bg-muted/20 flex flex-row items-center justify-between">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                     <Users className="w-4 h-4 text-primary" />
-                    Children in Labour Camps (Age & Gender Breakdown)
+                    Children in Camps
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Tracks infant & adolescent children residing in project camps for crèche & education coverage
-                  </p>
+                  
                 </div>
                 <Badge variant="outline" className="text-xs font-mono">
                   66 Total Camp Children
@@ -2791,11 +2750,11 @@ export function SocialTab({
             </Card>
           </div>
 
-          {/* Middle Row: Gender-specific facilities + IEC material displayed */}
+          {/* Middle Row: Gender-specific facilities + IEC Material */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {/* Card 1: Gender-specific facilities at labour camps */}
+            {/* Card 1: Gender Facilities */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-2.5 border-b bg-muted/20">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20">
                 <div className="flex items-start gap-3">
                   {/* Overall Donut */}
                   <div className="w-14 h-14 relative flex items-center justify-center shrink-0">
@@ -2842,7 +2801,7 @@ export function SocialTab({
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-3">
+              <CardContent className="p-2 px-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {genderFacilitiesDetailed.map((item) => {
                     const isGreen = item.pct >= 80;
@@ -2901,7 +2860,7 @@ export function SocialTab({
 
             {/* Card 2: IEC material displayed */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-              <CardHeader className="p-4 pb-2.5 border-b bg-muted/20">
+              <CardHeader className="py-1 px-2 border-b bg-muted/20">
                 <div className="flex items-start gap-3">
                   {/* Overall Donut */}
                   <div className="w-14 h-14 relative flex items-center justify-center shrink-0">
@@ -2948,7 +2907,7 @@ export function SocialTab({
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-3">
+              <CardContent className="p-2 px-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {iecMaterialDetailed.map((item) => {
                     const isGreen = item.pct >= 80;
@@ -3008,10 +2967,10 @@ export function SocialTab({
 
           {/* Capacity building participants (Full Width) */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-            <CardContent className="p-4">
+            <CardContent className="p-2 px-3">
               <div>
                 <h3 className="text-sm font-bold text-foreground">Capacity building participants</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">Sum of monthly reports.</p>
+                
               </div>
 
               {/* Legend */}
@@ -3072,10 +3031,10 @@ export function SocialTab({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {/* Card 1: Women newly employed, by skill */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-4">
+              <CardContent className="p-2 px-3">
                 <div>
                   <h3 className="text-sm font-bold text-foreground">Women newly employed, by skill</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">Sum of monthly reports.</p>
+                  
                 </div>
 
                 {/* Legend */}
@@ -3158,10 +3117,10 @@ export function SocialTab({
 
             {/* Card 2: Children in labour camps, by age */}
             <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 bg-card">
-              <CardContent className="p-4">
+              <CardContent className="p-2 px-3">
                 <div>
                   <h3 className="text-sm font-bold text-foreground">Children in labour camps, by age</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">Latest report per project.</p>
+                  
                 </div>
 
                 {/* Legend */}
@@ -3240,12 +3199,6 @@ export function SocialTab({
           </div>
         </div>
       )}
-    
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <div className="lg:col-span-1">
-          <AttentionCard attentionItems={attentionItems} month={month} domain="Social" />
-        </div>
-      </div>
 </div>
   )
 }

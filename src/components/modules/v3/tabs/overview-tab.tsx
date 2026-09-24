@@ -57,15 +57,13 @@ export function OverviewTab({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Left 2 Cols: Portfolio Compliance Heatmap Matrix */}
         <Card className="lg:col-span-2 border shadow-xs rounded-2xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <CardTitle className="text-sm font-bold tracking-tight text-foreground flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-primary" />
-                Portfolio E&S Compliance Heatmap ({projects.length} Active Packages)
+                Compliance Heatmap
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Evaluated under Global Compliance Logic Model for {month}. Applicable Items = Total - NA.
-              </p>
+              
             </div>
             {/* Global Logic Model Status Thresholds Legend */}
             <div className="flex items-center flex-wrap gap-2 text-[10px]">
@@ -239,16 +237,14 @@ export function OverviewTab({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* Reporting Rates by Month */}
         <Card className="border shadow-xs md:col-span-2 rounded-2xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-primary" />
-              Monthly Compliance Velocity (Feb 2026 – Sep 2026)
+              Monthly Velocity
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Form submission volume and portfolio reporting health over time
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4">
+          <CardContent className="p-2 px-3">
             <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
               {[
                 { m: 'Feb 2026', count: 31, rate: '43.1%' },
@@ -279,14 +275,12 @@ export function OverviewTab({
 
         {/* 22 Awaiting Onboarding / Submissions */}
         <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <AlertCircle className="w-4 h-4 text-amber-500" />
-              Awaiting Initial Submissions ({defaulterProjects.length})
+              Awaiting Submissions
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Packages awaiting initial E&S monthly submissions
-            </p>
+            
           </CardHeader>
           <CardContent className="p-0">
             <div className="max-h-[160px] overflow-y-auto divide-y text-xs">

@@ -253,16 +253,13 @@ export function EvmTab({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Visual A: Stacked Bar Table: Statutory Compliance Tracking */}
         <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                 <FileCheck className="w-4 h-4 text-primary" />
-                Statutory Compliance Tracking (Clearances & Permissions)
+                Compliance Tracking
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Evaluation across all projects | "Applied" is never counted as
-                compliant
-              </p>
+              
             </div>
             <div className="flex items-center gap-2 text-[10px]">
               <span className="flex items-center gap-1">
@@ -381,15 +378,12 @@ export function EvmTab({
 
         {/* Visual C: Table: Air Quality Monitoring */}
         <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Wind className="w-4 h-4 text-primary" />
-              Air Quality Monitoring (Latest Station Results)
+              Air Quality
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Standards: PM10 &gt; 100, PM2.5 &gt; 60, SO2 &gt; 80, NOx &gt; 80,
-              CO &gt; 2.0 | Alert: Red, Bold, and " ▲"
-            </p>
+            
           </CardHeader>
           <CardContent className="p-0">
             <div className="max-h-[280px] overflow-y-auto">
@@ -434,16 +428,14 @@ export function EvmTab({
 
         {/* Noise: Loudest Projects */}
         <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 flex flex-col">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Volume2 className="w-4 h-4 text-primary" />
-              Noise: loudest projects
+              Noise Levels
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Highest equivalent continuous sound level (Leq) recorded by each project.
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4 flex-1 flex flex-col">
+          <CardContent className="p-2 px-3 flex-1 flex flex-col">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex-1 bg-slate-100 dark:bg-slate-900 rounded-xl p-3">
                 <p className="text-xs text-muted-foreground mb-1">Average Leq</p>
@@ -496,14 +488,14 @@ export function EvmTab({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-          {/* Card 1: How excavated muck was used */}
+          {/* Card 1: Muck Usage */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 How excavated muck was used
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 flex flex-col items-center gap-6 h-full justify-center">
+            <CardContent className="p-2 px-3 flex flex-col items-center gap-6 h-full justify-center">
               <div className="w-36 h-36 relative">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -544,14 +536,14 @@ export function EvmTab({
             </CardContent>
           </Card>
 
-          {/* Card 2: Muck and topsoil volumes */}
+          {/* Card 2: Muck & Topsoil */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Muck and topsoil volumes
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 flex flex-col justify-center h-full gap-4">
+            <CardContent className="p-2 px-3 flex flex-col justify-center h-full gap-4">
               {muckVolumes.map((item, idx) => {
                 const pct = (item.value / item.max) * 100;
                 return (
@@ -567,9 +559,9 @@ export function EvmTab({
             </CardContent>
           </Card>
 
-          {/* Participants by month */}
+          {/* Participants (Month) */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Participants by month
               </CardTitle>
@@ -582,7 +574,7 @@ export function EvmTab({
                 </span>
               </div>
             </CardHeader>
-            <CardContent className="p-4 h-[300px]">
+            <CardContent className="p-2 px-3 h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={trainingByMonth} margin={{ top: 25, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
@@ -598,14 +590,14 @@ export function EvmTab({
             </CardContent>
           </Card>
 
-          {/* Participants by gender */}
+          {/* Participants (Gender) */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Participants by gender
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 flex flex-col items-center gap-6 h-full justify-center min-h-[300px]">
+            <CardContent className="p-2 px-3 flex flex-col items-center gap-6 h-full justify-center min-h-[300px]">
               <div className="w-40 h-40 relative">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -655,16 +647,13 @@ export function EvmTab({
         {/* Middle Split: Visual B (SVG Geographic Map) + Station Inspection Side-Panel */}
 
       <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 w-full lg:w-[65%] h-full">
-        <CardHeader className="px-4 py-1.5 border-b bg-muted/20 flex flex-row items-center justify-between">
+        <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <MapPin className="w-4 h-4 text-primary" />
               Geographic Map
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Interactive plots for Air (AAQ), Noise (N), and Soil (S) stations.
-              Click any point to inspect exact parameters.
-            </p>
+            
           </div>
           <div className="flex items-center gap-3 text-xs">
             <span className="flex items-center gap-1">
@@ -685,7 +674,7 @@ export function EvmTab({
             </span>
           </div>
         </CardHeader>
-        <CardContent className="p-2 flex flex-col lg:flex-row gap-3">
+        <CardContent className="p-2 px-3 flex flex-col lg:flex-row gap-3">
           {/* SVG Map Canvas */}
           <div className="flex-1 bg-slate-950/5 dark:bg-slate-900/40 rounded-xl border border-border/80 relative min-h-[600px] p-4 flex items-center justify-center overflow-hidden">
             {/* Background Map Contours (Amaravati River & Zone Grid) */}
@@ -844,15 +833,13 @@ export function EvmTab({
         </CardContent>
       </Card>
         
-        {/* Card 3: Solid waste: generated vs disposed */}
+        {/* Card 3: Solid Waste */}
         <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40 w-full lg:w-[35%] h-full">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Solid waste: generated vs disposed
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Units differ by waste type, so each row has its own scale.
-            </p>
+            
             <div className="flex items-center gap-4 mt-3 text-xs">
               <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
                 <span className="w-2.5 h-2.5 rounded-sm bg-[#0d5c50]" /> Generated
@@ -862,7 +849,7 @@ export function EvmTab({
               </span>
             </div>
           </CardHeader>
-          <CardContent className="p-4">
+          <CardContent className="p-2 px-3">
             <div className="max-h-[380px] overflow-y-auto pr-4 flex flex-col gap-4">
               {wasteList.map((w, idx) => {
                 const maxVal = Math.max(w.generated, w.disposed, 1);

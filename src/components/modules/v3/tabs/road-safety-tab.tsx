@@ -27,7 +27,6 @@ import {
   Tooltip as RechartsTooltip,
   LabelList
 } from 'recharts'
-import { AttentionCard } from '../attention-card';
 import { ProjectData, DomainAggregatesMonth, AttentionItem } from '../v3-types'
 
 interface RoadSafetyTabProps {
@@ -112,7 +111,7 @@ export function RoadSafetyTab({
       {/* Road Safety Top KPI Stat Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Compliance Rate</span>
               <Car className="w-3.5 h-3.5 text-blue-500 shrink-0" />
@@ -123,7 +122,7 @@ export function RoadSafetyTab({
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Passed Checks</span>
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
@@ -134,7 +133,7 @@ export function RoadSafetyTab({
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Identified Gaps</span>
               <AlertTriangle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
@@ -145,7 +144,7 @@ export function RoadSafetyTab({
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Active Packages</span>
               <TrendingUp className="w-3.5 h-3.5 text-primary shrink-0" />
@@ -156,7 +155,7 @@ export function RoadSafetyTab({
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Exceptions Flagged</span>
               <ShieldAlert className="w-3.5 h-3.5 text-amber-500 shrink-0" />
@@ -167,7 +166,7 @@ export function RoadSafetyTab({
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Report Completeness</span>
               <FileText className="w-3.5 h-3.5 text-purple-500 shrink-0" />
@@ -181,17 +180,15 @@ export function RoadSafetyTab({
       
       {/* Combined Requested Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
-{/* Card 1: Checklist compliance by month */}
+{/* Card 1: Monthly Compliance */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Checklist compliance by month
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Share of Yes among all checklist answers in each month's reports.
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4 h-[340px]">
+          <CardContent className="p-2 px-3 h-[340px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={complianceByMonthData} margin={{ top: 25, right: 15, left: -20, bottom: 0 }}>
                 <defs>
@@ -228,18 +225,16 @@ export function RoadSafetyTab({
           </CardContent>
         </Card>
 
-{/* Visual A: Doughnut Chart: Checklist Response Mix */}
+{/* Visual A: Doughnut Chart: Response Mix */}
         <Card className="border shadow-xs flex flex-col justify-between rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Car className="w-4 h-4 text-primary" />
               Checklist Response Mix
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Raw response distribution across 15 statutory IRC SP:55-2014 items
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4 flex flex-col gap-4">
+          <CardContent className="p-2 px-3 flex flex-col gap-4">
             <div className="flex items-center justify-center py-2">
               {/* SVG Ring Chart */}
               <div className="relative w-40 h-40 flex items-center justify-center">
@@ -316,21 +311,19 @@ export function RoadSafetyTab({
 
 {/* Visual C: Monthly Road Safety Compliance Trend (6 Months) */}
         <Card className="border shadow-xs flex flex-col justify-between rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-primary" />
-                Monthly Road Safety Compliance Trend (6-Month Velocity)
+                Compliance Trend
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Formula: (Total Yes / Total Applicable Items) * 100 | Target Reference: 90%
-              </p>
+              
             </div>
             <Badge variant="outline" className="text-xs font-mono">
               Target: ≥ 90%
             </Badge>
           </CardHeader>
-          <CardContent className="p-4 flex flex-col justify-between flex-1">
+          <CardContent className="p-2 px-3 flex flex-col justify-between flex-1">
             <div className="grid grid-cols-6 gap-2 h-44 items-end pb-3 pt-6 border-b">
               {trendData.map((t) => {
                 const heightPct = Math.max(10, Math.min(100, t.rate))
@@ -379,17 +372,15 @@ export function RoadSafetyTab({
       
       {/* Combined Requested Row 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-3">
-{/* Card 2: Projects with the lowest checklist compliance */}
+{/* Card 2: Lowest Compliance */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Projects with the lowest checklist compliance
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Share of Yes in each project's latest answers. Select a project to see its gaps.
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
+          <CardContent className="p-2 px-3 flex-1 flex flex-col justify-between gap-1.5">
             {lowestComplianceProjects.map((p, idx) => {
               return (
                 <div
@@ -429,21 +420,19 @@ export function RoadSafetyTab({
 
 {/* Visual B: Horizontal Bar Chart: Checklist-Item-Wise Compliance (Sorted Worst-First) */}
       <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-        <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+        <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-500" />
-              15 Statutory Checklist Items — Sorted Worst-First (Lowest Compliance Top)
+              Checklist Items
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Evaluates individual checklist item compliance across submitting projects during {month}
-            </p>
+            
           </div>
           <Badge variant="secondary" className="text-xs">
             15 IRC SP:55-2014 Standards
           </Badge>
         </CardHeader>
-        <CardContent className="p-4">
+        <CardContent className="p-2 px-3">
           <div className="flex flex-col gap-3.5 max-h-[460px] overflow-y-auto pr-2">
             {sortedItems.map((itm, idx) => {
               const isLow = itm.compliance_pct < 85
@@ -484,15 +473,13 @@ export function RoadSafetyTab({
 
 {/* Visual D: Exception Table: Projects with "No" Responses */}
       <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-        <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+        <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <ShieldAlert className="w-4 h-4 text-rose-500" />
-              Exception List: Projects with "No" Responses ({exceptionProjects.length} Projects)
+              Exception List
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Filtered for projects with verified non-compliances. No count highlighted in red if &gt; 2.
-            </p>
+            
           </div>
           <Badge variant="destructive" className="text-xs">
             Rectification Required
@@ -576,11 +563,6 @@ export function RoadSafetyTab({
         </CardContent>
       </Card>
     
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <div className="lg:col-span-1">
-          <AttentionCard attentionItems={attentionItems} month={month} domain="Road Safety" />
-        </div>
-      </div>
 </div>
   )
 }

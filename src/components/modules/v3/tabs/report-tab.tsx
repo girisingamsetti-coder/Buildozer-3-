@@ -268,7 +268,7 @@ function StatCard({ formType, entries }: { formType: FormType; entries: FormEntr
 
   return (
     <Card className="flex-1 min-w-0 border shadow-sm">
-      <CardContent className="p-3 flex flex-col gap-2">
+      <CardContent className="p-2 px-3 flex flex-col gap-2">
         <p className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate text-center">{formType}</p>
         <div className="relative flex items-center justify-center">
           <ResponsiveContainer width="100%" height={120}>

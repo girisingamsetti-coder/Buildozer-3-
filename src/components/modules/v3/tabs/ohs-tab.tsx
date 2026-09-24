@@ -161,7 +161,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
     { name: 'Permit to work-Quarterly', count: 59 },
   ]
 
-  // Visual E: 6 OHS Policies & Plans Availability
+  // Visual E: 6 OHS Policies
   const policies = ohsAgg?.policies || {
     'OHS Policy Displayed': { yes: 44, no: 2 },
     'Approved OHS Plan Available': { yes: 42, no: 4 },
@@ -188,7 +188,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
       {/* OHS Top KPI Stat Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">OHS Compliance</span>
               <HardHat className="w-3.5 h-3.5 text-amber-500 shrink-0" />
@@ -199,7 +199,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Trainings</span>
               <GraduationCap className="w-3.5 h-3.5 text-blue-500 shrink-0" />
@@ -210,7 +210,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Audits Conducted</span>
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
@@ -221,7 +221,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Policy Availability</span>
               <FileCheck className="w-3.5 h-3.5 text-teal-600 shrink-0" />
@@ -232,7 +232,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Fatalities / LTI</span>
               <AlertCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
@@ -243,7 +243,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         </Card>
 
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 hover:border-primary/40 transition-colors">
-          <CardContent className="p-3">
+          <CardContent className="p-2 px-3">
             <div className="flex items-center justify-between text-muted-foreground mb-1">
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider block">Near Misses</span>
               <Activity className="w-3.5 h-3.5 text-purple-500 shrink-0" />
@@ -259,16 +259,14 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
 {/* Visual E: Horizontal Bar Chart: OHS Policies & Plans Availability */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <FileCheck className="w-4 h-4 text-primary" />
               OHS Policies & Plans Availability
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Evaluation of 6 mandatory statutory plans across projects | Alert if No &gt; 3 (Red)
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4 flex flex-col gap-3">
+          <CardContent className="p-2 px-3 flex flex-col gap-3">
             {Object.entries(policies).map(([pname, pdata]) => {
               const total = pdata.yes + pdata.no || 46
               const yesPct = Math.round((pdata.yes / total) * 100)
@@ -306,17 +304,15 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </CardContent>
         </Card>
 
-{/* Card 1: Checklist compliance by month */}
+{/* Card 1: Monthly Compliance */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Checklist compliance by month
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Share of Yes among all checklist answers in each month's reports.
-              </p>
+              
             </CardHeader>
-            <CardContent className="p-4 h-[340px]">
+            <CardContent className="p-2 px-3 h-[340px]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={complianceTrendData} margin={{ top: 25, right: 15, left: -20, bottom: 0 }}>
                   <defs>
@@ -353,17 +349,15 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
             </CardContent>
           </Card>
 
-{/* Projects reporting the most incidents */}
+{/* Top Incidents */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Projects reporting the most incidents
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Select a project to focus on it.
-              </p>
+              
             </CardHeader>
-            <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5">
+            <CardContent className="p-2 px-3 flex-1 flex flex-col justify-between gap-1.5">
               {topIncidentProjects.map((p, idx) => {
                 const maxVal = 7;
                 const pct = (p.count / maxVal) * 100;
@@ -410,16 +404,14 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
 {/* Visual A: Horizontal Bar Chart: Compliance by OHS Requirement Group */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <HardHat className="w-4 h-4 text-primary" />
-              Compliance by Statutory OHS Requirement Group
+              Compliance by Group
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Formula: (Total Yes / Total Applicable in Group) * 100 | Green (&ge;90%), Amber (70-89%), Red (&lt;70%)
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4 flex flex-col gap-3 max-h-[280px] overflow-y-auto custom-scrollbar">
+          <CardContent className="p-2 px-3 flex flex-col gap-3 max-h-[280px] overflow-y-auto custom-scrollbar">
             {Object.entries(groups).map(([gname, gdata]) => {
               const color =
                 gdata.pct >= 90 ? 'bg-emerald-500' : gdata.pct >= 70 ? 'bg-amber-500' : 'bg-rose-500'
@@ -456,17 +448,15 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </CardContent>
         </Card>
 
-{/* Card 2: Projects with the lowest checklist compliance */}
+{/* Card 2: Lowest Compliance */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Projects with the lowest checklist compliance
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Share of Yes in each project's latest answers. Select a project to see its gaps.
-              </p>
+              
             </CardHeader>
-            <CardContent className="p-4 flex-1 flex flex-col justify-between gap-1.5 max-h-[280px] overflow-y-auto custom-scrollbar">
+            <CardContent className="p-2 px-3 flex-1 flex flex-col justify-between gap-1.5 max-h-[280px] overflow-y-auto custom-scrollbar">
               {lowestComplianceProjects.map((p, idx) => {
                 const isRed = p.pct < 40;
                 return (
@@ -505,17 +495,15 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
             </CardContent>
           </Card>
 
-{/* Card 3: Trainings conducted */}
+{/* Card 3: Trainings */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Trainings conducted
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Number of monthly reports that ticked each training.
-            </p>
+            
           </CardHeader>
-          <CardContent className="p-4 flex flex-col gap-2 max-h-[280px] overflow-y-auto custom-scrollbar">
+          <CardContent className="p-2 px-3 flex flex-col gap-2 max-h-[280px] overflow-y-auto custom-scrollbar">
             {trainingsConductedData.map((t, idx) => (
               <div key={idx} className="flex items-center gap-4 text-xs py-1 px-1.5 hover:bg-muted/30 rounded-md transition-colors">
                 <span className="w-56 sm:w-72 md:w-80 font-medium text-foreground truncate shrink-0" title={t.name}>
@@ -555,17 +543,15 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
 
       {/* Middle Split: Visual B (OHS Audits Table) + Visual C (Trainings per Frequency Table) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {/* Visual B: Table: OHS Audits Conducted This Month */}
+        {/* Visual B: Table: OHS Audits */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-primary" />
                 OHS Audits Conducted This Month
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                4 mandatory audits | "No" count turns Red if &gt; 4
-              </p>
+              
             </div>
             <Badge variant="outline" className="text-xs font-mono">
               Statutory Periodic Audits
@@ -614,15 +600,13 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
 
         {/* Visual C: Table: Trainings Conducted (per frequency) */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                 <GraduationCap className="w-4 h-4 text-primary" />
-                Trainings Conducted (per Frequency)
+                Trainings (Frequency)
               </CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                10 training types | Aggregated sessions and worker attendance
-              </p>
+              
             </div>
             <Badge variant="outline" className="text-xs font-mono">
               10 Training Modules
@@ -676,9 +660,9 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
         
       {/* Combined Requested Row 3 */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
-{/* Incidents reported by month Chart Card */}
+{/* Monthly Incidents Chart Card */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-          <CardHeader className="p-4 pb-2 border-b bg-muted/20">
+          <CardHeader className="py-1 px-2 border-b bg-muted/20">
             <CardTitle className="text-sm font-bold text-foreground">
               Incidents reported by month
             </CardTitle>
@@ -697,7 +681,7 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
               </span>
             </div>
           </CardHeader>
-          <CardContent className="p-4 h-[300px]">
+          <CardContent className="p-2 px-3 h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={incidentsReportedByMonth} margin={{ top: 25, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
@@ -723,14 +707,14 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
           </CardContent>
         </Card>
 
-{/* Incident types */}
+{/* Incident Types */}
           <Card className="border shadow-xs rounded-xl shadow-sm border-border/40 flex flex-col">
-            <CardHeader className="p-4 border-b bg-muted/20">
+            <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
                 Incident types
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 flex-1 flex flex-col sm:flex-row items-center justify-around gap-6">
+            <CardContent className="p-2 px-3 flex-1 flex flex-col sm:flex-row items-center justify-around gap-6">
               <div className="w-52 h-52 relative shrink-0">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -775,15 +759,13 @@ export function OhsTab({ projects, month, domainAggregates, onSelectProject,
 
 {/* Visual D: Table: Near Miss / Incident Report */}
         <Card className="border shadow-xs rounded-xl shadow-sm border-border/40">
-        <CardHeader className="p-4 border-b bg-muted/20 flex flex-row items-center justify-between">
+        <CardHeader className="py-1 px-2 border-b bg-muted/20 flex flex-row items-center justify-between">
           <div>
             <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
               <Activity className="w-4 h-4 text-rose-500" />
-              Near Miss / Incident Report Log ({incidents.length} Incidents)
+              Incident Log
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Incident classification, CAPA open/closed tracking, and root cause analysis
-            </p>
+            
           </div>
           <Badge variant="destructive" className="text-xs">
             Zero Harm Policy
