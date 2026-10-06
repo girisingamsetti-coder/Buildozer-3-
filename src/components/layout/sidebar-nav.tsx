@@ -61,7 +61,6 @@ const navItems: { id: PageId; label: string; icon: typeof LayoutDashboard }[] = 
   { id: 'dashboard', label: 'Overview', icon: LayoutDashboard },
   { id: 'locations', label: 'Locations', icon: MapPin },
   { id: 'workers', label: 'Workforce', icon: Users },
-  { id: 'es-forms', label: 'E&S Forms', icon: FileBarChart },
   { id: 'v3', label: 'E&S', icon: FileBarChart },
   { id: 'incidents', label: 'Incidents', icon: AlertTriangle },
   { id: 'training', label: 'Training', icon: GraduationCap },
