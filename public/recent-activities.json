@@ -1,605 +1,905 @@
 {
   "items": [
     {
-      "id": "act-319",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N3A and N3B Road",
-      "timestamp": "2026-09-18T04:38:39.353Z",
-      "photo": null,
+      "id": "act-ent-101",
+      "kind": "entry",
+      "title": "Venkatesh Rao (Steel Fixer)",
+      "subtitle": "Contractor: L&T \u2022 Trade: Steel Fixer \u2022 Badge: AP-BLD-8492",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-06T15:06:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "L&T Construction"
       }
     },
     {
-      "id": "act-954",
-      "kind": "new-entry",
-      "title": "OHS -  MONITORING",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N5 Road",
-      "timestamp": "2026-09-17T09:05:47.523Z",
+      "id": "act-ent-102",
+      "kind": "entry",
+      "title": "Ramesh Kumar (Mason Grade-I)",
+      "subtitle": "Contractor: NCC \u2022 Trade: Masonry \u2022 Badge: AP-BLD-8493",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-06T14:43:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "NCC Urban"
       }
     },
     {
-      "id": "act-2297",
+      "id": "act-ent-103",
+      "kind": "entry",
+      "title": "Anil Sharma (Scaffolder)",
+      "subtitle": "Contractor: Shapoorji \u2022 Trade: Scaffolding \u2022 Badge: AP-BLD-8494",
+      "location": "Govt Complex Block-A",
+      "timestamp": "2026-10-06T14:11:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-ent-104",
+      "kind": "entry",
+      "title": "Mohd. Irfan (Electrician)",
+      "subtitle": "Contractor: MEIL \u2022 Trade: Industrial Electrical \u2022 Badge: AP-BLD-8495",
+      "location": "N3A Road",
+      "timestamp": "2026-10-06T13:30:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-ent-105",
+      "kind": "entry",
+      "title": "Pradeep Nayak (Welder 6G)",
+      "subtitle": "Contractor: BSR \u2022 Trade: High Pressure Welding \u2022 Badge: AP-BLD-8496",
+      "location": "Zone-10 Camp",
+      "timestamp": "2026-10-06T12:40:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-ent-106",
+      "kind": "entry",
+      "title": "K. Satyanarayana (Rigger)",
+      "subtitle": "Contractor: AVR \u2022 Trade: Heavy Lifting Rigger \u2022 Badge: AP-BLD-8497",
+      "location": "N5 Expressway",
+      "timestamp": "2026-10-06T11:41:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-ent-107",
+      "kind": "entry",
+      "title": "Suresh Goud (Carpenter)",
+      "subtitle": "Contractor: L&T \u2022 Trade: Shuttering Carpentry \u2022 Badge: AP-BLD-8498",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-06T10:33:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-ent-108",
+      "kind": "entry",
+      "title": "Dinesh Meena (Bar Bender)",
+      "subtitle": "Contractor: GMR \u2022 Trade: Reinforcement \u2022 Badge: AP-BLD-8499",
+      "location": "Amaravati Zone-4",
+      "timestamp": "2026-10-06T09:16:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "GMR Projects"
+      }
+    },
+    {
+      "id": "act-ent-109",
+      "kind": "entry",
+      "title": "Subhash Chandra (Heavy Driver)",
+      "subtitle": "Contractor: NCC \u2022 Trade: Tipper Driver \u2022 Badge: AP-BLD-8500",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-06T08:53:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-ent-110",
+      "kind": "entry",
+      "title": "Bikramjeet Singh (Crane Operator)",
+      "subtitle": "Contractor: MEIL \u2022 Trade: 50T Crane Ops \u2022 Badge: AP-BLD-8501",
+      "location": "Flyover Pier P-14",
+      "timestamp": "2026-10-06T08:21:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-ent-111",
+      "kind": "entry",
+      "title": "G. Mahesh (Site Surveyor)",
+      "subtitle": "Contractor: L&T \u2022 Trade: Total Station Survey \u2022 Badge: AP-BLD-8502",
+      "location": "Govt Complex",
+      "timestamp": "2026-10-06T07:40:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-ent-112",
+      "kind": "entry",
+      "title": "Manish Verma (Helper)",
+      "subtitle": "Contractor: Shapoorji \u2022 Trade: General Workforce \u2022 Badge: AP-BLD-8503",
+      "location": "Sector 7 Bay-2",
+      "timestamp": "2026-10-06T06:50:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-ent-113",
+      "kind": "entry",
+      "title": "Santosh Yadav (Painter)",
+      "subtitle": "Contractor: BSR \u2022 Trade: Industrial Coating \u2022 Badge: AP-BLD-8504",
+      "location": "Zone-10 Camp",
+      "timestamp": "2026-10-06T05:51:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-ent-114",
+      "kind": "entry",
+      "title": "Naveen Reddy (Plumber)",
+      "subtitle": "Contractor: AVR \u2022 Trade: Utilities & Piping \u2022 Badge: AP-BLD-8505",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-06T04:43:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-ent-115",
+      "kind": "entry",
+      "title": "Rajendra Prasad (Mechanic)",
+      "subtitle": "Contractor: MEIL \u2022 Trade: P&M Maintenance \u2022 Badge: AP-BLD-8506",
+      "location": "Central Workshop",
+      "timestamp": "2026-10-06T03:26:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-med-101",
+      "kind": "medical",
+      "title": "Pre-Employment Medical Checkup",
+      "subtitle": "Worker: Rajesh Patil \u2022 Status: Fit \u2022 BP: 120/80 \u2022 Vision: 6/6",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-06T03:03:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-med-102",
+      "kind": "medical",
+      "title": "Audiometry & Noise Exposure Screening",
+      "subtitle": "Worker: Anil Sharma \u2022 Status: Fit \u2022 Hearing: 15dB Normal",
+      "location": "Govt Complex",
+      "timestamp": "2026-10-06T02:40:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-med-103",
+      "kind": "medical",
+      "title": "Working at Heights Fitness Certification",
+      "subtitle": "Worker: Mohd. Irfan \u2022 Status: Fit \u2022 Vertigo/ECG: Cleared",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-06T02:08:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-med-104",
+      "kind": "medical",
+      "title": "Periodical Health Surveillance",
+      "subtitle": "Worker: Pradeep Nayak \u2022 Status: Fit \u2022 Chest X-Ray: Clear",
+      "location": "Zone-10 Camp",
+      "timestamp": "2026-10-06T01:27:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-med-105",
+      "kind": "medical",
+      "title": "Spirometry & Pulmonary Function Test",
+      "subtitle": "Worker: Suresh Goud \u2022 Status: Fit \u2022 FEV1/FVC: 98%",
+      "location": "N3A Road",
+      "timestamp": "2026-10-06T00:37:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-med-106",
+      "kind": "medical",
+      "title": "Heat Stress & Hydration Screening",
+      "subtitle": "Worker: Dinesh Meena \u2022 Status: Treated & Cleared \u2022 Vitals Normal",
+      "location": "Amaravati Zone-4",
+      "timestamp": "2026-10-05T23:38:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "GMR Projects"
+      }
+    },
+    {
+      "id": "act-med-107",
+      "kind": "medical",
+      "title": "First Aid Examination - Minor Strain",
+      "subtitle": "Worker: Ramesh Kumar \u2022 Status: Cleared for Duty",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-05T22:30:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-med-108",
+      "kind": "medical",
+      "title": "Annual OHS Blood Profile Screening",
+      "subtitle": "Worker: K. Satyanarayana \u2022 Status: Fit \u2022 Hb: 14.2",
+      "location": "N5 Expressway",
+      "timestamp": "2026-10-05T21:13:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-med-109",
+      "kind": "medical",
+      "title": "Eye Screening & Refraction Exam",
+      "subtitle": "Worker: Subhash Chandra \u2022 Status: Fit with Corrective Glasses",
+      "location": "Central Camp",
+      "timestamp": "2026-10-05T20:50:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-med-110",
+      "kind": "medical",
+      "title": "Ergonomic & Musculoskeletal Assessment",
+      "subtitle": "Worker: Bikramjeet Singh \u2022 Status: Fit",
+      "location": "Flyover Pier P-14",
+      "timestamp": "2026-10-05T20:18:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-med-111",
+      "kind": "medical",
+      "title": "Camp Food Handler Hygiene Screen",
+      "subtitle": "Worker: Manish Verma \u2022 Status: Fit & Cleared",
+      "location": "Camp Mess #3",
+      "timestamp": "2026-10-05T19:37:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-med-112",
+      "kind": "medical",
+      "title": "General OHS Vitals & Health Exam",
+      "subtitle": "Worker: Santosh Yadav \u2022 Status: Fit",
+      "location": "Zone-10 Camp",
+      "timestamp": "2026-10-05T18:47:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-med-113",
+      "kind": "medical",
+      "title": "Cardiovascular Fitness Evaluation",
+      "subtitle": "Worker: Naveen Reddy \u2022 Status: Fit \u2022 Resting HR: 68",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-05T17:48:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-med-114",
+      "kind": "medical",
+      "title": "Periodic Health Checkup Batch #14",
+      "subtitle": "Worker: G. Mahesh \u2022 Status: Fit",
+      "location": "Govt Complex",
+      "timestamp": "2026-10-05T16:40:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-med-115",
+      "kind": "medical",
+      "title": "Post-Incident Fitness Clearance",
+      "subtitle": "Worker: Rajendra Prasad \u2022 Status: Cleared Full Duty",
+      "location": "Central Workshop",
+      "timestamp": "2026-10-05T15:23:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-tra-101",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-17T03:14:10.948Z",
-      "photo": null,
+      "title": "Working at Heights & Fall Arrest",
+      "subtitle": "Trainer: OHS Team \u2022 32 Workers Attended \u2022 Score: 96%",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-05T15:00:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "L&T Construction"
       }
     },
     {
-      "id": "act-1598",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-17T03:13:27.651Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1947",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-17T03:08:12.928Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2633",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-17T03:07:12.287Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2732",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E11 Road",
-      "timestamp": "2026-09-16T13:22:11.446Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2632",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-16T12:53:29.373Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1789",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Water Treatment Plant (WTP)",
-      "timestamp": "2026-09-16T11:58:55.021Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2481",
+      "id": "act-tra-102",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Water Treatment Plant (WTP)",
-      "timestamp": "2026-09-16T11:58:23.688Z",
+      "title": "Confined Space Entry & Rescue Protocol",
+      "subtitle": "Trainer: Safety Lead \u2022 18 Workers Attended \u2022 Score: 94%",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-05T14:37:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "NCC Urban"
       }
     },
     {
-      "id": "act-2152",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Water Treatment Plant (WTP)",
-      "timestamp": "2026-09-16T11:57:50.477Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2836",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Water Treatment Plant (WTP)",
-      "timestamp": "2026-09-16T11:56:17.810Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-147",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "GOs and Group D employees - External Infra",
-      "timestamp": "2026-09-16T11:53:58.622Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2288",
+      "id": "act-tra-103",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 5D",
-      "timestamp": "2026-09-16T11:50:16.904Z",
+      "title": "Basic Life Support (BLS) & First Aid",
+      "subtitle": "Trainer: Apollo Emergency \u2022 25 Workers Certified",
+      "location": "Govt Complex",
+      "timestamp": "2026-10-05T14:05:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "Shapoorji Pallonji"
       }
     },
     {
-      "id": "act-1938",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 5D",
-      "timestamp": "2026-09-16T11:48:31.324Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2624",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 5D",
-      "timestamp": "2026-09-16T11:45:36.509Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1589",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 5D",
-      "timestamp": "2026-09-16T11:44:48.956Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1163",
-      "kind": "new-entry",
-      "title": "Road Safety",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 12",
-      "timestamp": "2026-09-16T09:48:29.411Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2785",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E10 Road",
-      "timestamp": "2026-09-16T09:39:57.798Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-634",
-      "kind": "new-entry",
-      "title": "OHS -  MONITORING",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 12",
-      "timestamp": "2026-09-16T09:38:53.550Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2433",
+      "id": "act-tra-104",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E10 Road",
-      "timestamp": "2026-09-16T09:38:05.959Z",
+      "title": "Scaffolding Erection & Green Tagging",
+      "subtitle": "Trainer: Scaffolding Specialist \u2022 22 Scaffolders",
+      "location": "N3A Road",
+      "timestamp": "2026-10-05T13:24:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "MEIL"
       }
     },
     {
-      "id": "act-1740",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E10 Road",
-      "timestamp": "2026-09-16T09:37:05.278Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2105",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E10 Road",
-      "timestamp": "2026-09-16T09:35:49.436Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2077",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N6 Utilities",
-      "timestamp": "2026-09-16T09:32:51.738Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2755",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N6 Utilities",
-      "timestamp": "2026-09-16T09:27:10.059Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2408",
+      "id": "act-tra-105",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N6 Utilities",
-      "timestamp": "2026-09-16T09:24:27.806Z",
-      "photo": null,
+      "title": "Fire Prevention & Extinguisher Operation",
+      "subtitle": "Trainer: Fire Safety Officer \u2022 45 Workers Attended",
+      "location": "Zone-10 Camp",
+      "timestamp": "2026-10-05T12:34:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "BSR Infratech"
       }
     },
     {
-      "id": "act-1709",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N6 Utilities",
-      "timestamp": "2026-09-16T09:21:32.957Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2448",
+      "id": "act-tra-106",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N8 Road",
-      "timestamp": "2026-09-16T08:17:39.523Z",
+      "title": "Hazardous Chemical Handling & MSDS",
+      "subtitle": "Trainer: Environmental Officer \u2022 16 Handlers",
+      "location": "Central Store",
+      "timestamp": "2026-10-05T11:35:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "AVR Infra"
       }
     },
     {
-      "id": "act-2053",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E11 Road",
-      "timestamp": "2026-09-16T08:14:59.097Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1686",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E11 Road",
-      "timestamp": "2026-09-16T08:07:48.717Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1756",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N8 Road",
-      "timestamp": "2026-09-16T08:05:38.600Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2386",
+      "id": "act-tra-107",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E11 Road",
-      "timestamp": "2026-09-16T08:04:59.949Z",
+      "title": "Heavy Vehicle Blind Spot & Reversing",
+      "subtitle": "Trainer: P&M Safety Lead \u2022 20 Tipper Drivers",
+      "location": "Heavy Yard",
+      "timestamp": "2026-10-05T10:27:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "NCC Urban"
       }
     },
     {
-      "id": "act-2120",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N8 Road",
-      "timestamp": "2026-09-16T07:41:55.189Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2801",
-      "kind": "new-entry",
-      "title": "Social Safeguard Compliance for MPR",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N8 Road",
-      "timestamp": "2026-09-16T07:24:25.331Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-442",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "GOs and Group D employees - Housing",
-      "timestamp": "2026-09-16T06:35:15.805Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-165",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Tower 1 and 2 - Structure",
-      "timestamp": "2026-09-16T05:35:18.589Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1221",
-      "kind": "new-entry",
-      "title": "Road Safety",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Bungalows for Principal Secretaries & Secretaries",
-      "timestamp": "2026-09-16T05:01:13.696Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-725",
-      "kind": "new-entry",
-      "title": "OHS -  MONITORING",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Bungalows for Principal Secretaries & Secretaries",
-      "timestamp": "2026-09-16T04:09:58.979Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2296",
+      "id": "act-tra-108",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-16T04:04:55.670Z",
+      "title": "Electrical Safety, Earthing & LOTO",
+      "subtitle": "Trainer: Chief Electrical Inspector \u2022 15 Electricians",
+      "location": "Substation Area",
+      "timestamp": "2026-10-05T09:10:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "MEIL"
       }
     },
     {
-      "id": "act-1392",
-      "kind": "new-entry",
-      "title": "Road Safety",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E2 Road",
-      "timestamp": "2026-09-16T04:00:11.877Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1597",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-16T03:59:09.395Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1946",
-      "kind": "new-entry",
-      "title": "Labour Law Compliance",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Zone - 10",
-      "timestamp": "2026-09-16T03:58:07.468Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-166",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "Tower 1 and 2 - Structure",
-      "timestamp": "2026-09-15T13:05:25.931Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-363",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "N7 Road",
-      "timestamp": "2026-09-15T10:14:55.345Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1391",
-      "kind": "new-entry",
-      "title": "Road Safety",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "E2 Road",
-      "timestamp": "2026-09-15T10:11:50.941Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-337",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "E2 Road",
-      "timestamp": "2026-09-15T09:55:23.152Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-164",
-      "kind": "new-entry",
-      "title": "Environmental Compliance Monitoring Form",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "Tower 1 and 2 - Structure",
-      "timestamp": "2026-09-15T07:28:36.273Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1106",
-      "kind": "new-entry",
-      "title": "OHS -  MONITORING",
-      "subtitle": "Reporting Month: Unknown Month • Status: NOT_READY",
-      "location": "GOs and Group D employees - Housing",
-      "timestamp": "2026-09-15T05:17:46.047Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-1667",
-      "kind": "new-entry",
-      "title": "Gender",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N11 Road",
-      "timestamp": "2026-09-15T04:21:42.228Z",
-      "photo": null,
-      "meta": {
-        "contractor": "Unknown Contractor"
-      }
-    },
-    {
-      "id": "act-2367",
+      "id": "act-tra-109",
       "kind": "training",
-      "title": "Skill Training and Employment",
-      "subtitle": "Reporting Month: Unknown Month • Status: IN_PROGRESS",
-      "location": "N11 Road",
-      "timestamp": "2026-09-15T04:19:52.038Z",
+      "title": "Deep Excavation Shoring & Soil Collapse",
+      "subtitle": "Trainer: Geotechnical Lead \u2022 28 Workers",
+      "location": "Trench Bay-4",
+      "timestamp": "2026-10-05T08:47:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-tra-110",
+      "kind": "training",
+      "title": "Mandatory PPE Compliance Protocol",
+      "subtitle": "Trainer: Site Safety Officer \u2022 60 Inductees",
+      "location": "Induction Hall",
+      "timestamp": "2026-10-05T08:15:04.664626Z",
       "photo": null,
       "meta": {
-        "contractor": "Unknown Contractor"
+        "contractor": "GMR Projects"
+      }
+    },
+    {
+      "id": "act-tra-111",
+      "kind": "training",
+      "title": "Heat Stroke Prevention & Hydration Rules",
+      "subtitle": "Trainer: Camp Medical Officer \u2022 40 Workers",
+      "location": "Sector 4 Camp",
+      "timestamp": "2026-10-05T07:34:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-tra-112",
+      "kind": "training",
+      "title": "Rigging, Slings & Lifting Tackles Inspection",
+      "subtitle": "Trainer: Crane Specialist \u2022 14 Riggers",
+      "location": "Casting Yard",
+      "timestamp": "2026-10-05T06:44:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-tra-113",
+      "kind": "training",
+      "title": "Environmental Safeguards & Waste Sorting",
+      "subtitle": "Trainer: ESMS Safeguard Lead \u2022 35 Workers",
+      "location": "Govt Complex",
+      "timestamp": "2026-10-05T05:45:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-tra-114",
+      "kind": "training",
+      "title": "Toolbox Talk: Pinch Point Prevention",
+      "subtitle": "Trainer: Section Engineer \u2022 50 Workers",
+      "location": "Fabrication Bay",
+      "timestamp": "2026-10-05T04:37:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-tra-115",
+      "kind": "training",
+      "title": "Traffic Management & Night Marshalling",
+      "subtitle": "Trainer: Highway Safety Marshal \u2022 18 Marshals",
+      "location": "Expressway Junction",
+      "timestamp": "2026-10-05T03:20:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-inc-101",
+      "kind": "incident",
+      "title": "INC-2026-092: Near Miss - Unsecured Scaffolding Clamp",
+      "subtitle": "Severity: Low \u2022 CAPA Issued \u2022 Rectified Immediately",
+      "location": "Govt Complex Block-A",
+      "timestamp": "2026-10-05T02:57:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-inc-102",
+      "kind": "incident",
+      "title": "INC-2026-091: Minor First Aid - Superficial Abrasion",
+      "subtitle": "Severity: First Aid \u2022 Treated on Site \u2022 Resumed Duty",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-05T02:34:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-inc-103",
+      "kind": "incident",
+      "title": "INC-2026-090: Near Miss - Tipper Reversing Horn Fault",
+      "subtitle": "Severity: Low \u2022 Horn Replaced \u2022 Re-inspected",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-05T02:02:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-inc-104",
+      "kind": "incident",
+      "title": "INC-2026-089: Hazard Report - Water Puddle Near DB Box",
+      "subtitle": "Severity: Medium \u2022 Power Isolated \u2022 DB Raised",
+      "location": "N3A Road",
+      "timestamp": "2026-10-05T01:21:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-inc-105",
+      "kind": "incident",
+      "title": "INC-2026-088: Minor Sprain - Foot Slid on Wet Soil Ramp",
+      "subtitle": "Severity: First Aid \u2022 Ice Applied \u2022 Ramp Regraded",
+      "location": "Zone-10 Camp",
+      "timestamp": "2026-10-05T00:31:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-inc-106",
+      "kind": "incident",
+      "title": "INC-2026-087: Near Miss - Helmet Hit by Loose Tarpaulin",
+      "subtitle": "Severity: Low \u2022 Zero Injury \u2022 Tarpaulin Secured",
+      "location": "Amaravati Zone-4",
+      "timestamp": "2026-10-04T23:32:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "GMR Projects"
+      }
+    },
+    {
+      "id": "act-inc-107",
+      "kind": "incident",
+      "title": "INC-2026-086: Environmental Observation - Drip Tray Missing",
+      "subtitle": "Severity: Low \u2022 Drip Tray Placed \u2022 Absorbent Used",
+      "location": "Generator Bay 2",
+      "timestamp": "2026-10-04T22:24:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-inc-108",
+      "kind": "incident",
+      "title": "INC-2026-085: Near Miss - Rebar End Without Mushroom Cap",
+      "subtitle": "Severity: Low \u2022 Caps Installed Immediately",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-04T21:07:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-inc-109",
+      "kind": "incident",
+      "title": "INC-2026-084: Minor First Aid - Dust in Eye While Grinding",
+      "subtitle": "Severity: First Aid \u2022 Eye Flushed \u2022 Shield Mandated",
+      "location": "Fabrication Yard",
+      "timestamp": "2026-10-04T20:44:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-inc-110",
+      "kind": "incident",
+      "title": "INC-2026-083: Vehicle Hazard - Over-speeding on Haul Road",
+      "subtitle": "Severity: Medium \u2022 Speed Governor Enforced",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-04T20:12:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-inc-111",
+      "kind": "incident",
+      "title": "INC-2026-082: Near Miss - Rigging Shackle Pin Found Loose",
+      "subtitle": "Severity: Low \u2022 Lift Aborted \u2022 Shackle Replaced",
+      "location": "Casting Yard",
+      "timestamp": "2026-10-04T19:31:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-inc-112",
+      "kind": "incident",
+      "title": "INC-2026-081: First Aid - Heat Exhaustion Handled with ORS",
+      "subtitle": "Severity: First Aid \u2022 Rested in Cool Zone \u2022 Cleared",
+      "location": "Zone-10 Site",
+      "timestamp": "2026-10-04T18:41:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-inc-113",
+      "kind": "incident",
+      "title": "INC-2026-080: Hazard Report - Damaged Cord Insulation",
+      "subtitle": "Severity: Medium \u2022 Cable Replaced \u2022 Certified",
+      "location": "Block B Basement",
+      "timestamp": "2026-10-04T17:42:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-inc-114",
+      "kind": "incident",
+      "title": "INC-2026-079: Near Miss - Trench Edge Lacked Reflective Tape",
+      "subtitle": "Severity: Low \u2022 Retro-reflective Barrier Installed",
+      "location": "N5 Expressway",
+      "timestamp": "2026-10-04T16:34:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-inc-115",
+      "kind": "incident",
+      "title": "INC-2026-078: First Aid - Minor Wood Splinter on Palm",
+      "subtitle": "Severity: First Aid \u2022 Splinter Extracted \u2022 Gloves Issued",
+      "location": "Carpentry Yard",
+      "timestamp": "2026-10-04T15:17:04.664626Z",
+      "photo": null,
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-pho-101",
+      "kind": "photo",
+      "title": "Daily Morning Safety Toolbox Talk",
+      "subtitle": "Seed Access Road \u2022 L&T Construction \u2022 45 Attendees",
+      "location": "Seed Access Road",
+      "timestamp": "2026-10-04T14:54:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-pho-102",
+      "kind": "photo",
+      "title": "Deep Excavation Barricade Inspection",
+      "subtitle": "Judicial Complex \u2022 NCC Urban \u2022 Trench Depth: 4.5m",
+      "location": "Judicial Complex",
+      "timestamp": "2026-10-04T14:31:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-pho-103",
+      "kind": "photo",
+      "title": "Scaffolding Green Tagged Audit",
+      "subtitle": "Govt Complex Block-A \u2022 Shapoorji Pallonji \u2022 Bay 12",
+      "location": "Govt Complex Block-A",
+      "timestamp": "2026-10-04T13:59:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-pho-104",
+      "kind": "photo",
+      "title": "Personal Protective Equipment Check",
+      "subtitle": "N3A Expressway \u2022 MEIL \u2022 100% Compliance Verified",
+      "location": "N3A Expressway",
+      "timestamp": "2026-10-04T13:18:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-pho-105",
+      "kind": "photo",
+      "title": "Worker Hydration & Rest Booth Facility",
+      "subtitle": "Zone-10 Labor Camp \u2022 BSR Infratech \u2022 Cool Drinking Water",
+      "location": "Zone-10 Camp",
+      "timestamp": "2026-10-04T12:28:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "BSR Infratech"
+      }
+    },
+    {
+      "id": "act-pho-106",
+      "kind": "photo",
+      "title": "Hazardous Waste Secondary Containment Area",
+      "subtitle": "Central Batching Plant \u2022 AVR Infra \u2022 Spill Kit Station",
+      "location": "Central Batching Plant",
+      "timestamp": "2026-10-04T11:29:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "AVR Infra"
+      }
+    },
+    {
+      "id": "act-pho-107",
+      "kind": "photo",
+      "title": "Double-Lanyard Harness Verification",
+      "subtitle": "Flyover Pier P-14 \u2022 L&T \u2022 100% Tie-Off Compliant",
+      "location": "Flyover Pier P-14",
+      "timestamp": "2026-10-04T10:21:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-pho-108",
+      "kind": "photo",
+      "title": "First Aid Station & Emergency Response Kit",
+      "subtitle": "Sector 4 Medical Post \u2022 Health Team \u2022 AED & Oxygen",
+      "location": "Sector 4 Post",
+      "timestamp": "2026-10-04T09:04:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "Health Services"
+      }
+    },
+    {
+      "id": "act-pho-109",
+      "kind": "photo",
+      "title": "Night Shift High-Mast Illumination Check",
+      "subtitle": "N5 Expressway \u2022 NCC Urban \u2022 Lux Level: 120 (Standard)",
+      "location": "N5 Expressway",
+      "timestamp": "2026-10-04T08:41:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "NCC Urban"
+      }
+    },
+    {
+      "id": "act-pho-110",
+      "kind": "photo",
+      "title": "Fire Extinguisher Station Audit",
+      "subtitle": "Zone-12 Workshop \u2022 MEIL \u2022 DCP 6kg Tagged & Charged",
+      "location": "Zone-12 Workshop",
+      "timestamp": "2026-10-04T08:09:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "MEIL"
+      }
+    },
+    {
+      "id": "act-pho-111",
+      "kind": "photo",
+      "title": "Earthmover Pre-Use Inspection Tag",
+      "subtitle": "Heavy Equipment Yard \u2022 Shapoorji \u2022 Reverse Camera OK",
+      "location": "Equipment Yard",
+      "timestamp": "2026-10-04T07:28:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "Shapoorji Pallonji"
+      }
+    },
+    {
+      "id": "act-pho-112",
+      "kind": "photo",
+      "title": "Pre-cast Yard Safe Lifting Procedure",
+      "subtitle": "Casting Yard 2 \u2022 L&T \u2022 4-Legged Wire Rope Slings",
+      "location": "Casting Yard 2",
+      "timestamp": "2026-10-04T06:38:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "L&T Construction"
+      }
+    },
+    {
+      "id": "act-pho-113",
+      "kind": "photo",
+      "title": "Air Quality & Water Mist Cannon Deployment",
+      "subtitle": "Capital City Zone \u2022 Dust Suppression Operating",
+      "location": "Capital City Zone",
+      "timestamp": "2026-10-04T05:39:04.664626Z",
+      "photo": "/slideshow/slide1.jpg",
+      "meta": {
+        "contractor": "ESMS Environment Team"
+      }
+    },
+    {
+      "id": "act-pho-114",
+      "kind": "photo",
+      "title": "Health Screening & Vitals Triage Camp",
+      "subtitle": "Judicial Complex Camp \u2022 Medical Unit \u2022 60 Screened",
+      "location": "Judicial Camp",
+      "timestamp": "2026-10-04T04:31:04.664626Z",
+      "photo": "/slideshow/slide2.jpg",
+      "meta": {
+        "contractor": "Medical Services"
+      }
+    },
+    {
+      "id": "act-pho-115",
+      "kind": "photo",
+      "title": "Traffic Management Signage & Barricade",
+      "subtitle": "Seed Access Junction \u2022 Traffic Marshals on Duty",
+      "location": "Seed Access Junction",
+      "timestamp": "2026-10-04T03:14:04.664626Z",
+      "photo": "/slideshow/slide3.jpg",
+      "meta": {
+        "contractor": "AVR Infra"
       }
     }
   ],
-  "count": 50
+  "count": 75
 }

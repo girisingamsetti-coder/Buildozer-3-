@@ -555,7 +555,7 @@ function ActivityCard({ className, slides = [] }: { className?: string; slides?:
 }
 
 function ActivityPhoto({ photo, name }: { photo?: string | null; name: string }) {
-  if (photo && photo.startsWith('data:')) {
+  if (photo && (photo.startsWith('data:') || photo.startsWith('/') || photo.startsWith('http'))) {
     return <img src={photo} alt={name} className="w-9 h-9 rounded-md object-cover shrink-0" />
   }
   const initials = name.split(' ').map(n => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()
@@ -571,17 +571,16 @@ function RecentActivityItem({ item, onPhotoClick }: { item: ActivityItem; onPhot
   const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(' ', '')
   const dateString = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
 
-  const locParts = (item.location || '').split('•')
-  const locStr = locParts.length > 1 ? locParts[1].trim() : (item.location || 'Unknown Location')
-  const actor = item.title.startsWith('INC-') ? 'System' : item.title
+  const locStr = item.location || 'Site'
+  const actor = item.title
 
   let actionText = ''
-  if (item.kind === 'photo') actionText = `photo uploaded in ${locStr}, by ${actor}`
-  else if (item.kind === 'entry') actionText = `worker registered in ${locStr}, by ${actor}`
-  else if (item.kind === 'medical') actionText = `medical test completed in ${locStr}, by ${actor}`
-  else if (item.kind === 'training') actionText = `training attended in ${locStr}, by ${actor}`
-  else if (item.kind === 'incident') actionText = `incident reported in ${locStr}, by ${actor}`
-  else actionText = `activity recorded in ${locStr}, by ${actor}`
+  if (item.kind === 'photo') actionText = `photo uploaded in ${locStr}: ${actor}`
+  else if (item.kind === 'entry' || item.kind === 'new-entry') actionText = `worker registered in ${locStr}: ${actor}`
+  else if (item.kind === 'medical') actionText = `medical test in ${locStr}: ${actor}`
+  else if (item.kind === 'training') actionText = `training attended in ${locStr}: ${actor}`
+  else if (item.kind === 'incident') actionText = `incident reported in ${locStr}: ${actor}`
+  else actionText = `activity recorded in ${locStr}: ${actor}`
 
   return (
     <div className="flex items-start gap-3 px-2 py-0.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-default">
@@ -789,9 +788,9 @@ export default function DashboardView() {
   let filteredTabItems = rawActivityItems
   
   if (activeTab === 'new-entry') {
-    filteredTabItems = rawActivityItems.filter(item => item.kind === 'entry')
+    filteredTabItems = rawActivityItems.filter(item => item.kind === 'entry' || item.kind === 'new-entry')
   } else if (activeTab === 'photos') {
-    filteredTabItems = rawActivityItems.filter(item => item.kind === 'photo')
+    filteredTabItems = rawActivityItems.filter(item => item.kind === 'photo' || item.kind === 'photos' || !!item.photo)
   } else {
     filteredTabItems = rawActivityItems.filter(item => item.kind === activeTab)
   }
