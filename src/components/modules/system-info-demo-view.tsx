@@ -422,7 +422,7 @@ export function SystemInfoDemoView() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16">
       {/* Hero Header Banner */}
       <motion.div {...fadeInUp}>
         <Card className="overflow-hidden border-teal-200/70 dark:border-teal-900/60 bg-gradient-to-br from-teal-500/10 via-cyan-500/5 to-transparent relative shadow-sm">

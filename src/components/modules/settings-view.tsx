@@ -1314,15 +1314,15 @@ export default function SettingsView() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col h-full min-w-0 overflow-hidden space-y-4">
       {/* Page Header */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:block shrink-0">
         <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
         <p className="text-sm text-muted-foreground mt-1">Manage users, access, workflows, and system configuration.</p>
       </div>
 
-      <Tabs defaultValue="users" className="w-full">
-        <TabsList className="flex flex-wrap h-auto gap-1 p-1 bg-muted">
+      <Tabs defaultValue="users" className="w-full flex-1 flex flex-col min-h-0 overflow-hidden">
+        <TabsList className="flex flex-wrap h-auto gap-1 p-1 bg-muted shrink-0">
           <TabsTrigger value="users" className="text-sm gap-1.5">
             <Users className="h-4 w-4" />
             <span className="hidden sm:inline">User Management</span>
@@ -1355,27 +1355,27 @@ export default function SettingsView() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="users">
+        <TabsContent value="users" className="flex-1 min-h-0 overflow-y-auto mt-2 pr-1 pb-12 focus-visible:outline-none">
           <UserManagementTab />
         </TabsContent>
 
-        <TabsContent value="access">
+        <TabsContent value="access" className="flex-1 min-h-0 overflow-y-auto mt-2 pr-1 pb-12 focus-visible:outline-none">
           <AccessManagementTab />
         </TabsContent>
 
-        <TabsContent value="workflow">
+        <TabsContent value="workflow" className="flex-1 min-h-0 overflow-y-auto mt-2 pr-1 pb-12 focus-visible:outline-none">
           <WorkflowManagementTab />
         </TabsContent>
 
-        <TabsContent value="audit">
+        <TabsContent value="audit" className="flex-1 min-h-0 overflow-y-auto mt-2 pr-1 pb-12 focus-visible:outline-none">
           <AuditLogTab />
         </TabsContent>
 
-        <TabsContent value="menu">
+        <TabsContent value="menu" className="flex-1 min-h-0 overflow-y-auto mt-2 pr-1 pb-12 focus-visible:outline-none">
           <MenuConfigurationTab />
         </TabsContent>
 
-        <TabsContent value="about">
+        <TabsContent value="about" className="flex-1 min-h-0 overflow-y-auto mt-2 pr-1 pb-12 focus-visible:outline-none">
           <SystemInfoDemoView />
         </TabsContent>
       </Tabs>
