@@ -1322,36 +1322,48 @@ export default function SettingsView() {
       </div>
 
       <Tabs defaultValue="users" className="w-full flex-1 flex flex-col min-h-0 overflow-hidden">
-        <TabsList className="flex flex-wrap h-auto gap-1 p-1 bg-muted shrink-0">
-          <TabsTrigger value="users" className="text-sm gap-1.5">
-            <Users className="h-4 w-4" />
-            <span className="hidden sm:inline">User Management</span>
-            <span className="sm:hidden">Users</span>
+        <TabsList className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 h-auto p-1.5 gap-1.5 bg-[#F1E1CE]/40 dark:bg-stone-900/60 border border-[var(--maroon-700,#8B2A2A)]/30 rounded-xl shrink-0 shadow-xs">
+          <TabsTrigger
+            value="users"
+            className="w-full py-2 sm:py-2.5 text-xs sm:text-sm font-bold gap-2 rounded-lg transition-all data-[state=active]:bg-[var(--maroon-700,#8B2A2A)] data-[state=active]:text-white data-[state=active]:shadow-sm text-stone-700 dark:text-stone-300 hover:text-[var(--maroon-700,#8B2A2A)]"
+          >
+            <Users className="h-4 w-4 shrink-0" />
+            <span className="truncate">User Management</span>
           </TabsTrigger>
-          <TabsTrigger value="access" className="text-sm gap-1.5">
-            <Lock className="h-4 w-4" />
-            <span className="hidden sm:inline">Access Management</span>
-            <span className="sm:hidden">Access</span>
+          <TabsTrigger
+            value="access"
+            className="w-full py-2 sm:py-2.5 text-xs sm:text-sm font-bold gap-2 rounded-lg transition-all data-[state=active]:bg-[var(--maroon-700,#8B2A2A)] data-[state=active]:text-white data-[state=active]:shadow-sm text-stone-700 dark:text-stone-300 hover:text-[var(--maroon-700,#8B2A2A)]"
+          >
+            <Lock className="h-4 w-4 shrink-0" />
+            <span className="truncate">Access Management</span>
           </TabsTrigger>
-          <TabsTrigger value="workflow" className="text-sm gap-1.5">
-            <GitBranch className="h-4 w-4" />
-            <span className="hidden sm:inline">Workflow Management</span>
-            <span className="sm:hidden">Workflows</span>
+          <TabsTrigger
+            value="workflow"
+            className="w-full py-2 sm:py-2.5 text-xs sm:text-sm font-bold gap-2 rounded-lg transition-all data-[state=active]:bg-[var(--maroon-700,#8B2A2A)] data-[state=active]:text-white data-[state=active]:shadow-sm text-stone-700 dark:text-stone-300 hover:text-[var(--maroon-700,#8B2A2A)]"
+          >
+            <GitBranch className="h-4 w-4 shrink-0" />
+            <span className="truncate">Workflow Management</span>
           </TabsTrigger>
-          <TabsTrigger value="audit" className="text-sm gap-1.5">
-            <ClipboardList className="h-4 w-4" />
-            <span className="hidden sm:inline">Audit Log</span>
-            <span className="sm:hidden">Audit</span>
+          <TabsTrigger
+            value="audit"
+            className="w-full py-2 sm:py-2.5 text-xs sm:text-sm font-bold gap-2 rounded-lg transition-all data-[state=active]:bg-[var(--maroon-700,#8B2A2A)] data-[state=active]:text-white data-[state=active]:shadow-sm text-stone-700 dark:text-stone-300 hover:text-[var(--maroon-700,#8B2A2A)]"
+          >
+            <ClipboardList className="h-4 w-4 shrink-0" />
+            <span className="truncate">Audit Log</span>
           </TabsTrigger>
-          <TabsTrigger value="menu" className="text-sm gap-1.5">
-            <LayoutDashboard className="h-4 w-4" />
-            <span className="hidden sm:inline">Menu Configuration</span>
-            <span className="sm:hidden">Menu</span>
+          <TabsTrigger
+            value="menu"
+            className="w-full py-2 sm:py-2.5 text-xs sm:text-sm font-bold gap-2 rounded-lg transition-all data-[state=active]:bg-[var(--maroon-700,#8B2A2A)] data-[state=active]:text-white data-[state=active]:shadow-sm text-stone-700 dark:text-stone-300 hover:text-[var(--maroon-700,#8B2A2A)]"
+          >
+            <LayoutDashboard className="h-4 w-4 shrink-0" />
+            <span className="truncate">Menu Configuration</span>
           </TabsTrigger>
-          <TabsTrigger value="about" className="text-sm gap-1.5">
-            <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
-            <span className="hidden sm:inline">System Information & Demo</span>
-            <span className="sm:hidden">System Info</span>
+          <TabsTrigger
+            value="about"
+            className="w-full py-2 sm:py-2.5 text-xs sm:text-sm font-bold gap-2 rounded-lg transition-all data-[state=active]:bg-[var(--maroon-700,#8B2A2A)] data-[state=active]:text-white data-[state=active]:shadow-sm text-stone-700 dark:text-stone-300 hover:text-[var(--maroon-700,#8B2A2A)]"
+          >
+            <Info className="h-4 w-4 shrink-0 text-teal-600 dark:text-teal-400" />
+            <span className="truncate">System Info & Demo</span>
           </TabsTrigger>
         </TabsList>
 
