@@ -255,26 +255,41 @@ export default function GrievanceView() {
       {/* ====== Summary Cards ====== */}
       {isLoading ? (
         <div className={cn("grid gap-3", isMobile ? "grid-cols-2" : "grid-cols-5")}>
-          {[1, 2, 3, 4, 5].map((i) => <Skeleton key={i} className="h-24 lg:h-20 rounded-xl" />)}
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Card key={i} className="bg-[#F1E1CE]/40 dark:bg-stone-900/60 border-2 border-[var(--maroon-700,#8B2A2A)]/40 rounded-xl">
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2">
+                    <Skeleton className="h-3.5 w-16" />
+                    <Skeleton className="h-8 w-12" />
+                  </div>
+                  <Skeleton className="h-11 w-11 rounded-xl" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       ) : (
         <div className={cn("grid gap-3", isMobile ? "grid-cols-2" : "grid-cols-5")}>
           {[
-            { label: 'Total', value: total, icon: MessageSquare, valueColor: 'text-teal-700', bg: 'bg-teal-50 text-teal-700 border-teal-200', iconStyle: 'bg-teal-100 text-teal-600' },
-            { label: 'Open', value: openCount, icon: AlertTriangle, valueColor: 'text-emerald-700', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200', iconStyle: 'bg-emerald-100 text-emerald-600' },
-            { label: 'In Progress', value: progressCount, icon: Clock, valueColor: 'text-amber-700', bg: 'bg-amber-50 text-amber-700 border-amber-200', iconStyle: 'bg-amber-100 text-amber-600' },
-            { label: 'Resolved', value: resolvedCount, icon: CheckCircle2, valueColor: 'text-slate-700', bg: 'bg-slate-50 text-slate-700 border-slate-200', iconStyle: 'bg-slate-100 text-slate-600' },
-            { label: 'Escalated', value: escalatedCount, icon: ArrowUpRight, valueColor: 'text-rose-700', bg: 'bg-rose-50 text-rose-700 border-rose-200', iconStyle: 'bg-rose-100 text-rose-600' },
+            { label: 'Total', value: total, icon: MessageSquare, valueColor: 'text-[#8B2A2A] dark:text-[#F1E1CE]', iconStyle: 'bg-[#8B2A2A]/10 text-[#8B2A2A] dark:bg-[#8B2A2A]/25 dark:text-[#F1E1CE]' },
+            { label: 'Open', value: openCount, icon: AlertTriangle, valueColor: 'text-emerald-700 dark:text-emerald-400', iconStyle: 'bg-emerald-100/80 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400' },
+            { label: 'In Progress', value: progressCount, icon: Clock, valueColor: 'text-amber-700 dark:text-amber-400', iconStyle: 'bg-amber-100/80 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400' },
+            { label: 'Resolved', value: resolvedCount, icon: CheckCircle2, valueColor: 'text-stone-700 dark:text-stone-300', iconStyle: 'bg-stone-200/80 text-stone-700 dark:bg-stone-800 dark:text-stone-300' },
+            { label: 'Escalated', value: escalatedCount, icon: ArrowUpRight, valueColor: 'text-rose-700 dark:text-rose-400', iconStyle: 'bg-rose-100/80 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400' },
           ].map((c) => (
-            <Card key={c.label} className={`${c.bg} transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]`}>
-              <CardContent className="p-4 sm:p-4 lg:p-3">
+            <Card
+              key={c.label}
+              className="bg-[#F1E1CE]/50 dark:bg-stone-900/80 border-2 border-[var(--maroon-700,#8B2A2A)]/60 dark:border-[var(--maroon-700,#8B2A2A)]/80 shadow-xs rounded-xl transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5 hover:border-[var(--maroon-700,#8B2A2A)]"
+            >
+              <CardContent className="p-3.5 sm:p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">{c.label}</p>
-                    <p className={`text-2xl lg:text-xl font-bold tracking-tight mt-1 ${c.valueColor}`}>{c.value}</p>
+                    <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 font-body">{c.label}</p>
+                    <p className={cn("text-2xl sm:text-3xl font-bold font-display tracking-tight mt-1", c.valueColor)}>{c.value}</p>
                   </div>
-                  <div className={`rounded-xl p-2 shrink-0 ${c.iconStyle}`}>
-                    <c.icon className="h-5 w-5" />
+                  <div className={cn("rounded-xl p-2.5 shrink-0 flex items-center justify-center", c.iconStyle)}>
+                    <c.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
                 </div>
               </CardContent>

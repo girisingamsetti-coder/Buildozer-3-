@@ -177,9 +177,19 @@ const trainingExportColumns: ExportColumn<TrainingRecord>[] = [
 // ---------- skeleton ----------
 function SummarySkeleton() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
       {Array.from({ length: 4 }).map((_, i) => (
-        <Card key={i}><CardContent className="p-3"><Skeleton className="h-12 w-full" /></CardContent></Card>
+        <Card key={i} className="bg-[#F1E1CE]/40 dark:bg-stone-900/60 border-2 border-[var(--maroon-700,#8B2A2A)]/40 rounded-xl">
+          <CardContent className="p-3.5 sm:p-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <Skeleton className="h-3.5 w-24" />
+                <Skeleton className="h-8 w-14" />
+              </div>
+              <Skeleton className="h-11 w-11 rounded-xl" />
+            </div>
+          </CardContent>
+        </Card>
       ))}
     </div>
   )
@@ -803,50 +813,29 @@ export default function TrainingView() {
         <SummarySkeleton />
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
-          <Card className="bg-teal-50 text-teal-700 border-teal-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="rounded-xl p-2 shrink-0 bg-teal-100 text-teal-600 flex items-center justify-center">
-                <GraduationCap className="h-4 w-4" />
-              </div>
-              <div>
-                <p className="text-xl font-bold tracking-tight">{summary.total}</p>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Total Trainings</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-emerald-50 text-emerald-700 border-emerald-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="rounded-xl p-2 shrink-0 bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                <CheckCircle2 className="h-4 w-4" />
-              </div>
-              <div>
-                <p className="text-xl font-bold tracking-tight text-emerald-700">{summary.valid}</p>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Valid</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-amber-50 text-amber-700 border-amber-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="rounded-xl p-2 shrink-0 bg-amber-100 text-amber-600 flex items-center justify-center">
-                <AlertTriangle className="h-4 w-4" />
-              </div>
-              <div>
-                <p className="text-xl font-bold tracking-tight text-amber-700">{summary.expiring}</p>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Expiring Soon</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-rose-50 text-rose-700 border-rose-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="rounded-xl p-2 shrink-0 bg-rose-100 text-rose-600 flex items-center justify-center">
-                <XCircle className="h-4 w-4" />
-              </div>
-              <div>
-                <p className="text-xl font-bold tracking-tight text-rose-700">{summary.expired}</p>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Expired</p>
-              </div>
-            </CardContent>
-          </Card>
+          {[
+            { label: 'Total Trainings', value: summary.total, icon: GraduationCap, valueColor: 'text-[#8B2A2A] dark:text-[#F1E1CE]', iconStyle: 'bg-[#8B2A2A]/10 text-[#8B2A2A] dark:bg-[#8B2A2A]/25 dark:text-[#F1E1CE]' },
+            { label: 'Valid', value: summary.valid, icon: CheckCircle2, valueColor: 'text-emerald-700 dark:text-emerald-400', iconStyle: 'bg-emerald-100/80 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400' },
+            { label: 'Expiring Soon', value: summary.expiring, icon: AlertTriangle, valueColor: 'text-amber-700 dark:text-amber-400', iconStyle: 'bg-amber-100/80 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400' },
+            { label: 'Expired', value: summary.expired, icon: XCircle, valueColor: 'text-rose-700 dark:text-rose-400', iconStyle: 'bg-rose-100/80 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400' },
+          ].map((c) => (
+            <Card
+              key={c.label}
+              className="bg-[#F1E1CE]/50 dark:bg-stone-900/80 border-2 border-[var(--maroon-700,#8B2A2A)]/60 dark:border-[var(--maroon-700,#8B2A2A)]/80 shadow-xs rounded-xl transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5 hover:border-[var(--maroon-700,#8B2A2A)]"
+            >
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 font-body">{c.label}</p>
+                    <p className={cn("text-2xl sm:text-3xl font-bold font-display tracking-tight mt-1", c.valueColor)}>{c.value}</p>
+                  </div>
+                  <div className={cn("rounded-xl p-2.5 shrink-0 flex items-center justify-center", c.iconStyle)}>
+                    <c.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
 

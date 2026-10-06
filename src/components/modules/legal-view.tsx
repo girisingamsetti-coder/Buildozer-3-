@@ -30,6 +30,7 @@ import { StatusBadge } from '@/components/shared/status-badge'
 import { TablePagination } from '@/components/shared/table-pagination'
 import { format, differenceInDays, parseISO } from 'date-fns'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
+import { cn } from '@/lib/utils'
 
 // ---------- types ----------
 interface LegalCompliance {
@@ -323,25 +324,40 @@ export default function LegalView() {
       {/* ====== Summary Cards ====== */}
       {isLoading ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
-          {[1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-20 rounded-xl" />)}
+          {[1, 2, 3, 4].map((i) => (
+            <Card key={i} className="bg-[#F1E1CE]/40 dark:bg-stone-900/60 border-2 border-[var(--maroon-700,#8B2A2A)]/40 rounded-xl">
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2">
+                    <Skeleton className="h-3.5 w-24" />
+                    <Skeleton className="h-8 w-14" />
+                  </div>
+                  <Skeleton className="h-11 w-11 rounded-xl" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
           {[
-            { label: 'Total Records', value: total, icon: Scale, valueColor: 'text-teal-700', bg: 'bg-teal-50 text-teal-700 border-teal-200', iconStyle: 'bg-teal-100 text-teal-600' },
-            { label: 'Valid', value: validCount, icon: CheckCircle2, valueColor: 'text-emerald-700', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200', iconStyle: 'bg-emerald-100 text-emerald-600' },
-            { label: 'Expiring Soon', value: expiringCount, icon: Clock, valueColor: 'text-amber-700', bg: 'bg-amber-50 text-amber-700 border-amber-200', iconStyle: 'bg-amber-100 text-amber-600' },
-            { label: 'Expired', value: expiredCount, icon: XCircle, valueColor: 'text-rose-700', bg: 'bg-rose-50 text-rose-700 border-rose-200', iconStyle: 'bg-rose-100 text-rose-600' },
+            { label: 'Total Records', value: total, icon: Scale, valueColor: 'text-[#8B2A2A] dark:text-[#F1E1CE]', iconStyle: 'bg-[#8B2A2A]/10 text-[#8B2A2A] dark:bg-[#8B2A2A]/25 dark:text-[#F1E1CE]' },
+            { label: 'Valid', value: validCount, icon: CheckCircle2, valueColor: 'text-emerald-700 dark:text-emerald-400', iconStyle: 'bg-emerald-100/80 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400' },
+            { label: 'Expiring Soon', value: expiringCount, icon: Clock, valueColor: 'text-amber-700 dark:text-amber-400', iconStyle: 'bg-amber-100/80 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400' },
+            { label: 'Expired', value: expiredCount, icon: XCircle, valueColor: 'text-rose-700 dark:text-rose-400', iconStyle: 'bg-rose-100/80 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400' },
           ].map((c) => (
-            <Card key={c.label} className={`${c.bg} transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]`}>
-              <CardContent className="p-3">
+            <Card
+              key={c.label}
+              className="bg-[#F1E1CE]/50 dark:bg-stone-900/80 border-2 border-[var(--maroon-700,#8B2A2A)]/60 dark:border-[var(--maroon-700,#8B2A2A)]/80 shadow-xs rounded-xl transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5 hover:border-[var(--maroon-700,#8B2A2A)]"
+            >
+              <CardContent className="p-3.5 sm:p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">{c.label}</p>
-                    <p className={`text-xl font-bold tracking-tight mt-1 ${c.valueColor}`}>{c.value}</p>
+                    <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 font-body">{c.label}</p>
+                    <p className={cn("text-2xl sm:text-3xl font-bold font-display tracking-tight mt-1", c.valueColor)}>{c.value}</p>
                   </div>
-                  <div className={`rounded-xl p-2 shrink-0 ${c.iconStyle}`}>
-                    <c.icon className="h-5 w-5" />
+                  <div className={cn("rounded-xl p-2.5 shrink-0 flex items-center justify-center", c.iconStyle)}>
+                    <c.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
                 </div>
               </CardContent>
