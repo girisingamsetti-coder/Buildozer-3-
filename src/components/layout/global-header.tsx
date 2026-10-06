@@ -133,17 +133,17 @@ export function GlobalHeader() {
 
         <div className="flex flex-col justify-center">
           <span className="text-sm font-bold tracking-wider leading-none text-[#8B2A2A] dark:text-[#F1E1CE] font-display">AICCC</span>
-          <span className="hidden md:inline text-[10px] text-stone-700 dark:text-stone-300 font-medium leading-none mt-1 font-body">Amaravati Integrated Command Control Center</span>
+          <span className="hidden md:inline text-[10px] text-stone-800 dark:text-stone-200 font-bold leading-none mt-1 font-body">Amaravati Integrated Command Control Center</span>
         </div>
 
         <div className="h-7 w-px bg-[#8B2A2A]/20 dark:bg-stone-700 shrink-0 mx-1 sm:mx-2" />
 
         {/* Amaravati Logo */}
-        <div className="flex items-center justify-center shrink-0 px-2 py-0.5 rounded-lg bg-[#241a1a] dark:bg-stone-900 border border-[#3d2626]/40 dark:border-stone-700 shadow-xs">
+        <div className="flex items-center justify-center shrink-0">
           <img
-            src="/amaravati-logo.png"
+            src="/amaravati-brand-logo.png?v=2"
             alt="Amaravati The People's Capital"
-            className="h-7 sm:h-8 md:h-8.5 max-h-9 w-auto object-contain drop-shadow-sm"
+            className="h-9 sm:h-10 md:h-11 max-h-11 w-auto object-contain drop-shadow-xs"
           />
         </div>
       </div>
@@ -155,14 +155,14 @@ export function GlobalHeader() {
             key={idx}
             onClick={() => { if (item.id) setPage(item.id as any) }}
             className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 h-10 rounded-md whitespace-nowrap transition-colors cursor-pointer",
+              "flex items-center gap-1.5 px-3 py-1.5 h-10 rounded-md whitespace-nowrap transition-colors cursor-pointer font-bold",
               item.active
-                ? "bg-[#8B2A2A] text-white font-semibold relative after:absolute after:bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:bg-[#F1E1CE] after:rounded-full shadow-sm"
-                : "text-stone-700 dark:text-stone-300 hover:bg-[#8B2A2A]/15 hover:text-[#8B2A2A] text-sm font-medium"
+                ? "bg-[#8B2A2A] text-white font-bold relative after:absolute after:bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:bg-[#F1E1CE] after:rounded-full shadow-sm"
+                : "text-stone-800 dark:text-stone-200 hover:bg-[#8B2A2A]/15 hover:text-[#8B2A2A] text-sm font-bold"
             )}
           >
             <item.icon className="w-3.5 h-3.5" />
-            <span className="text-xs">{item.label}</span>
+            <span className="text-xs font-bold">{item.label}</span>
           </button>
         ))}
       </div>
@@ -231,7 +231,7 @@ export function GlobalHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="h-9 px-3 bg-white/80 dark:bg-stone-900 border-[#E2CEB7] dark:border-stone-700 hover:bg-[#8B2A2A] hover:text-white hover:border-[#8B2A2A] text-stone-800 dark:text-stone-200 gap-2 rounded-lg font-body shadow-xs transition-colors">
               <UserIcon className="h-4 w-4" />
-              <span className="text-xs font-semibold">{roleLabels[role] || 'User'}</span>
+              <span className="text-xs font-bold">{roleLabels[role] || 'User'}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="bottom" align="end" className="w-56 z-[100] mt-2 font-body">

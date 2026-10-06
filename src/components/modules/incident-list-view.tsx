@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Search, Plus, AlertTriangle, ShieldCheck, Ban, ShieldAlert, X } from 'lucide-react'
+import { Search, Plus, AlertTriangle, ShieldCheck, Ban, ShieldAlert, X, Clock } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -22,6 +22,7 @@ import { StatusBadge } from '@/components/shared/status-badge'
 import { format } from 'date-fns'
 import { TablePagination } from '@/components/shared/table-pagination'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
+import { cn } from '@/lib/utils'
 
 // ---------- types ----------
 interface Incident {
@@ -211,63 +212,44 @@ export default function IncidentListView() {
       {isLoading ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
           {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="h-20 rounded-xl" />
+            <Card key={i} className="bg-[#F1E1CE]/40 dark:bg-stone-900/60 border-2 border-[var(--maroon-700,#8B2A2A)]/40 rounded-xl">
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2">
+                    <Skeleton className="h-3.5 w-24" />
+                    <Skeleton className="h-8 w-14" />
+                  </div>
+                  <Skeleton className="h-11 w-11 rounded-xl" />
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
-          <Card className="bg-teal-50 text-teal-700 border-teal-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Total Incidents</p>
-                  <p className="text-xl font-bold tracking-tight mt-1">{total}</p>
+          {[
+            { label: 'Total Incidents', value: total, icon: ShieldAlert, valueColor: 'text-[#8B2A2A] dark:text-[#F1E1CE]', iconStyle: 'bg-[#8B2A2A]/10 text-[#8B2A2A] dark:bg-[#8B2A2A]/25 dark:text-[#F1E1CE]' },
+            { label: 'Open', value: openCount, icon: AlertTriangle, valueColor: 'text-emerald-700 dark:text-emerald-400', iconStyle: 'bg-emerald-100/80 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400' },
+            { label: 'Under Investigation', value: invCount, icon: Clock, valueColor: 'text-amber-700 dark:text-amber-400', iconStyle: 'bg-amber-100/80 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400' },
+            { label: 'Closed', value: closedCount, icon: ShieldCheck, valueColor: 'text-stone-700 dark:text-stone-300', iconStyle: 'bg-stone-200/80 text-stone-700 dark:bg-stone-800 dark:text-stone-300' },
+          ].map((c) => (
+            <Card
+              key={c.label}
+              className="bg-[#F1E1CE]/50 dark:bg-stone-900/80 border-2 border-[var(--maroon-700,#8B2A2A)]/60 dark:border-[var(--maroon-700,#8B2A2A)]/80 shadow-xs rounded-xl transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5 hover:border-[var(--maroon-700,#8B2A2A)]"
+            >
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 font-body">{c.label}</p>
+                    <p className={cn("text-2xl sm:text-3xl font-bold font-display tracking-tight mt-1", c.valueColor)}>{c.value}</p>
+                  </div>
+                  <div className={cn("rounded-xl p-2.5 shrink-0 flex items-center justify-center", c.iconStyle)}>
+                    <c.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
                 </div>
-                <div className="rounded-xl p-2 shrink-0 bg-teal-100 text-teal-600">
-                  <ShieldAlert className="h-5 w-5" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-emerald-50 text-emerald-700 border-emerald-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Open</p>
-                  <p className="text-xl font-bold tracking-tight mt-1 text-emerald-700">{openCount}</p>
-                </div>
-                <div className="rounded-xl p-2 shrink-0 bg-emerald-100 text-emerald-600">
-                  <AlertTriangle className="h-5 w-5" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-amber-50 text-amber-700 border-amber-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Under Investigation</p>
-                  <p className="text-xl font-bold tracking-tight mt-1 text-amber-700">{invCount}</p>
-                </div>
-                <div className="rounded-xl p-2 shrink-0 bg-amber-100 text-amber-600">
-                  <ShieldAlert className="h-5 w-5" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-50 text-slate-700 border-slate-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Closed</p>
-                  <p className="text-xl font-bold tracking-tight mt-1 text-slate-700">{closedCount}</p>
-                </div>
-                <div className="rounded-xl p-2 shrink-0 bg-slate-100 text-slate-600">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
 
