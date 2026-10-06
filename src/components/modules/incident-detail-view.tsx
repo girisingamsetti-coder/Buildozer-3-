@@ -119,7 +119,7 @@ export default function IncidentDetailView() {
   const [followUpAction, setFollowUpAction] = useState('')
   const [followUpPerson, setFollowUpPerson] = useState('')
   const [followUpDue, setFollowUpDue] = useState('')
-  const [newStatus, setNewStatus] = useState('')
+  const [activeTab, setActiveTab] = useState(pageParams?.tab || 'overview')
   const { data, isLoading } = useQuery<{ data: IncidentDetail }>({ queryKey: ['incident', id], queryFn: () => fetch(`/api/incidents/${id}?t=${Date.now()}`).then((r) => r.json()), enabled: !!id })
   const incident = data?.data
 
@@ -233,7 +233,7 @@ export default function IncidentDetailView() {
         </div>
       </div>
 
-      <Tabs defaultValue="overview" className="w-full flex-1 flex flex-col min-h-0 overflow-hidden">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col min-h-0 overflow-hidden">
         <TabsList className="flex w-full overflow-x-auto justify-start shrink-0 h-auto mb-6 bg-transparent p-0 gap-2">
           <TabsTrigger value="overview" className="flex-1 h-10 px-4 gap-2 !border !border-slate-300 !bg-white !text-black !font-bold !rounded-md !shadow-sm data-[state=inactive]:shadow-[0_3px_0_0_#cbd5e1] !transform-none hover:!bg-slate-50 data-[state=active]:!border-[#0d9488] transition-all">
             Overview

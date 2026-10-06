@@ -61,9 +61,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
 
-    if (!body.incidentType || !body.date || !body.description) {
-      return errorResponse('incidentType, date, and description are required', 400)
-    }
+    const incidentType = body.incidentType || 'Other'
+    const date = body.date ? new Date(body.date) : new Date()
+    const description = body.description || body.briefIncidentTitle || 'Incident reported'
 
     // Auto-generate incident number: INC-YYYY-XXX
     const year = new Date().getFullYear()
@@ -76,8 +76,8 @@ export async function POST(req: NextRequest) {
     const incident = await db.incident.create({
       data: {
         incidentNumber,
-        incidentType: body.incidentType,
-        date: new Date(body.date),
+        incidentType,
+        date,
         time: body.time || null,
         reportedBy: body.reportedBy || null,
         dateTimeReported: body.dateTimeReported ? new Date(body.dateTimeReported) : null,
