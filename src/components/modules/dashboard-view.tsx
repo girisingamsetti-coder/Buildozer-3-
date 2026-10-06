@@ -827,7 +827,7 @@ export default function DashboardView() {
           className={cn("rounded-xl bg-[#F1E1CE] border border-[#E2CEB7] dark:bg-[#F1E1CE]/15 dark:border-[#F1E1CE]/25 px-4 py-2 flex items-center justify-between shadow-xs", isMobile ? "w-full" : "shrink-0")}
         >
           <div>
-            <h1 className="text-base font-bold tracking-tight text-[#8B2A2A] dark:text-[#F1E1CE] border-0 bg-transparent p-0 shadow-none"><span className="welcome-text font-script italic text-lg">{getGreeting()}</span> 👋</h1>
+            <h1 className="text-base font-bold tracking-tight text-[#8B2A2A] dark:text-[#F1E1CE] border-0 bg-transparent p-0 shadow-none"><span className="welcome-text font-body font-semibold text-base">{getGreeting()}</span> 👋</h1>
             <p className="text-[11px] text-stone-600 dark:text-stone-400 flex items-center gap-1 font-body">
               <CalendarDays className="h-3 w-3 text-[#8B2A2A]" />
               {getTodayFormatted()}
