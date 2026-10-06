@@ -239,7 +239,7 @@ export default function ComplianceView() {
       </div>
 
       {/* ====== 4 Stat Tiles (Overall + 3 sections) ====== */}
-      {sitesLoading ? (
+      {(sitesLoading || dataLoading) ? (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} className="h-20 rounded-xl" />

@@ -174,7 +174,9 @@ function WorkersTab() {
       </div>
 
       {/* Results count */}
-      {!isLoading && (
+      {isLoading ? (
+        <Skeleton className="h-4 w-36" />
+      ) : (
         <p className="text-sm text-muted-foreground">
           Showing {workers.length} worker{workers.length !== 1 ? 's' : ''}
         </p>
@@ -349,7 +351,9 @@ function StaffTab() {
       </div>
 
       {/* Results count */}
-      {!isLoading && (
+      {isLoading ? (
+        <Skeleton className="h-4 w-36" />
+      ) : (
         <p className="text-sm text-muted-foreground">
           Showing {filteredUsers.length} staff member{filteredUsers.length !== 1 ? 's' : ''}
         </p>

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import {
@@ -61,6 +62,7 @@ export function GlobalHeader() {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [notifOpen, setNotifOpen] = useState(false)
   const [clearing, setClearing] = useState(false)
+  const [notifLoading, setNotifLoading] = useState(true)
 
   const demoUsers = [
     { name: 'Demo Admin', role: 'ADMIN' as const },
@@ -71,10 +73,16 @@ export function GlobalHeader() {
   ]
 
   const fetchNotifications = useCallback(() => {
+    setNotifLoading(true)
     fetch('/api/notifications')
       .then(r => r.ok ? r.json() : [])
-      .then(setNotifications)
-      .catch(() => { })
+      .then(data => {
+        setNotifications(data)
+        setNotifLoading(false)
+      })
+      .catch(() => {
+        setNotifLoading(false)
+      })
   }, [])
 
   useEffect(() => {
@@ -184,7 +192,19 @@ export function GlobalHeader() {
               </div>
             </div>
             <ScrollArea className="h-80 max-h-[50vh]">
-              {notifications.length === 0 ? (
+              {notifLoading ? (
+                <div className="p-3 space-y-3">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="flex items-start gap-2.5 py-1">
+                      <Skeleton className="h-2.5 w-2.5 rounded-full mt-1.5 shrink-0" />
+                      <div className="space-y-1.5 flex-1 min-w-0">
+                        <Skeleton className="h-3.5 w-3/4" />
+                        <Skeleton className="h-2.5 w-full" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : notifications.length === 0 ? (
                 <p className="text-sm text-slate-500 text-center py-8">No notifications</p>
               ) : (
                 <div className="divide-y divide-slate-100">

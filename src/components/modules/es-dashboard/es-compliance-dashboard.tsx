@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -163,9 +164,51 @@ export default function EsComplianceDashboard({ addNewButton }: EsComplianceDash
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-96 gap-3 text-muted-foreground">
-        <Clock className="w-8 h-8 animate-spin text-teal-600" />
-        <div className="text-sm font-medium">Ingesting 280 E&S compliance submissions...</div>
+      <div className="space-y-5 pb-10">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Skeleton className="h-7 w-56 rounded-lg" />
+          <div className="flex gap-2">
+            <Skeleton className="h-9 w-28 rounded-lg" />
+            <Skeleton className="h-9 w-28 rounded-lg" />
+          </div>
+        </div>
+
+        {/* Filter bar skeleton */}
+        <div className="p-3 border rounded-xl bg-card shadow-sm flex flex-wrap gap-3">
+          <Skeleton className="h-9 w-40 rounded-lg" />
+          <Skeleton className="h-9 w-40 rounded-lg" />
+          <Skeleton className="h-9 w-40 rounded-lg" />
+          <Skeleton className="h-9 w-48 flex-1 min-w-[160px] rounded-lg" />
+        </div>
+
+        {/* Metric cards skeleton */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Card key={i} className="shadow-sm">
+              <CardContent className="p-4 space-y-2">
+                <Skeleton className="h-3 w-20" />
+                <Skeleton className="h-7 w-16" />
+                <Skeleton className="h-2 w-full rounded-full" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Content table skeleton */}
+        <div className="p-4 border rounded-xl bg-card shadow-sm space-y-3">
+          <div className="flex items-center justify-between border-b pb-2">
+            <Skeleton className="h-4 w-36" />
+            <Skeleton className="h-6 w-20 rounded-md" />
+          </div>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-4 py-2 border-b/40">
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-4 flex-1" />
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-5 w-16 rounded-full" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

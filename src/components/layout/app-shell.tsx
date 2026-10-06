@@ -42,16 +42,64 @@ const ProcurementView = lazy(() => import('@/app/procurement/page'))
 
 function LoadingFallback() {
   return (
-    <div className="space-y-4 p-6">
-      <Skeleton className="h-8 w-64" />
-      <Skeleton className="h-4 w-96" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-        <Skeleton className="h-28 rounded-xl" />
-        <Skeleton className="h-28 rounded-xl" />
-        <Skeleton className="h-28 rounded-xl" />
-        <Skeleton className="h-28 rounded-xl" />
+    <div className="space-y-4 p-4 sm:p-6 w-full h-full overflow-hidden">
+      {/* Page Title & Actions Skeleton */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="space-y-2">
+          <Skeleton className="h-7 w-48 rounded-lg" />
+          <Skeleton className="h-4 w-72 max-w-full" />
+        </div>
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-9 w-24 rounded-lg" />
+          <Skeleton className="h-9 w-32 rounded-lg" />
+        </div>
       </div>
-      <Skeleton className="h-64 rounded-xl mt-4" />
+
+      {/* Metric Tiles Skeleton */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="rounded-xl border bg-card p-3 space-y-2 shadow-sm">
+            <div className="flex items-center justify-between">
+              <Skeleton className="h-3 w-20" />
+              <Skeleton className="h-7 w-7 rounded-lg" />
+            </div>
+            <Skeleton className="h-6 w-16" />
+            <Skeleton className="h-2 w-full rounded-full" />
+          </div>
+        ))}
+      </div>
+
+      {/* Main Content Grid Skeleton */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-[350px]">
+        <div className="lg:col-span-2 rounded-xl border bg-card p-4 space-y-3 shadow-sm flex flex-col">
+          <div className="flex items-center justify-between pb-2 border-b">
+            <Skeleton className="h-4 w-36" />
+            <Skeleton className="h-7 w-20 rounded-md" />
+          </div>
+          <div className="space-y-2 flex-1">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-3 py-2 border-b/50">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-4 flex-1" />
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-6 w-16 rounded-full" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-xl border bg-card p-4 space-y-3 shadow-sm flex flex-col">
+          <div className="flex items-center justify-between pb-2 border-b">
+            <Skeleton className="h-4 w-28" />
+            <Skeleton className="h-7 w-7 rounded-md" />
+          </div>
+          <Skeleton className="h-44 w-full rounded-lg" />
+          <div className="space-y-2">
+            <Skeleton className="h-3 w-full" />
+            <Skeleton className="h-3 w-4/5" />
+            <Skeleton className="h-3 w-3/5" />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

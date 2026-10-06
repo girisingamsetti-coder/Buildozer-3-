@@ -605,7 +605,21 @@ export default function AttendanceView() {
 
 
       {/* Summary Stats */}
-      {!isLoading && (
+      {isLoading ? (
+        <div className={cn("grid gap-3", isMobile ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-5")}>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Card key={i} className="h-full border shadow-sm">
+              <CardContent className="p-3 h-full flex items-center gap-2">
+                <Skeleton className="h-8 w-8 rounded-xl shrink-0" />
+                <div className="space-y-1.5 flex-1 min-w-0">
+                  <Skeleton className="h-5 w-14" />
+                  <Skeleton className="h-3 w-20" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
         <div className={cn("grid gap-3", isMobile ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-5")}>
           <Card className="h-full bg-teal-50 text-teal-700 border-teal-200 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]">
             <CardContent className="p-3 h-full flex items-center gap-2">

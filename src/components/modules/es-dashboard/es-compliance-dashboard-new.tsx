@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Clock, AlertTriangle, Layers, TreePine, HardHat, Car, Users, CheckCircle2, ChevronDown, ExternalLink
 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
@@ -36,9 +37,57 @@ export default function EsComplianceDashboardNew({ addNewButton }: EsComplianceD
 
   if (loading || !data) {
     return (
-      <div className="flex flex-col items-center justify-center h-96 gap-3 text-muted-foreground">
-        <Clock className="w-8 h-8 animate-spin text-teal-600" />
-        <div className="text-sm font-medium">Aggregating 145MB E&S JSON Data...</div>
+      <div className="space-y-6 pb-10">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-7 w-64 rounded-lg" />
+          <Skeleton className="h-9 w-32 rounded-lg" />
+        </div>
+
+        {/* 1. Top-Level KPI Strip Skeleton */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Card key={i} className="shadow-sm">
+              <CardContent className="p-4 space-y-3">
+                <Skeleton className="h-3 w-28" />
+                <Skeleton className="h-8 w-20" />
+                <Skeleton className="h-3 w-36" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* 2. Middle Grid: Heatmap + Trends Skeleton */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <Card className="lg:col-span-2 shadow-sm">
+            <CardHeader className="pb-2">
+              <Skeleton className="h-5 w-48" />
+              <Skeleton className="h-3.5 w-64" />
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-3 py-2 border-b/40">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 flex-1" />
+                  <Skeleton className="h-5 w-16 rounded-full" />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-sm">
+            <CardHeader className="pb-2">
+              <Skeleton className="h-5 w-36" />
+              <Skeleton className="h-3.5 w-48" />
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Skeleton className="h-48 w-full rounded-lg" />
+              <div className="space-y-1.5">
+                <Skeleton className="h-3 w-full" />
+                <Skeleton className="h-3 w-4/5" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }

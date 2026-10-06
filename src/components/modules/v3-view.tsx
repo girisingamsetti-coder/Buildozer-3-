@@ -17,6 +17,7 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import * as XLSX from 'xlsx'
 
 import { V3CompliancePayload, DashboardFilterState, ProjectData } from './v3/v3-types'
@@ -186,9 +187,88 @@ export default function V3View() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-full min-h-[500px] gap-3 text-muted-foreground">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-        <span className="text-sm font-medium">Loading Amaravati E&S Compliance Intelligence...</span>
+      <div className="flex flex-col gap-4 p-4 md:p-4 pb-12 md:pb-16 h-full overflow-y-auto bg-muted/10">
+        {/* Filter Bar Skeleton */}
+        <div className="rounded-xl border bg-card p-3 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2 flex-1">
+            <Skeleton className="h-9 w-32 rounded-lg" />
+            <Skeleton className="h-9 w-40 rounded-lg" />
+            <Skeleton className="h-9 w-44 rounded-lg" />
+            <Skeleton className="h-9 w-36 rounded-lg" />
+            <Skeleton className="h-9 w-48 flex-1 min-w-[160px] rounded-lg" />
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Skeleton className="h-8 w-24 rounded-full" />
+            <Skeleton className="h-9 w-28 rounded-lg" />
+          </div>
+        </div>
+
+        {/* KPI Row Skeleton */}
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="rounded-xl border bg-card p-3 shadow-sm space-y-2">
+              <div className="flex items-center justify-between">
+                <Skeleton className="h-3 w-16" />
+                <Skeleton className="h-7 w-7 rounded-lg" />
+              </div>
+              <Skeleton className="h-7 w-20" />
+              <div className="flex items-center gap-1.5 pt-1">
+                <Skeleton className="h-4 w-12 rounded-full" />
+                <Skeleton className="h-3 w-16" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Attention Card Skeleton */}
+        <div className="rounded-xl border border-amber-200/60 bg-amber-50/30 dark:bg-amber-950/10 p-3.5 flex items-center gap-3">
+          <Skeleton className="h-8 w-8 rounded-full shrink-0" />
+          <div className="space-y-1.5 flex-1">
+            <Skeleton className="h-4 w-48" />
+            <Skeleton className="h-3 w-3/4" />
+          </div>
+          <Skeleton className="h-7 w-24 rounded-lg shrink-0" />
+        </div>
+
+        {/* Tabs Bar Skeleton */}
+        <div className="flex items-center gap-1.5 border-b pb-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-9 w-28 rounded-lg" />
+          ))}
+        </div>
+
+        {/* Main Content Grid Skeleton */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-[360px]">
+          <div className="lg:col-span-2 rounded-xl border bg-card p-4 space-y-3 shadow-sm">
+            <div className="flex items-center justify-between pb-2 border-b">
+              <Skeleton className="h-5 w-48" />
+              <Skeleton className="h-7 w-24 rounded-md" />
+            </div>
+            <Skeleton className="h-64 w-full rounded-lg" />
+            <div className="grid grid-cols-3 gap-2 pt-2">
+              <Skeleton className="h-12 rounded-lg" />
+              <Skeleton className="h-12 rounded-lg" />
+              <Skeleton className="h-12 rounded-lg" />
+            </div>
+          </div>
+          <div className="rounded-xl border bg-card p-4 space-y-3 shadow-sm">
+            <div className="flex items-center justify-between pb-2 border-b">
+              <Skeleton className="h-5 w-36" />
+              <Skeleton className="h-6 w-16 rounded-full" />
+            </div>
+            <div className="space-y-2.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-between py-2 border-b/40">
+                  <div className="space-y-1">
+                    <Skeleton className="h-3.5 w-32" />
+                    <Skeleton className="h-2.5 w-20" />
+                  </div>
+                  <Skeleton className="h-6 w-14 rounded-full" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

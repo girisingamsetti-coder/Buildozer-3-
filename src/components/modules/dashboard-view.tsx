@@ -603,24 +603,78 @@ function RecentActivityItem({ item, onPhotoClick }: { item: ActivityItem; onPhot
 
 function DashboardSkeleton() {
   return (
-    <div className="space-y-2 h-full">
-      <div className="space-y-1">
-        <Skeleton className="h-6 w-48" />
-        <Skeleton className="h-3 w-72" />
+    <div className="space-y-3 p-1 sm:p-2 h-full flex flex-col overflow-hidden">
+      {/* Header bar skeleton */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 shrink-0">
+        <div className="space-y-1.5">
+          <Skeleton className="h-6 w-48 rounded-lg" />
+          <Skeleton className="h-3.5 w-72" />
+        </div>
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-8 w-24 rounded-lg" />
+          <Skeleton className="h-8 w-32 rounded-lg" />
+        </div>
       </div>
-      <div className="flex-1 grid grid-cols-5 gap-2">
+
+      {/* Row 1: 5 KPI stat cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 shrink-0">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="rounded-xl" />
+          <div key={i} className="rounded-xl border bg-card p-3 space-y-2 shadow-sm">
+            <div className="flex items-center justify-between">
+              <Skeleton className="h-3 w-16" />
+              <Skeleton className="h-6 w-6 rounded-md" />
+            </div>
+            <Skeleton className="h-6 w-20" />
+            <Skeleton className="h-2 w-full rounded-full" />
+          </div>
         ))}
       </div>
-      <div className="flex-1 grid grid-cols-4 gap-2">
+
+      {/* Row 2: 4 donut/chart cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 shrink-0">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="rounded-xl" />
+          <div key={i} className="rounded-xl border bg-card p-3 space-y-2.5 shadow-sm">
+            <div className="flex items-center justify-between">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-5 w-5 rounded-md" />
+            </div>
+            <div className="flex items-center justify-center py-2">
+              <Skeleton className="h-20 w-20 rounded-full" />
+            </div>
+            <div className="grid grid-cols-2 gap-1.5 pt-1">
+              <Skeleton className="h-3 w-full" />
+              <Skeleton className="h-3 w-full" />
+            </div>
+          </div>
         ))}
       </div>
-      <div className="flex-1 grid grid-cols-4 gap-2">
-        <Skeleton className="rounded-xl" />
-        <Skeleton className="col-span-3 rounded-xl" />
+
+      {/* Row 3: Bottom grid with bar charts & activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2.5 flex-1 min-h-[200px]">
+        <div className="lg:col-span-2 rounded-xl border bg-card p-3.5 space-y-3 shadow-sm flex flex-col">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-4 w-36" />
+            <Skeleton className="h-6 w-20 rounded-md" />
+          </div>
+          <Skeleton className="h-full min-h-[120px] w-full rounded-lg flex-1" />
+        </div>
+        <div className="rounded-xl border bg-card p-3.5 space-y-3 shadow-sm flex flex-col">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-4 w-28" />
+            <Skeleton className="h-6 w-6 rounded-md" />
+          </div>
+          <div className="space-y-2.5 flex-1">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-2.5 py-1">
+                <Skeleton className="h-8 w-8 rounded-full shrink-0" />
+                <div className="space-y-1.5 flex-1">
+                  <Skeleton className="h-3 w-3/4" />
+                  <Skeleton className="h-2.5 w-1/2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -661,7 +715,7 @@ export default function DashboardView() {
     queryFn: () => fetch('/api/dashboard').then(r => r.json()),
   })
 
-  const { data: activityData } = useQuery<{ items: ActivityItem[]; count: number }>({
+  const { data: activityData, isLoading: activityLoading } = useQuery<{ items: ActivityItem[]; count: number }>({
     queryKey: ['dashboard', 'recent-activity', activeTab],
     queryFn: () => fetch(`/api/dashboard/recent-activity?type=${activeTab}`).then(r => r.json()),
   })
@@ -1082,7 +1136,19 @@ export default function DashboardView() {
                   <TabsContent key={t.id} value={t.id} className="mt-0 flex-1 min-h-0">
                     <ScrollArea className="h-full pr-1">
                       <div className="space-y-0.5">
-                        {activityItems.length === 0 ? (
+                        {activityLoading ? (
+                          <div className="space-y-2 p-1">
+                            {Array.from({ length: 4 }).map((_, i) => (
+                              <div key={i} className="flex items-center gap-2.5 p-2 rounded-lg">
+                                <Skeleton className="h-8 w-8 rounded-full shrink-0" />
+                                <div className="space-y-1.5 flex-1 min-w-0">
+                                  <Skeleton className="h-3 w-3/4" />
+                                  <Skeleton className="h-2.5 w-1/2" />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : activityItems.length === 0 ? (
                           <p className="text-xs text-slate-400 dark:text-slate-500 text-center py-8">No recent activity</p>
                         ) : (
                           <AnimatePresence mode="popLayout">

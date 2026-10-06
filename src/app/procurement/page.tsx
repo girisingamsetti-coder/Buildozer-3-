@@ -5,6 +5,7 @@ import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styles from './page.module.scss';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   ProcurementData,
   PROCUREMENT_CATEGORIES,
@@ -279,27 +280,43 @@ export default function ProcurementDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {rows.length > 0 ? rows.map((row, i) => (
-                  <tr key={row.id}>
-                    <td className={styles['col-sno']}>{i + 1}</td>
-                    <td className={styles['col-work']}>{row.workNumber || '-'}</td>
-                    <td className={styles['col-name']}>{row.projectName || '-'}</td>
-                    <td className={styles['col-date']}>{row.adminSanctionDate || '-'}</td>
-                    <td className={styles['col-date']}>{row.technicalSanctionDate || '-'}</td>
-                    <td className={styles['col-num']}>{row.estimatedCostInrCr || '-'}</td>
-                    <td className={styles['col-cat']}>{row.procurementCategory || '-'}</td>
-                    <td className={styles['col-cat']}>{row.procurementMethod || '-'}</td>
-                    <td className={styles['col-actions']}>
-                      <div className={styles['proc-actions-cell']}>
-                        <button className={styles['proc-icon-btn']} title="Edit"><i className="bi bi-pencil"></i></button>
-                        <button className={`${styles['proc-icon-btn']} ${styles['danger']}`} title="Delete"><i className="bi bi-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>
-                )) : (
+                {loading ? (
+                  Array.from({ length: 6 }).map((_, idx) => (
+                    <tr key={idx}>
+                      <td className={styles['col-sno']}><Skeleton className="h-4 w-6" /></td>
+                      <td className={styles['col-work']}><Skeleton className="h-4 w-20" /></td>
+                      <td className={styles['col-name']}><Skeleton className="h-4 w-40" /></td>
+                      <td className={styles['col-date']}><Skeleton className="h-4 w-20" /></td>
+                      <td className={styles['col-date']}><Skeleton className="h-4 w-20" /></td>
+                      <td className={styles['col-num']}><Skeleton className="h-4 w-16" /></td>
+                      <td className={styles['col-cat']}><Skeleton className="h-4 w-20" /></td>
+                      <td className={styles['col-cat']}><Skeleton className="h-4 w-20" /></td>
+                      <td className={styles['col-actions']}><Skeleton className="h-6 w-14 rounded" /></td>
+                    </tr>
+                  ))
+                ) : rows.length > 0 ? (
+                  rows.map((row, i) => (
+                    <tr key={row.id}>
+                      <td className={styles['col-sno']}>{i + 1}</td>
+                      <td className={styles['col-work']}>{row.workNumber || '-'}</td>
+                      <td className={styles['col-name']}>{row.projectName || '-'}</td>
+                      <td className={styles['col-date']}>{row.adminSanctionDate || '-'}</td>
+                      <td className={styles['col-date']}>{row.technicalSanctionDate || '-'}</td>
+                      <td className={styles['col-num']}>{row.estimatedCostInrCr || '-'}</td>
+                      <td className={styles['col-cat']}>{row.procurementCategory || '-'}</td>
+                      <td className={styles['col-cat']}>{row.procurementMethod || '-'}</td>
+                      <td className={styles['col-actions']}>
+                        <div className={styles['proc-actions-cell']}>
+                          <button className={styles['proc-icon-btn']} title="Edit"><i className="bi bi-pencil"></i></button>
+                          <button className={`${styles['proc-icon-btn']} ${styles['danger']}`} title="Delete"><i className="bi bi-trash"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
                   <tr>
                     <td colSpan={9} style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>
-                      {loading ? 'Loading procurement data...' : 'No procurement data found.'}
+                      No procurement data found.
                     </td>
                   </tr>
                 )}

@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
@@ -449,25 +450,27 @@ export default function EsFormsView() {
   const queryClient = useQueryClient()
 
   const [ohsOpen, setOhsOpen] = useState(false)
-  const { data: ohsSubmissions = [], refetch: refreshOHS } = useQuery<OHSSubmission[]>({ queryKey: ['es-forms', 'OHS'], queryFn: () => fetchSubmissions('OHS') })
+  const { data: ohsSubmissions = [], isLoading: ohsLoading, refetch: refreshOHS } = useQuery<OHSSubmission[]>({ queryKey: ['es-forms', 'OHS'], queryFn: () => fetchSubmissions('OHS') })
 
   const [rsOpen, setRsOpen] = useState(false)
-  const { data: rsSubmissions = [], refetch: refreshRS } = useQuery<RoadSafetySubmission[]>({ queryKey: ['es-forms', 'RoadSafety'], queryFn: () => fetchSubmissions('RoadSafety') })
+  const { data: rsSubmissions = [], isLoading: rsLoading, refetch: refreshRS } = useQuery<RoadSafetySubmission[]>({ queryKey: ['es-forms', 'RoadSafety'], queryFn: () => fetchSubmissions('RoadSafety') })
 
   const [evmOpen, setEvmOpen] = useState(false)
-  const { data: evmSubmissions = [], refetch: refreshEVM } = useQuery<EVMSubmission[]>({ queryKey: ['es-forms', 'EVM'], queryFn: () => fetchSubmissions('EVM') })
+  const { data: evmSubmissions = [], isLoading: evmLoading, refetch: refreshEVM } = useQuery<EVMSubmission[]>({ queryKey: ['es-forms', 'EVM'], queryFn: () => fetchSubmissions('EVM') })
 
   const [ssOpen, setSsOpen] = useState(false)
-  const { data: ssSubmissions = [], refetch: refreshSS } = useQuery<SocialSafeguardSubmission[]>({ queryKey: ['es-forms', 'SocialSafeguard'], queryFn: () => fetchSubmissions('SocialSafeguard') })
+  const { data: ssSubmissions = [], isLoading: ssLoading, refetch: refreshSS } = useQuery<SocialSafeguardSubmission[]>({ queryKey: ['es-forms', 'SocialSafeguard'], queryFn: () => fetchSubmissions('SocialSafeguard') })
 
   const [stOpen, setStOpen] = useState(false)
-  const { data: stSubmissions = [], refetch: refreshST } = useQuery<SkillTrainingSubmission[]>({ queryKey: ['es-forms', 'SkillTraining'], queryFn: () => fetchSubmissions('SkillTraining') })
+  const { data: stSubmissions = [], isLoading: stLoading, refetch: refreshST } = useQuery<SkillTrainingSubmission[]>({ queryKey: ['es-forms', 'SkillTraining'], queryFn: () => fetchSubmissions('SkillTraining') })
 
   const [llOpen, setLlOpen] = useState(false)
-  const { data: llSubmissions = [], refetch: refreshLL } = useQuery<LabourLawSubmission[]>({ queryKey: ['es-forms', 'LabourLaw'], queryFn: () => fetchSubmissions('LabourLaw') })
+  const { data: llSubmissions = [], isLoading: llLoading, refetch: refreshLL } = useQuery<LabourLawSubmission[]>({ queryKey: ['es-forms', 'LabourLaw'], queryFn: () => fetchSubmissions('LabourLaw') })
 
   const [genOpen, setGenOpen] = useState(false)
-  const { data: genSubmissions = [], refetch: refreshGen } = useQuery<GenderSubmission[]>({ queryKey: ['es-forms', 'Gender'], queryFn: () => fetchSubmissions('Gender') })
+  const { data: genSubmissions = [], isLoading: genLoading, refetch: refreshGen } = useQuery<GenderSubmission[]>({ queryKey: ['es-forms', 'Gender'], queryFn: () => fetchSubmissions('Gender') })
+
+  const isSubmissionsLoading = ohsLoading || rsLoading || evmLoading || ssLoading || stLoading || llLoading || genLoading
 
   const [editingEntry, setEditingEntry] = useState<FormEntry | null>(null)
 
@@ -665,6 +668,27 @@ export default function EsFormsView() {
 
           {/* Project Summary Table */}
           <ProjectSummaryTable forms={forms} />
+
+          {/* Submissions Loading Skeleton */}
+          {isSubmissionsLoading && (
+            <Card className="shrink-0 shadow-sm">
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-center justify-between pb-2 border-b">
+                  <Skeleton className="h-5 w-48" />
+                  <Skeleton className="h-7 w-28 rounded-md" />
+                </div>
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="flex items-center gap-4 py-2 border-b/40">
+                    <Skeleton className="h-4 w-36" />
+                    <Skeleton className="h-4 w-28" />
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-4 flex-1" />
+                    <Skeleton className="h-6 w-20 rounded-full" />
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
 
           {/* Road Safety Submissions Dashboard */}
           {rsSubmissions.length > 0 && (

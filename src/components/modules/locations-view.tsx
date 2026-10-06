@@ -221,17 +221,17 @@ export default function LocationsView() {
           <div className="inline-flex items-center gap-1.5 rounded-lg border bg-card px-3 py-1.5 text-xs">
             <Home className="h-3.5 w-3.5 text-teal-600" />
             <span className="text-muted-foreground">Camps</span>
-            <span className="font-semibold">{activeCamps}<span className="text-muted-foreground font-normal">/{camps.length}</span></span>
+            <span className="font-semibold">{campsLoading ? <Skeleton className="h-3.5 w-8 inline-block align-middle" /> : <>{activeCamps}<span className="text-muted-foreground font-normal">/{camps.length}</span></>}</span>
           </div>
           <div className="inline-flex items-center gap-1.5 rounded-lg border bg-card px-3 py-1.5 text-xs">
             <Users className="h-3.5 w-3.5 text-amber-600" />
             <span className="text-muted-foreground">Workers</span>
-            <span className="font-semibold">{totalWorkers}</span>
+            <span className="font-semibold">{campsLoading ? <Skeleton className="h-3.5 w-6 inline-block align-middle" /> : totalWorkers}</span>
           </div>
           <div className="inline-flex items-center gap-1.5 rounded-lg border bg-card px-3 py-1.5 text-xs">
             <Building2 className="h-3.5 w-3.5 text-indigo-600" />
             <span className="text-muted-foreground">Capacity</span>
-            <span className="font-semibold">{totalCapacity}</span>
+            <span className="font-semibold">{campsLoading ? <Skeleton className="h-3.5 w-8 inline-block align-middle" /> : totalCapacity}</span>
           </div>
           <TableExportButton
             rows={camps}
@@ -312,9 +312,17 @@ export default function LocationsView() {
       <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
         <CardContent className="p-0 flex-1 min-h-0 flex flex-col">
           {campsLoading ? (
-            <div className="p-4 space-y-2">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton key={i} className="h-10 w-full" />
+            <div className="p-4 space-y-3">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4 py-2 border-b">
+                  <Skeleton className="h-4 w-12" />
+                  <Skeleton className="h-4 w-40 flex-1" />
+                  <Skeleton className="h-4 w-28" />
+                  <Skeleton className="h-4 w-28" />
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-5 w-16 rounded-full" />
+                  <Skeleton className="h-7 w-14 rounded-md" />
+                </div>
               ))}
             </div>
           ) : sorted.length === 0 ? (

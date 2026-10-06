@@ -443,7 +443,18 @@ function AddTrainingDialog({ open, onOpenChange }: {
 
                 <div className="overflow-y-auto border rounded-md p-2 max-h-[340px]">
                   {workersLoading ? (
-                    <div className="p-8 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>
+                    <div className="space-y-2 p-2">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <div key={i} className="flex items-center gap-3 p-2 rounded-md border border-slate-100 dark:border-slate-800">
+                          <Skeleton className="h-4 w-4 rounded shrink-0" />
+                          <div className="space-y-1.5 flex-1 min-w-0">
+                            <Skeleton className="h-3.5 w-36" />
+                            <Skeleton className="h-2.5 w-24" />
+                          </div>
+                          <Skeleton className="h-5 w-16 rounded-full" />
+                        </div>
+                      ))}
+                    </div>
                   ) : workers.length === 0 ? (
                     <div className="p-8 text-center text-sm text-muted-foreground flex flex-col items-center">
                       <Users className="h-10 w-10 opacity-20 mb-2" />
