@@ -1295,7 +1295,27 @@ function MenuConfigurationTab() {
 
 export default function SettingsView() {
   const { userName, role, contractorName } = useAuthStore()
+  const setPage = useNavStore(s => s.setPage)
   const queryClient = useQueryClient()
+
+  if (role !== 'ADMIN') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[420px] text-center p-8 space-y-4">
+        <div className="w-16 h-16 rounded-full bg-[var(--peach,#F1E1CE)] flex items-center justify-center text-[var(--maroon-700,#8B2A2A)] shadow-sm">
+          <Shield className="w-8 h-8" />
+        </div>
+        <div className="space-y-1.5 max-w-md">
+          <h2 className="text-2xl font-bold font-display text-foreground">Admin Access Required</h2>
+          <p className="text-sm text-muted-foreground font-body">
+            The Settings module is restricted to Administrator users only. You are currently signed in as a <span className="font-semibold text-foreground">{roleLabels[role] || role}</span>.
+          </p>
+        </div>
+        <Button onClick={() => setPage('dashboard')} className="mt-2">
+          Back to Overview
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">

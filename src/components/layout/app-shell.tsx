@@ -7,7 +7,7 @@ import { GlobalHeader } from './global-header'
 import { TopBar } from './top-bar'
 import { MobileBottomNav } from './mobile-bottom-nav'
 import { LoginScreen } from './login-screen'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 
 // Dialog-based wizards (always mounted, conditionally visible)
@@ -142,8 +142,16 @@ const deviceDimensions: Record<string, { width: string, height: string }> = {
 
 export function AppShell() {
   const isAuthenticated = useAuthStore(s => s.isAuthenticated)
+  const role = useAuthStore(s => s.role)
   const activePage = useNavStore(s => s.activePage)
+  const setPage = useNavStore(s => s.setPage)
   const mobileView = useNavStore(s => s.mobileView)
+
+  useEffect(() => {
+    if (activePage === 'settings' && role !== 'ADMIN') {
+      setPage('dashboard')
+    }
+  }, [activePage, role, setPage])
 
   if (!isAuthenticated) return <LoginScreen />
 

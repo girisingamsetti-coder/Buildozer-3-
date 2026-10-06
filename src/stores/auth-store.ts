@@ -28,6 +28,7 @@ export const rolePermissions: Record<UserRole, {
   canViewAadhaar: boolean
   canViewMedical: boolean
   canViewPOSH: boolean
+  canAccessSettings: boolean
   modules: string[]
 }> = {
   ADMIN: {
@@ -37,6 +38,7 @@ export const rolePermissions: Record<UserRole, {
     canViewAadhaar: true,
     canViewMedical: true,
     canViewPOSH: true,
+    canAccessSettings: true,
     modules: ['dashboard', 'workers', 'locations', 'medical', 'training', 'attendance', 'incidents', 'grievance', 'vehicles', 'hazardous', 'legal', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'settings', 'reports', 'procurement'],
   },
   SAFETY_OFFICER: {
@@ -46,7 +48,8 @@ export const rolePermissions: Record<UserRole, {
     canViewAadhaar: true,
     canViewMedical: true,
     canViewPOSH: false,
-    modules: ['dashboard', 'workers', 'locations', 'medical', 'training', 'attendance', 'incidents', 'grievance', 'vehicles', 'hazardous', 'legal', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'settings', 'reports', 'procurement'],
+    canAccessSettings: false,
+    modules: ['dashboard', 'workers', 'locations', 'medical', 'training', 'attendance', 'incidents', 'grievance', 'vehicles', 'hazardous', 'legal', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'reports', 'procurement'],
   },
   PMC: {
     canEdit: false,
@@ -55,7 +58,8 @@ export const rolePermissions: Record<UserRole, {
     canViewAadhaar: false,
     canViewMedical: false,
     canViewPOSH: false,
-    modules: ['dashboard', 'workers', 'locations', 'medical', 'training', 'incidents', 'vehicles', 'legal', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'settings', 'reports', 'procurement'],
+    canAccessSettings: false,
+    modules: ['dashboard', 'workers', 'locations', 'medical', 'training', 'incidents', 'vehicles', 'legal', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'reports', 'procurement'],
   },
   HR_COORDINATOR: {
     canEdit: true,
@@ -64,7 +68,8 @@ export const rolePermissions: Record<UserRole, {
     canViewAadhaar: true,
     canViewMedical: false,
     canViewPOSH: false,
-    modules: ['dashboard', 'workers', 'locations', 'attendance', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'settings', 'reports', 'procurement'],
+    canAccessSettings: false,
+    modules: ['dashboard', 'workers', 'locations', 'attendance', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'reports', 'procurement'],
   },
   LEGAL_ADVISOR: {
     canEdit: false,
@@ -73,7 +78,8 @@ export const rolePermissions: Record<UserRole, {
     canViewAadhaar: false,
     canViewMedical: false,
     canViewPOSH: true,
-    modules: ['dashboard', 'workers', 'locations', 'legal', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'settings', 'reports', 'procurement'],
+    canAccessSettings: false,
+    modules: ['dashboard', 'workers', 'locations', 'legal', 'compliance', 'es-forms', 'es-forms-2', 'v3', 'reports', 'procurement'],
   },
 }
 

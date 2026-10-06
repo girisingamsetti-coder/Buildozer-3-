@@ -17,7 +17,8 @@ import {
   ChevronDown,
   LogOut,
   Calendar,
-  ShoppingCart
+  ShoppingCart,
+  Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -240,11 +241,12 @@ export function GlobalHeader() {
                 <p className="text-xs leading-none text-muted-foreground">{roleLabels[role] || role}</p>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setPage('settings')} className="cursor-pointer">
-              <UserIcon className="h-4 w-4 mr-2" />
-              Profile
-            </DropdownMenuItem>
+            {role === 'ADMIN' && (
+              <DropdownMenuItem onClick={() => setPage('settings')} className="cursor-pointer">
+                <Settings className="h-4 w-4 mr-2" />
+                Settings
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem onClick={() => setPage('attendance')} className="cursor-pointer">
               <Calendar className="h-4 w-4 mr-2" />
               Calendar

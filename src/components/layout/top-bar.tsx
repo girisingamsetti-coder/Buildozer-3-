@@ -3,7 +3,7 @@
 import { useNavStore, pageTitles } from '@/stores/nav-store'
 import { useAuthStore, roleLabels } from '@/stores/auth-store'
 import { Button } from '@/components/ui/button'
-import { Bell, User, Monitor, Moon, Sun, Trash2, Calendar, LogOut, User as UserIcon, Users } from 'lucide-react'
+import { Bell, User, Monitor, Moon, Sun, Trash2, Calendar, LogOut, User as UserIcon, Users, Settings } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/utils'
@@ -171,11 +171,12 @@ export function TopBar() {
                 <p className="text-xs leading-none text-muted-foreground">{roleLabels[role] || role}</p>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setPage('settings')} className="cursor-pointer">
-              <UserIcon className="h-4 w-4 mr-2" />
-              Profile
-            </DropdownMenuItem>
+            {role === 'ADMIN' && (
+              <DropdownMenuItem onClick={() => setPage('settings')} className="cursor-pointer">
+                <Settings className="h-4 w-4 mr-2" />
+                Settings
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem onClick={() => setPage('attendance')} className="cursor-pointer">
               <Calendar className="h-4 w-4 mr-2" />
               Calendar
