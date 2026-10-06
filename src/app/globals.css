@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-display: var(--font-display), "Marcellus", Georgia, serif;
+  --font-display: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-script: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-sans: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -92,7 +92,7 @@
   --ring: #8B2A2A;
 
   /* Typography tokens */
-  --font-display: "Marcellus", serif;
+  --font-display: "Poppins", sans-serif;
   --font-script: "Poppins", sans-serif;
   --font-body: "Poppins", sans-serif;
 
@@ -142,7 +142,7 @@
   --input: #332220;
   --ring: #9E3535;
 
-  --font-display: "Marcellus", serif;
+  --font-display: "Poppins", sans-serif;
   --font-script: "Poppins", sans-serif;
   --font-body: "Poppins", sans-serif;
 
@@ -181,7 +181,7 @@
     font-family: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
-  /* Headings & Titles: Marcellus, serif */
+  /* Headings & Titles: Poppins, sans-serif */
   h1,
   h2,
   h3,
@@ -191,7 +191,7 @@
   .font-display,
   [data-slot="card-title"],
   [data-slot="dialog-title"] {
-    font-family: var(--font-display), "Marcellus", Georgia, serif;
+    font-family: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     letter-spacing: -0.01em;
   }
 
@@ -213,6 +213,7 @@
   h1,
   .title-bg,
   .page-title-banner {
+    font-family: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     background-color: var(--peach, #F1E1CE);
     color: #3D1818;
     padding: 0.25rem 0.75rem;
