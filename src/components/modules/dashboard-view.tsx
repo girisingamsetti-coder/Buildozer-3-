@@ -66,6 +66,8 @@ interface DashboardData {
   incidentBreakdown: { type: string; count: number }[]
   trainingStatusBreakdown: { status: string; count: number }[]
   genderBreakdown: { gender: string; count: number }[]
+  medicalGenderBreakdown?: { male: number; female: number }
+  trainingGenderBreakdown?: { male: number; female: number }
   // New fields
   skilledWorkers: number
   unskilledWorkers: number
@@ -787,8 +789,10 @@ export default function DashboardView() {
   let filteredTabItems = rawActivityItems
   
   if (activeTab === 'new-entry') {
-    filteredTabItems = rawActivityItems.filter(item => item.kind === 'new-entry')
-  } else if (activeTab !== 'all') {
+    filteredTabItems = rawActivityItems.filter(item => item.kind === 'entry')
+  } else if (activeTab === 'photos') {
+    filteredTabItems = rawActivityItems.filter(item => item.kind === 'photo')
+  } else {
     filteredTabItems = rawActivityItems.filter(item => item.kind === activeTab)
   }
 
@@ -820,12 +824,12 @@ export default function DashboardView() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className={cn("rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/80 to-teal-50/60 border border-teal-100/60 dark:from-teal-950/40 dark:via-cyan-900/20 dark:to-teal-950/30 dark:border-teal-900/50 px-4 py-2 flex items-center justify-between", isMobile ? "w-full" : "shrink-0")}
+          className={cn("rounded-xl bg-[#F1E1CE] border border-[#E2CEB7] dark:bg-[#F1E1CE]/15 dark:border-[#F1E1CE]/25 px-4 py-2 flex items-center justify-between shadow-xs", isMobile ? "w-full" : "shrink-0")}
         >
           <div>
-            <h1 className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-100">{getGreeting()} 👋</h1>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1">
-              <CalendarDays className="h-3 w-3" />
+            <h1 className="text-base font-bold tracking-tight text-[#8B2A2A] dark:text-[#F1E1CE] border-0 bg-transparent p-0 shadow-none"><span className="welcome-text font-script italic text-lg">{getGreeting()}</span> 👋</h1>
+            <p className="text-[11px] text-stone-600 dark:text-stone-400 flex items-center gap-1 font-body">
+              <CalendarDays className="h-3 w-3 text-[#8B2A2A]" />
               {getTodayFormatted()}
             </p>
           </div>

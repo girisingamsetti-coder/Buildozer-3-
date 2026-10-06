@@ -83,7 +83,7 @@ export function LoginScreen() {
   const canLogin = username.trim().length > 0 && password.trim().length > 0 && selectedRole !== null
 
   return (
-    <div className="relative min-h-screen flex items-stretch overflow-hidden">
+    <div className="relative min-h-screen flex items-stretch overflow-hidden font-body">
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -94,18 +94,18 @@ export function LoginScreen() {
       {/* Right-aligned content */}
       <div className="relative z-10 ml-auto flex flex-col items-center justify-center gap-5 p-6 lg:p-12 lg:pr-16 w-full max-w-sm">
         {/* Logo on top */}
-        <div className="flex flex-col items-center justify-center gap-2 mb-4 bg-white/80 p-4 rounded-2xl backdrop-blur-sm w-full">
-          <h1 className="text-3xl font-black text-slate-800 tracking-tight">AICCC</h1>
-          <h2 className="text-sm font-semibold text-teal-600 uppercase tracking-widest">E&S Management</h2>
+        <div className="flex flex-col items-center justify-center gap-2 mb-4 bg-white/80 p-4 rounded-2xl backdrop-blur-sm w-full border border-[#E2CEB7]/50 shadow-sm">
+          <h1 className="text-3xl font-black text-stone-900 tracking-tight font-display">AICCC</h1>
+          <h2 className="text-sm font-semibold text-[#8B2A2A] uppercase tracking-widest font-script italic">E&S Management</h2>
         </div>
 
         {/* Login card */}
-        <Card className="w-full bg-white/80 backdrop-blur-sm border-white/50">
+        <Card className="w-full bg-white/85 backdrop-blur-sm border-white/60 shadow-lg">
           <CardHeader className="pb-2 px-4 pt-4">
-            <CardTitle className="text-base">Sign In</CardTitle>
-            <CardDescription className="text-xs">Enter your credentials to continue.</CardDescription>
+            <CardTitle className="text-base font-display">Sign In</CardTitle>
+            <CardDescription className="text-xs font-body">Enter your credentials to continue.</CardDescription>
           </CardHeader>
-          <CardContent className="px-4 pb-4 space-y-3">
+          <CardContent className="px-4 pb-4 space-y-3 font-body">
             {/* Username */}
             <div className="space-y-1.5">
               <Label htmlFor="username" className="text-xs font-medium">Username</Label>
@@ -141,7 +141,7 @@ export function LoginScreen() {
             <Button
               variant="ghost"
               size="sm"
-              className="w-full text-xs text-muted-foreground hover:text-foreground"
+              className="w-full text-xs text-muted-foreground hover:text-foreground hover:bg-[#F1E1CE]/50"
               onClick={() => setShowDemo(d => !d)}
             >
               {showDemo ? <ChevronUp className="h-3.5 w-3.5 mr-1" /> : <ChevronDown className="h-3.5 w-3.5 mr-1" />}
@@ -150,7 +150,7 @@ export function LoginScreen() {
 
             {/* Demo Credentials List */}
             {showDemo && (
-              <div className="max-h-[200px] overflow-y-auto space-y-1 pr-1">
+              <div className="max-h-[200px] overflow-y-auto space-y-1 pr-1 font-body">
                 {demoCredentials.map((demo) => {
                   const Icon = demo.icon
                   const isSelected = selectedRole === demo.role
@@ -159,31 +159,31 @@ export function LoginScreen() {
                       key={demo.role}
                       onClick={() => handleDemoSelect(demo)}
                       className={cn(
-                        'w-full text-left p-2 rounded-lg border-2 transition-all duration-200',
+                        'w-full text-left p-2 rounded-lg border-2 transition-all duration-200 cursor-pointer',
                         isSelected
-                          ? 'border-teal-500 bg-teal-50/50 dark:bg-teal-900/10'
+                          ? 'border-[#8B2A2A] bg-[#F1E1CE]/60 dark:bg-[#8B2A2A]/20'
                           : 'border-transparent bg-muted/50 hover:bg-muted'
                       )}
                     >
                       <div className="flex items-center gap-2.5">
                         <div className={cn(
                           'rounded-md p-1.5',
-                          isSelected ? 'bg-teal-100 dark:bg-teal-900/30' : 'bg-background'
+                          isSelected ? 'bg-[#F1E1CE] text-[#8B2A2A]' : 'bg-background'
                         )}>
                           <Icon className={cn(
                             'h-3.5 w-3.5',
-                            isSelected ? 'text-teal-600 dark:text-teal-400' : 'text-muted-foreground'
+                            isSelected ? 'text-[#8B2A2A]' : 'text-muted-foreground'
                           )} />
                         </div>
                         <div className="min-w-0 flex-1">
                           <p className={cn(
                             'font-semibold text-xs leading-tight',
-                            isSelected ? 'text-teal-700 dark:text-teal-300' : ''
+                            isSelected ? 'text-[#8B2A2A]' : ''
                           )}>{demo.label}</p>
                           <p className="text-[10px] text-muted-foreground">{demo.desc}</p>
                         </div>
                         {isSelected && (
-                          <span className="text-[10px] text-teal-600 font-medium shrink-0">✓</span>
+                          <span className="text-[10px] text-[#8B2A2A] font-bold shrink-0">✓</span>
                         )}
                       </div>
                     </button>
@@ -194,10 +194,10 @@ export function LoginScreen() {
 
             {/* PMC Site Selector */}
             {pmcSelected && (
-              <div className="p-2.5 rounded-lg border border-teal-200 bg-teal-50/30 space-y-1.5">
+              <div className="p-2.5 rounded-lg border border-[#E2CEB7] bg-[#F1E1CE]/30 space-y-1.5">
                 <div className="flex items-center gap-1.5">
-                  <MapPin className="h-3 w-3 text-teal-600" />
-                  <Label className="text-[11px] font-medium text-teal-700">Select Site</Label>
+                  <MapPin className="h-3 w-3 text-[#8B2A2A]" />
+                  <Label className="text-[11px] font-medium text-[#8B2A2A]">Select Site</Label>
                 </div>
                 {sitesLoading ? (
                   <Skeleton className="h-8 w-full rounded-md" />

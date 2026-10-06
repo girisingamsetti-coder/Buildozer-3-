@@ -171,9 +171,9 @@ export function SidebarNav() {
       {/* Sidebar */}
       <aside className={cn(
         'text-sidebar-foreground flex flex-col shrink-0 transition-[width] duration-300 ease-in-out relative',
-        // Light teal gradient background (dark slate in dark mode)
-        'bg-gradient-to-b from-teal-50/60 via-teal-50/30 to-cyan-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950',
-        'border border-teal-100/60 dark:border-slate-800 shadow-sm',
+        // Warm peach subtle gradient background (dark in dark mode)
+        'bg-gradient-to-b from-[#F1E1CE]/35 via-white to-[#F1E1CE]/15 dark:from-stone-950 dark:via-stone-900 dark:to-stone-950',
+        'border border-[#E2CEB7]/60 dark:border-stone-800 shadow-xs',
         // Mobile: fixed, slide in/out
         'fixed top-0 left-0 z-50 h-full w-64',
         sidebarOpen ? 'translate-x-0' : '-translate-x-full',
@@ -183,7 +183,7 @@ export function SidebarNav() {
       )}>
         {/* Header */}
         <div className={cn(
-          'flex items-center border-b border-teal-100/60 dark:border-slate-800 shrink-0 lg:hidden',
+          'flex items-center border-b border-[#E2CEB7]/60 dark:border-stone-800 shrink-0 lg:hidden',
           collapsed ? 'h-14 justify-center px-2' : 'h-20 px-3'
         )}>
 
@@ -192,7 +192,7 @@ export function SidebarNav() {
             variant="ghost"
             size="icon"
             className={cn(
-              'text-teal-700/50 dark:text-slate-400 hover:text-teal-700 dark:hover:text-slate-200 hover:bg-teal-100/60 dark:hover:bg-slate-800 h-8 w-8 shrink-0 ml-auto',
+              'text-stone-600 dark:text-stone-400 hover:text-[#8B2A2A] dark:hover:text-[#F1E1CE] hover:bg-[#F1E1CE]/60 dark:hover:bg-stone-800 h-8 w-8 shrink-0 ml-auto',
               forceMobile ? '' : 'lg:hidden'
             )}
             onClick={() => setSidebarOpen(false)}
@@ -203,7 +203,7 @@ export function SidebarNav() {
 
         {/* Nav items */}
         <ScrollArea className="flex-1 min-h-0 py-3 px-2.5">
-          <nav className="space-y-0.5">
+          <nav className="space-y-1">
             {filteredItems.map(item => {
               const Icon = item.icon
               const isActive = activePage === item.id || (item.id === 'workers' && ['worker-detail', 'worker-form', 'worker-fitness', 'attendance'].includes(activePage)) || (item.id === 'incidents' && ['incident-detail', 'incident-form'].includes(activePage)) || (item.id === 'vehicles' && activePage === 'vehicle-detail')
@@ -213,13 +213,13 @@ export function SidebarNav() {
                   key={item.id}
                   onClick={() => { setPage(item.id); setSidebarOpen(false) }}
                   className={cn(
-                    'w-full flex items-center rounded-lg text-sm font-medium transition-colors relative',
+                    'w-full flex items-center rounded-lg text-sm font-medium transition-all relative font-body',
                     collapsed
                       ? 'justify-center px-0 py-2.5'
                       : 'gap-3 px-3 py-2.5',
                     isActive
-                      ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-semibold shadow-sm'
-                      : 'text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300'
+                      ? 'bg-gradient-to-r from-[#8B2A2A] to-[#A23636] text-white font-semibold shadow-sm shadow-[#8B2A2A]/20'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-[#F1E1CE] hover:text-[#8B2A2A] dark:hover:bg-[#8B2A2A]/20 dark:hover:text-[#F1E1CE]'
                   )}
                 >
                   <Icon className="h-4.5 w-4.5 shrink-0" />
@@ -233,7 +233,7 @@ export function SidebarNav() {
                     <TooltipTrigger asChild>
                       {btn}
                     </TooltipTrigger>
-                    <TooltipContent side="right" className="font-medium">
+                    <TooltipContent side="right" className="font-medium font-body">
                       {item.label}
                     </TooltipContent>
                   </Tooltip>
@@ -248,7 +248,7 @@ export function SidebarNav() {
 
         {/* User Actions section (above collapse toggle) */}
         <div className={cn(
-          'shrink-0 border-t border-teal-100/60 py-2',
+          'shrink-0 border-t border-[#E2CEB7]/60 dark:border-stone-800 py-2',
           collapsed ? 'px-1.5' : 'px-2.5'
         )}>
           <div className={cn('flex gap-2', collapsed ? 'flex-col items-center' : 'flex-row items-center justify-center')}>
@@ -259,7 +259,7 @@ export function SidebarNav() {
                   variant="ghost"
                   size="icon"
                   onClick={toggleMobileView}
-                  className={cn("h-9 w-9 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-sm", mobileView ? "text-teal-600 bg-teal-100 dark:text-teal-400 dark:bg-teal-900/30" : "text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300")}
+                  className={cn("h-9 w-9 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-xs", mobileView ? "text-[#8B2A2A] bg-[#F1E1CE] dark:text-[#F1E1CE] dark:bg-[#8B2A2A]/30" : "text-stone-600 dark:text-stone-300 hover:bg-[#F1E1CE] hover:text-[#8B2A2A] dark:hover:bg-stone-800 dark:hover:text-stone-200")}
                 >
                   <Smartphone className="h-4 w-4" />
                 </Button>
@@ -274,12 +274,12 @@ export function SidebarNav() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300 transition-all duration-200 hover:scale-110 hover:shadow-sm"
+                  className="relative h-9 w-9 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-[#F1E1CE] hover:text-[#8B2A2A] dark:hover:bg-stone-800 dark:hover:text-stone-200 transition-all duration-200 hover:scale-110 hover:shadow-xs"
                   title="Notifications"
                 >
                   <Bell className="h-4 w-4" />
                   {unreadCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-background dark:ring-slate-900">
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[var(--maroon-700,#8B2A2A)] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-background dark:ring-stone-900">
                       {unreadCount}
                     </span>
                   )}
@@ -287,9 +287,9 @@ export function SidebarNav() {
               </PopoverTrigger>
               <PopoverContent side="top" align="center" className="w-64 p-0 rounded-xl mb-2">
                 <div className="flex items-center justify-between p-3 border-b">
-                  <h3 className="font-semibold text-sm">Notifications</h3>
+                  <h3 className="font-semibold text-sm font-display text-foreground">Notifications</h3>
                   <div className="flex items-center gap-2">
-                    {unreadCount > 0 && <Badge variant="secondary" className="text-xs">{unreadCount} new</Badge>}
+                    {unreadCount > 0 && <Badge variant="secondary" className="text-xs bg-[#F1E1CE] text-[#8B2A2A]">{unreadCount} new</Badge>}
                     {notifications.length > 0 && (
                       <Button
                         variant="ghost"
@@ -308,8 +308,8 @@ export function SidebarNav() {
                   {notifLoading ? (
                     <div className="p-3 space-y-3">
                       {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="flex items-start gap-2 py-1">
-                          <Skeleton className="h-2 w-2 rounded-full mt-1.5 shrink-0" />
+                        <div key={i} className="flex items-start gap-2.5 py-1">
+                          <Skeleton className="h-2.5 w-2.5 rounded-full mt-1.5 shrink-0" />
                           <div className="space-y-1.5 flex-1 min-w-0">
                             <Skeleton className="h-3.5 w-3/4" />
                             <Skeleton className="h-2.5 w-full" />
@@ -318,19 +318,16 @@ export function SidebarNav() {
                       ))}
                     </div>
                   ) : notifications.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-8">No notifications</p>
+                    <p className="text-sm text-muted-foreground text-center py-8 font-body">No notifications</p>
                   ) : (
-                    <div className="divide-y">
+                    <div className="divide-y divide-border">
                       {notifications.map(n => (
-                        <div key={n.id} className="p-3 hover:bg-muted/50 transition-colors">
+                        <div key={n.id} className="p-3 hover:bg-[#F1E1CE]/30 dark:hover:bg-stone-800/50 transition-colors">
                           <div className="flex items-start gap-2">
-                            <span className={cn(
-                              'mt-1 inline-block w-2 h-2 rounded-full shrink-0',
-                              n.priority === 'Critical' ? 'bg-red-500' : n.priority === 'High' ? 'bg-amber-500' : 'bg-teal-500'
-                            )} />
+                            <span className={cn('mt-1 inline-block w-2 h-2 rounded-full shrink-0', n.priority === 'Critical' ? 'bg-red-500' : n.priority === 'High' ? 'bg-amber-500' : 'bg-[var(--maroon-700,#8B2A2A)]')} />
                             <div className="min-w-0">
-                              <p className="text-sm font-medium truncate">{n.title}</p>
-                              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{n.message}</p>
+                              <p className="text-sm font-medium truncate font-body">{n.title}</p>
+                              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2 font-body">{n.message}</p>
                             </div>
                           </div>
                         </div>
@@ -347,15 +344,15 @@ export function SidebarNav() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-9 w-9 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-slate-700 hover:text-teal-800 dark:hover:text-teal-300 transition-all duration-200 hover:scale-110 hover:shadow-sm"
+                  className="h-9 w-9 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-[#F1E1CE] hover:text-[#8B2A2A] dark:hover:bg-stone-800 dark:hover:text-stone-200 transition-all duration-200 hover:scale-110 hover:shadow-xs"
                   title="Profile"
                 >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 text-white flex items-center justify-center text-xs font-bold">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#8B2A2A] to-[#A23636] text-white flex items-center justify-center text-xs font-bold">
                     {getInitials(userName || 'User')}
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent side="right" align="start" className="w-56">
+              <DropdownMenuContent side="right" align="start" className="w-56 font-body">
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">{userName || 'User'}</p>
@@ -378,7 +375,7 @@ export function SidebarNav() {
                     <span>Switch User</span>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
+                    <DropdownMenuSubContent className="font-body">
                       {demoUsers.map((u) => (
                         <DropdownMenuItem
                           key={u.role}
@@ -406,14 +403,14 @@ export function SidebarNav() {
         <button
           onClick={() => setSidebarCollapsed(!collapsed)}
           className={cn(
-            'absolute top-1/2 -translate-y-1/2 -right-3 z-10 h-6 w-6 rounded-full border border-teal-200 bg-white shadow-sm items-center justify-center hover:bg-teal-50 hover:shadow-md transition-all',
+            'absolute top-1/2 -translate-y-1/2 -right-3 z-10 h-6 w-6 rounded-full border border-[#E2CEB7] bg-white shadow-sm items-center justify-center hover:bg-[#F1E1CE] hover:shadow-md transition-all',
             forceMobile ? 'hidden' : 'hidden lg:flex'
           )}
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed
-            ? <ChevronRight className="h-3.5 w-3.5 text-teal-600" />
-            : <ChevronLeft className="h-3.5 w-3.5 text-teal-600" />
+            ? <ChevronRight className="h-3.5 w-3.5 text-[#8B2A2A]" />
+            : <ChevronLeft className="h-3.5 w-3.5 text-[#8B2A2A]" />
           }
         </button>
       </aside>
@@ -421,7 +418,7 @@ export function SidebarNav() {
       {/* Mobile floating menu button (also shown on desktop when mobile view is forced) */}
       <button
         className={cn(
-          'fixed bottom-4 left-4 z-30 h-12 w-12 rounded-full bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-lg shadow-teal-500/30 flex items-center justify-center active:scale-95 transition-transform',
+          'fixed bottom-4 left-4 z-30 h-12 w-12 rounded-full bg-gradient-to-r from-[#8B2A2A] to-[#A23636] text-white shadow-lg shadow-[#8B2A2A]/30 flex items-center justify-center active:scale-95 transition-transform',
           forceMobile ? '' : 'lg:hidden'
         )}
         onClick={() => setSidebarOpen(true)}

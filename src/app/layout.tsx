@@ -1,13 +1,29 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Marcellus, Cormorant_Garamond, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "next-themes";
 
-const inter = Inter({
+const marcellus = Marcellus({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-script",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -22,8 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className={`${inter.variable} ${inter.className} font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
+    <html lang="en" className={`${marcellus.variable} ${cormorant.variable} ${poppins.variable}`} suppressHydrationWarning>
+      <body className={`${marcellus.variable} ${cormorant.variable} ${poppins.variable} font-body antialiased bg-background text-foreground`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <QueryProvider>
             {children}

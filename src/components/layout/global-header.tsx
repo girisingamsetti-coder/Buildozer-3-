@@ -116,7 +116,7 @@ export function GlobalHeader() {
   ]
 
   return (
-    <header className="flex items-center justify-between h-14 shrink-0 bg-[#2b3544] text-white select-none w-full shadow-md z-[60]">
+    <header className="flex items-center justify-between h-14 shrink-0 bg-[#241a1a] text-white select-none w-full shadow-md z-[60] border-b border-[#3d2626]">
       {/* Left Section: Logos & Title */}
       <div className="flex items-center h-full px-2 sm:px-4 gap-2 sm:gap-3 shrink-0">
         {/* AP Govt Logo */}
@@ -128,14 +128,14 @@ export function GlobalHeader() {
           />
         </div>
 
-        <div className="h-7 w-px bg-slate-600 shrink-0" />
+        <div className="h-7 w-px bg-stone-700 shrink-0" />
 
         <div className="flex flex-col justify-center">
-          <span className="text-sm font-bold tracking-wider leading-none text-white">AICCC</span>
-          <span className="hidden md:inline text-[10px] text-slate-300 font-medium leading-none mt-1">Amaravati Integrated Command Control Center</span>
+          <span className="text-sm font-bold tracking-wider leading-none text-white font-display">AICCC</span>
+          <span className="hidden md:inline text-[10px] text-stone-300 font-medium leading-none mt-1 font-body">Amaravati Integrated Command Control Center</span>
         </div>
 
-        <div className="h-7 w-px bg-slate-600 shrink-0 mx-1 sm:mx-2" />
+        <div className="h-7 w-px bg-stone-700 shrink-0 mx-1 sm:mx-2" />
 
         {/* Amaravati Logo */}
         <div className="flex items-center justify-center shrink-0">
@@ -148,16 +148,16 @@ export function GlobalHeader() {
       </div>
 
       {/* Middle Section: Navigation */}
-      <div className="flex-1 min-w-0 flex items-center h-full overflow-x-auto no-scrollbar gap-1 px-4">
+      <div className="flex-1 min-w-0 flex items-center h-full overflow-x-auto no-scrollbar gap-1 px-4 font-body">
         {navItems.map((item, idx) => (
           <button
             key={idx}
             onClick={() => { if (item.id) setPage(item.id as any) }}
             className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 h-10 rounded-md whitespace-nowrap transition-colors",
+              "flex items-center gap-1.5 px-3 py-1.5 h-10 rounded-md whitespace-nowrap transition-colors cursor-pointer",
               item.active
-                ? "bg-slate-700/80 text-white font-semibold relative after:absolute after:bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:bg-white after:rounded-full"
-                : "text-slate-300 hover:bg-slate-700/50 hover:text-white text-sm"
+                ? "bg-[#8B2A2A] text-white font-semibold relative after:absolute after:bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:bg-[#F1E1CE] after:rounded-full shadow-sm"
+                : "text-stone-300 hover:bg-[#8B2A2A]/40 hover:text-white text-sm"
             )}
           >
             <item.icon className="w-3.5 h-3.5" />
@@ -167,24 +167,24 @@ export function GlobalHeader() {
       </div>
 
       {/* Right Section: Notifications & Profile */}
-      <div className="flex items-center gap-2 px-4 shrink-0 h-full border-l border-slate-600 pl-4 ml-2">
+      <div className="flex items-center gap-2 px-4 shrink-0 h-full border-l border-stone-700 pl-4 ml-2">
         {/* Notifications */}
         <Popover open={notifOpen} onOpenChange={setNotifOpen}>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full text-slate-300 hover:text-white hover:bg-slate-700">
+            <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full text-stone-300 hover:text-white hover:bg-stone-800">
               <Bell className="h-4 w-4" />
               {unreadCount > 0 && (
                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent side="bottom" align="end" className="w-72 p-0 rounded-xl mt-2 z-[100] border-slate-200 shadow-xl">
-            <div className="flex items-center justify-between p-3 border-b border-slate-100">
-              <h3 className="font-semibold text-sm">Notifications</h3>
+          <PopoverContent side="bottom" align="end" className="w-72 p-0 rounded-xl mt-2 z-[100] border-border shadow-xl font-body">
+            <div className="flex items-center justify-between p-3 border-b border-border bg-[#F1E1CE]/20">
+              <h3 className="font-semibold text-sm font-display text-foreground">Notifications</h3>
               <div className="flex items-center gap-2">
-                {unreadCount > 0 && <Badge variant="secondary" className="text-[10px] py-0">{unreadCount} new</Badge>}
+                {unreadCount > 0 && <Badge variant="secondary" className="text-[10px] py-0 bg-[#F1E1CE] text-[#8B2A2A]">{unreadCount} new</Badge>}
                 {notifications.length > 0 && (
-                  <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-slate-500 hover:text-red-600" onClick={handleClearAll} disabled={clearing}>
+                  <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground hover:text-red-600" onClick={handleClearAll} disabled={clearing}>
                     <Trash2 className="h-3 w-3 mr-1" />
                     Clear
                   </Button>
@@ -205,16 +205,16 @@ export function GlobalHeader() {
                   ))}
                 </div>
               ) : notifications.length === 0 ? (
-                <p className="text-sm text-slate-500 text-center py-8">No notifications</p>
+                <p className="text-sm text-muted-foreground text-center py-8 font-body">No notifications</p>
               ) : (
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-border">
                   {notifications.map(n => (
-                    <div key={n.id} className="p-3 hover:bg-slate-50 transition-colors">
+                    <div key={n.id} className="p-3 hover:bg-[#F1E1CE]/20 transition-colors">
                       <div className="flex items-start gap-2">
-                        <span className={cn('mt-1 inline-block w-2 h-2 rounded-full shrink-0', n.priority === 'Critical' ? 'bg-red-500' : n.priority === 'High' ? 'bg-amber-500' : 'bg-teal-500')} />
+                        <span className={cn('mt-1 inline-block w-2 h-2 rounded-full shrink-0', n.priority === 'Critical' ? 'bg-red-500' : n.priority === 'High' ? 'bg-amber-500' : 'bg-[var(--maroon-700,#8B2A2A)]')} />
                         <div className="min-w-0">
-                          <p className="text-sm font-medium truncate text-slate-900">{n.title}</p>
-                          <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">{n.message}</p>
+                          <p className="text-sm font-medium truncate text-foreground font-body">{n.title}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2 font-body">{n.message}</p>
                         </div>
                       </div>
                     </div>
@@ -228,16 +228,16 @@ export function GlobalHeader() {
         {/* Profile */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="h-9 px-3 bg-slate-700/50 border-slate-600 hover:bg-slate-700 hover:text-white text-slate-200 gap-2 rounded-md">
+            <Button variant="outline" className="h-9 px-3 bg-stone-800/80 border-stone-700 hover:bg-stone-800 hover:text-white text-stone-200 gap-2 rounded-md font-body">
               <UserIcon className="h-4 w-4" />
               <span className="text-xs font-medium">{roleLabels[role] || 'User'}</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="bottom" align="end" className="w-56 z-[100] mt-2">
+          <DropdownMenuContent side="bottom" align="end" className="w-56 z-[100] mt-2 font-body">
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none text-slate-900">{userName || 'User'}</p>
-                <p className="text-xs leading-none text-slate-500">{roleLabels[role] || role}</p>
+                <p className="text-sm font-medium leading-none text-foreground">{userName || 'User'}</p>
+                <p className="text-xs leading-none text-muted-foreground">{roleLabels[role] || role}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -256,7 +256,7 @@ export function GlobalHeader() {
                 <span>Switch User</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
-                <DropdownMenuSubContent className="z-[110]">
+                <DropdownMenuSubContent className="z-[110] font-body">
                   {demoUsers.map((u) => (
                     <DropdownMenuItem
                       key={u.role}
@@ -264,7 +264,7 @@ export function GlobalHeader() {
                       className="cursor-pointer flex flex-col items-start gap-0.5 py-2"
                     >
                       <span className="font-medium text-sm">{u.name}</span>
-                      <span className="text-xs text-slate-500">{roleLabels[u.role]}</span>
+                      <span className="text-xs text-muted-foreground">{roleLabels[u.role]}</span>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuSubContent>

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Marcellus&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -6,7 +7,16 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-display), "Marcellus", Georgia, serif;
+  --font-script: var(--font-script), "Cormorant Garamond", Georgia, serif;
+  --font-body: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-maroon-700: #8B2A2A;
+  --color-maroon-800: #742222;
+  --color-maroon-900: #5C1D1D;
+  --color-peach: #F1E1CE;
+  --color-peach-light: #FBF7F0;
+  --color-peach-dark: #E2CEB7;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -40,9 +50,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-teal: #0d9488;
-  --color-teal-light: #14b8a6;
-  --color-teal-dark: #0f766e;
+  --color-teal: #8B2A2A;
+  --color-teal-light: #A83838;
+  --color-teal-dark: #742222;
   --color-warn: #f59e0b;
   --color-warn-light: #fbbf24;
   --color-critical: #ef4444;
@@ -52,73 +62,104 @@
 
 :root {
   --radius: 0.75rem;
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #fdfbf7;
+  --foreground: #1c1917;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #1c1917;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #0d9488;
+  --popover-foreground: #1c1917;
+
+  /* Theme tokens: Maroon & Peach */
+  --maroon-700: #8B2A2A;
+  --maroon-800: #742222;
+  --maroon-900: #5C1D1D;
+  --peach: #F1E1CE;
+  --peach-light: #FBF7F0;
+  --peach-dark: #E2CEB7;
+
+  /* Primary Button & Accent */
+  --primary: #8B2A2A;
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f0fdfa;
-  --accent-foreground: #0f172a;
+  --secondary: #F1E1CE;
+  --secondary-foreground: #4A1E1E;
+  --muted: #f7f2ea;
+  --muted-foreground: #78716c;
+  --accent: #F1E1CE;
+  --accent-foreground: #4A1E1E;
   --destructive: #ef4444;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #0d9488;
-  /* Chart palette: harmonious, no blue/indigo */
-  --chart-1: #0d9488;
+  --border: #e7ded4;
+  --input: #e7ded4;
+  --ring: #8B2A2A;
+
+  /* Typography tokens */
+  --font-display: "Marcellus", serif;
+  --font-script: "Cormorant Garamond", serif;
+  --font-body: "Poppins", sans-serif;
+
+  /* Chart palette */
+  --chart-1: #8B2A2A;
   --chart-2: #f97316;
   --chart-3: #eab308;
   --chart-4: #ec4899;
   --chart-5: #ef4444;
-  /* Sidebar: clean light theme */
-  --sidebar: #f0fdfa;
-  --sidebar-foreground: #134e4a;
-  --sidebar-primary: #0d9488;
+
+  /* Sidebar */
+  --sidebar: #fdfbf7;
+  --sidebar-foreground: #3d1c1c;
+  --sidebar-primary: #8B2A2A;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ccfbf1;
-  --sidebar-accent-foreground: #0f766e;
-  --sidebar-border: #99f6e4;
-  --sidebar-ring: #0d9488;
+  --sidebar-accent: #F1E1CE;
+  --sidebar-accent-foreground: #8B2A2A;
+  --sidebar-border: #E2CEB7;
+  --sidebar-ring: #8B2A2A;
 }
 
 .dark {
-  --background: #020617;
-  --foreground: #e2e8f0;
-  --card: #0f172a;
-  --card-foreground: #e2e8f0;
-  --popover: #0f172a;
-  --popover-foreground: #e2e8f0;
-  --primary: #14b8a6;
+  --background: #0f0a0a;
+  --foreground: #f5ede4;
+  --card: #1a1212;
+  --card-foreground: #f5ede4;
+  --popover: #1a1212;
+  --popover-foreground: #f5ede4;
+
+  --maroon-700: #9E3535;
+  --maroon-800: #8B2A2A;
+  --maroon-900: #742222;
+  --peach: #3D261E;
+  --peach-light: rgba(241, 225, 206, 0.15);
+  --peach-dark: rgba(241, 225, 206, 0.25);
+
+  --primary: #9E3535;
   --primary-foreground: #ffffff;
-  --secondary: #1e293b;
-  --secondary-foreground: #e2e8f0;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #0f1f1e;
-  --accent-foreground: #e2e8f0;
+  --secondary: #291a18;
+  --secondary-foreground: #f5ede4;
+  --muted: #241816;
+  --muted-foreground: #a89f91;
+  --accent: rgba(241, 225, 206, 0.12);
+  --accent-foreground: #F1E1CE;
   --destructive: #f87171;
-  --border: #1e293b;
-  --input: #1e293b;
-  --ring: #14b8a6;
-  --chart-1: #14b8a6;
+  --border: #332220;
+  --input: #332220;
+  --ring: #9E3535;
+
+  --font-display: "Marcellus", serif;
+  --font-script: "Cormorant Garamond", serif;
+  --font-body: "Poppins", sans-serif;
+
+  --chart-1: #9E3535;
   --chart-2: #fb923c;
   --chart-3: #facc15;
   --chart-4: #f472b6;
   --chart-5: #f87171;
-  --sidebar: #042f2e;
-  --sidebar-foreground: #ccfbf1;
-  --sidebar-primary: #14b8a6;
+
+  --sidebar: #140d0d;
+  --sidebar-foreground: #F1E1CE;
+  --sidebar-primary: #9E3535;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #115e59;
-  --sidebar-accent-foreground: #ccfbf1;
-  --sidebar-border: rgba(20, 184, 166, 0.2);
-  --sidebar-ring: #14b8a6;
+  --sidebar-accent: #3D261E;
+  --sidebar-accent-foreground: #F1E1CE;
+  --sidebar-border: rgba(241, 225, 206, 0.2);
+  --sidebar-ring: #9E3535;
 }
 
 @layer base {
@@ -129,15 +170,131 @@
   html,
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   input,
   button,
   select,
-  textarea {
-    font-family: inherit;
+  textarea,
+  label {
+    font-family: var(--font-body), "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
+
+  /* Headings & Titles: Marcellus, serif */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display,
+  [data-slot="card-title"],
+  [data-slot="dialog-title"] {
+    font-family: var(--font-display), "Marcellus", Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* Welcome text / Accent lines: Cormorant Garamond, serif (italic) */
+  .font-script,
+  .welcome-text,
+  .subtitle-accent,
+  .accent-line,
+  .welcome-greeting {
+    font-family: var(--font-script), "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    letter-spacing: 0.01em;
+  }
+
+  /* Page title background: --peach (#F1E1CE) */
+  h1,
+  .title-bg,
+  .page-title-banner {
+    background-color: var(--peach, #F1E1CE);
+    color: #3D1818;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(139, 42, 42, 0.14);
+    box-shadow: 0 1px 2px rgba(139, 42, 42, 0.04);
+  }
+
+  .dark h1,
+  .dark .title-bg,
+  .dark .page-title-banner {
+    background-color: rgba(241, 225, 206, 0.12);
+    color: #F1E1CE;
+    border-color: rgba(241, 225, 206, 0.2);
+    box-shadow: none;
+  }
+}
+
+/* Dialog Header with Peach Title Background */
+[data-slot="dialog-header"] {
+  background-color: var(--peach, #F1E1CE);
+  padding: 1rem 1.25rem;
+  margin: -1.5rem -1.5rem 1rem -1.5rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom: 1px solid rgba(139, 42, 42, 0.15);
+}
+
+.dark [data-slot="dialog-header"] {
+  background-color: rgba(241, 225, 206, 0.12);
+  border-bottom-color: rgba(241, 225, 206, 0.2);
+}
+
+[data-slot="dialog-title"] {
+  color: #3D1818;
+}
+
+.dark [data-slot="dialog-title"] {
+  color: #F1E1CE;
+}
+
+/* =============================================================
+   BUTTONS: --maroon-700 (#8B2A2A) with --maroon-800 hover
+   ============================================================= */
+button[data-slot="button"][data-variant="default"],
+.btn-maroon,
+.btn-primary {
+  background-color: var(--maroon-700, #8B2A2A) !important;
+  color: #ffffff !important;
+}
+
+button[data-slot="button"][data-variant="default"]:hover,
+.btn-maroon:hover,
+.btn-primary:hover {
+  background-color: var(--maroon-800, #742222) !important;
+}
+
+/* Global button and accent override for legacy teal classes */
+button[class*="bg-[#0d9488]"],
+[data-slot="button"][class*="bg-[#0d9488]"],
+[class*="bg-[#0d9488]"]:is(button, a) {
+  background-color: var(--maroon-700, #8B2A2A) !important;
+  color: #ffffff !important;
+}
+
+button[class*="hover:bg-[#0f766e]"]:hover,
+[data-slot="button"][class*="hover:bg-[#0f766e]"]:hover,
+[class*="hover:bg-[#0f766e]"]:is(button, a):hover {
+  background-color: var(--maroon-800, #742222) !important;
+}
+
+div[class*="bg-[#0d9488]"],
+span[class*="bg-[#0d9488]"] {
+  background-color: var(--maroon-700, #8B2A2A) !important;
+}
+
+[class*="border-[#0d9488]"] {
+  border-color: var(--maroon-700, #8B2A2A) !important;
+}
+
+[class*="text-[#0d9488]"] {
+  color: var(--maroon-700, #8B2A2A) !important;
 }
 
 /* Custom scrollbar - modern thin style */
@@ -165,7 +322,7 @@
   scrollbar-color: #cbd5e1 transparent;
 }
 
-/* Status badge colors - no indigo/blue */
+/* Status badge colors */
 .status-valid {
   @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400;
 }
@@ -183,7 +340,7 @@
 }
 
 .status-open {
-  @apply bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400;
+  @apply bg-[#F1E1CE] text-[#8B2A2A] dark:bg-[#8B2A2A]/20 dark:text-[#F1E1CE];
 }
 
 .status-closed {
@@ -194,7 +351,7 @@
   @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400;
 }
 
-/* Sidebar navigation styles - modern hover and active states */
+/* Sidebar navigation styles */
 .sidebar-nav-item {
   @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200;
   @apply text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground;
@@ -223,16 +380,12 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Mobile frame: simulate a narrow viewport inside the 420px
-   preview frame. Tailwind's sm:/lg:/xl: breakpoints respond to
-   the real browser viewport (desktop-sized), so we override them
-   here to force mobile-appropriate layouts inside the frame.
+   Mobile frame simulation
    ───────────────────────────────────────────────────────────── */
 .mobile-frame {
   container-type: inline-size;
 }
 
-/* 4-column grids (stat cards, etc.) → 2 columns on mobile frame */
 .mobile-frame .lg\:grid-cols-4,
 .mobile-frame .xl\:grid-cols-4,
 .mobile-frame .sm\:grid-cols-4,
@@ -240,7 +393,6 @@
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
 
-/* 3-column grids → 2 columns on mobile frame */
 .mobile-frame .lg\:grid-cols-3,
 .mobile-frame .xl\:grid-cols-3,
 .mobile-frame .md\:grid-cols-3,
@@ -248,15 +400,11 @@
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
 
-/* 2-column side-by-side content (charts, detail panels) → 1 column (stack) */
 .mobile-frame .lg\:grid-cols-2,
 .mobile-frame .xl\:grid-cols-2 {
   grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
 }
 
-/* md:grid-cols-2 stays at 2 columns (fine for mobile stat pairs) */
-
-/* Views with hardcoded viewport height → auto height so content flows */
 .mobile-frame .h-\[calc\(100vh-6rem\)\],
 .mobile-frame .h-\[calc\(100vh-7rem\)\],
 .mobile-frame .h-\[calc\(100vh-8rem\)\] {
@@ -265,29 +413,16 @@
   overflow: visible !important;
 }
 
-/* Tables and wide content: ensure horizontal scroll instead of overflow */
 .mobile-frame .overflow-x-auto {
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
 }
 
-/* Ensure the content wrapper doesn't clip wide tables — let them scroll */
 .mobile-frame main>div {
   max-width: 100%;
   min-width: 0;
 }
 
-/* ── Breakpoint simulation: force mobile layouts inside the frame ──
-   Tailwind's sm:/md:/lg: respond to the real viewport (desktop-sized).
-   Inside the 420px frame we must swap them so mobile-optimized views
-   (cards, stacked filters, short labels) are shown instead.
-
-   NOTE: We use [class~="..."] attribute selectors instead of escaped
-   class selectors (.md\:hidden) because Tailwind 4's CSS processor
-   strips custom rules that reference its own utility class names.
-   Attribute selectors bypass that processing entirely.               */
-
-/* Show mobile-only elements (md:hidden / lg:hidden / sm:hidden) */
 .mobile-frame [class~="sm:hidden"],
 .mobile-frame [class~="md:hidden"],
 .mobile-frame [class~="lg:hidden"],
@@ -295,7 +430,6 @@
   display: block !important;
 }
 
-/* Hide desktop-only elements (hidden md:block / hidden lg:block) */
 .mobile-frame [class~="hidden"][class~="sm:block"],
 .mobile-frame [class~="hidden"][class~="md:block"],
 .mobile-frame [class~="hidden"][class~="lg:block"],
@@ -306,14 +440,12 @@
   display: none !important;
 }
 
-/* Stack rows that are side-by-side on sm+ into columns */
 .mobile-frame [class~="sm:flex-row"],
 .mobile-frame [class~="md:flex-row"],
 .mobile-frame [class~="lg:flex-row"] {
   flex-direction: column !important;
 }
 
-/* Show mobile text variants in buttons (sm:hidden spans) and hide desktop ones (sm:inline spans) */
 .mobile-frame span[class~="sm:hidden"],
 .mobile-frame span[class~="md:hidden"],
 .mobile-frame span[class~="lg:hidden"] {
@@ -326,7 +458,6 @@
   display: none !important;
 }
 
-/* Force fixed-width inputs/selects to full width in mobile frame */
 .mobile-frame [class~="sm:w-44"],
 .mobile-frame [class~="sm:w-40"],
 .mobile-frame [class~="sm:w-36"],
@@ -341,18 +472,15 @@
   width: 100% !important;
 }
 
-/* Filter/toolbars: allow wrapping instead of overflowing horizontally */
 .mobile-frame .flex.flex-wrap {
   gap: 0.5rem !important;
 }
 
-/* Slightly reduce large heading sizes for better mobile fit */
 .mobile-frame h1 {
   font-size: 1.5rem !important;
   line-height: 2rem !important;
 }
 
-/* Allow truncated text to wrap instead of being cut off (better mobile readability) */
 .mobile-frame .truncate {
   white-space: normal !important;
   overflow: visible !important;
@@ -360,19 +488,16 @@
   word-break: break-word !important;
 }
 
-/* Slightly smaller secondary text so descriptions fit in narrow cards */
 .mobile-frame .text-xs {
   font-size: 0.6875rem !important;
   line-height: 1rem !important;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
