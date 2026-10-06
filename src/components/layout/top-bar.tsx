@@ -92,9 +92,9 @@ export function TopBar() {
   const isDark = mounted && theme === 'dark'
 
   return (
-    <header className="flex items-center justify-between px-3 h-14 shrink-0 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 pt-[env(safe-area-inset-top)]">
+    <header className="flex items-center justify-between px-3 h-14 shrink-0 border-b border-[#E2CEB7] dark:border-stone-800 bg-[#F1E1CE] dark:bg-stone-900 sticky top-0 z-50 pt-[env(safe-area-inset-top)]">
       <div className="flex items-center gap-2 flex-1 min-w-0">
-        <h1 className="text-base font-bold text-slate-900 dark:text-slate-100 truncate">
+        <h1 className="text-base font-bold text-[#8B2A2A] dark:text-[#F1E1CE] font-display truncate">
           {pageTitles[activePage] || 'AICCC E&S'}
         </h1>
       </div>
