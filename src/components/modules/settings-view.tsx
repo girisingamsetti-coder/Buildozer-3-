@@ -31,6 +31,7 @@ import {
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -483,49 +484,44 @@ function UserManagementTab() {
       {/* Summary Cards */}
       {isLoading ? (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-          {[1, 2, 3].map((i) => <Skeleton key={i} className="h-20 rounded-xl" />)}
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="bg-[#F1E1CE]/40 dark:bg-stone-900/60 border-2 border-[var(--maroon-700,#8B2A2A)]/40 rounded-xl">
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2">
+                    <Skeleton className="h-3.5 w-24" />
+                    <Skeleton className="h-8 w-14" />
+                  </div>
+                  <Skeleton className="h-11 w-11 rounded-xl" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-          <Card className="bg-gradient-to-br from-teal-500/10 via-teal-500/5 to-transparent border-teal-200/60 dark:border-teal-700/40 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99] backdrop-blur-sm">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Total Users</p>
-                  <p className="text-xl font-bold tracking-tight mt-1">{users.length}</p>
+          {[
+            { label: 'Total Users', value: users.length, icon: Users, valueColor: 'text-[#8B2A2A] dark:text-[#F1E1CE]', iconStyle: 'bg-[#8B2A2A]/10 text-[#8B2A2A] dark:bg-[#8B2A2A]/25 dark:text-[#F1E1CE]' },
+            { label: 'Active', value: activeCount, icon: ShieldCheck, valueColor: 'text-emerald-700 dark:text-emerald-400', iconStyle: 'bg-emerald-100/80 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400' },
+            { label: 'Inactive', value: inactiveCount, icon: PowerOff, valueColor: 'text-rose-700 dark:text-rose-400', iconStyle: 'bg-rose-100/80 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400' },
+          ].map((c) => (
+            <Card
+              key={c.label}
+              className="bg-[#F1E1CE]/50 dark:bg-stone-900/80 border-2 border-[var(--maroon-700,#8B2A2A)]/60 dark:border-[var(--maroon-700,#8B2A2A)]/80 shadow-xs rounded-xl transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5 hover:border-[var(--maroon-700,#8B2A2A)]"
+            >
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 font-body">{c.label}</p>
+                    <p className={cn("text-2xl sm:text-3xl font-bold font-display tracking-tight mt-1", c.valueColor)}>{c.value}</p>
+                  </div>
+                  <div className={cn("rounded-xl p-2.5 shrink-0 flex items-center justify-center", c.iconStyle)}>
+                    <c.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
                 </div>
-                <div className="rounded-xl p-2 shrink-0 bg-teal-500/15 text-teal-600 dark:text-teal-400">
-                  <Users className="h-5 w-5" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border-emerald-200/60 dark:border-emerald-700/40 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99] backdrop-blur-sm">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Active</p>
-                  <p className="text-xl font-bold tracking-tight mt-1 text-emerald-600">{activeCount}</p>
-                </div>
-                <div className="rounded-xl p-2 shrink-0 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-red-500/10 via-red-500/5 to-transparent border-red-200/60 dark:border-red-700/40 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99] backdrop-blur-sm">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">Inactive</p>
-                  <p className="text-xl font-bold tracking-tight mt-1 text-red-600">{inactiveCount}</p>
-                </div>
-                <div className="rounded-xl p-2 shrink-0 bg-red-500/15 text-red-600 dark:text-red-400">
-                  <PowerOff className="h-5 w-5" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
 

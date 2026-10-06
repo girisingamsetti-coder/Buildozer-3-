@@ -27,6 +27,7 @@ import { useAuthStore, rolePermissions } from '@/stores/auth-store'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { TableExportButton, type ExportColumn } from '@/components/ui/table-export-button'
 import { format, parseISO } from 'date-fns'
+import { cn } from '@/lib/utils'
 
 // ===================== TYPES =====================
 
@@ -242,71 +243,46 @@ export default function ComplianceView() {
       {(sitesLoading || dataLoading) ? (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-20 rounded-xl" />
+            <Card key={i} className="bg-[#F1E1CE]/40 dark:bg-stone-900/60 border-2 border-[var(--maroon-700,#8B2A2A)]/40 rounded-xl">
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2">
+                    <Skeleton className="h-3.5 w-20" />
+                    <Skeleton className="h-8 w-14" />
+                  </div>
+                  <Skeleton className="h-11 w-11 rounded-xl" />
+                </div>
+                <Skeleton className="h-1.5 w-full mt-2.5 rounded-full" />
+              </CardContent>
+            </Card>
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {/* Overall Compliance */}
-          <Card className="border-l-4 border-l-[#0d9488] shadow-sm">
-            <CardContent className="p-2">
-              <div className="flex items-center gap-2">
-                <div className="rounded-md bg-teal-100 p-1.5 shrink-0">
-                  <ClipboardCheck className="h-3.5 w-3.5 text-teal-600" />
+          {[
+            { label: 'Overall', value: `${overallScore}%`, icon: ClipboardCheck, score: overallScore, valueColor: 'text-[#8B2A2A] dark:text-[#F1E1CE]', iconStyle: 'bg-[#8B2A2A]/10 text-[#8B2A2A] dark:bg-[#8B2A2A]/25 dark:text-[#F1E1CE]' },
+            { label: 'Facilities', value: `${facilityScore}%`, icon: Warehouse, score: facilityScore, valueColor: 'text-teal-700 dark:text-teal-400', iconStyle: 'bg-teal-100/80 text-teal-700 dark:bg-teal-950/60 dark:text-teal-400' },
+            { label: 'Security', value: `${securityScore}%`, icon: Shield, score: securityScore, valueColor: 'text-emerald-700 dark:text-emerald-400', iconStyle: 'bg-emerald-100/80 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400' },
+            { label: 'Medical', value: `${medScore}%`, icon: Heart, score: medScore, valueColor: 'text-amber-700 dark:text-amber-400', iconStyle: 'bg-amber-100/80 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400' },
+          ].map((c) => (
+            <Card
+              key={c.label}
+              className="bg-[#F1E1CE]/50 dark:bg-stone-900/80 border-2 border-[var(--maroon-700,#8B2A2A)]/60 dark:border-[var(--maroon-700,#8B2A2A)]/80 shadow-xs rounded-xl transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5 hover:border-[var(--maroon-700,#8B2A2A)]"
+            >
+              <CardContent className="p-3.5 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 font-body">{c.label}</p>
+                    <p className={cn("text-2xl sm:text-3xl font-bold font-display tracking-tight mt-1", c.valueColor)}>{c.value}</p>
+                  </div>
+                  <div className={cn("rounded-xl p-2.5 shrink-0 flex items-center justify-center", c.iconStyle)}>
+                    <c.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Overall</p>
-                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(overallScore)}`}>{overallScore}%</p>
-                </div>
-              </div>
-              <Progress value={overallScore} className={`h-1.5 mt-1 ${getScoreProgressColor(overallScore)}`} />
-            </CardContent>
-          </Card>
-          {/* Site Facilities */}
-          <Card className="border-l-4 border-l-teal-500 shadow-sm">
-            <CardContent className="p-2">
-              <div className="flex items-center gap-2">
-                <div className="rounded-md bg-teal-100 p-1.5 shrink-0">
-                  <Warehouse className="h-3.5 w-3.5 text-teal-600" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Facilities</p>
-                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(facilityScore)}`}>{facilityScore}%</p>
-                </div>
-              </div>
-              <Progress value={facilityScore} className={`h-1.5 mt-1 ${getScoreProgressColor(facilityScore)}`} />
-            </CardContent>
-          </Card>
-          {/* Site Security */}
-          <Card className="border-l-4 border-l-emerald-500 shadow-sm">
-            <CardContent className="p-2">
-              <div className="flex items-center gap-2">
-                <div className="rounded-md bg-emerald-100 p-1.5 shrink-0">
-                  <Shield className="h-3.5 w-3.5 text-emerald-600" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Security</p>
-                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(securityScore)}`}>{securityScore}%</p>
-                </div>
-              </div>
-              <Progress value={securityScore} className={`h-1.5 mt-1 ${getScoreProgressColor(securityScore)}`} />
-            </CardContent>
-          </Card>
-          {/* Medical Infrastructure */}
-          <Card className="border-l-4 border-l-amber-500 shadow-sm">
-            <CardContent className="p-2">
-              <div className="flex items-center gap-2">
-                <div className="rounded-md bg-amber-100 p-1.5 shrink-0">
-                  <Heart className="h-3.5 w-3.5 text-amber-600" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 truncate">Medical</p>
-                  <p className={`text-lg font-bold tracking-tight ${getScoreColor(medScore)}`}>{medScore}%</p>
-                </div>
-              </div>
-              <Progress value={medScore} className={`h-1.5 mt-1 ${getScoreProgressColor(medScore)}`} />
-            </CardContent>
-          </Card>
+                <Progress value={c.score} className={cn("h-1.5 mt-2.5", getScoreProgressColor(c.score))} />
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
 
