@@ -172,7 +172,7 @@ function IncidentPartAForm({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      <DialogHeader className="px-5 py-3 border-b shrink-0 bg-[#F1E1CE]/50 dark:bg-stone-900/80">
+      <DialogHeader className="px-5 py-3 pr-12 border-b shrink-0 bg-[#F1E1CE]/50 dark:bg-stone-900/80">
         <div className="flex items-center justify-between">
           <DialogTitle className="text-lg font-semibold font-display flex items-center gap-2 text-foreground">
             <AlertTriangle className="h-5 w-5 text-[#8B2A2A]" />

@@ -328,21 +328,54 @@ function QuantityTable({ title, rows, data, onChange, showSources = true }: { ti
 
 function StepProgress({ current }: { current: number }) {
   return (
-    <div className="flex items-center gap-0 mb-4">
-      {STEPS.map((s, i) => (
-        <div key={s} className="flex items-center flex-1">
-          <div className="flex flex-col items-center gap-0.5 flex-1">
-            <div className={cn('w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold border-2 transition-all',
-              i < current ? 'bg-[#0d9488] border-[#0d9488] text-white' :
-              i === current ? 'border-[#0d9488] text-[#0d9488] bg-white dark:bg-slate-900' :
-              'border-slate-300 text-slate-400 bg-white dark:bg-slate-900')}>
-              {i < current ? <CheckCircle2 className="h-3 w-3" /> : i + 1}
+    <div className="w-full">
+      <div className="flex items-start">
+        {STEPS.map((s, i) => {
+          const isCompleted = i < current
+          const isCurrent = i === current
+          return (
+            <div key={s} className="relative flex-1 flex flex-col items-center">
+              {/* Connector line to next step */}
+              {i < STEPS.length - 1 && (
+                <div
+                  className={cn(
+                    "absolute top-3.5 left-[50%] right-[-50%] h-[2px] transition-colors",
+                    i < current
+                      ? "bg-[var(--maroon-700,#8B2A2A)]"
+                      : "bg-slate-200 dark:bg-slate-700"
+                  )}
+                />
+              )}
+              {/* Step Circle */}
+              <div
+                className={cn(
+                  "relative z-10 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all shadow-xs",
+                  isCompleted
+                    ? "bg-[var(--maroon-700,#8B2A2A)] border-[var(--maroon-700,#8B2A2A)] text-white"
+                    : isCurrent
+                    ? "border-[var(--maroon-700,#8B2A2A)] text-[var(--maroon-700,#8B2A2A)] bg-white dark:bg-slate-900 ring-4 ring-[#8B2A2A]/15"
+                    : "border-slate-300 dark:border-slate-600 text-slate-400 bg-white dark:bg-slate-900"
+                )}
+              >
+                {isCompleted ? <CheckCircle2 className="h-4 w-4" /> : i + 1}
+              </div>
+              {/* Step Label */}
+              <span
+                className={cn(
+                  "mt-2 text-[10px] sm:text-[11px] text-center leading-tight transition-colors px-1 max-w-[90px] hidden sm:block",
+                  isCurrent
+                    ? "text-[var(--maroon-700,#8B2A2A)] font-bold"
+                    : isCompleted
+                    ? "text-foreground/80 font-medium"
+                    : "text-muted-foreground"
+                )}
+              >
+                {s}
+              </span>
             </div>
-            <span className={cn('text-[8px] text-center leading-tight hidden sm:block max-w-[60px]', i === current ? 'text-[#0d9488] font-semibold' : 'text-muted-foreground')}>{s}</span>
-          </div>
-          {i < STEPS.length - 1 && <div className={cn('h-0.5 flex-1 mx-0.5 mb-3', i < current ? 'bg-[#0d9488]' : 'bg-slate-200')} />}
-        </div>
-      ))}
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -1016,16 +1049,16 @@ export default function EVMFormDialog({ open, onOpenChange, onSaved }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[92vw] sm:!max-w-[1100px] h-[90vh] max-h-[750px] rounded-2xl flex flex-col p-0 gap-0 overflow-hidden bg-white dark:bg-slate-950">
-        <DialogHeader className="px-6 py-4 border-b shrink-0 flex flex-row items-center justify-between">
-          <DialogTitle className="text-base font-bold flex items-center gap-2">
+        <DialogHeader className="px-6 py-4 pr-12 border-b shrink-0 flex flex-row items-center justify-between">
+          <DialogTitle className="text-base font-bold flex items-center gap-2 leading-normal">
             <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-[#0d9488] text-white">
               <ClipboardList className="h-3.5 w-3.5" />
             </span>
             EVM — Environmental Compliance Monitoring Form
           </DialogTitle>
         </DialogHeader>
-        <div className="px-6 sm:px-8 py-4 border-b shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
-          <div className="max-w-3xl mx-auto">
+        <div className="px-6 sm:px-8 py-3.5 border-b shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="w-full max-w-4xl mx-auto">
             <StepProgress current={step} />
           </div>
         </div>
