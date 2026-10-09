@@ -7,9 +7,11 @@ import {
 } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, CheckCircle2, Clock, XCircle, AlertCircle, Eye, ShieldCheck, Building2, User } from 'lucide-react'
+import { ArrowLeft, Clock, Maximize2, Minimize2 } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
+import { SubmittedFullFormView } from './submitted-full-form-view'
 
 export type FormStatus = 'PMC' | 'PGMC' | 'CRDA' | 'Approved' | 'Rejected' | 'Pending'
 
@@ -52,6 +54,7 @@ interface SubmittedFormsWizardProps {
 
 export function SubmittedFormsWizard({ isOpen, onClose, project, formType, stats }: SubmittedFormsWizardProps) {
   const [selectedForm, setSelectedForm] = useState<MockWizardForm | null>(null)
+  const [isMaximized, setIsMaximized] = useState(false)
 
   // Generate mock forms matching the stats perfectly
   const forms = useMemo(() => {
@@ -108,36 +111,66 @@ export function SubmittedFormsWizard({ isOpen, onClose, project, formType, stats
 
   const handleClose = () => {
     setSelectedForm(null)
+    setIsMaximized(false)
     onClose()
   }
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <SheetContent className="w-full sm:max-w-md md:max-w-lg lg:max-w-xl p-0 flex flex-col bg-slate-50 dark:bg-slate-950">
+      <SheetContent
+        className={cn(
+          "p-0 flex flex-col bg-slate-50 dark:bg-slate-950 transition-all duration-300",
+          selectedForm
+            ? (isMaximized ? "w-full sm:max-w-[95vw]" : "w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl")
+            : "w-full sm:max-w-md md:max-w-lg lg:max-w-xl"
+        )}
+      >
         <SheetHeader className="p-4 border-b bg-white dark:bg-slate-900 shadow-sm z-10 sticky top-0">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              {selectedForm && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 rounded-full shrink-0 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  onClick={() => setSelectedForm(null)}
+                  title="Back to submissions list"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              )}
+              <SheetTitle className="text-lg font-bold tracking-tight flex flex-col gap-1 text-left">
+                <span>{project?.projectName}</span>
+                <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <Badge variant="outline" className="text-[10px] uppercase border-teal-500 text-teal-600 bg-teal-50 dark:bg-teal-950">
+                    {formType}
+                  </Badge>
+                  {selectedForm ? (
+                    <span className="text-xs">Form ID: <strong className="text-foreground">{selectedForm.id}</strong></span>
+                  ) : (
+                    <span>Total Forms: {stats?.raised || 0}</span>
+                  )}
+                </span>
+              </SheetTitle>
+            </div>
+
             {selectedForm && (
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full shrink-0 -ml-2" onClick={() => setSelectedForm(null)}>
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
+              <div className="flex items-center gap-1.5 shrink-0 mr-6">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                  onClick={() => setIsMaximized(!isMaximized)}
+                  title={isMaximized ? "Restore sheet width" : "Maximize view"}
+                >
+                  {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                </Button>
+              </div>
             )}
-            <SheetTitle className="text-lg font-bold tracking-tight flex flex-col gap-1">
-              <span>{project?.projectName}</span>
-              <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <Badge variant="outline" className="text-[10px] uppercase border-teal-500 text-teal-600 bg-teal-50 dark:bg-teal-950">
-                  {formType}
-                </Badge>
-                {selectedForm ? (
-                  <span>Form Details: {selectedForm.id}</span>
-                ) : (
-                  <span>Total Forms: {stats?.raised || 0}</span>
-                )}
-              </span>
-            </SheetTitle>
           </div>
         </SheetHeader>
 
-        <ScrollArea className="flex-1 p-4">
+        <ScrollArea className="flex-1 p-4 sm:p-5">
           {!selectedForm ? (
             <div className="flex flex-col gap-6">
               {/* Stats Summary */}
@@ -201,54 +234,13 @@ export function SubmittedFormsWizard({ isOpen, onClose, project, formType, stats
               </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-4 animate-in slide-in-from-right-4 duration-300">
-              {/* Form Detail View */}
-              <Card className="border shadow-sm">
-                <CardContent className="p-4 flex flex-col gap-4">
-                  <div className="flex items-center justify-between border-b pb-4">
-                    <div>
-                      <h4 className="font-bold text-lg text-foreground">{selectedForm.id}</h4>
-                      <p className="text-xs text-muted-foreground">Submitted on {new Date(selectedForm.date).toLocaleDateString('en-IN')}</p>
-                    </div>
-                    <Badge 
-                        variant="outline" 
-                        className="text-xs px-2 py-1 font-bold border-current shadow-sm"
-                        style={{ color: STATUS_COLORS[selectedForm.status], backgroundColor: `${STATUS_COLORS[selectedForm.status]}15` }}
-                      >
-                        {selectedForm.status}
-                    </Badge>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1"><ShieldCheck className="w-3 h-3" /> Form Type</span>
-                      <span className="font-semibold">{selectedForm.formType}</span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1"><Building2 className="w-3 h-3" /> Project</span>
-                      <span className="font-semibold">{selectedForm.project}</span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1"><User className="w-3 h-3" /> Contractor</span>
-                      <span className="font-semibold">{selectedForm.contractor}</span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1"><User className="w-3 h-3" /> PMC</span>
-                      <span className="font-semibold">{selectedForm.pmc}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border shadow-sm border-dashed">
-                <CardContent className="p-6 flex flex-col items-center justify-center text-center gap-2">
-                  <Eye className="w-8 h-8 text-muted-foreground/50" />
-                  <p className="text-sm font-medium text-muted-foreground">Full form view is available in the Forms module.</p>
-                  <Button variant="outline" size="sm" className="mt-2">
-                    Open in Forms Module
-                  </Button>
-                </CardContent>
-              </Card>
+            <div className="animate-in slide-in-from-right-4 duration-300">
+              <SubmittedFullFormView
+                form={selectedForm}
+                onBack={() => setSelectedForm(null)}
+                isMaximized={isMaximized}
+                onToggleMaximize={() => setIsMaximized(!isMaximized)}
+              />
             </div>
           )}
         </ScrollArea>
