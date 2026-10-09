@@ -559,11 +559,11 @@ export function EvmTab({
             </CardContent>
           </Card>
 
-          {/* Participants (Month) */}
+          {/* Training Participants (Month) */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
             <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
-                Participants by month
+                Training Participants by month
               </CardTitle>
               <div className="flex items-center gap-4 mt-2 text-xs">
                 <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
@@ -590,11 +590,11 @@ export function EvmTab({
             </CardContent>
           </Card>
 
-          {/* Participants (Gender) */}
+          {/* Training Participants (Gender) */}
           <Card className="border shadow-xs rounded-2xl shadow-sm border-border/40">
             <CardHeader className="py-1 px-2 border-b bg-muted/20">
               <CardTitle className="text-sm font-bold text-foreground">
-                Participants by gender
+                Training Participants by gender
               </CardTitle>
             </CardHeader>
             <CardContent className="p-2 px-3 flex flex-col items-center gap-6 h-full justify-center min-h-[300px]">
