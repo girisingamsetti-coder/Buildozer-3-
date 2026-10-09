@@ -125,53 +125,21 @@ export function SubmittedFormsWizard({ isOpen, onClose, project, formType, stats
             : "w-full sm:max-w-md md:max-w-lg lg:max-w-xl"
         )}
       >
-        <SheetHeader className="p-4 border-b bg-white dark:bg-slate-900 shadow-sm z-10 sticky top-0">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              {selectedForm && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 rounded-full shrink-0 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  onClick={() => setSelectedForm(null)}
-                  title="Back to submissions list"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                </Button>
-              )}
+        {!selectedForm ? (
+          <>
+            <SheetHeader className="p-4 border-b bg-white dark:bg-slate-900 shadow-sm z-10 sticky top-0 pr-12">
               <SheetTitle className="text-lg font-bold tracking-tight flex flex-col gap-1 text-left">
                 <span>{project?.projectName}</span>
                 <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <Badge variant="outline" className="text-[10px] uppercase border-teal-500 text-teal-600 bg-teal-50 dark:bg-teal-950">
                     {formType}
                   </Badge>
-                  {selectedForm ? (
-                    <span className="text-xs">Form ID: <strong className="text-foreground">{selectedForm.id}</strong></span>
-                  ) : (
-                    <span>Total Forms: {stats?.raised || 0}</span>
-                  )}
+                  <span>Total Forms: {stats?.raised || 0}</span>
                 </span>
               </SheetTitle>
-            </div>
+            </SheetHeader>
 
-            {selectedForm && (
-              <div className="flex items-center gap-1.5 shrink-0 mr-6">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                  onClick={() => setIsMaximized(!isMaximized)}
-                  title={isMaximized ? "Restore sheet width" : "Maximize view"}
-                >
-                  {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-                </Button>
-              </div>
-            )}
-          </div>
-        </SheetHeader>
-
-        {!selectedForm ? (
-          <ScrollArea className="flex-1 p-4 sm:p-5">
+            <ScrollArea className="flex-1 p-4 sm:p-5">
             <div className="flex flex-col gap-6">
               {/* Stats Summary */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -234,16 +202,20 @@ export function SubmittedFormsWizard({ isOpen, onClose, project, formType, stats
               </div>
             </div>
           </ScrollArea>
-        ) : (
-          <div className="flex-1 min-h-0 flex flex-col overflow-hidden animate-in slide-in-from-right-4 duration-300">
-            <SubmittedFullFormView
-              form={selectedForm}
-              onBack={() => setSelectedForm(null)}
-              isMaximized={isMaximized}
-              onToggleMaximize={() => setIsMaximized(!isMaximized)}
-            />
-          </div>
-        )}
+        </>
+      ) : (
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden animate-in slide-in-from-right-4 duration-300">
+          <SheetTitle className="sr-only">
+            {selectedForm.formType} Compliance Report - {selectedForm.id}
+          </SheetTitle>
+          <SubmittedFullFormView
+            form={selectedForm}
+            onBack={() => setSelectedForm(null)}
+            isMaximized={isMaximized}
+            onToggleMaximize={() => setIsMaximized(!isMaximized)}
+          />
+        </div>
+      )}
       </SheetContent>
     </Sheet>
   )

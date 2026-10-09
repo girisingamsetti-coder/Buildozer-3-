@@ -11,7 +11,8 @@ import {
   FileText, CheckCircle2, XCircle, AlertTriangle, Clock, ShieldCheck,
   Building2, User, Calendar, MapPin, Printer, Copy, Check,
   ExternalLink, HardHat, Activity, FileCheck, Truck, Users, Award,
-  Trees, Droplets, Wind, Volume2, HeartHandshake, Eye, Download, Info
+  Trees, Droplets, Wind, Volume2, HeartHandshake, Eye, Download, Info,
+  ArrowLeft, Maximize2, Minimize2
 } from 'lucide-react'
 import { MockWizardForm, FormStatus } from './submitted-forms-wizard'
 
@@ -31,7 +32,12 @@ const STATUS_CONFIG: Record<FormStatus, { label: string; bg: string; text: strin
   Pending: { label: 'Pending Submission', bg: 'bg-orange-500/10 dark:bg-orange-950/40', text: 'text-orange-700 dark:text-orange-300', border: 'border-orange-500/30' },
 }
 
-export function SubmittedFullFormView({ form, onBack }: SubmittedFullFormViewProps) {
+export function SubmittedFullFormView({ 
+  form, 
+  onBack,
+  isMaximized,
+  onToggleMaximize 
+}: SubmittedFullFormViewProps) {
   const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState<string>('overview')
 
@@ -93,43 +99,78 @@ export function SubmittedFullFormView({ form, onBack }: SubmittedFullFormViewPro
     <div className="flex-1 min-h-0 flex flex-col h-full overflow-hidden bg-slate-50 dark:bg-slate-950">
       {/* ================= FIXED TOP HEADER BAR ================= */}
       <div className="shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs z-10">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex flex-col gap-1.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className="font-mono text-xs px-2.5 py-0.5 font-bold border-teal-500/40 text-teal-700 dark:text-teal-300 bg-teal-50/50 dark:bg-teal-950/50">
-                {form.id}
-              </Badge>
-              <button 
-                onClick={copyId} 
-                className="text-muted-foreground hover:text-foreground transition-colors p-1"
-                title="Copy Form ID"
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div className="flex items-start gap-3 flex-1 min-w-0">
+            {onBack && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 rounded-full shrink-0 mt-0.5 hover:bg-slate-100 dark:hover:bg-slate-800"
+                onClick={onBack}
+                title="Back to submissions list"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-              </button>
-              <Badge 
-                variant="outline" 
-                className={`text-xs px-2.5 py-0.5 font-semibold ${statusInfo.bg} ${statusInfo.text} ${statusInfo.border}`}
-              >
-                {statusInfo.label}
-              </Badge>
-              <Badge variant="outline" className={`text-xs px-2 py-0.5 font-semibold ${rag.color}`}>
-                {rag.status} RAG ({complianceScore}% Score)
-              </Badge>
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            )}
+
+            <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="outline" className="font-mono text-xs px-2.5 py-0.5 font-bold border-teal-500/40 text-teal-700 dark:text-teal-300 bg-teal-50/50 dark:bg-teal-950/50">
+                  {form.id}
+                </Badge>
+                <button 
+                  onClick={copyId} 
+                  className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                  title="Copy Form ID"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                </button>
+                <Badge 
+                  variant="outline" 
+                  className={`text-xs px-2.5 py-0.5 font-semibold ${statusInfo.bg} ${statusInfo.text} ${statusInfo.border}`}
+                >
+                  {statusInfo.label}
+                </Badge>
+                <Badge variant="outline" className={`text-xs px-2 py-0.5 font-semibold ${rag.color}`}>
+                  {rag.status} RAG ({complianceScore}% Score)
+                </Badge>
+              </div>
+              
+              <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+                {form.formType} Compliance Report
+              </h2>
+              
+              <p className="text-xs text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1">
+                <span className="flex items-center gap-1.5"><Building2 className="w-3.5 h-3.5 text-teal-600" /> {form.project}</span>
+                <span className="flex items-center gap-1.5"><User className="w-3.5 h-3.5 text-slate-500" /> Contractor: <strong className="text-foreground">{form.contractor}</strong></span>
+                <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-blue-500" /> PMC: <strong className="text-foreground">{form.pmc}</strong></span>
+                <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-amber-500" /> Reporting Period: <strong className="text-foreground">{reportingMonthStr}</strong></span>
+              </p>
             </div>
-            
-            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
-              {form.formType} Compliance Report
-            </h2>
-            
-            <p className="text-xs text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1">
-              <span className="flex items-center gap-1.5"><Building2 className="w-3.5 h-3.5 text-teal-600" /> {form.project}</span>
-              <span className="flex items-center gap-1.5"><User className="w-3.5 h-3.5 text-slate-500" /> Contractor: <strong className="text-foreground">{form.contractor}</strong></span>
-              <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-blue-500" /> PMC: <strong className="text-foreground">{form.pmc}</strong></span>
-              <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-amber-500" /> Reporting Period: <strong className="text-foreground">{reportingMonthStr}</strong></span>
-            </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+          <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto pr-8 sm:pr-10">
+            {onToggleMaximize && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onToggleMaximize}
+                className="h-8 text-xs gap-1.5"
+                title={isMaximized ? "Restore sheet width" : "Maximize view"}
+              >
+                {isMaximized ? (
+                  <>
+                    <Minimize2 className="h-3.5 w-3.5 text-slate-500" />
+                    <span className="hidden sm:inline">Restore</span>
+                  </>
+                ) : (
+                  <>
+                    <Maximize2 className="h-3.5 w-3.5 text-slate-500" />
+                    <span className="hidden sm:inline">Maximize</span>
+                  </>
+                )}
+              </Button>
+            )}
             <Button variant="outline" size="sm" onClick={handleExportJson} className="h-8 text-xs gap-1.5">
               <Download className="w-3.5 h-3.5 text-slate-500" /> Export JSON
             </Button>

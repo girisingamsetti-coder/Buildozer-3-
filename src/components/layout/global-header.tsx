@@ -117,7 +117,7 @@ export function GlobalHeader() {
   ]
 
   return (
-    <header className="flex items-center justify-between h-14 shrink-0 bg-[#F1E1CE] dark:bg-stone-950 text-stone-900 dark:text-stone-100 select-none w-full shadow-xs z-[60] border-b border-[#E2CEB7] dark:border-stone-800">
+    <header className="flex items-center justify-between h-14 shrink-0 bg-[#F1E1CE] dark:bg-stone-950 text-stone-900 dark:text-stone-100 select-none w-full shadow-xs z-40 border-b border-[#E2CEB7] dark:border-stone-800">
       {/* Left Section: Logos & Title */}
       <div className="flex items-center h-full px-2 sm:px-4 gap-2 sm:gap-3 shrink-0">
         {/* AP Govt Logo */}
