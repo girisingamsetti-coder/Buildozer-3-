@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   FileText, CheckCircle2, XCircle, AlertTriangle, Clock, ShieldCheck,
   Building2, User, Calendar, MapPin, Printer, Copy, Check,
@@ -89,9 +90,9 @@ export function SubmittedFullFormView({ form, onBack }: SubmittedFullFormViewPro
   const normType = form.formType.toLowerCase()
 
   return (
-    <div className="flex flex-col gap-5 pb-10">
-      {/* ================= HEADER BAR ================= */}
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs">
+    <div className="flex-1 min-h-0 flex flex-col h-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+      {/* ================= FIXED TOP HEADER BAR ================= */}
+      <div className="shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs z-10">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex flex-col gap-1.5">
             <div className="flex flex-wrap items-center gap-2">
@@ -179,73 +180,78 @@ export function SubmittedFullFormView({ form, onBack }: SubmittedFullFormViewPro
         </div>
       </div>
 
-      {/* ================= DOMAIN TABBED VIEW ================= */}
-      {normType.includes('evm') && <EVMDetailTabs form={form} hash={hash} />}
-      {normType.includes('ohs') && <OHSDetailTabs form={form} hash={hash} />}
-      {normType.includes('road') && <RoadSafetyDetailTabs form={form} hash={hash} />}
-      {(normType.includes('social') || normType.includes('labour') || normType.includes('gender')) && <SocialDetailTabs form={form} hash={hash} />}
+      {/* ================= INLINE SCROLLABLE FORM BODY ================= */}
+      <ScrollArea className="flex-1 min-h-0">
+        <div className="p-4 sm:p-6 space-y-6">
+          {/* ================= DOMAIN TABBED VIEW ================= */}
+          {normType.includes('evm') && <EVMDetailTabs form={form} hash={hash} />}
+          {normType.includes('ohs') && <OHSDetailTabs form={form} hash={hash} />}
+          {normType.includes('road') && <RoadSafetyDetailTabs form={form} hash={hash} />}
+          {(normType.includes('social') || normType.includes('labour') || normType.includes('gender')) && <SocialDetailTabs form={form} hash={hash} />}
 
-      {/* ================= REVIEW SIGN-OFF & ATTACHMENTS ================= */}
-      <Card className="border border-slate-200 dark:border-slate-800 shadow-xs">
-        <CardHeader className="pb-3 pt-4 px-4 sm:px-5 border-b bg-muted/20">
-          <CardTitle className="text-sm font-bold flex items-center gap-2">
-            <FileCheck className="w-4 h-4 text-teal-600" />
-            Supervisory Observations, Endorsements & Digital Signoffs
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 sm:p-5 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div className="p-3 rounded-lg border bg-white dark:bg-slate-900 space-y-1.5">
-              <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Contractor In-Charge
-              </span>
-              <p className="text-muted-foreground text-[11px]">
-                Certified that all monitoring metrics, photographs and supporting laboratory test reports conform to the project C-ESMP.
-              </p>
-              <div className="pt-2 text-[10px] text-muted-foreground border-t flex justify-between">
-                <span>Sign: <strong>Project Manager ({form.contractor})</strong></span>
-                <span>Date: {form.date}</span>
+          {/* ================= REVIEW SIGN-OFF & ATTACHMENTS ================= */}
+          <Card className="border border-slate-200 dark:border-slate-800 shadow-xs">
+            <CardHeader className="pb-3 pt-4 px-4 sm:px-5 border-b bg-muted/20">
+              <CardTitle className="text-sm font-bold flex items-center gap-2">
+                <FileCheck className="w-4 h-4 text-teal-600" />
+                Supervisory Observations, Endorsements & Digital Signoffs
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-5 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div className="p-3 rounded-lg border bg-white dark:bg-slate-900 space-y-1.5">
+                  <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Contractor In-Charge
+                  </span>
+                  <p className="text-muted-foreground text-[11px]">
+                    Certified that all monitoring metrics, photographs and supporting laboratory test reports conform to the project C-ESMP.
+                  </p>
+                  <div className="pt-2 text-[10px] text-muted-foreground border-t flex justify-between">
+                    <span>Sign: <strong>Project Manager ({form.contractor})</strong></span>
+                    <span>Date: {form.date}</span>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg border bg-white dark:bg-slate-900 space-y-1.5">
+                  <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" /> PMC Verification
+                  </span>
+                  <p className="text-muted-foreground text-[11px]">
+                    Verified on-site. Mandatory environmental & safety controls verified in active work zones and labour camps.
+                  </p>
+                  <div className="pt-2 text-[10px] text-muted-foreground border-t flex justify-between">
+                    <span>Sign: <strong>Lead Consultant ({form.pmc})</strong></span>
+                    <span>Status: Compliant</span>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg border bg-white dark:bg-slate-900 space-y-1.5">
+                  <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-purple-600" /> PgMC / APCRDA
+                  </span>
+                  <p className="text-muted-foreground text-[11px]">
+                    Submission endorsed for monthly contractual compliance certificate under World Bank E&S safeguards.
+                  </p>
+                  <div className="pt-2 text-[10px] text-muted-foreground border-t flex justify-between">
+                    <span>Sign: <strong>ESMU Officer</strong></span>
+                    <span>RAG: {rag.status}</span>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="p-3 rounded-lg border bg-white dark:bg-slate-900 space-y-1.5">
-              <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" /> PMC Verification
-              </span>
-              <p className="text-muted-foreground text-[11px]">
-                Verified on-site. Mandatory environmental & safety controls verified in active work zones and labour camps.
-              </p>
-              <div className="pt-2 text-[10px] text-muted-foreground border-t flex justify-between">
-                <span>Sign: <strong>Lead Consultant ({form.pmc})</strong></span>
-                <span>Status: Compliant</span>
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground border-t">
+                <span className="flex items-center gap-1.5">
+                  <Info className="w-3.5 h-3.5 text-teal-600" />
+                  Evidence archive contains 14 geo-tagged photographs and 3 certified NABL test certificates.
+                </span>
+                <Badge variant="outline" className="font-mono text-[10px]">
+                  SHA256: e8b9f...4c1d
+                </Badge>
               </div>
-            </div>
-
-            <div className="p-3 rounded-lg border bg-white dark:bg-slate-900 space-y-1.5">
-              <span className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-purple-600" /> PgMC / APCRDA
-              </span>
-              <p className="text-muted-foreground text-[11px]">
-                Submission endorsed for monthly contractual compliance certificate under World Bank E&S safeguards.
-              </p>
-              <div className="pt-2 text-[10px] text-muted-foreground border-t flex justify-between">
-                <span>Sign: <strong>ESMU Officer</strong></span>
-                <span>RAG: {rag.status}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground border-t">
-            <span className="flex items-center gap-1.5">
-              <Info className="w-3.5 h-3.5 text-teal-600" />
-              Evidence archive contains 14 geo-tagged photographs and 3 certified NABL test certificates.
-            </span>
-            <Badge variant="outline" className="font-mono text-[10px]">
-              SHA256: e8b9f...4c1d
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </div>
+      </ScrollArea>
     </div>
   )
 }
@@ -256,7 +262,7 @@ export function SubmittedFullFormView({ form, onBack }: SubmittedFullFormViewPro
 function EVMDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
   return (
     <Tabs defaultValue="air-noise" className="w-full">
-      <TabsList className="w-full justify-start overflow-x-auto h-10 p-1 bg-muted/60 border border-slate-200 dark:border-slate-800 rounded-lg">
+      <TabsList className="sticky top-0 z-20 w-full justify-start overflow-x-auto whitespace-nowrap scrollbar-none h-10 p-1 bg-white/95 dark:bg-slate-900/95 backdrop-blur border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xs flex items-center gap-1">
         <TabsTrigger value="personnel" className="text-xs">1. Setup & Personnel</TabsTrigger>
         <TabsTrigger value="statutory" className="text-xs">2. Consents & Clearances</TabsTrigger>
         <TabsTrigger value="air-noise" className="text-xs">3. Air & Noise Monitoring</TabsTrigger>
@@ -279,9 +285,9 @@ function EVMDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
 
             <div>
               <h4 className="font-bold text-xs mb-2">Contractor E&S Key Personnel</h4>
-              <div className="overflow-x-auto rounded-lg border">
+              <div className="overflow-x-auto max-h-[340px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
                 <table className="w-full text-xs">
-                  <thead className="bg-muted/50 border-b">
+                  <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                     <tr>
                       <th className="p-2.5 text-left">Designation</th>
                       <th className="p-2.5 text-left">Name</th>
@@ -317,9 +323,9 @@ function EVMDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
         <Card className="border">
           <CardHeader className="pb-3"><CardTitle className="text-sm font-bold">Consents & Clearances Register</CardTitle></CardHeader>
           <CardContent className="space-y-4 text-xs">
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto max-h-[360px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 border-b">
+                <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                   <tr>
                     <th className="p-2.5 text-left">Facility / Operation</th>
                     <th className="p-2.5 text-center">EC</th>
@@ -372,9 +378,9 @@ function EVMDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
         <Card className="border">
           <CardHeader className="pb-3"><CardTitle className="text-sm font-bold">Ambient Air Quality Monitoring (AAQ1 – AAQ6)</CardTitle></CardHeader>
           <CardContent className="space-y-4 text-xs">
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto max-h-[360px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 border-b">
+                <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left">Station</th>
                     <th className="p-2 text-left">Location</th>
@@ -412,9 +418,9 @@ function EVMDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
 
             <div className="pt-2">
               <h4 className="font-bold text-xs mb-2">Ambient Noise Level Monitoring (N1 – N3 & DG)</h4>
-              <div className="overflow-x-auto rounded-lg border">
+              <div className="overflow-x-auto max-h-[300px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
                 <table className="w-full text-xs">
-                  <thead className="bg-muted/50 border-b">
+                  <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                     <tr>
                       <th className="p-2 text-left">Location</th>
                       <th className="p-2 text-center">Leq dB(A)</th>
@@ -491,9 +497,9 @@ function EVMDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
         <Card className="border">
           <CardHeader className="pb-3"><CardTitle className="text-sm font-bold">Solid & Hazardous Waste Generation & Disposal (15 Categories)</CardTitle></CardHeader>
           <CardContent className="text-xs">
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto max-h-[380px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 border-b">
+                <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left">Waste Category</th>
                     <th className="p-2 text-center">Unit</th>
@@ -565,7 +571,7 @@ function EVMDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
 function OHSDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
   return (
     <Tabs defaultValue="daily-tbt" className="w-full">
-      <TabsList className="w-full justify-start overflow-x-auto h-10 p-1 bg-muted/60 border border-slate-200 dark:border-slate-800 rounded-lg">
+      <TabsList className="sticky top-0 z-20 w-full justify-start overflow-x-auto whitespace-nowrap scrollbar-none h-10 p-1 bg-white/95 dark:bg-slate-900/95 backdrop-blur border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xs flex items-center gap-1">
         <TabsTrigger value="daily-tbt" className="text-xs">1. Induction & Daily TBT</TabsTrigger>
         <TabsTrigger value="safeguards" className="text-xs">2. Work Zone Safeguards</TabsTrigger>
         <TabsTrigger value="committee" className="text-xs">3. Safety Committee & Rewards</TabsTrigger>
@@ -598,9 +604,9 @@ function OHSDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
 
             <div>
               <h4 className="font-bold text-xs mb-2">Sample Daily TBT Topics Log</h4>
-              <div className="overflow-x-auto rounded-lg border">
+              <div className="overflow-x-auto max-h-[340px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
                 <table className="w-full text-xs">
-                  <thead className="bg-muted/50 border-b">
+                  <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                     <tr>
                       <th className="p-2 text-left">Date</th>
                       <th className="p-2 text-left">TBT Topic</th>
@@ -690,9 +696,9 @@ function OHSDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
         <Card className="border">
           <CardHeader className="pb-3"><CardTitle className="text-sm font-bold">Safety Audits & Specialized Training Matrix</CardTitle></CardHeader>
           <CardContent className="space-y-4 text-xs">
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto max-h-[340px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 border-b">
+                <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left">Audit Category</th>
                     <th className="p-2 text-center">Frequency</th>
@@ -779,7 +785,7 @@ function RoadSafetyDetailTabs({ form, hash }: { form: MockWizardForm; hash: numb
 
   return (
     <Tabs defaultValue="checklist" className="w-full">
-      <TabsList className="w-full justify-start overflow-x-auto h-10 p-1 bg-muted/60 border border-slate-200 dark:border-slate-800 rounded-lg">
+      <TabsList className="sticky top-0 z-20 w-full justify-start overflow-x-auto whitespace-nowrap scrollbar-none h-10 p-1 bg-white/95 dark:bg-slate-900/95 backdrop-blur border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xs flex items-center gap-1">
         <TabsTrigger value="checklist" className="text-xs">1. 15-Point CESMP Checklist</TabsTrigger>
         <TabsTrigger value="marshals" className="text-xs">2. Marshals & TMP</TabsTrigger>
         <TabsTrigger value="vehicles" className="text-xs">3. Vehicles & Drivers Fitness</TabsTrigger>
@@ -791,9 +797,9 @@ function RoadSafetyDetailTabs({ form, hash }: { form: MockWizardForm; hash: numb
         <Card className="border">
           <CardHeader className="pb-3"><CardTitle className="text-sm font-bold">15-Point Road Safety Checklist (IRC SP:55-2014 & CESMP)</CardTitle></CardHeader>
           <CardContent className="text-xs">
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto max-h-[420px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 border-b">
+                <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                   <tr>
                     <th className="p-2.5 text-center w-12">#</th>
                     <th className="p-2.5 text-left min-w-[200px]">Requirement Item</th>
@@ -846,9 +852,9 @@ function RoadSafetyDetailTabs({ form, hash }: { form: MockWizardForm; hash: numb
         <Card className="border">
           <CardHeader className="pb-3"><CardTitle className="text-sm font-bold">Heavy Machinery Fitness & Breathalyzer Screenings</CardTitle></CardHeader>
           <CardContent className="space-y-4 text-xs">
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto max-h-[340px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 border-b">
+                <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left">Vehicle Category</th>
                     <th className="p-2 text-center">Active Count</th>
@@ -909,7 +915,7 @@ function RoadSafetyDetailTabs({ form, hash }: { form: MockWizardForm; hash: numb
 function SocialDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }) {
   return (
     <Tabs defaultValue="labour-camp" className="w-full">
-      <TabsList className="w-full justify-start overflow-x-auto h-10 p-1 bg-muted/60 border border-slate-200 dark:border-slate-800 rounded-lg">
+      <TabsList className="sticky top-0 z-20 w-full justify-start overflow-x-auto whitespace-nowrap scrollbar-none h-10 p-1 bg-white/95 dark:bg-slate-900/95 backdrop-blur border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xs flex items-center gap-1">
         <TabsTrigger value="labour-camp" className="text-xs">1. Labour Camp & Amenities</TabsTrigger>
         <TabsTrigger value="statutory-acts" className="text-xs">2. Labour Law Registrations</TabsTrigger>
         <TabsTrigger value="grc" className="text-xs">3. GRC & Grievances</TabsTrigger>
@@ -970,9 +976,9 @@ function SocialDetailTabs({ form, hash }: { form: MockWizardForm; hash: number }
         <Card className="border">
           <CardHeader className="pb-3"><CardTitle className="text-sm font-bold">Labour Law Statutory Licenses & Registrations (7 Acts)</CardTitle></CardHeader>
           <CardContent className="text-xs">
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto max-h-[360px] overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs scrollbar-thin">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 border-b">
+                <thead className="bg-muted/95 dark:bg-slate-800/95 backdrop-blur border-b sticky top-0 z-10">
                   <tr>
                     <th className="p-2 text-left">Statutory Act</th>
                     <th className="p-2 text-left">License / Registration No</th>

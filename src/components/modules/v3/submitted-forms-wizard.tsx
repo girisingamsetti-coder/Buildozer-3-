@@ -170,8 +170,8 @@ export function SubmittedFormsWizard({ isOpen, onClose, project, formType, stats
           </div>
         </SheetHeader>
 
-        <ScrollArea className="flex-1 p-4 sm:p-5">
-          {!selectedForm ? (
+        {!selectedForm ? (
+          <ScrollArea className="flex-1 p-4 sm:p-5">
             <div className="flex flex-col gap-6">
               {/* Stats Summary */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -233,17 +233,17 @@ export function SubmittedFormsWizard({ isOpen, onClose, project, formType, stats
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="animate-in slide-in-from-right-4 duration-300">
-              <SubmittedFullFormView
-                form={selectedForm}
-                onBack={() => setSelectedForm(null)}
-                isMaximized={isMaximized}
-                onToggleMaximize={() => setIsMaximized(!isMaximized)}
-              />
-            </div>
-          )}
-        </ScrollArea>
+          </ScrollArea>
+        ) : (
+          <div className="flex-1 min-h-0 flex flex-col overflow-hidden animate-in slide-in-from-right-4 duration-300">
+            <SubmittedFullFormView
+              form={selectedForm}
+              onBack={() => setSelectedForm(null)}
+              isMaximized={isMaximized}
+              onToggleMaximize={() => setIsMaximized(!isMaximized)}
+            />
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   )
